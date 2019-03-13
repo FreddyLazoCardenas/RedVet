@@ -1,0 +1,70 @@
+apply plugin: 'com.android.application'
+
+android {
+
+
+    compileSdkVersion 28
+    defaultConfig {
+        vectorDrawables.useSupportLibrary = true
+        applicationId "com.papps.freddy_lazo.redvet"
+        minSdkVersion 19
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        debug{
+            resValue 'string', 'GOOGLE_MAPS_API_KEY', '"AIzaSyCVdzgo5h0sMSyNnFWNUYnQATQynsm5jVE"'
+        }
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    flavorDimensions "enviroment"
+    productFlavors {
+        doctor {
+            dimension "enviroment"
+            applicationId "pe.com.papps.retVet.doctor"
+            versionCode = 1
+            versionName "v1.0.0"
+
+        }
+        customer {
+            dimension "enviroment"
+            applicationId "pe.com.papps.retVet.customer"
+            versionCode = 1
+            versionName "v1.0.0"
+        }
+
+    }
+
+    compileOptions {
+        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    def presentationDependencies =presentationDependencies
+
+
+    implementation project(":domain")
+    implementation project(":data")
+
+
+    annotationProcessor presentationDependencies.daggerCompiler
+    annotationProcessor presentationDependencies.butterKnifeCompiler
+
+    implementation presentationDependencies.androidAppCompat
+    implementation presentationDependencies.androidDesign
+    implementation presentationDependencies.constraintLayout
+    implementation presentationDependencies.dagger
+    implementation presentationDependencies.butterKnife
+    implementation presentationDependencies.googleMaps
+    implementation presentationDependencies.googleLocation
+}
