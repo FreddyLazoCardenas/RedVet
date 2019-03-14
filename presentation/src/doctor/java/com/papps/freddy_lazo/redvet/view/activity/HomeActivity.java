@@ -36,6 +36,7 @@ public class HomeActivity extends BaseActivity implements BottomNavigationView.O
 
     @Override
     public void initUI() {
+        bottomNav.getMenu().removeItem(R.id.action_map);
         bottomNav.setOnNavigationItemSelectedListener(this);
         bottomNav.setSelectedItemId(R.id.action_quotes);
 
