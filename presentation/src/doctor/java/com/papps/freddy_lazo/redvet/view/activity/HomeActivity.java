@@ -50,9 +50,6 @@ public class HomeActivity extends BaseActivity implements BottomNavigationView.O
             case R.id.action_profile:
                 navigator.navigateFromMenu(R.id.action_profile, this);
                 return true;
-            case R.id.action_map:
-                navigator.navigateFromMenu(R.id.action_map, this);
-                return true;
             case R.id.action_news:
                 navigator.navigateFromMenu(R.id.action_news, this);
                 return true;

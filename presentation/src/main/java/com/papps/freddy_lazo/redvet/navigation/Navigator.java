@@ -9,6 +9,8 @@ import com.papps.freddy_lazo.redvet.view.activity.HomeActivity;
 import com.papps.freddy_lazo.redvet.view.activity.LoginActivity;
 import com.papps.freddy_lazo.redvet.view.activity.RegisterActivity;
 import com.papps.freddy_lazo.redvet.view.fragment.MapFragment;
+import com.papps.freddy_lazo.redvet.view.fragment.NewsFragment;
+import com.papps.freddy_lazo.redvet.view.fragment.NotificationsFragment;
 import com.papps.freddy_lazo.redvet.view.fragment.ProfileFragment;
 import com.papps.freddy_lazo.redvet.view.fragment.QuotesFragment;
 import com.papps.freddy_lazo.redvet.view.fragment.RegisterFragment;
@@ -73,10 +75,10 @@ public class Navigator extends BaseNavigator {
                 fragmentTransaction(activity, MapFragment.newInstance(), false);
                 break;
             case R.id.action_news:
-                fragmentTransaction(activity, ProfileFragment.newInstance(), false);
+                fragmentTransaction(activity, NewsFragment.newInstance(), false);
                 break;
             case R.id.action_notifications:
-                fragmentTransaction(activity, ProfileFragment.newInstance(), false);
+                fragmentTransaction(activity, NotificationsFragment.newInstance(), false);
                 break;
             default:
                 break;

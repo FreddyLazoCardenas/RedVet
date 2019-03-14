@@ -17,6 +17,7 @@
         tools:ignore="GoogleAppIndexingWarning" >
         <activity android:name=".view.activity.BaseActivity" />
         <activity android:name=".view.activity.LoginActivity" />
+        <activity android:name=".view.activity.HomeActivity" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"

@@ -65,8 +65,8 @@ public class MapFragment extends BaseFragment implements OnMapReadyCallback {
         int permissionGranted = ContextCompat.checkSelfPermission(context(), Manifest.permission.ACCESS_FINE_LOCATION);
         if (permissionGranted != PackageManager.PERMISSION_GRANTED) {
             requestPermissions(
-                    new String[]{android.Manifest.permission.ACCESS_COARSE_LOCATION,
-                            android.Manifest.permission.ACCESS_FINE_LOCATION},
+                    new String[]{Manifest.permission.ACCESS_COARSE_LOCATION,
+                            Manifest.permission.ACCESS_FINE_LOCATION},
                     REQUEST_LOCATION);
         } else {
             initMap();
