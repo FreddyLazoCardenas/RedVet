@@ -10,6 +10,7 @@ import com.papps.freddy_lazo.redvet.view.activity.LoginActivity;
 import com.papps.freddy_lazo.redvet.view.activity.RegisterActivity;
 import com.papps.freddy_lazo.redvet.view.fragment.MapFragment;
 import com.papps.freddy_lazo.redvet.view.fragment.ProfileFragment;
+import com.papps.freddy_lazo.redvet.view.fragment.QuotesFragment;
 import com.papps.freddy_lazo.redvet.view.fragment.RegisterFragment;
 import com.papps.freddy_lazo.redvet.view.fragment.ForgotPasswordFragment;
 import com.papps.freddy_lazo.redvet.view.fragment.LoginFragment;
@@ -63,7 +64,7 @@ public class Navigator extends BaseNavigator {
         activity.getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
         switch (itemId) {
             case R.id.action_quotes:
-                fragmentTransaction(activity, ProfileFragment.newInstance(), false);
+                fragmentTransaction(activity, QuotesFragment.newInstance(), false);
                 break;
             case R.id.action_profile:
                 fragmentTransaction(activity, ProfileFragment.newInstance(), false);

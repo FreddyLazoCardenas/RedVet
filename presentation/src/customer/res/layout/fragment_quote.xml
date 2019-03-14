@@ -6,6 +6,7 @@
 
 
     <android.support.constraint.ConstraintLayout
+        android:id="@+id/header_view"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@color/colorLightGray">
@@ -32,10 +33,61 @@
             app:layout_constraintStart_toEndOf="@id/img_header"
             app:layout_constraintTop_toTopOf="parent" />
     </android.support.constraint.ConstraintLayout>
-    
+
     <View
-        src
+        android:id="@+id/header_shadow"
         android:layout_width="0dp"
-        android:layout_height=""
-    
+        android:layout_height="100dp"
+        android:background="@drawable/ic_green_shadow"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/header_view" />
+
+    <TextView
+        android:id="@+id/txt_pending"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:background="@drawable/quote_bg_selected"
+        android:padding="10dp"
+        android:text="Pendientes"
+        android:textColor="@color/colorWhite"
+        app:layout_constraintBottom_toBottomOf="@+id/header_shadow"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/header_shadow" />
+
+    <TextView
+        android:id="@+id/txt_confirmed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/quote_bg"
+        android:padding="10dp"
+        android:text="Confirmadas"
+        android:textColor="@color/colorWhite"
+        app:layout_constraintBottom_toBottomOf="@+id/header_shadow"
+        app:layout_constraintEnd_toStartOf="@id/txt_finalized"
+        app:layout_constraintStart_toEndOf="@id/txt_pending"
+        app:layout_constraintTop_toTopOf="@+id/header_shadow" />
+
+    <TextView
+        android:id="@+id/txt_finalized"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/quote_bg"
+        android:padding="10dp"
+        android:text="Finalizadas"
+        android:textColor="@color/colorWhite"
+        app:layout_constraintBottom_toBottomOf="@+id/header_shadow"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/header_shadow" />
+
+    <include
+        android:layout_marginTop="20dp"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        app:layout_constraintTop_toBottomOf="@+id/header_shadow"
+        layout="@layout/item_quote"/>
+
+
 </android.support.constraint.ConstraintLayout>
