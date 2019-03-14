@@ -21,6 +21,7 @@ import com.papps.freddy_lazo.redvet.view.adapter.PetAdapter;
 import javax.inject.Inject;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 public class RegisterFragment extends BaseFragment implements LoginFragmentView {
 
@@ -88,5 +89,10 @@ public class RegisterFragment extends BaseFragment implements LoginFragmentView 
     @Override
     public void showErrorNetworkMessage(String message) {
 
+    }
+
+    @OnClick(R.id.btn_register)
+    public void btnRegister(){
+        navigator.navigateToHomeActivity(activity);
     }
 }
