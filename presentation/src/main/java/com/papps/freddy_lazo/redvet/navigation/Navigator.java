@@ -17,6 +17,7 @@ import com.papps.freddy_lazo.redvet.view.fragment.RegisterFragment;
 import com.papps.freddy_lazo.redvet.view.fragment.ForgotPasswordFragment;
 import com.papps.freddy_lazo.redvet.view.fragment.LoginFragment;
 import com.papps.freddy_lazo.redvet.view.fragment.MainMenuFragment;
+import com.papps.freddy_lazo.redvet.view.fragment.ServicesFragments;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -62,6 +63,10 @@ public class Navigator extends BaseNavigator {
         fragmentTransaction(activity, MainMenuFragment.newInstance(), true);
     }
 
+    public void navigateToSewrvicesFragment(BaseActivity activity) {
+        fragmentTransaction(activity, ServicesFragments.newInstance(), true);
+    }
+
     public void navigateFromMenu(int itemId, BaseActivity activity) {
         activity.getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
         switch (itemId) {
@@ -84,4 +89,8 @@ public class Navigator extends BaseNavigator {
                 break;
         }
     }
+
+    //Dialogs
+
+
 }
