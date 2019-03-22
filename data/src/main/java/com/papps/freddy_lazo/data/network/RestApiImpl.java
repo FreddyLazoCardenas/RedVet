@@ -2,8 +2,6 @@ package com.papps.freddy_lazo.data.network;
 
 import android.content.Context;
 
-import com.papps.freddy_lazo.data.network.network.RestService;
-
 public class RestApiImpl implements RestApi {
 
 
