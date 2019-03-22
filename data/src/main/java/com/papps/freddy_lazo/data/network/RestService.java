@@ -1,4 +1,4 @@
-package com.papps.freddy_lazo.data.network.network;
+package com.papps.freddy_lazo.data.network;
 
 public interface RestService {
 }

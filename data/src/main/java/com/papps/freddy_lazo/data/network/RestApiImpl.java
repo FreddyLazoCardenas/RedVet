@@ -2,12 +2,9 @@ package com.papps.freddy_lazo.data.network;
 
 import android.content.Context;
 
-import com.papps.freddy_lazo.data.network.network.RestService;
 
 import io.reactivex.Observable;
 import io.reactivex.annotations.NonNull;
-import retrofit2.Call;
-import retrofit2.Response;
 
 public class RestApiImpl implements RestApi {
 
