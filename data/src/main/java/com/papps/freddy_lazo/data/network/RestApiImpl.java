@@ -3,8 +3,15 @@ package com.papps.freddy_lazo.data.network;
 import android.content.Context;
 
 
+import com.papps.freddy_lazo.data.entity.DoctorEntity;
+import com.papps.freddy_lazo.data.entity.ResponseEntity;
+import com.papps.freddy_lazo.data.network.body.BodyLogin;
+import com.papps.freddy_lazo.data.network.response.LoginResponse;
+
 import io.reactivex.Observable;
 import io.reactivex.annotations.NonNull;
+import retrofit2.Call;
+import retrofit2.Response;
 
 public class RestApiImpl implements RestApi {
 
@@ -17,19 +24,19 @@ public class RestApiImpl implements RestApi {
         this.restService = restService;
     }
 
-
     @Override
-    public Observable<ValidateQrEntity> login(long customerUserId, String code) {
-        return Observable.create(emitter -> restService.validateQrCode(customerUserId, new BodyValidateQrCode(code)).enqueue(new DefaultCallback<ResponseEntity<QrValidateResponse>>(emitter) {
+    public Observable<DoctorEntity> login(String email, String password) {
+        return Observable.create(emitter -> restService.login(new BodyLogin(email, password, "asdd", "android")).enqueue(new DefaultCallback<ResponseEntity<LoginResponse>>(emitter) {
             @Override
-            public void onResponse(@NonNull Call<ResponseEntity<QrValidateResponse>> call, @NonNull Response<ResponseEntity<QrValidateResponse>> response) {
+            public void onResponse(@NonNull Call<ResponseEntity<LoginResponse>> call, @NonNull Response<ResponseEntity<LoginResponse>> response) {
                 super.onResponse(call, response);
-                ResponseEntity<QrValidateResponse> body = response.body();
-                if (body != null && body.getError() == null) {
-                    emitter.onNext(body.getBody().getValidateQrEntity());
+                ResponseEntity<LoginResponse> body = response.body();
+                if (body != null && body.getMessage() == null) {
+                    emitter.onNext(body.getData().getDoctorEntity());
                     emitter.onComplete();
                 }
             }
         }));
     }
+
 }

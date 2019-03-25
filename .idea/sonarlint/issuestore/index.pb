@@ -47,3 +47,15 @@ v
 Fdata/src/main/java/com/papps/freddy_lazo/data/network/RestApiImpl.java,4/2/4265ce88a5b69e0e45eeb1a1f6ef8986ca2e276c
 í
 bpresentation/src/main/java/com/papps/freddy_lazo/redvet/internal/dagger/module/ActivityModule.java,3/a/3ab3526b361376c3db9e039ecfd09bccdbe6dabd
+Å
+Qdata/src/main/java/com/papps/freddy_lazo/data/network/response/LoginResponse.java,3/7/37ab75aa8dc1bcce5e721f439877f92b2b2fc034
+y
+Idata/src/main/java/com/papps/freddy_lazo/data/network/body/BodyLogin.java,a/d/adf0032f240848b101e35c03f70ab35658dfeb90
+v
+Fdata/src/main/java/com/papps/freddy_lazo/data/entity/DoctorEntity.java,c/2/c20c91061c422038a59ca411e2ca699a596c1ac7
+x
+Hdata/src/main/java/com/papps/freddy_lazo/data/entity/ResponseEntity.java,1/6/16fdac2b88aefbd7cdb8051732743511270f7d58
+u
+Edata/src/main/java/com/papps/freddy_lazo/data/entity/LoginEntity.java,a/d/adfcbd69e87c945e420ed94f18501f70a0fa2565
+z
+Jdata/src/main/java/com/papps/freddy_lazo/data/network/DefaultCallback.java,d/6/d66587eaf6e0279992ef9c0247c1334753b05dd8

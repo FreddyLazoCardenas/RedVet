@@ -21,6 +21,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    compileOptions {
+        sourceCompatibility = '1.8'
+        targetCompatibility = '1.8'
+    }
 
 }
 
@@ -34,5 +38,8 @@ dependencies {
     api dataDependencies.retrofit
     api dataDependencies.gson
     api dataDependencies.gsonConverter
+    api dataDependencies.rxJava
+    api dataDependencies.rxAndroid
+    api dataDependencies.javaxInject
 
 }
