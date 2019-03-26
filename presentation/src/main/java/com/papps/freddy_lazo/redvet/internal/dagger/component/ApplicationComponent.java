@@ -1,7 +1,12 @@
 package com.papps.freddy_lazo.redvet.internal.dagger.component;
 
 
+import android.content.Context;
+
 import com.papps.freddy_lazo.data.repository.UserDataRepository;
+import com.papps.freddy_lazo.domain.executor.PostExecutionThread;
+import com.papps.freddy_lazo.domain.executor.ThreadExecutor;
+import com.papps.freddy_lazo.domain.repository.UserRepository;
 import com.papps.freddy_lazo.redvet.internal.dagger.module.NetworkModule;
 import com.papps.freddy_lazo.redvet.navigation.Navigator;
 import com.papps.freddy_lazo.redvet.view.activity.BaseActivity;
@@ -21,8 +26,14 @@ public interface ApplicationComponent {
 
     void inject(BaseActivity activity);
 
+    Context context();
+
+    ThreadExecutor threadExecutor();
+
+    PostExecutionThread postExecutionThread();
+
     Navigator navigator();
 
-    UserDataRepository userDataRepository();
+    UserRepository userRepository();
 
 }

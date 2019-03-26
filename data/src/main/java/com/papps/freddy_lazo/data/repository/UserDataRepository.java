@@ -1,6 +1,5 @@
 package com.papps.freddy_lazo.data.repository;
 
-import com.papps.freddy_lazo.data.entity.DoctorEntity;
 import com.papps.freddy_lazo.data.entity.mapper.DoctorLoginMapper;
 import com.papps.freddy_lazo.data.network.RestApi;
 import com.papps.freddy_lazo.domain.model.Doctor;

@@ -2,6 +2,8 @@ package com.papps.freddy_lazo.data.entity;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 public class DoctorEntity {
 
     @SerializedName("user_id")
@@ -50,6 +52,17 @@ public class DoctorEntity {
     private String photo_url;
     @SerializedName("api_token")
     private String api_token;
+    @SerializedName("pets")
+    private List<PetEntity> petEntity;
+
+
+    public List<PetEntity> getPetEntity() {
+        return petEntity;
+    }
+
+    public void setPetEntity(List<PetEntity> petEntity) {
+        this.petEntity = petEntity;
+    }
 
     public int getUser_id() {
         return user_id;

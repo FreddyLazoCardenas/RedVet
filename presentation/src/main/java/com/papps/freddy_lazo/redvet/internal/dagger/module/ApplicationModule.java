@@ -2,8 +2,13 @@ package com.papps.freddy_lazo.redvet.internal.dagger.module;
 
 import android.content.Context;
 
+import com.papps.freddy_lazo.data.executor.JobExecutor;
 import com.papps.freddy_lazo.data.repository.UserDataRepository;
+import com.papps.freddy_lazo.domain.executor.PostExecutionThread;
+import com.papps.freddy_lazo.domain.executor.ThreadExecutor;
+import com.papps.freddy_lazo.domain.repository.UserRepository;
 import com.papps.freddy_lazo.redvet.AndroidApplication;
+import com.papps.freddy_lazo.redvet.UIThread;
 
 import javax.inject.Singleton;
 
@@ -29,7 +34,19 @@ public class ApplicationModule {
 
     @Provides
     @Singleton
-    UserDataRepository provideUserDataRepository(UserDataRepository userDataRepository) {
+    ThreadExecutor provideThreadExecutor(JobExecutor jobExecutor) {
+        return jobExecutor;
+    }
+
+    @Provides
+    @Singleton
+    PostExecutionThread providePostExecutionThread(UIThread uiThread) {
+        return uiThread;
+    }
+
+    @Provides
+    @Singleton
+    UserRepository provideUserDataRepository(UserDataRepository userDataRepository) {
         return userDataRepository;
     }
 
