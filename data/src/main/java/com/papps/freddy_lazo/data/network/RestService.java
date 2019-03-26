@@ -2,6 +2,7 @@ package com.papps.freddy_lazo.data.network;
 
 import com.papps.freddy_lazo.data.entity.ResponseEntity;
 import com.papps.freddy_lazo.data.network.body.BodyLogin;
+import com.papps.freddy_lazo.data.network.body.BodyPetLoverRegister;
 import com.papps.freddy_lazo.data.network.response.LoginResponse;
 
 import retrofit2.Call;
@@ -12,4 +13,13 @@ public interface RestService {
 
     @POST("login")
     Call<ResponseEntity<LoginResponse>> login(@Body BodyLogin bodyLogin);
+
+    @POST("pet-lover/sign-up")
+    Call<ResponseEntity<LoginResponse>> petLoverRegister(@Body BodyPetLoverRegister bodyLogin);
+
+    @POST("doctor/sign-up")
+    Call<ResponseEntity<LoginResponse>> doctorRegister(@Body BodyPetLoverRegister bodyLogin);
+
+    @POST("pet-lover/sign-up")
+    Call<ResponseEntity<LoginResponse>> petLoverRegister(@Body BodyPetLoverRegister bodyLogin);
 }
