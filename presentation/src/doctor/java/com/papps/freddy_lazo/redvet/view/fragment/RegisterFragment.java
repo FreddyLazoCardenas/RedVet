@@ -25,8 +25,8 @@ import butterknife.OnClick;
 
 public class RegisterFragment extends BaseFragment implements LoginFragmentView {
 
-    @Inject
-    LoginFragmentPresenter presenter;
+    /*@Inject
+    LoginFragmentPresenter presenter;*/
     @Inject
     PetAdapter adapter;
 
@@ -66,7 +66,7 @@ public class RegisterFragment extends BaseFragment implements LoginFragmentView 
 
     @Override
     public void initUI() {
-        presenter.setView(this);
+        //presenter.setView(this);
         setUpPetRv();
     }
 

@@ -25,5 +25,4 @@ public interface ApplicationComponent {
 
     UserDataRepository userDataRepository();
 
-
 }

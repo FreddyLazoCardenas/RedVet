@@ -7,10 +7,11 @@ import com.papps.freddy_lazo.domain.model.Doctor;
 import com.papps.freddy_lazo.domain.repository.UserRepository;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
 import io.reactivex.Observable;
-import io.reactivex.functions.Function;
 
+@Singleton
 public class UserDataRepository implements UserRepository {
 
     private final RestApi mRestApi;

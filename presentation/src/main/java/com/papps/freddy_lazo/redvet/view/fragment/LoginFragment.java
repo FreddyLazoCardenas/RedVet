@@ -24,6 +24,7 @@ public class LoginFragment extends BaseFragment implements LoginFragmentView {
 
     @Inject
     LoginFragmentPresenter presenter;
+
     private LoginActivity activity;
 
     public static Fragment newInstance() {
@@ -68,6 +69,7 @@ public class LoginFragment extends BaseFragment implements LoginFragmentView {
     @Override
     public void initUI() {
         presenter.setView(this);
+        presenter.login();
     }
 
     @Override
