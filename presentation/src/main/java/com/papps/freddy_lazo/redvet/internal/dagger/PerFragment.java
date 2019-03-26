@@ -1,4 +1,4 @@
-package com.papps.freddy_lazo.redvet.internal.dagger.module;
+package com.papps.freddy_lazo.redvet.internal.dagger;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

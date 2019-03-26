@@ -1,6 +1,8 @@
 package com.papps.freddy_lazo.redvet.internal.dagger.component;
 
 
+import com.papps.freddy_lazo.data.repository.UserDataRepository;
+import com.papps.freddy_lazo.redvet.internal.dagger.module.NetworkModule;
 import com.papps.freddy_lazo.redvet.navigation.Navigator;
 import com.papps.freddy_lazo.redvet.view.activity.BaseActivity;
 import com.papps.freddy_lazo.redvet.internal.dagger.module.ApplicationModule;
@@ -14,12 +16,14 @@ import dagger.Component;
  * A component whose lifetime is the life of the application.
  */
 @Singleton
-@Component(modules = {ApplicationModule.class})
+@Component(modules = {ApplicationModule.class, NetworkModule.class})
 public interface ApplicationComponent {
 
     void inject(BaseActivity activity);
 
     Navigator navigator();
+
+    UserDataRepository userDataRepository();
 
 
 }
