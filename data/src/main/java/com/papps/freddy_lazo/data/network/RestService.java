@@ -20,6 +20,6 @@ public interface RestService {
     @POST("doctor/sign-up")
     Call<ResponseEntity<LoginResponse>> doctorRegister(@Body BodyPetLoverRegister bodyLogin);
 
-    @POST("pet-lover/sign-up")
-    Call<ResponseEntity<LoginResponse>> petLoverRegister(@Body BodyPetLoverRegister bodyLogin);
+    /*@POST("pet-lover/sign-up")
+    Call<ResponseEntity<LoginResponse>> petLoverRegister(@Body BodyPetLoverRegister bodyLogin);*/
 }

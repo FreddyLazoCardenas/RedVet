@@ -45,7 +45,7 @@ public class BodyDoctorRegister {
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.dni = dni;
+        //this.dni = dni;
         this.address = address;
         this.phone = phone;
         this.fcmToken = fcmToken;
