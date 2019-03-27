@@ -11,7 +11,9 @@ import com.papps.freddy_lazo.redvet.internal.dagger.component.DaggerLoginCompone
 public class LoginActivity extends BaseActivity {
 
     public static Intent getCallingIntent(Activity activity) {
-        return new Intent(activity, LoginActivity.class);
+        return new Intent(activity, LoginActivity.class)
+                .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
     }
 
     @Override

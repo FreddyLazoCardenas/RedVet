@@ -15,7 +15,7 @@
         app:layout_constraintBottom_toBottomOf="@id/txt_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/txt_title"
-        app:srcCompat="@drawable/ic_alert_not" />
+        app:srcCompat="@drawable/ic_quotes" />
 
     <TextView
         android:id="@+id/txt_title"
@@ -27,13 +27,13 @@
         android:ellipsize="end"
         android:gravity="start"
         android:lines="1"
-        android:textColor="@color/colorGray"
+        android:textColor="@color/colorBlack"
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/img_news"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="Servicio confirmado" />
+        android:text="Servicio confirmado" />
 
     <TextView
         android:id="@+id/txt_content"
@@ -46,7 +46,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@id/txt_title"
         app:layout_constraintTop_toBottomOf="@+id/txt_title"
-        tools:text="Tu cita ha sido confirmada" />
+        android:text="Tu cita ha sido confirmada" />
 
     <TextView
         android:id="@+id/txt_time"
@@ -57,7 +57,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txt_content"
-        tools:text="Hace 2 horas" />
+        android:text="Hace 2 horas" />
 
 
 </android.support.constraint.ConstraintLayout>

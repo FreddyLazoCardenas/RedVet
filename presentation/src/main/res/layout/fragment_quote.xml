@@ -9,7 +9,7 @@
         android:id="@+id/header_view"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="@color/colorLightGray">
+        android:background="@color/colorWhite">
 
         <ImageView
             android:id="@+id/img_header"
