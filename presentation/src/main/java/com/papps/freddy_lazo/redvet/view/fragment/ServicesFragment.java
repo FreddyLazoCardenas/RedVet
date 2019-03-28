@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,11 +19,13 @@ import com.papps.freddy_lazo.redvet.internal.dagger.component.DaggerServicesComp
 import com.papps.freddy_lazo.redvet.model.ServicesModel;
 import com.papps.freddy_lazo.redvet.presenter.ServicesFragmentPresenter;
 import com.papps.freddy_lazo.redvet.view.activity.HomeActivity;
+import com.papps.freddy_lazo.redvet.view.adapter.ServicesAdapter;
 
 import java.util.List;
 
 import javax.inject.Inject;
 
+import butterknife.BindView;
 import butterknife.OnClick;
 
 public class ServicesFragment extends BaseFragment implements ServicesFragmentView {
@@ -30,6 +34,11 @@ public class ServicesFragment extends BaseFragment implements ServicesFragmentVi
 
     @Inject
     ServicesFragmentPresenter presenter;
+    @Inject
+    ServicesAdapter adapter;
+
+    @BindView(R.id.recycler_view)
+    RecyclerView recyclerView;
 
     public static Fragment newInstance() {
         return new ServicesFragment();
@@ -57,6 +66,12 @@ public class ServicesFragment extends BaseFragment implements ServicesFragmentVi
     public void initUI() {
         presenter.setView(this);
         presenter.getServices();
+        setUpRv();
+    }
+
+    private void setUpRv() {
+        recyclerView.setLayoutManager(new LinearLayoutManager(activity));
+        recyclerView.setAdapter(adapter);
     }
 
     @Override
@@ -89,5 +104,6 @@ public class ServicesFragment extends BaseFragment implements ServicesFragmentVi
     @Override
     public void listData(List<ServicesModel> data) {
         Log.d("serviceData",data.toString());
+        adapter.bindList(data);
     }
 }
