@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
 
     <fragment
         android:name="com.google.android.gms.maps.SupportMapFragment"
@@ -9,4 +11,62 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
-</FrameLayout>
+    <View
+        app:layout_constraintTop_toTopOf="parent"
+        android:id="@+id/header_shadow"
+        android:layout_width="0dp"
+        android:layout_height="250dp"
+        android:background="@drawable/ic_green_shadow"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+    <TextView
+        android:id="@+id/txt_clinics"
+        android:layout_width="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:paddingStart="30dp"
+        android:paddingEnd="30dp"
+        android:background="@drawable/quote_bg_selected"
+        android:text="Clinicas"
+        android:textColor="@color/colorWhite"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/header_shadow" />
+
+    <TextView
+        android:id="@+id/txt_veterinaries"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/quote_bg"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:paddingStart="30dp"
+        android:paddingEnd="30dp"
+        android:text="Veterinarias"
+        android:textColor="@color/colorWhite"
+        app:layout_constraintEnd_toStartOf="@id/txt_others"
+        app:layout_constraintStart_toEndOf="@id/txt_clinics"
+        app:layout_constraintTop_toTopOf="@+id/txt_clinics" />
+
+    <TextView
+        android:id="@+id/txt_others"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="20dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:paddingStart="30dp"
+        android:paddingEnd="30dp"
+        android:background="@drawable/quote_bg"
+        android:padding="10dp"
+        android:text="Otros"
+        android:textColor="@color/colorWhite"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/txt_clinics" />
+
+
+</android.support.constraint.ConstraintLayout>
