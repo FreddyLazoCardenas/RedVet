@@ -14,12 +14,12 @@ import com.papps.freddy_lazo.redvet.view.activity.HomeActivity;
 
 import butterknife.OnClick;
 
-public class ServicesFragments extends BaseFragment {
+public class ServicesFragment extends BaseFragment {
 
     private HomeActivity activity;
 
     public static Fragment newInstance() {
-        return new ServicesFragments();
+        return new ServicesFragment();
     }
 
     @Nullable

@@ -7,6 +7,7 @@ import com.papps.freddy_lazo.data.repository.UserDataRepository;
 import com.papps.freddy_lazo.domain.executor.PostExecutionThread;
 import com.papps.freddy_lazo.domain.executor.ThreadExecutor;
 import com.papps.freddy_lazo.domain.repository.UserRepository;
+import com.papps.freddy_lazo.domain.repository.UtilsRepository;
 import com.papps.freddy_lazo.redvet.internal.dagger.module.NetworkModule;
 import com.papps.freddy_lazo.redvet.navigation.Navigator;
 import com.papps.freddy_lazo.redvet.view.activity.BaseActivity;
@@ -35,5 +36,7 @@ public interface ApplicationComponent {
     Navigator navigator();
 
     UserRepository userRepository();
+
+    UtilsRepository utilsRepository();
 
 }

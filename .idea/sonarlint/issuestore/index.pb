@@ -75,3 +75,9 @@ Cdata/src/main/java/com/papps/freddy_lazo/data/entity/PetEntity.java,3/c/3c05e0
 Tdata/src/main/java/com/papps/freddy_lazo/data/network/body/BodyPetLoverRegister.java,9/2/92f692578d78c01b97a407ffa975c47a0f190cde
 ‚
 Rdata/src/main/java/com/papps/freddy_lazo/data/network/body/BodyDoctorRegister.java,f/b/fb51c65043d9529870f7e917ebf0e9812eca64c8
+‹
+[presentation/src/customer/java/com/papps/freddy_lazo/redvet/view/activity/HomeActivity.java,7/8/788c73330baaef5e068a8d51b1df579b73dbdd95
+‰
+Ypresentation/src/main/java/com/papps/freddy_lazo/redvet/view/fragment/QuotesFragment.java,6/4/64ad38647fc0097985751fdecd4db124f781aba3
+†
+Vpresentation/src/main/java/com/papps/freddy_lazo/redvet/view/fragment/MapFragment.java,8/6/86f75a32913071fefc863b258188189137ce5328

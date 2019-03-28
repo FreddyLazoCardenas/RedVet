@@ -5,8 +5,12 @@ import android.content.Context;
 
 import com.papps.freddy_lazo.data.entity.DoctorEntity;
 import com.papps.freddy_lazo.data.entity.ResponseEntity;
+import com.papps.freddy_lazo.data.entity.ServicesEntity;
 import com.papps.freddy_lazo.data.network.body.BodyLogin;
 import com.papps.freddy_lazo.data.network.response.LoginResponse;
+import com.papps.freddy_lazo.data.network.response.ServicesResponse;
+
+import java.util.List;
 
 import io.reactivex.Observable;
 import io.reactivex.annotations.NonNull;
@@ -33,6 +37,21 @@ public class RestApiImpl implements RestApi {
                 ResponseEntity<LoginResponse> body = response.body();
                 if (body != null && body.getMessage() == null) {
                     emitter.onNext(body.getData().getDoctorEntity());
+                    emitter.onComplete();
+                }
+            }
+        }));
+    }
+
+    @Override
+    public Observable<List<ServicesEntity>> services() {
+        return Observable.create(emitter -> restService.services().enqueue(new DefaultCallback<ResponseEntity<ServicesResponse>>(emitter) {
+            @Override
+            public void onResponse(@NonNull Call<ResponseEntity<ServicesResponse>> call, @NonNull Response<ResponseEntity<ServicesResponse>> response) {
+                super.onResponse(call, response);
+                ResponseEntity<ServicesResponse> body = response.body();
+                if (body != null && body.getMessage() == null) {
+                    emitter.onNext(body.getData().getServicesEntityList());
                     emitter.onComplete();
                 }
             }
