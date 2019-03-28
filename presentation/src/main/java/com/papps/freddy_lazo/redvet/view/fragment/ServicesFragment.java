@@ -5,18 +5,31 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.papps.freddy_lazo.redvet.R;
+import com.papps.freddy_lazo.redvet.interfaces.ServicesFragmentView;
+import com.papps.freddy_lazo.redvet.internal.dagger.component.DaggerRegisterFragmentComponent;
+import com.papps.freddy_lazo.redvet.internal.dagger.component.DaggerServicesComponent;
+import com.papps.freddy_lazo.redvet.model.ServicesModel;
+import com.papps.freddy_lazo.redvet.presenter.ServicesFragmentPresenter;
 import com.papps.freddy_lazo.redvet.view.activity.HomeActivity;
+
+import java.util.List;
+
+import javax.inject.Inject;
 
 import butterknife.OnClick;
 
-public class ServicesFragment extends BaseFragment {
+public class ServicesFragment extends BaseFragment implements ServicesFragmentView {
 
     private HomeActivity activity;
+
+    @Inject
+    ServicesFragmentPresenter presenter;
 
     public static Fragment newInstance() {
         return new ServicesFragment();
@@ -29,14 +42,28 @@ public class ServicesFragment extends BaseFragment {
     }
 
     @Override
-    public void initUI() {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        buildInjection();
+    }
 
+    private void buildInjection() {
+        DaggerServicesComponent.builder()
+                .applicationComponent(getAndroidApplication().getApplicationComponent())
+                .build().inject(this);
+    }
+
+    @Override
+    public void initUI() {
+        presenter.setView(this);
+        presenter.getServices();
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        activity = (HomeActivity)getActivity();
+        activity = (HomeActivity) getActivity();
+        initUI();
     }
 
     @Override
@@ -55,7 +82,12 @@ public class ServicesFragment extends BaseFragment {
     }
 
     @OnClick(R.id.img_header)
-    public void imgClicked(){
+    public void imgClicked() {
         activity.onBackPressed();
+    }
+
+    @Override
+    public void listData(List<ServicesModel> data) {
+        Log.d("serviceData",data.toString());
     }
 }

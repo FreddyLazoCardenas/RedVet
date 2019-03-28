@@ -54,7 +54,7 @@ public class ApplicationModule {
 
     @Provides
     @Singleton
-    UtilsRepository provideUserDataRepository(UtilsDataRepository utilsDataRepository) {
+    UtilsRepository provideUserUtilsRepository(UtilsDataRepository utilsDataRepository) {
         return utilsDataRepository;
     }
 
