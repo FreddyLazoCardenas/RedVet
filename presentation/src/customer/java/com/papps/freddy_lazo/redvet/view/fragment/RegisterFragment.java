@@ -73,7 +73,7 @@ public class RegisterFragment extends BaseFragment implements LoginFragmentView 
     private void setUpPetRv() {
         recyclerView.setLayoutManager(new LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false));
         recyclerView.setAdapter(adapter);
-        adapter.bindList();
+        adapter.bindList(false);
     }
 
 

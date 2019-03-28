@@ -16,6 +16,8 @@ import butterknife.ButterKnife;
 
 public class PetAdapter extends RecyclerView.Adapter<PetAdapter.PetViewHolder> {
 
+    private  boolean fromMap;
+
     @Inject
     PetAdapter() {
         //empty constructor
@@ -24,7 +26,7 @@ public class PetAdapter extends RecyclerView.Adapter<PetAdapter.PetViewHolder> {
     @NonNull
     @Override
     public PetViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_list_pet, viewGroup, false);
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(fromMap ? R.layout.item_list_pet_map : R.layout.item_list_pet, viewGroup, false);
         return new PetViewHolder(view);
     }
 
@@ -38,7 +40,8 @@ public class PetAdapter extends RecyclerView.Adapter<PetAdapter.PetViewHolder> {
         return 6;
     }
 
-    public void bindList() {
+    public void bindList(boolean fromMap) {
+        this.fromMap = fromMap;
         notifyDataSetChanged();
     }
 

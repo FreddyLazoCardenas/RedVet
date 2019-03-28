@@ -63,7 +63,7 @@ public class Navigator extends BaseNavigator {
         fragmentTransaction(activity, MainMenuFragment.newInstance(), true);
     }
 
-    public void navigateToSewrvicesFragment(BaseActivity activity) {
+    public void navigateToServicesFragment(BaseActivity activity) {
         fragmentTransaction(activity, ServicesFragments.newInstance(), true);
     }
 

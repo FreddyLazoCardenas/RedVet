@@ -10,6 +10,8 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,7 +27,14 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.papps.freddy_lazo.redvet.R;
+import com.papps.freddy_lazo.redvet.internal.dagger.component.DaggerMapFragmentComponent;
 import com.papps.freddy_lazo.redvet.view.activity.HomeActivity;
+import com.papps.freddy_lazo.redvet.view.adapter.PetAdapter;
+
+import javax.inject.Inject;
+
+import butterknife.BindView;
+import butterknife.OnClick;
 
 public class MapFragment extends BaseFragment implements OnMapReadyCallback {
 
@@ -34,6 +43,12 @@ public class MapFragment extends BaseFragment implements OnMapReadyCallback {
     private FusedLocationProviderClient fusedLocationClient;
     private GoogleMap googleMap;
 
+
+    @Inject
+    PetAdapter adapter;
+
+    @BindView(R.id.rv_pet)
+    RecyclerView recyclerView;
 
     public static Fragment newInstance() {
         return new MapFragment();
@@ -46,10 +61,17 @@ public class MapFragment extends BaseFragment implements OnMapReadyCallback {
     }
 
     @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        buildInjection();
+    }
+
+    @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         activity = (HomeActivity) getActivity();
         checkPermission();
+        initUI();
 
     }
 
@@ -110,9 +132,21 @@ public class MapFragment extends BaseFragment implements OnMapReadyCallback {
         }
     }
 
+    private void buildInjection() {
+        DaggerMapFragmentComponent.builder()
+                .applicationComponent(getAndroidApplication().getApplicationComponent())
+                .build().inject(this);
+    }
+
     @Override
     public void initUI() {
+        setUpPetRv();
+    }
 
+    private void setUpPetRv() {
+        recyclerView.setLayoutManager(new LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false));
+        recyclerView.setAdapter(adapter);
+        adapter.bindList(true);
     }
 
     @Override
@@ -135,5 +169,10 @@ public class MapFragment extends BaseFragment implements OnMapReadyCallback {
         this.googleMap = googleMap;
         Log.d("onMapReady", "cargo el mapa");
         requestLastPosition();
+    }
+
+    @OnClick(R.id.txt_services)
+    public void servicesClick(){
+        navigator.navigateToServicesFragment(activity);
     }
 }

@@ -10,8 +10,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.papps.freddy_lazo.redvet.R;
+import com.papps.freddy_lazo.redvet.view.activity.HomeActivity;
+
+import butterknife.OnClick;
 
 public class ServicesFragments extends BaseFragment {
+
+    private HomeActivity activity;
 
     public static Fragment newInstance() {
         return new ServicesFragments();
@@ -29,6 +34,12 @@ public class ServicesFragments extends BaseFragment {
     }
 
     @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        activity = (HomeActivity)getActivity();
+    }
+
+    @Override
     public Context context() {
         return null;
     }
@@ -41,5 +52,10 @@ public class ServicesFragments extends BaseFragment {
     @Override
     public void showErrorNetworkMessage(String message) {
 
+    }
+
+    @OnClick(R.id.img_header)
+    public void imgClicked(){
+        activity.onBackPressed();
     }
 }
