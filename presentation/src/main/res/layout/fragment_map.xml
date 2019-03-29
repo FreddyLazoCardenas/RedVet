@@ -40,7 +40,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/search_view"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_filter" />
+            android:src="@drawable/ic_filter" />
 
         <ImageView
             android:id="@+id/search_view"
@@ -51,7 +51,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_search" />
+            android:src="@drawable/ic_search" />
     </android.support.constraint.ConstraintLayout>
 
 
