@@ -1,7 +1,7 @@
 
-?squid:S1068"(Remove this unused "view" private field.(ƒŒûÀ
-?squid:S11857"(Remove this method to simply inherit it.(×İŠÎ
 ?squid:S11852"(Remove this method to simply inherit it.(éùéÖ
-jsquid:S1450"SRemove the "view" field and declare it as a local variable in the relevant methods.(ƒŒûÀ
 [squid:UselessImportCheck
 "2Remove this unused import 'io.reactivex.Observer'.(ÛËÿÅÿÿÿÿÿ
+jsquid:S1450"SRemove the "view" field and declare it as a local variable in the relevant methods.(ƒŒûÀ
+?squid:S11857"(Remove this method to simply inherit it.(×İŠÎ
+?squid:S1068"(Remove this unused "view" private field.(ƒŒûÀ
