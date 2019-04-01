@@ -5,7 +5,6 @@ android {
 
     compileSdkVersion 28
     defaultConfig {
-        vectorDrawables.useSupportLibrary = true
         applicationId "com.papps.freddy_lazo.redvet"
         minSdkVersion 19
         targetSdkVersion 28
@@ -59,6 +58,8 @@ dependencies {
 
     annotationProcessor presentationDependencies.daggerCompiler
     annotationProcessor presentationDependencies.butterKnifeCompiler
+    annotationProcessor presentationDependencies.glideCompiler
+
 
     implementation presentationDependencies.androidAppCompat
     implementation presentationDependencies.androidDesign
@@ -67,4 +68,7 @@ dependencies {
     implementation presentationDependencies.butterKnife
     implementation presentationDependencies.googleMaps
     implementation presentationDependencies.googleLocation
+    implementation presentationDependencies.shapeImageView
+    implementation presentationDependencies.glide
+    implementation presentationDependencies.imageCropper
 }

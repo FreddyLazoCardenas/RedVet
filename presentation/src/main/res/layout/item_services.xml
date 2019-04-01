@@ -28,6 +28,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_temp_check" />
+        android:src="@drawable/ic_temp_check" />
 
 </android.support.constraint.ConstraintLayout>

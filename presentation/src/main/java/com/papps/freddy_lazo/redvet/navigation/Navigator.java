@@ -1,8 +1,15 @@
 package com.papps.freddy_lazo.redvet.navigation;
 
 
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Build;
+import android.provider.MediaStore;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.content.FileProvider;
 
+import com.papps.freddy_lazo.redvet.BuildConfig;
 import com.papps.freddy_lazo.redvet.R;
 import com.papps.freddy_lazo.redvet.view.activity.BaseActivity;
 import com.papps.freddy_lazo.redvet.view.activity.HomeActivity;
@@ -18,6 +25,9 @@ import com.papps.freddy_lazo.redvet.view.fragment.ForgotPasswordFragment;
 import com.papps.freddy_lazo.redvet.view.fragment.LoginFragment;
 import com.papps.freddy_lazo.redvet.view.fragment.MainMenuFragment;
 import com.papps.freddy_lazo.redvet.view.fragment.ServicesFragment;
+
+import java.io.File;
+import java.util.Objects;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -90,6 +100,37 @@ public class Navigator extends BaseNavigator {
         }
     }
 
+    public void navigateToTakePictureCamera(Fragment fragment, File photoFile, int requestCode) {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (takePictureIntent.resolveActivity(Objects.requireNonNull(fragment.getContext()).getPackageManager()) != null) {
+            if (photoFile != null) {
+                Uri photoURI = FileProvider.getUriForFile(fragment.getContext(),
+                        BuildConfig.APPLICATION_ID + ".fileprovider",
+                        photoFile);
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
+                    takePictureIntent.putExtra("android.intent.extras.LENS_FACING_FRONT", 1);
+                    takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                    fragment.startActivityForResult(takePictureIntent, requestCode);
+                } else {
+                    takePictureIntent.putExtra("android.intent.extras.CAMERA_FACING", 1);
+                    takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                    fragment.startActivityForResult(takePictureIntent, requestCode);
+                }
+
+
+            } else {
+                throw new NullPointerException("File for saving picture is null.");
+            }
+        }
+    }
+
+    public void navigateToGallery(Fragment fragment, int requestCode) {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        fragment.startActivityForResult(Intent.createChooser(intent, "Select File"), requestCode);
+    }
     //Dialogs
 
 

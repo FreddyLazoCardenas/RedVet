@@ -20,17 +20,17 @@
             android:padding="5dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_close_pink" />
+            android:src="@drawable/ic_close_pink" />
 
         <ImageView
-            android:id="@+id/img_profile"
+            android:id="@+id/img_register"
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:layout_marginEnd="24dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/img_dismiss"
-            app:srcCompat="@drawable/ic_placeholder" />
+            android:src="@drawable/ic_placeholder" />
 
         <TextView
             android:id="@+id/txt_name"
@@ -42,7 +42,7 @@
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/img_profile"
+            app:layout_constraintTop_toBottomOf="@+id/img_register"
             tools:text="Freddy Lazo" />
 
         <TextView
