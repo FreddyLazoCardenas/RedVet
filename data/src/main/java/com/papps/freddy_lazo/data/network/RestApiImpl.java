@@ -4,10 +4,12 @@ import android.content.Context;
 
 
 import com.papps.freddy_lazo.data.entity.DoctorEntity;
+import com.papps.freddy_lazo.data.entity.NewsEntity;
 import com.papps.freddy_lazo.data.entity.ResponseEntity;
 import com.papps.freddy_lazo.data.entity.ServicesEntity;
 import com.papps.freddy_lazo.data.network.body.BodyLogin;
 import com.papps.freddy_lazo.data.network.response.LoginResponse;
+import com.papps.freddy_lazo.data.network.response.NewsResponse;
 import com.papps.freddy_lazo.data.network.response.ServicesResponse;
 
 import java.util.List;
@@ -52,6 +54,21 @@ public class RestApiImpl implements RestApi {
                 ResponseEntity<ServicesResponse> body = response.body();
                 if (body != null && body.getMessage() == null) {
                     emitter.onNext(body.getData().getServicesEntityList());
+                    emitter.onComplete();
+                }
+            }
+        }));
+    }
+
+    @Override
+    public Observable<List<NewsEntity>> petLoverNews() {
+        return Observable.create(emitter -> restService.petLoverNews("Bearer wuGnaJzXVEFFJkfo").enqueue(new DefaultCallback<ResponseEntity<NewsResponse>>(emitter) {
+            @Override
+            public void onResponse(@NonNull Call<ResponseEntity<NewsResponse>> call, @NonNull Response<ResponseEntity<NewsResponse>> response) {
+                super.onResponse(call, response);
+                ResponseEntity<NewsResponse> body = response.body();
+                if (body != null && body.getMessage() == null) {
+                    emitter.onNext(body.getData().getNewsEntityList());
                     emitter.onComplete();
                 }
             }
