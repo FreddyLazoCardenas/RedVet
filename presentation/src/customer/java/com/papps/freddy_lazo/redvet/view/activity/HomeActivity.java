@@ -37,7 +37,7 @@ public class HomeActivity extends BaseActivity implements BottomNavigationView.O
     @Override
     public void initUI() {
         bottomNav.setOnNavigationItemSelectedListener(this);
-        bottomNav.setSelectedItemId(R.id.action_quotes);
+        bottomNav.setSelectedItemId(R.id.action_map);
 
     }
 
