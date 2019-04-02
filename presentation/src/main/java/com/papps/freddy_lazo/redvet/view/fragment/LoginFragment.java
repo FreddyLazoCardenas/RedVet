@@ -63,7 +63,7 @@ public class LoginFragment extends BaseFragment implements LoginFragmentView {
 
     @OnClick(R.id.register_text)
     public void registerUser() {
-        navigator.navigateToMainMenuFragment(activity);
+        navigator.navigateToRegisterActivity(activity);
     }
 
     @Override

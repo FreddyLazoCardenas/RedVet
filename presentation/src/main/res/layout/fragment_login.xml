@@ -14,10 +14,10 @@
         android:layout_marginTop="50dp"
         android:layout_marginEnd="8dp"
         android:scaleType="fitXY"
+        android:src="@drawable/ic_vet"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:src="@drawable/ic_vet" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/editText"
@@ -87,6 +87,18 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textView" />
 
+
+    <ImageView
+        android:layout_width="0dp"
+        android:layout_height="160dp"
+        android:alpha="0.5"
+        android:scaleType="fitXY"
+        android:src="@drawable/ic_login_bg"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
     <Button
         android:id="@+id/button_login"
         style="@style/Widget.RetVet.ButtonPrimary"
@@ -94,7 +106,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="40dp"
+        android:layout_marginBottom="50dp"
         android:elevation="10dp"
         android:text="Ingresar"
         app:layout_constraintBottom_toTopOf="@+id/textView"
