@@ -24,6 +24,7 @@ import com.papps.freddy_lazo.redvet.R;
 import com.papps.freddy_lazo.redvet.internal.dagger.component.DaggerRegisterFragmentComponent;
 import com.papps.freddy_lazo.redvet.view.activity.RegisterActivity;
 import com.papps.freddy_lazo.redvet.view.adapter.PetAdapter;
+import com.papps.freddy_lazo.redvet.view.dialogFragment.CameraDialog;
 import com.papps.freddy_lazo.redvet.view.interfaces.RegisterFragmentView;
 import com.papps.freddy_lazo.redvet.view.presenter.RegisterFragmentPresenter;
 import com.theartofdev.edmodo.cropper.CropImage;
@@ -36,7 +37,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class RegisterFragment extends BaseFragment implements RegisterFragmentView {
+public class RegisterFragment extends BaseFragment implements RegisterFragmentView, CameraDialog.OnClickListener {
 
 
     private static final String PICTURE_FILE_NAME = "profileComplete.jpg";
@@ -127,20 +128,13 @@ public class RegisterFragment extends BaseFragment implements RegisterFragmentVi
     @OnClick(R.id.img_register)
     public void imgRegister() {
         isPetImage = false;
-        if (presenter.checkCameraHardware() && presenter.checkPermissions()) {
-            if (pictureFile == null) {
-                pictureFile = new File(getContext().getFilesDir(), PICTURE_FILE_NAME);
-            }
-            navigator.navigateToTakePictureCamera(this, pictureFile, REQUEST_CAMERA);
-        }
+        navigator.showListDialog(activity, this);
     }
 
     @OnClick(R.id.img_add)
     public void imgPet() {
         isPetImage = true;
-        if (presenter.checkGalleryPermissions()) {
-            navigator.navigateToGallery(this, SELECT_FILE);
-        }
+        navigator.showListDialog(activity, this);
     }
 
     @Override
@@ -212,4 +206,20 @@ public class RegisterFragment extends BaseFragment implements RegisterFragmentVi
                 .into(isPetImage ? imgPet : imgRegister);
     }
 
+    @Override
+    public void camera() {
+        if (presenter.checkCameraHardware() && presenter.checkPermissions()) {
+            if (pictureFile == null) {
+                pictureFile = new File(getContext().getFilesDir(), PICTURE_FILE_NAME);
+            }
+            navigator.navigateToTakePictureCamera(this, pictureFile, REQUEST_CAMERA);
+        }
+    }
+
+    @Override
+    public void gallery() {
+        if (presenter.checkGalleryPermissions()) {
+            navigator.navigateToGallery(this, SELECT_FILE);
+        }
+    }
 }
