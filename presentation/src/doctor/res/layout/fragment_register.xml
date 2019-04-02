@@ -24,7 +24,7 @@
             app:layout_constraintTop_toTopOf="@id/img_register" />
 
 
-        <ImageView
+        <com.github.siyamed.shapeimageview.CircularImageView
             android:id="@+id/img_register"
             android:layout_width="80dp"
             android:layout_height="80dp"
@@ -95,6 +95,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:hint="Numero"
+            android:theme="@style/MyEditTextTheme"
             app:layout_constraintEnd_toEndOf="@id/end_guideline"
             app:layout_constraintStart_toStartOf="@id/start_guideline"
             app:layout_constraintTop_toBottomOf="@+id/toggle">
@@ -113,6 +114,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
+            android:theme="@style/MyEditTextTheme"
             android:hint="Razon Social"
             app:layout_constraintEnd_toEndOf="@id/end_guideline"
             app:layout_constraintStart_toStartOf="@id/start_guideline"
@@ -131,6 +133,7 @@
             android:id="@+id/til_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:theme="@style/MyEditTextTheme"
             android:layout_marginTop="20dp"
             android:hint="Nombre"
             app:layout_constraintEnd_toEndOf="@id/end_guideline"
@@ -152,6 +155,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:hint="Apellido"
+            android:theme="@style/MyEditTextTheme"
             app:layout_constraintEnd_toEndOf="@id/end_guideline"
             app:layout_constraintStart_toStartOf="@id/start_guideline"
             app:layout_constraintTop_toBottomOf="@+id/til_name">
@@ -174,6 +178,7 @@
             android:drawableStart="@drawable/ic_address"
             android:drawablePadding="10dp"
             android:hint="Direccion"
+            android:theme="@style/MyEditTextTheme"
             android:inputType="text"
             app:layout_constraintEnd_toEndOf="@id/end_guideline"
             app:layout_constraintStart_toStartOf="@id/start_guideline"
@@ -185,6 +190,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
+            android:theme="@style/MyEditTextTheme"
             android:drawableStart="@drawable/ic_email"
             android:drawablePadding="10dp"
             android:hint="Correo"
@@ -199,6 +205,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
+            android:theme="@style/MyEditTextTheme"
             android:drawableStart="@drawable/ic_phone"
             android:drawablePadding="10dp"
             android:hint="Celular"
@@ -215,6 +222,7 @@
             android:layout_marginTop="20dp"
             android:drawableStart="@drawable/ic_password"
             android:drawablePadding="10dp"
+            android:theme="@style/MyEditTextTheme"
             android:hint="Contrasena"
             android:inputType="textPassword"
             app:layout_constraintEnd_toEndOf="@id/end_guideline"
@@ -230,6 +238,7 @@
             android:drawableStart="@drawable/ic_password"
             android:drawablePadding="10dp"
             android:hint="Profesion y oficio"
+            android:theme="@style/MyEditTextTheme"
             android:inputType="text"
             app:layout_constraintEnd_toEndOf="@id/end_guideline"
             app:layout_constraintStart_toStartOf="@id/start_guideline"
@@ -243,6 +252,7 @@
             android:layout_marginTop="20dp"
             android:drawableStart="@drawable/ic_password"
             android:drawablePadding="10dp"
+            android:theme="@style/MyEditTextTheme"
             android:hint="Nro de colegiatura"
             android:inputType="number"
             app:layout_constraintEnd_toEndOf="@id/end_guideline"
@@ -255,6 +265,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
+            android:theme="@style/MyEditTextTheme"
             android:drawableStart="@drawable/ic_pet_feet"
             android:drawablePadding="20dp"
             android:text="Mascotas que atiendo"
@@ -306,12 +317,12 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="10dp"
                     android:text="Selecciona los servicios que ofreceras"
-                    app:layout_constraintEnd_toStartOf="@id/img_add"
+                    app:layout_constraintEnd_toStartOf="@id/img_add_services"
                     app:layout_constraintStart_toStartOf="@id/title"
                     app:layout_constraintTop_toBottomOf="@+id/title" />
 
                 <ImageView
-                    android:id="@+id/img_add"
+                    android:id="@+id/img_add_services"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     app:layout_constraintBottom_toBottomOf="parent"

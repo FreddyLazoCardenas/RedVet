@@ -2,6 +2,7 @@ package com.papps.freddy_lazo.redvet.view.adapter;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class ServicesAdapter extends RecyclerView.Adapter<ServicesAdapter.ServicesViewHolder> {
 
@@ -52,10 +54,16 @@ public class ServicesAdapter extends RecyclerView.Adapter<ServicesAdapter.Servic
         }
     }
 
+    public List<ServicesModel> getData() {
+        return data;
+    }
+
     class ServicesViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.txt_services)
         TextView txtServices;
+        @BindView(R.id.img_check)
+        ImageView imgCheck;
 
 
         ServicesViewHolder(@NonNull View itemView) {
@@ -66,25 +74,19 @@ public class ServicesAdapter extends RecyclerView.Adapter<ServicesAdapter.Servic
         void bind(int position) {
             txtServices.setText(data.get(position).getName());
         }
-    }
 
-    private int getImage(int position) {
-        switch (position) {
-            case 0:
-                return R.drawable.ic_dog;
-            case 1:
-                return R.drawable.ic_cat;
-            case 2:
-                return R.drawable.ic_fish;
-            case 3:
-                return R.drawable.ic_bird;
-            case 4:
-                return R.drawable.ic_rabbit;
-            case 5:
-                return R.drawable.ic_hedgehog;
-            default:
-                return R.drawable.ic_dog;
-
+        @OnClick
+        void serviceClicked() {
+            if(imgCheck.getTag().equals("false")){
+                imgCheck.setTag("true");
+                imgCheck.setImageResource(R.drawable.ic_check_green);
+            }else{
+                imgCheck.setTag("false");
+                imgCheck.setImageResource(R.drawable.ic_check_gray);
+            }
+            data.get(getAdapterPosition()).setState(Boolean.valueOf(String.valueOf(imgCheck.getTag())));
+            Log.d("serviceClicked", "posicion es " + getAdapterPosition());
         }
     }
+
 }

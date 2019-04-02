@@ -10,12 +10,15 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -23,6 +26,7 @@ import com.papps.freddy_lazo.redvet.GlideApp;
 import com.papps.freddy_lazo.redvet.R;
 import com.papps.freddy_lazo.redvet.interfaces.RegisterFragmentView;
 import com.papps.freddy_lazo.redvet.internal.dagger.component.DaggerRegisterFragmentComponent;
+import com.papps.freddy_lazo.redvet.model.ServicesModel;
 import com.papps.freddy_lazo.redvet.presenter.RegisterFragmentPresenter;
 import com.papps.freddy_lazo.redvet.view.activity.RegisterActivity;
 import com.papps.freddy_lazo.redvet.view.adapter.PetAdapter;
@@ -31,13 +35,14 @@ import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
 import java.io.File;
+import java.util.List;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class RegisterFragment extends BaseFragment implements RegisterFragmentView, CameraDialog.OnClickListener{
+public class RegisterFragment extends BaseFragment implements RegisterFragmentView, CameraDialog.OnClickListener {
 
     private static final String PICTURE_FILE_NAME = "profileComplete.jpg";
     private static final String PICTURE_CROPPED_FILE_NAME = "profile.jpg";
@@ -58,6 +63,37 @@ public class RegisterFragment extends BaseFragment implements RegisterFragmentVi
     RecyclerView recyclerView;
     @BindView(R.id.img_register)
     ImageView imgRegister;
+
+    @BindView(R.id.til_number)
+    TextInputLayout tilNumber;
+    @BindView(R.id.til_rs)
+    TextInputLayout tilRs;
+    @BindView(R.id.til_name)
+    TextInputLayout tilName;
+    @BindView(R.id.til_last_name)
+    TextInputLayout tilLastName;
+
+    @BindView(R.id.edt_number)
+    EditText etNumber;
+    @BindView(R.id.edt_rs)
+    EditText etRs;
+    @BindView(R.id.edt_name)
+    EditText etName;
+    @BindView(R.id.edt_last_name)
+    EditText etLastName;
+    @BindView(R.id.edt_address)
+    EditText etAddress;
+    @BindView(R.id.edt_email)
+    EditText etEmail;
+    @BindView(R.id.edt_phone)
+    EditText etPhone;
+    @BindView(R.id.edt_password)
+    EditText etPassword;
+    @BindView(R.id.edt_job)
+    EditText etJob;
+    @BindView(R.id.edt_tuition)
+    EditText etTuition;
+    private boolean fromServices;
 
 
     public static Fragment newInstance() {
@@ -117,14 +153,30 @@ public class RegisterFragment extends BaseFragment implements RegisterFragmentVi
     }
 
     @OnClick(R.id.btn_register)
-    public void btnRegister(){
-        navigator.navigateToHomeActivity(activity);
+    public void btnRegister() {
+        // navigator.navigateToHomeActivity(activity);
+        presenter.validateData();
     }
-
 
     @OnClick(R.id.img_register)
     public void imgRegister() {
         navigator.showListDialog(activity, this);
+    }
+
+    @OnClick(R.id.img_add_services)
+    public void services(){
+        fromServices = true;
+        navigator.navigateToServicesFragment(activity);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(fromServices){
+            fromServices = false;
+            List<ServicesModel> test = activity.getData();
+            Log.d("da","das");
+        }
     }
 
     @Override
@@ -135,6 +187,157 @@ public class RegisterFragment extends BaseFragment implements RegisterFragmentVi
     @Override
     public void requestGalleryPermission() {
         requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, RegisterFragmentPresenter.PERMISSION_REQUEST_GALLERY_CODE);
+    }
+
+    @Override
+    public String getNumber() {
+        return etNumber.getText().toString();
+    }
+
+    @Override
+    public String getBusinessName() {
+        return etRs.getText().toString();
+    }
+
+    @Override
+    public String getName() {
+        return etName.getText().toString();
+    }
+
+    @Override
+    public String getLastName() {
+        return etLastName.getText().toString();
+    }
+
+    @Override
+    public String getAddress() {
+        return etAddress.getText().toString();
+    }
+
+    @Override
+    public String getEmail() {
+        return etEmail.getText().toString();
+    }
+
+    @Override
+    public String getPhone() {
+        return etPhone.getText().toString();
+    }
+
+    @Override
+    public String getPassword() {
+        return etPassword.getText().toString();
+    }
+
+    @Override
+    public String getJob() {
+        return etJob.getText().toString();
+    }
+
+    @Override
+    public String getTuition() {
+        return etTuition.getText().toString();
+    }
+
+    @Override
+    public void showDocumentNumberError(String message) {
+        showError(tilNumber, etNumber, message);
+    }
+
+    @Override
+    public void showBusinessNameError(String message) {
+        showError(tilRs, etRs, message);
+
+    }
+
+    @Override
+    public void showNameError(String message) {
+        showError(tilName, etName, message);
+    }
+
+    @Override
+    public void showLastNameError(String message) {
+        showError(tilLastName, etLastName, message);
+    }
+
+    @Override
+    public void showAddressError(String message) {
+        showEtError(etAddress,message);
+    }
+
+    @Override
+    public void showEmailError(String message) {
+        showEtError(etEmail,message);
+    }
+
+    @Override
+    public void showPhoneError(String message) {
+        showEtError(etPhone,message);
+    }
+
+    @Override
+    public void showPasswordError(String message) {
+        showEtError(etPassword,message);
+    }
+
+    @Override
+    public void showJobError(String message) {
+        showEtError(etJob,message);
+    }
+
+    @Override
+    public void showTuitionError(String message) {
+        showEtError(etTuition,message);
+    }
+
+    @Override
+    public void hideDocumentNumberError() {
+        hideError(tilNumber);
+    }
+
+    @Override
+    public void hideBusinessNameError() {
+        hideError(tilRs);
+    }
+
+    @Override
+    public void hideNameError() {
+        hideError(tilName);
+    }
+
+    @Override
+    public void hideLastNameError() {
+        hideError(tilLastName);
+    }
+
+    @Override
+    public void hideAddressError() {
+        hideEtError(etAddress);
+    }
+
+    @Override
+    public void hideEmailError() {
+        hideEtError(etEmail);
+    }
+
+    @Override
+    public void hidePhoneError() {
+        hideEtError(etPhone);
+    }
+
+    @Override
+    public void hidePasswordError() {
+        hideEtError(etPassword);
+    }
+
+    @Override
+    public void hideJobError() {
+        hideEtError(etJob);
+    }
+
+    @Override
+    public void hideTuitionError() {
+        hideEtError(etTuition);
     }
 
     @Override
@@ -212,4 +415,33 @@ public class RegisterFragment extends BaseFragment implements RegisterFragmentVi
             navigator.navigateToGallery(this, SELECT_FILE);
         }
     }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        presenter.destroy();
+    }
+
+    private void showError(TextInputLayout inputLayout, EditText editText, String message) {
+        inputLayout.setErrorEnabled(true);
+        inputLayout.setError(message);
+        editText.requestFocus();
+    }
+
+    private void hideError(TextInputLayout inputLayout) {
+        if (inputLayout.isErrorEnabled()) {
+            inputLayout.setError(null);
+            inputLayout.setErrorEnabled(false);
+        }
+    }
+
+    private void showEtError(EditText editText, String message) {
+        editText.setError(message);
+        editText.requestFocus();
+    }
+
+    private void hideEtError(EditText editText) {
+        editText.setError(null);
+    }
+
 }

@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">RedVet</string>
+    <string name="text_required_field">Campo requerido</string>
+    <string name="text_bad_format_field">Mal formato en campo</string>
 </resources>

@@ -31,4 +31,5 @@ public class RegisterActivity extends BaseActivity {
     public void initUI() {
         navigator.navigateToRegisterFragment(this);
     }
+
 }
