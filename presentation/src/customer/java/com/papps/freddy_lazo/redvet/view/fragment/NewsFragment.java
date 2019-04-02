@@ -16,6 +16,7 @@ import com.papps.freddy_lazo.redvet.internal.dagger.component.DaggerNewsFragment
 import com.papps.freddy_lazo.redvet.model.NewsModel;
 import com.papps.freddy_lazo.redvet.presenter.NewsFragmentPresenter;
 import com.papps.freddy_lazo.redvet.view.activity.HomeActivity;
+import com.papps.freddy_lazo.redvet.view.adapter.NewsAdapter;
 import com.papps.freddy_lazo.redvet.view.interfaces.NewsFragmentView;
 
 import java.util.List;
@@ -75,7 +76,7 @@ public class NewsFragment extends BaseFragment implements NewsFragmentView {
 
     private void setUpRecycler() {
         recyclerView.setLayoutManager(new LinearLayoutManager(activity));
-        recyclerView.setAdapter();
+        recyclerView.setAdapter(adapter);
     }
 
     @Override
@@ -101,6 +102,6 @@ public class NewsFragment extends BaseFragment implements NewsFragmentView {
 
     @Override
     public void listData(List<NewsModel> data) {
-
+        adapter.bindList(data);
     }
 }
