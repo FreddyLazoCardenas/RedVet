@@ -22,7 +22,7 @@ public interface RestService {
     Call<ResponseEntity<LoginResponse>> login(@Body BodyLogin bodyLogin);
 
     @POST("pet-lover/sign-up")
-    Call<ResponseEntity<LoginResponse>> petLoverRegister(@Body BodyPetLoverRegister bodyLogin);
+    Call<ResponseEntity<Void>> petLoverRegister(@Body BodyPetLoverRegister bodyLogin);
 
     @POST("doctor/sign-up")
     Call<ResponseEntity<LoginResponse>> doctorRegister(@Body BodyPetLoverRegister bodyLogin);

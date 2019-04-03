@@ -1,7 +1,10 @@
 package com.papps.freddy_lazo.redvet.interfaces;
 
 
+import com.papps.freddy_lazo.domain.model.PetRegister;
 import com.papps.freddy_lazo.redvet.model.PetLoverModel;
+
+import java.util.ArrayList;
 
 public interface RegisterFragmentView extends BaseView {
 
@@ -83,5 +86,5 @@ public interface RegisterFragmentView extends BaseView {
 
     void savePetData();
 
-    PetLoverModel getPetData();
+    ArrayList<PetRegister> getPetData();
 }

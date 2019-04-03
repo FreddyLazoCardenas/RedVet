@@ -5,21 +5,28 @@ import android.content.pm.PackageManager;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 
+import com.papps.freddy_lazo.data.exception.RedVetException;
+import com.papps.freddy_lazo.domain.interactor.DefaultObserver;
+import com.papps.freddy_lazo.domain.interactor.PetLoverSignUp;
 import com.papps.freddy_lazo.redvet.R;
 import com.papps.freddy_lazo.redvet.interfaces.RegisterFragmentView;
 
 import javax.inject.Inject;
+
+import io.reactivex.Observer;
 
 public class RegisterFragmentPresenter implements Presenter<RegisterFragmentView> {
 
 
     public static final int PERMISSION_REQUEST_CAMERA_CODE = 4;
     public static final int PERMISSION_REQUEST_GALLERY_CODE = 5;
+    private final PetLoverSignUp petLoverSignUp;
 
     private RegisterFragmentView view;
 
     @Inject
-    public RegisterFragmentPresenter() {
+    public RegisterFragmentPresenter(PetLoverSignUp petLoverSignUp) {
+        this.petLoverSignUp = petLoverSignUp;
     }
 
     @Override
@@ -94,6 +101,8 @@ public class RegisterFragmentPresenter implements Presenter<RegisterFragmentView
         if (!validatePetModelData())
             return;
         view.showErrorMessage("Mandando servicio");
+        petLoverSignUp.bindParams(view.getEmail(),view.getPassword(),view.getName(),view.getLastName(),view.getDni(),view.getAddress(),view.getPhone(),view.getDeviceId(),view.getPetData());
+        petLoverSignUp.execute(new PetLoverSignUpObservable());
     }
 
     private boolean validatePetModelData() {
@@ -238,5 +247,25 @@ public class RegisterFragmentPresenter implements Presenter<RegisterFragmentView
         }
         view.hidePetBreedError();
         return true;
+    }
+
+    private class PetLoverSignUpObservable extends DefaultObserver<Void> {
+
+        @Override
+        protected void onStart() {
+            super.onStart();
+        }
+
+        @Override
+        public void onComplete() {
+            super.onComplete();
+        }
+
+        @Override
+        public void onError(Throwable e) {
+            super.onError(e);
+            RedVetException exception = (RedVetException) e;
+            view.showErrorMessage(exception.getMessage());
+        }
     }
 }

@@ -24,7 +24,9 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.iid.FirebaseInstanceId;
+import com.papps.freddy_lazo.domain.model.PetRegister;
 import com.papps.freddy_lazo.redvet.GlideApp;
 import com.papps.freddy_lazo.redvet.R;
 import com.papps.freddy_lazo.redvet.interfaces.RegisterFragmentView;
@@ -39,6 +41,7 @@ import com.theartofdev.edmodo.cropper.CropImageView;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.util.ArrayList;
 
 import javax.inject.Inject;
 
@@ -99,7 +102,7 @@ public class RegisterFragment extends BaseFragment implements RegisterFragmentVi
     private File croppedProfileFile;
     private File croppedPetFile;
     private boolean isPetImage;
-    private PetLoverModel petLoverModel;
+    private PetRegister petLoverModel;
 
     public static Fragment newInstance() {
         return new RegisterFragment();
@@ -127,6 +130,7 @@ public class RegisterFragment extends BaseFragment implements RegisterFragmentVi
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         activity = (RegisterActivity) getActivity();
+        FirebaseApp.initializeApp(activity);
         initUI();
     }
 
@@ -358,12 +362,14 @@ public class RegisterFragment extends BaseFragment implements RegisterFragmentVi
 
     @Override
     public void savePetData() {
-        petLoverModel = new PetLoverModel(1, getPetName(), getPetBirthday(), getPetBreed(), getPetBase64Image());
+        petLoverModel = new PetRegister(1, getPetName(), getPetBirthday(), getPetBreed(), getPetBase64Image());
     }
 
     @Override
-    public PetLoverModel getPetData() {
-        return petLoverModel;
+    public ArrayList<PetRegister> getPetData() {
+        ArrayList<PetRegister> petRegisters = new ArrayList<>();
+        petRegisters.add(0,petLoverModel);
+        return petRegisters;
     }
 
     @Override
@@ -503,6 +509,7 @@ public class RegisterFragment extends BaseFragment implements RegisterFragmentVi
 
     @Override
     public String getDeviceId() {
-        return FirebaseInstanceId.getInstance().getToken();
+        //return FirebaseInstanceId.getInstance().getToken();
+        return "lalalalal";
     }
 }

@@ -2,6 +2,8 @@ package com.papps.freddy_lazo.data.network.body;
 
 import com.google.gson.annotations.SerializedName;
 import com.papps.freddy_lazo.data.entity.PetEntity;
+import com.papps.freddy_lazo.data.entity.PetRegisterEntity;
+import com.papps.freddy_lazo.domain.model.PetRegister;
 
 import java.util.List;
 
@@ -26,11 +28,10 @@ public class BodyPetLoverRegister {
     @SerializedName("device")
     private String device;
 
-    // TODO: 3/26/19 crear entidad de mandar la data de mascotas
     @SerializedName("pets")
-    private List<PetEntity> pets;
+    private List<PetRegister> pets;
 
-    public BodyPetLoverRegister(String email, String password, String firstName, String lastName, String dni, String address, String phone, String fcmToken, String device, List<PetEntity> pets) {
+    public BodyPetLoverRegister(String email, String password, String firstName, String lastName, String dni, String address, String phone, String fcmToken, String device, List<PetRegister> pets) {
         this.email = email;
         this.password = password;
         this.firstName = firstName;
