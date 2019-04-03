@@ -1,31 +1,0 @@
-
-nsquid:S00100—"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(šë ’8èĞ‚·›-
-psquid:S00117¿"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¼²å8èĞ‚·›-
-rsquid:S00100G"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ãÅ®Šüÿÿÿÿ8èĞ‚·›-
-qsquid:S00117×"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¹ìñ†8èĞ‚·›-
-rsquid:S00100"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(õçõóıÿÿÿÿ8èĞ‚·›-
-msquid:S00100{"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(²±‚í8èĞ‚·›-
-osquid:S00117W"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ºÚo8èĞ‚·›-
-ssquid:S00100“"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÒûŸŸúÿÿÿÿ8èĞ‚·›-
-rsquid:S00100O"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¬–èÿüÿÿÿÿ8èĞ‚·›-
-vsquid:S00117Ï"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Š…šşÿÿÿÿ8èĞ‚·›-
-msquid:S00100S"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(á»çš8èĞ‚·›-
-ssquid:S00100Ï"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Š…šşÿÿÿÿ8èĞ‚·›-
-msquid:S00100¿"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¼²å8èĞ‚·›-
-nsquid:S00100×"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¹ìñ†8èĞ‚·›-
-usquid:S00117G"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ãÅ®Šüÿÿÿÿ8èĞ‚·›-
-rsquid:S00100_"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÊÍŠşÿÿÿÿ8èĞ‚·›-
-qsquid:S00117—"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(šë ’8èĞ‚·›-
-nsquid:S00100³"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ìşæ8èĞ‚·›-
-rsquid:S00100["NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Á«Âôşÿÿÿÿ8èĞ‚·›-
-ssquid:S00100·"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¯½¸Šøÿÿÿÿ8èĞ‚·›-
-usquid:S00117O"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¬–èÿüÿÿÿÿ8èĞ‚·›-
-rsquid:S00100K"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ˆúõ«øÿÿÿÿ8èĞ‚·›-
-usquid:S00117_"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÊÍŠşÿÿÿÿ8èĞ‚·›-
-msquid:S00100Ë"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(œ¢ÁL8èĞ‚·›-
-vsquid:S00117·"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¯½¸Šøÿÿÿÿ8èĞ‚·›-
-msquid:S00100C"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¨şšş8èĞ‚·›-
-usquid:S00117"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(õçõóıÿÿÿÿ8èĞ‚·›-
-ssquid:S00100»"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(İí‚Æùÿÿÿÿ8èĞ‚·›-
-lsquid:S00100W"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ºÚo8èĞ‚·›-
-ssquid:S00100Ó"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ğ°±şÿÿÿÿ8èĞ‚·›-
