@@ -2,9 +2,9 @@ package com.papps.freddy_lazo.data.network;
 
 import com.papps.freddy_lazo.data.entity.DoctorEntity;
 import com.papps.freddy_lazo.data.entity.NewsEntity;
-import com.papps.freddy_lazo.data.entity.PetRegisterEntity;
 import com.papps.freddy_lazo.data.entity.ServicesEntity;
 import com.papps.freddy_lazo.domain.model.PetRegister;
+import com.papps.freddy_lazo.domain.model.ScheduleDoctorRegister;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,4 +23,5 @@ public interface RestApi {
 
     Observable<Void> signUpPetLover(String email, String password, String firstName, String lastName, String dni, String address, String phone, String fcmToken, List<PetRegister> pets);
 
+    Observable<Void> doctorRegister(String email, String password, String firstName, String lastName, String typeDocument, String numberDocument, String business_name, String address, String latitude, String longitude, String consultationPrice, String consultationTime, String shower_price, String shower_time, String tuition_number, String description, String phone, String photo, String type, String attention, String fcmToken, String device, List<PetRegister> pets, List<ScheduleDoctorRegister> schedules, List<ScheduleDoctorRegister> services);
 }

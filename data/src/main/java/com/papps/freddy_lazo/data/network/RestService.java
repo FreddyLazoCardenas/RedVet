@@ -1,6 +1,7 @@
 package com.papps.freddy_lazo.data.network;
 
 import com.papps.freddy_lazo.data.entity.ResponseEntity;
+import com.papps.freddy_lazo.data.network.body.BodyDoctorRegister;
 import com.papps.freddy_lazo.data.network.body.BodyLogin;
 import com.papps.freddy_lazo.data.network.body.BodyPetLoverRegister;
 import com.papps.freddy_lazo.data.network.body.BodySearchDoctors;
@@ -22,10 +23,10 @@ public interface RestService {
     Call<ResponseEntity<LoginResponse>> login(@Body BodyLogin bodyLogin);
 
     @POST("pet-lover/sign-up")
-    Call<ResponseEntity<Void>> petLoverRegister(@Body BodyPetLoverRegister bodyLogin);
+    Call<ResponseEntity<Void>> petLoverRegister(@Body BodyPetLoverRegister bodyPetLoverRegister);
 
     @POST("doctor/sign-up")
-    Call<ResponseEntity<LoginResponse>> doctorRegister(@Body BodyPetLoverRegister bodyLogin);
+    Call<ResponseEntity<Void>> doctorRegister(@Body BodyDoctorRegister bodyDoctorRegister);
 
 
     @POST("pet-lover/search")
