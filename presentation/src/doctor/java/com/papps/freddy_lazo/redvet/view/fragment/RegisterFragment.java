@@ -18,8 +18,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.papps.freddy_lazo.redvet.GlideApp;
@@ -35,6 +37,7 @@ import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -93,6 +96,13 @@ public class RegisterFragment extends BaseFragment implements RegisterFragmentVi
     EditText etJob;
     @BindView(R.id.edt_tuition)
     EditText etTuition;
+    @BindView(R.id.attention_spinner)
+    Spinner spinner;
+    @BindView(R.id.group_shower)
+    android.support.constraint.Group gShower;
+    @BindView(R.id.group_consultation)
+    android.support.constraint.Group gConsultation;
+
     private boolean fromServices;
 
 
@@ -129,6 +139,20 @@ public class RegisterFragment extends BaseFragment implements RegisterFragmentVi
     public void initUI() {
         presenter.setView(this);
         setUpPetRv();
+        setUpSpinner();
+    }
+
+    private void setUpSpinner() {
+        ArrayList<String> arrayData = new ArrayList<>();
+        arrayData.add("Casa");
+        arrayData.add("Local");
+        arrayData.add("Ambos");
+
+        String[] arrayListData = arrayData.toArray(new String[0]);
+        ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<>(
+                activity, R.layout.spinner_item, arrayListData);
+        spinnerArrayAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(spinnerArrayAdapter);
     }
 
     private void setUpPetRv() {
@@ -164,18 +188,29 @@ public class RegisterFragment extends BaseFragment implements RegisterFragmentVi
     }
 
     @OnClick(R.id.img_add_services)
-    public void services(){
+    public void services() {
         fromServices = true;
+        gShower.setVisibility(View.INVISIBLE);
+        gConsultation.setVisibility(View.INVISIBLE);
         navigator.navigateToServicesFragment(activity);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        if(fromServices){
+        if (fromServices) {
             fromServices = false;
-            List<ServicesModel> test = activity.getData();
-            Log.d("da","das");
+            List<ServicesModel> servicesModelList = activity.getData();
+            if (!servicesModelList.isEmpty()) {
+                for (ServicesModel servicesModel : servicesModelList) {
+                    if (servicesModel.getState() && servicesModel.getName().toLowerCase().contains("consultas")) {
+                        gConsultation.setVisibility(View.VISIBLE);
+                    }
+                    if (servicesModel.getState() && servicesModel.getName().toLowerCase().contains("baños")) {
+                        gShower.setVisibility(View.VISIBLE);
+                    }
+                }
+            }
         }
     }
 
@@ -262,32 +297,32 @@ public class RegisterFragment extends BaseFragment implements RegisterFragmentVi
 
     @Override
     public void showAddressError(String message) {
-        showEtError(etAddress,message);
+        showEtError(etAddress, message);
     }
 
     @Override
     public void showEmailError(String message) {
-        showEtError(etEmail,message);
+        showEtError(etEmail, message);
     }
 
     @Override
     public void showPhoneError(String message) {
-        showEtError(etPhone,message);
+        showEtError(etPhone, message);
     }
 
     @Override
     public void showPasswordError(String message) {
-        showEtError(etPassword,message);
+        showEtError(etPassword, message);
     }
 
     @Override
     public void showJobError(String message) {
-        showEtError(etJob,message);
+        showEtError(etJob, message);
     }
 
     @Override
     public void showTuitionError(String message) {
-        showEtError(etTuition,message);
+        showEtError(etTuition, message);
     }
 
     @Override

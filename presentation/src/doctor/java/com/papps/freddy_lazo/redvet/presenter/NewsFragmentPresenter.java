@@ -37,6 +37,7 @@ public class NewsFragmentPresenter implements Presenter<NewsFragmentView> {
     }
 
     public void getNews() {
+        petLoverNews.bindParams("doctor");
         petLoverNews.execute(new NewsObservable());
     }
 

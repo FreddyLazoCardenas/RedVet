@@ -5,7 +5,6 @@ import android.content.pm.PackageManager;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 
-import com.papps.freddy_lazo.domain.interactor.DoctorServices;
 import com.papps.freddy_lazo.redvet.R;
 import com.papps.freddy_lazo.redvet.interfaces.RegisterFragmentView;
 
@@ -16,13 +15,11 @@ public class RegisterFragmentPresenter implements Presenter<RegisterFragmentView
 
     public static final int PERMISSION_REQUEST_CAMERA_CODE = 4;
     public static final int PERMISSION_REQUEST_GALLERY_CODE = 5;
-    private final DoctorServices doctorServices;
 
     private RegisterFragmentView view;
 
     @Inject
-    public RegisterFragmentPresenter(DoctorServices doctorServices) {
-        this.doctorServices = doctorServices;
+    public RegisterFragmentPresenter() {
     }
 
     @Override

@@ -37,7 +37,7 @@ public class ServicesModel {
         this.available = available;
     }
 
-    public boolean isState() {
+    public boolean getState() {
         return state;
     }
 

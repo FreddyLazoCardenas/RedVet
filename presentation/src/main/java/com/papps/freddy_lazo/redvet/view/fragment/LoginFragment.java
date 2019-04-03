@@ -65,6 +65,11 @@ public class LoginFragment extends BaseFragment implements LoginFragmentView {
         navigator.navigateToRegisterActivity(activity);
     }
 
+    @OnClick(R.id.button_login)
+    public void login(){
+        navigator.navigateToHomeActivity(activity);
+    }
+
     @Override
     public void initUI() {
         presenter.setView(this);

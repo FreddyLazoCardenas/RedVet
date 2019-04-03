@@ -4,6 +4,7 @@ import com.papps.freddy_lazo.data.entity.DoctorEntity;
 import com.papps.freddy_lazo.data.entity.NewsEntity;
 import com.papps.freddy_lazo.data.entity.ServicesEntity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Observable;
@@ -14,6 +15,8 @@ public interface RestApi {
 
     Observable<List<ServicesEntity>> services();
 
-    Observable<List<NewsEntity>> petLoverNews();
+    Observable<List<NewsEntity>> petLoverNews(String path);
+
+    Observable<List<DoctorEntity>> searchDoctors(ArrayList<String> type, ArrayList<Integer> services, ArrayList<Integer> pets, String text);
 
 }

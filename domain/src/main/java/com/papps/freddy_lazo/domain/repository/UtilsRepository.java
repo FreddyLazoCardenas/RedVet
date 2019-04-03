@@ -12,6 +12,7 @@ public interface UtilsRepository {
     Observable<List<Service>> services();
 
 
-    Observable<List<News>> petLoverNews();
+    Observable<List<News>> petLoverNews(String query);
+
 
 }

@@ -21,12 +21,12 @@ import android.widget.ImageView;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.papps.freddy_lazo.redvet.GlideApp;
 import com.papps.freddy_lazo.redvet.R;
+import com.papps.freddy_lazo.redvet.interfaces.RegisterFragmentView;
 import com.papps.freddy_lazo.redvet.internal.dagger.component.DaggerRegisterFragmentComponent;
+import com.papps.freddy_lazo.redvet.presenter.RegisterFragmentPresenter;
 import com.papps.freddy_lazo.redvet.view.activity.RegisterActivity;
 import com.papps.freddy_lazo.redvet.view.adapter.PetAdapter;
 import com.papps.freddy_lazo.redvet.view.dialogFragment.CameraDialog;
-import com.papps.freddy_lazo.redvet.view.interfaces.RegisterFragmentView;
-import com.papps.freddy_lazo.redvet.view.presenter.RegisterFragmentPresenter;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 

@@ -30,7 +30,7 @@ public class UtilsDataRepository implements UtilsRepository {
     }
 
     @Override
-    public Observable<List<News>> petLoverNews() {
-        return mRestApi.petLoverNews().map(NewsMapper::transform);
+    public Observable<List<News>> petLoverNews(String path) {
+        return mRestApi.petLoverNews(path).map(NewsMapper::transform);
     }
 }

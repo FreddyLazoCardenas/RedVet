@@ -1,11 +1,10 @@
-package com.papps.freddy_lazo.redvet.view.presenter;
+package com.papps.freddy_lazo.redvet.presenter;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.support.v4.content.ContextCompat;
 
-import com.papps.freddy_lazo.redvet.presenter.Presenter;
-import com.papps.freddy_lazo.redvet.view.interfaces.RegisterFragmentView;
+import com.papps.freddy_lazo.redvet.interfaces.RegisterFragmentView;
 
 import javax.inject.Inject;
 
