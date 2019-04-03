@@ -2,7 +2,6 @@ package com.papps.freddy_lazo.redvet.presenter;
 
 import com.papps.freddy_lazo.domain.interactor.DefaultObserver;
 import com.papps.freddy_lazo.domain.interactor.DoctorServices;
-import com.papps.freddy_lazo.domain.model.Doctor;
 import com.papps.freddy_lazo.domain.model.Service;
 import com.papps.freddy_lazo.redvet.interfaces.ServicesFragmentView;
 import com.papps.freddy_lazo.redvet.model.mapper.ServicesModelMapper;

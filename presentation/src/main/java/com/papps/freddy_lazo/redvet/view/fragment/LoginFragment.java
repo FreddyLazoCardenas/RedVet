@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -63,7 +62,12 @@ public class LoginFragment extends BaseFragment implements LoginFragmentView {
 
     @OnClick(R.id.register_text)
     public void registerUser() {
-        navigator.navigateToMainMenuFragment(activity);
+        navigator.navigateToRegisterActivity(activity);
+    }
+
+    @OnClick(R.id.button_login)
+    public void login(){
+        navigator.navigateToHomeActivity(activity);
     }
 
     @Override

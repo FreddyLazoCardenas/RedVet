@@ -11,7 +11,11 @@ import android.view.View;
 import com.papps.freddy_lazo.redvet.AndroidApplication;
 import com.papps.freddy_lazo.redvet.interfaces.BaseView;
 import com.papps.freddy_lazo.redvet.internal.dagger.component.ApplicationComponent;
+import com.papps.freddy_lazo.redvet.model.ServicesModel;
 import com.papps.freddy_lazo.redvet.navigation.Navigator;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -23,15 +27,16 @@ public class BaseActivity extends AppCompatActivity implements BaseView {
     @Inject
     protected Navigator navigator;
 
-/*    @Nullable
-    @BindView(R.id.v_progress)
-    View vProgress;
+    /*    @Nullable
+        @BindView(R.id.v_progress)
+        View vProgress;
 
-    @Nullable
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
-    */
+        @Nullable
+        @BindView(R.id.toolbar)
+        Toolbar toolbar;
+        */
     protected boolean isStopped;
+    private List<ServicesModel> data =  new ArrayList<>();
 
 
     @Override
@@ -87,5 +92,13 @@ public class BaseActivity extends AppCompatActivity implements BaseView {
     @Override
     public void showErrorNetworkMessage(String message) {
 
+    }
+
+    public void data(List<ServicesModel> data) {
+        this.data = data;
+    }
+
+    public List<ServicesModel> getData() {
+        return data;
     }
 }

@@ -11,8 +11,7 @@ import io.reactivex.Observable;
 public class PetLoverNews extends UseCase {
 
     private final UtilsRepository repository;
-    private String email;
-    private String password;
+    private String path;
 
     @Inject
     PetLoverNews(UtilsRepository repository, ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
@@ -20,8 +19,12 @@ public class PetLoverNews extends UseCase {
         this.repository = repository;
     }
 
+    public void bindParams(String path){
+        this.path = path;
+    }
+
     @Override
     protected Observable buildUseCaseObservable() {
-        return repository.petLoverNews();
+        return repository.petLoverNews(path);
     }
 }

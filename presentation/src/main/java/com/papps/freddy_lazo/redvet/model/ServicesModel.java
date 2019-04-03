@@ -5,6 +5,7 @@ public class ServicesModel {
     private int id;
     private String name;
     private String available;
+    private boolean state;
 
     public ServicesModel(int id, String name, String available) {
         this.id = id;
@@ -34,5 +35,13 @@ public class ServicesModel {
 
     public void setAvailable(String available) {
         this.available = available;
+    }
+
+    public boolean getState() {
+        return state;
+    }
+
+    public void setState(boolean state) {
+        this.state = state;
     }
 }

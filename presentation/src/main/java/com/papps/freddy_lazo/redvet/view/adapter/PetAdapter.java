@@ -13,6 +13,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class PetAdapter extends RecyclerView.Adapter<PetAdapter.PetViewHolder> {
 
@@ -58,6 +59,19 @@ public class PetAdapter extends RecyclerView.Adapter<PetAdapter.PetViewHolder> {
 
         void bind(int position) {
             imgPet.setImageResource(getImage(position));
+        }
+
+        @OnClick
+        public void itemClick(){
+            if(!fromMap){
+                if(imgPet.getTag().equals("false")){
+                    imgPet.setTag("true");
+                    imgPet.setAlpha(1f);
+                }else{
+                    imgPet.setTag("false");
+                    imgPet.setAlpha(0.3f);
+                }
+            }
         }
     }
 

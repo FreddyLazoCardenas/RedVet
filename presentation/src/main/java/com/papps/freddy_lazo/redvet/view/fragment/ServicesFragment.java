@@ -1,5 +1,6 @@
 package com.papps.freddy_lazo.redvet.view.fragment;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -14,11 +15,11 @@ import android.view.ViewGroup;
 
 import com.papps.freddy_lazo.redvet.R;
 import com.papps.freddy_lazo.redvet.interfaces.ServicesFragmentView;
-import com.papps.freddy_lazo.redvet.internal.dagger.component.DaggerRegisterFragmentComponent;
+import com.papps.freddy_lazo.redvet.interfaces.ServicesListener;
 import com.papps.freddy_lazo.redvet.internal.dagger.component.DaggerServicesComponent;
 import com.papps.freddy_lazo.redvet.model.ServicesModel;
 import com.papps.freddy_lazo.redvet.presenter.ServicesFragmentPresenter;
-import com.papps.freddy_lazo.redvet.view.activity.HomeActivity;
+import com.papps.freddy_lazo.redvet.view.activity.BaseActivity;
 import com.papps.freddy_lazo.redvet.view.adapter.ServicesAdapter;
 
 import java.util.List;
@@ -30,7 +31,7 @@ import butterknife.OnClick;
 
 public class ServicesFragment extends BaseFragment implements ServicesFragmentView {
 
-    private HomeActivity activity;
+    private BaseActivity activity;
 
     @Inject
     ServicesFragmentPresenter presenter;
@@ -39,6 +40,7 @@ public class ServicesFragment extends BaseFragment implements ServicesFragmentVi
 
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
+
 
     public static Fragment newInstance() {
         return new ServicesFragment();
@@ -77,13 +79,13 @@ public class ServicesFragment extends BaseFragment implements ServicesFragmentVi
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        activity = (HomeActivity) getActivity();
+        activity = (BaseActivity) getActivity();
         initUI();
     }
 
     @Override
     public Context context() {
-        return null;
+        return getContext();
     }
 
     @Override
@@ -98,6 +100,7 @@ public class ServicesFragment extends BaseFragment implements ServicesFragmentVi
 
     @OnClick(R.id.img_header)
     public void imgClicked() {
+        activity.data(adapter.getData());
         activity.onBackPressed();
     }
 

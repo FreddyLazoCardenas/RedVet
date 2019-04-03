@@ -4,6 +4,9 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -23,20 +26,27 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.papps.freddy_lazo.redvet.R;
+import com.papps.freddy_lazo.redvet.interfaces.MapFragmentView;
 import com.papps.freddy_lazo.redvet.internal.dagger.component.DaggerMapFragmentComponent;
+import com.papps.freddy_lazo.redvet.model.DoctorModel;
+import com.papps.freddy_lazo.redvet.presenter.MapFragmentPresenter;
 import com.papps.freddy_lazo.redvet.view.activity.HomeActivity;
 import com.papps.freddy_lazo.redvet.view.adapter.PetAdapter;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class MapFragment extends BaseFragment implements OnMapReadyCallback {
+public class MapFragment extends BaseFragment implements OnMapReadyCallback, MapFragmentView {
 
     private static final int REQUEST_LOCATION = 2;
     private HomeActivity activity;
@@ -46,6 +56,8 @@ public class MapFragment extends BaseFragment implements OnMapReadyCallback {
 
     @Inject
     PetAdapter adapter;
+    @Inject
+    MapFragmentPresenter presenter;
 
     @BindView(R.id.rv_pet)
     RecyclerView recyclerView;
@@ -102,19 +114,29 @@ public class MapFragment extends BaseFragment implements OnMapReadyCallback {
                 .addOnSuccessListener(activity, location -> {
                     // Got last known location. In some rare situations this can be null.
                     if (location != null) {
-                        LatLng sydney = new LatLng(location.getLatitude(), location.getLongitude());
-                        googleMap.addMarker(new MarkerOptions().position(sydney));
+                        LatLng position = new LatLng(location.getLatitude(), location.getLongitude());
+                        googleMap.addMarker(new MarkerOptions().position(position)
+                                .icon(bitmapDescriptorFromVector(activity, R.drawable.ic_person_marker)));
 
 
                         CameraPosition cameraPosition = new CameraPosition.Builder()
-                                .target(sydney)      // Sets the center of the map to Mountain View
-                                .zoom(17)                   // Sets the zoom
+                                .target(position)      // Sets the center of the map to Mountain View
+                                .zoom(17)           // Sets the zoom
                                 .build();                   // Creates a CameraPosition from the builder
                         googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
 
                         // Logic to handle location object
                     }
                 });
+    }
+
+    private BitmapDescriptor bitmapDescriptorFromVector(Context context, int vectorResId) {
+        Drawable vectorDrawable = ContextCompat.getDrawable(context, vectorResId);
+        vectorDrawable.setBounds(0, 0, vectorDrawable.getIntrinsicWidth(), vectorDrawable.getIntrinsicHeight());
+        Bitmap bitmap = Bitmap.createBitmap(vectorDrawable.getIntrinsicWidth(), vectorDrawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        vectorDrawable.draw(canvas);
+        return BitmapDescriptorFactory.fromBitmap(bitmap);
     }
 
     @Override
@@ -140,6 +162,7 @@ public class MapFragment extends BaseFragment implements OnMapReadyCallback {
 
     @Override
     public void initUI() {
+        presenter.setView(this);
         setUpPetRv();
     }
 
@@ -169,10 +192,29 @@ public class MapFragment extends BaseFragment implements OnMapReadyCallback {
         this.googleMap = googleMap;
         Log.d("onMapReady", "cargo el mapa");
         requestLastPosition();
+        presenter.getDoctors();
     }
 
     @OnClick(R.id.txt_services)
-    public void servicesClick(){
+    public void servicesClick() {
         navigator.navigateToServicesFragment(activity);
+    }
+
+    @Override
+    public void getListData(List<DoctorModel> data) {
+        setDoctorMarkers(data);
+    }
+
+    private void setDoctorMarkers(List<DoctorModel> data) {
+        for (DoctorModel doctorModel : data){
+            LatLng latLng = new LatLng(Double.valueOf(doctorModel.getLatitude()), Double.valueOf(doctorModel.getLongitude()));
+            addDoctorMarker(latLng);
+        }
+    }
+
+    private void addDoctorMarker(LatLng latLng) {
+        if(googleMap != null){
+            googleMap.addMarker(new MarkerOptions().position(latLng).icon(bitmapDescriptorFromVector(activity, R.drawable.ic_doctor_marker)));
+        }
     }
 }

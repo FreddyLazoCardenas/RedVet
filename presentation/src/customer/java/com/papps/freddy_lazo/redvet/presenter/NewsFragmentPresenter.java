@@ -4,7 +4,6 @@ import com.papps.freddy_lazo.domain.interactor.DefaultObserver;
 import com.papps.freddy_lazo.domain.interactor.PetLoverNews;
 import com.papps.freddy_lazo.domain.model.News;
 import com.papps.freddy_lazo.redvet.model.mapper.NewsModelMapper;
-import com.papps.freddy_lazo.redvet.presenter.Presenter;
 import com.papps.freddy_lazo.redvet.view.interfaces.NewsFragmentView;
 
 import java.util.List;
@@ -37,6 +36,7 @@ public class NewsFragmentPresenter implements Presenter<NewsFragmentView> {
     }
 
     public void getNews() {
+        petLoverNews.bindParams("pet-lover");
         petLoverNews.execute(new NewsObservable());
     }
 

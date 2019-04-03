@@ -18,7 +18,8 @@ public class HomeActivity extends BaseActivity implements BottomNavigationView.O
     BottomNavigationView bottomNav;
 
     public static Intent getCallingIntent(BaseActivity activity) {
-        return new Intent(activity, HomeActivity.class);
+        return new Intent(activity, HomeActivity.class)
+                .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
     }
 
     @Override
@@ -37,7 +38,7 @@ public class HomeActivity extends BaseActivity implements BottomNavigationView.O
     @Override
     public void initUI() {
         bottomNav.setOnNavigationItemSelectedListener(this);
-        bottomNav.setSelectedItemId(R.id.action_quotes);
+        bottomNav.setSelectedItemId(R.id.action_map);
 
     }
 

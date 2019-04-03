@@ -3,6 +3,8 @@ package com.papps.freddy_lazo.data.network;
 import com.papps.freddy_lazo.data.entity.ResponseEntity;
 import com.papps.freddy_lazo.data.network.body.BodyLogin;
 import com.papps.freddy_lazo.data.network.body.BodyPetLoverRegister;
+import com.papps.freddy_lazo.data.network.body.BodySearchDoctors;
+import com.papps.freddy_lazo.data.network.response.DoctorSearchResponse;
 import com.papps.freddy_lazo.data.network.response.LoginResponse;
 import com.papps.freddy_lazo.data.network.response.NewsResponse;
 import com.papps.freddy_lazo.data.network.response.ServicesResponse;
@@ -12,6 +14,7 @@ import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 
 public interface RestService {
 
@@ -19,13 +22,18 @@ public interface RestService {
     Call<ResponseEntity<LoginResponse>> login(@Body BodyLogin bodyLogin);
 
     @POST("pet-lover/sign-up")
-    Call<ResponseEntity<LoginResponse>> petLoverRegister(@Body BodyPetLoverRegister bodyLogin);
+    Call<ResponseEntity<Void>> petLoverRegister(@Body BodyPetLoverRegister bodyLogin);
 
     @POST("doctor/sign-up")
     Call<ResponseEntity<LoginResponse>> doctorRegister(@Body BodyPetLoverRegister bodyLogin);
 
-    @GET("pet-lover/news")
-    Call<ResponseEntity<NewsResponse>> petLoverNews(@Header("Authorization") String auth);
+
+    @POST("pet-lover/search")
+    Call<ResponseEntity<DoctorSearchResponse>> petLoverSearch(@Body BodySearchDoctors bodySearch, @Header("Authorization") String auth);
+
+
+    @GET("{path}/news")
+    Call<ResponseEntity<NewsResponse>> petLoverNews(@Header("Authorization") String auth, @Path("path") String path);
 
     @GET("services")
     Call<ResponseEntity<ServicesResponse>> services();
