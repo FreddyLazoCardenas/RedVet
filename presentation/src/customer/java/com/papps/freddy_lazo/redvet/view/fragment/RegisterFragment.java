@@ -21,6 +21,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.firebase.iid.FirebaseInstanceId;
@@ -28,6 +29,7 @@ import com.papps.freddy_lazo.redvet.GlideApp;
 import com.papps.freddy_lazo.redvet.R;
 import com.papps.freddy_lazo.redvet.interfaces.RegisterFragmentView;
 import com.papps.freddy_lazo.redvet.internal.dagger.component.DaggerRegisterFragmentComponent;
+import com.papps.freddy_lazo.redvet.model.PetLoverModel;
 import com.papps.freddy_lazo.redvet.presenter.RegisterFragmentPresenter;
 import com.papps.freddy_lazo.redvet.view.activity.RegisterActivity;
 import com.papps.freddy_lazo.redvet.view.adapter.PetAdapter;
@@ -85,12 +87,19 @@ public class RegisterFragment extends BaseFragment implements RegisterFragmentVi
     EditText etPassword;
     @BindView(R.id.edt_rpt_password)
     EditText etRptPassword;
+    @BindView(R.id.pet_name)
+    EditText etPetName;
+    @BindView(R.id.pet_birthday)
+    EditText etPetBirthday;
+    @BindView(R.id.pet_breed)
+    EditText etpetBreed;
 
     private RegisterActivity activity;
     private File pictureFile;
     private File croppedProfileFile;
     private File croppedPetFile;
     private boolean isPetImage;
+    private PetLoverModel petLoverModel;
 
     public static Fragment newInstance() {
         return new RegisterFragment();
@@ -147,12 +156,17 @@ public class RegisterFragment extends BaseFragment implements RegisterFragmentVi
 
     @Override
     public void showErrorMessage(String message) {
-
+        Toast.makeText(activity, message, Toast.LENGTH_LONG).show();
     }
 
     @Override
     public void showErrorNetworkMessage(String message) {
 
+    }
+
+    @OnClick(R.id.btn_pet_save)
+    public void addPet() {
+        presenter.validatePetData();
     }
 
     @OnClick(R.id.img_register)
@@ -295,6 +309,61 @@ public class RegisterFragment extends BaseFragment implements RegisterFragmentVi
     @Override
     public void hidePhoneError() {
         hideEtError(etPhone);
+    }
+
+    @Override
+    public String getPetName() {
+        return etPetName.getText().toString();
+    }
+
+    @Override
+    public String getPetBirthday() {
+        return etPetBirthday.getText().toString();
+    }
+
+    @Override
+    public String getPetBreed() {
+        return etpetBreed.getText().toString();
+    }
+
+    @Override
+    public void showPetNameError(String message) {
+        showEtError(etPetName, message);
+    }
+
+    @Override
+    public void hidePetNameError() {
+        hideEtError(etPetName);
+    }
+
+    @Override
+    public void showPetBirthdayError(String message) {
+        showEtError(etPetBirthday, message);
+    }
+
+    @Override
+    public void hidePetBirthdayError() {
+        hideEtError(etPetBirthday);
+    }
+
+    @Override
+    public void showPetBreedError(String message) {
+        showEtError(etpetBreed, message);
+    }
+
+    @Override
+    public void hidePetBreedError() {
+        hideEtError(etpetBreed);
+    }
+
+    @Override
+    public void savePetData() {
+        petLoverModel = new PetLoverModel(1, getPetName(), getPetBirthday(), getPetBreed(), getPetBase64Image());
+    }
+
+    @Override
+    public PetLoverModel getPetData() {
+        return petLoverModel;
     }
 
     @Override

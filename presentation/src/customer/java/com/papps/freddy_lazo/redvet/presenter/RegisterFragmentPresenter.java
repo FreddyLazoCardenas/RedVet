@@ -91,6 +91,17 @@ public class RegisterFragmentPresenter implements Presenter<RegisterFragmentView
             return;
         if (!isValidRepeatPassword(view.getRepeatPassword(), view.getPassword()))
             return;
+        if (!validatePetModelData())
+            return;
+        view.showErrorMessage("Mandando servicio");
+    }
+
+    private boolean validatePetModelData() {
+        if (view.getPetData() == null) {
+            view.showErrorMessage(view.context().getString(R.string.add_pet_data));
+            return false;
+        }
+        return true;
     }
 
     private boolean isValidLastName(String lastName) {
@@ -189,6 +200,43 @@ public class RegisterFragmentPresenter implements Presenter<RegisterFragmentView
             return false;
         }
         view.hidePhoneError();
+        return true;
+    }
+
+    public void validatePetData() {
+        if (!isValidPetName(view.getPetName()))
+            return;
+        if (!isValidPetBirthday(view.getPetBirthday()))
+            return;
+        if (!isValidPetBreed(view.getPetBreed()))
+            return;
+        view.savePetData();
+    }
+
+    private boolean isValidPetName(String name) {
+        if (TextUtils.isEmpty(name)) {
+            view.showPetNameError(view.context().getString(R.string.text_required_field));
+            return false;
+        }
+        view.hidePetNameError();
+        return true;
+    }
+
+    private boolean isValidPetBirthday(String petBirthday) {
+        if (TextUtils.isEmpty(petBirthday)) {
+            view.showPetBirthdayError(view.context().getString(R.string.text_required_field));
+            return false;
+        }
+        view.hidePetBirthdayError();
+        return true;
+    }
+
+    private boolean isValidPetBreed(String breed) {
+        if (TextUtils.isEmpty(breed)) {
+            view.showPetBreedError(view.context().getString(R.string.text_required_field));
+            return false;
+        }
+        view.hidePetBreedError();
         return true;
     }
 }

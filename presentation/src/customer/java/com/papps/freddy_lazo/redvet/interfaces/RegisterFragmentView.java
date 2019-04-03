@@ -1,6 +1,8 @@
 package com.papps.freddy_lazo.redvet.interfaces;
 
 
+import com.papps.freddy_lazo.redvet.model.PetLoverModel;
+
 public interface RegisterFragmentView extends BaseView {
 
     void requestCameraPermission();
@@ -60,4 +62,26 @@ public interface RegisterFragmentView extends BaseView {
     void showPhoneError(String message);
 
     void hidePhoneError();
+
+    String getPetName();
+
+    String getPetBirthday();
+
+    String getPetBreed();
+
+    void showPetNameError(String string);
+
+    void hidePetNameError();
+
+    void showPetBirthdayError(String string);
+
+    void hidePetBirthdayError();
+
+    void showPetBreedError(String string);
+
+    void hidePetBreedError();
+
+    void savePetData();
+
+    PetLoverModel getPetData();
 }
