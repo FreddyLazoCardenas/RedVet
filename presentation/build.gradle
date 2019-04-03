@@ -71,4 +71,5 @@ dependencies {
     implementation presentationDependencies.shapeImageView
     implementation presentationDependencies.glide
     implementation presentationDependencies.imageCropper
+    implementation presentationDependencies.firebaseMessaging
 }

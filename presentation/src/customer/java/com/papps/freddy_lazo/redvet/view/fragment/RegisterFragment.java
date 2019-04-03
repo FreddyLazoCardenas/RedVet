@@ -6,19 +6,24 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.papps.freddy_lazo.redvet.GlideApp;
 import com.papps.freddy_lazo.redvet.R;
 import com.papps.freddy_lazo.redvet.interfaces.RegisterFragmentView;
@@ -30,6 +35,7 @@ import com.papps.freddy_lazo.redvet.view.dialogFragment.CameraDialog;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 
 import javax.inject.Inject;
@@ -58,9 +64,32 @@ public class RegisterFragment extends BaseFragment implements RegisterFragmentVi
     @BindView(R.id.img_add)
     ImageView imgPet;
 
+    @BindView(R.id.til_name)
+    TextInputLayout tilName;
+    @BindView(R.id.til_last_name)
+    TextInputLayout tilLastName;
+
+    @BindView(R.id.edt_name)
+    EditText etName;
+    @BindView(R.id.edt_last_name)
+    EditText etLastName;
+    @BindView(R.id.edt_dni)
+    EditText etDni;
+    @BindView(R.id.edt_address)
+    EditText etAddress;
+    @BindView(R.id.edt_email)
+    EditText etEmail;
+    @BindView(R.id.edt_phone)
+    EditText etPhone;
+    @BindView(R.id.edt_password)
+    EditText etPassword;
+    @BindView(R.id.edt_rpt_password)
+    EditText etRptPassword;
+
     private RegisterActivity activity;
     private File pictureFile;
-    private File croppedFile;
+    private File croppedProfileFile;
+    private File croppedPetFile;
     private boolean isPetImage;
 
     public static Fragment newInstance() {
@@ -107,7 +136,8 @@ public class RegisterFragment extends BaseFragment implements RegisterFragmentVi
 
     @OnClick(R.id.btn_register)
     public void btnRegister() {
-        navigator.navigateToHomeActivity(activity);
+        presenter.validateData();
+        //navigator.navigateToHomeActivity(activity);
     }
 
     @Override
@@ -148,19 +178,140 @@ public class RegisterFragment extends BaseFragment implements RegisterFragmentVi
     }
 
     @Override
+    public String getName() {
+        return etName.getText().toString();
+    }
+
+    @Override
+    public String getLastName() {
+        return etLastName.getText().toString();
+    }
+
+    @Override
+    public String getDni() {
+        return etDni.getText().toString();
+    }
+
+    @Override
+    public String getAddress() {
+        return etAddress.getText().toString();
+    }
+
+    @Override
+    public String getEmail() {
+        return etEmail.getText().toString();
+    }
+
+    @Override
+    public String getPhone() {
+        return etPhone.getText().toString();
+    }
+
+    @Override
+    public String getPassword() {
+        return etPassword.getText().toString();
+    }
+
+    @Override
+    public String getRepeatPassword() {
+        return etRptPassword.getText().toString();
+    }
+
+    @Override
+    public void showLastNameError(String message) {
+        showError(tilLastName, etLastName, message);
+    }
+
+    @Override
+    public void hideLastNameError() {
+        hideError(tilLastName);
+    }
+
+    @Override
+    public void showNameError(String message) {
+        showError(tilName, etName, message);
+    }
+
+    @Override
+    public void hideNameError() {
+        hideError(tilName);
+    }
+
+    @Override
+    public void showAddressError(String message) {
+        showEtError(etAddress, message);
+    }
+
+    @Override
+    public void hideAddressError() {
+        hideEtError(etAddress);
+    }
+
+    @Override
+    public void showEmailError(String message) {
+        showEtError(etEmail, message);
+    }
+
+    @Override
+    public void hideEmailError() {
+        hideEtError(etEmail);
+    }
+
+    @Override
+    public void showDniError(String message) {
+        showEtError(etDni, message);
+    }
+
+    @Override
+    public void hideDniError() {
+        hideEtError(etDni);
+    }
+
+    @Override
+    public void showRepeatPasswordError(String message) {
+        showEtError(etRptPassword, message);
+    }
+
+    @Override
+    public void hideRepeatPasswordError() {
+        hideEtError(etRptPassword);
+    }
+
+    @Override
+    public void showPasswordError(String message) {
+        showEtError(etPassword, message);
+    }
+
+    @Override
+    public void hidePasswordError() {
+        hideEtError(etPassword);
+    }
+
+    @Override
+    public void showPhoneError(String message) {
+        showEtError(etPhone, message);
+    }
+
+    @Override
+    public void hidePhoneError() {
+        hideEtError(etPhone);
+    }
+
+    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == SELECT_FILE && resultCode == Activity.RESULT_OK) {
             // selectGalleryButton();
-            startCrop(data.getData());
+            startCrop(data.getData(), isPetImage);
         } else if (requestCode == REQUEST_CAMERA && resultCode == Activity.RESULT_OK) {
             //selectSelfieButton();
-            startCrop(Uri.fromFile(pictureFile));
+            startCrop(Uri.fromFile(pictureFile), isPetImage);
         } else if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
             if (resultCode == Activity.RESULT_OK) {
-                displayPhoto(croppedFile.getAbsolutePath(), true);
+                displayPhoto(isPetImage, true);
             } else {
-                croppedFile = null;
+                croppedProfileFile = null;
+                croppedPetFile = null;
                 // unSelectButtons();
             }
         }
@@ -181,28 +332,40 @@ public class RegisterFragment extends BaseFragment implements RegisterFragmentVi
         }
     }
 
-    private void startCrop(Uri source) {
-        croppedFile = new File(getContext().getFilesDir(), PICTURE_CROPPED_FILE_NAME);
-        CropImage.activity(source)
-                .setCropShape(CropImageView.CropShape.OVAL)
-                .setFixAspectRatio(true)
-                .setBorderCornerThickness(0)
-                .setOutputCompressFormat(Bitmap.CompressFormat.JPEG)
-                .setOutputCompressQuality(50)
-                .setMaxCropResultSize(1800, 1800)
-                .setOutputUri(Uri.fromFile(croppedFile))
-                .start(getContext(), this);
-
+    private void startCrop(Uri source, boolean isPetImage) {
+        if (isPetImage) {
+            croppedPetFile = new File(getContext().getFilesDir(), PICTURE_CROPPED_FILE_NAME);
+            CropImage.activity(source)
+                    .setCropShape(CropImageView.CropShape.OVAL)
+                    .setFixAspectRatio(true)
+                    .setBorderCornerThickness(0)
+                    .setOutputCompressFormat(Bitmap.CompressFormat.JPEG)
+                    .setOutputCompressQuality(50)
+                    .setMaxCropResultSize(1800, 1800)
+                    .setOutputUri(Uri.fromFile(croppedPetFile))
+                    .start(getContext(), this);
+        } else {
+            croppedProfileFile = new File(getContext().getFilesDir(), PICTURE_CROPPED_FILE_NAME);
+            CropImage.activity(source)
+                    .setCropShape(CropImageView.CropShape.OVAL)
+                    .setFixAspectRatio(true)
+                    .setBorderCornerThickness(0)
+                    .setOutputCompressFormat(Bitmap.CompressFormat.JPEG)
+                    .setOutputCompressQuality(50)
+                    .setMaxCropResultSize(1800, 1800)
+                    .setOutputUri(Uri.fromFile(croppedProfileFile))
+                    .start(getContext(), this);
+        }
     }
 
-    public void displayPhoto(String photoUrl, boolean refresh) {
+    public void displayPhoto(boolean isPetImage, boolean refresh) {
         GlideApp.with(activity)
                 .asBitmap()
                 .dontAnimate()
                 .diskCacheStrategy(refresh ? DiskCacheStrategy.NONE : DiskCacheStrategy.ALL)
                 .skipMemoryCache(refresh)
                 .placeholder(R.drawable.ic_placeholder)
-                .load(photoUrl)
+                .load(isPetImage ? croppedPetFile.getAbsolutePath() : croppedProfileFile.getAbsolutePath())
                 .into(isPetImage ? imgPet : imgRegister);
     }
 
@@ -221,5 +384,56 @@ public class RegisterFragment extends BaseFragment implements RegisterFragmentVi
         if (presenter.checkGalleryPermissions()) {
             navigator.navigateToGallery(this, SELECT_FILE);
         }
+    }
+
+    private void showError(TextInputLayout inputLayout, EditText editText, String message) {
+        inputLayout.setErrorEnabled(true);
+        inputLayout.setError(message);
+        editText.requestFocus();
+    }
+
+    private void hideError(TextInputLayout inputLayout) {
+        if (inputLayout.isErrorEnabled()) {
+            inputLayout.setError(null);
+            inputLayout.setErrorEnabled(false);
+        }
+    }
+
+    private void showEtError(EditText editText, String message) {
+        editText.setError(message);
+        editText.requestFocus();
+    }
+
+    private void hideEtError(EditText editText) {
+        editText.setError(null);
+    }
+
+    @Override
+    public String getProfileBase64Image() {
+        if (croppedProfileFile != null) {
+            Bitmap bm = BitmapFactory.decodeFile(croppedProfileFile.getAbsolutePath());
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            bm.compress(Bitmap.CompressFormat.JPEG, 100, baos); //bm is the bitmap object
+            byte[] b = baos.toByteArray();
+            return Base64.encodeToString(b, Base64.DEFAULT);
+        } else
+            return "";
+    }
+
+    @Override
+    public String getPetBase64Image() {
+        if (croppedPetFile != null) {
+            Bitmap bm = BitmapFactory.decodeFile(croppedPetFile.getAbsolutePath());
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            bm.compress(Bitmap.CompressFormat.JPEG, 100, baos); //bm is the bitmap object
+            byte[] b = baos.toByteArray();
+            return Base64.encodeToString(b, Base64.DEFAULT);
+        } else
+            return "";
+    }
+
+    @Override
+    public String getDeviceId() {
+        return FirebaseInstanceId.getInstance().getToken();
     }
 }

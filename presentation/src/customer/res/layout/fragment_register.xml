@@ -29,8 +29,8 @@
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:layout_marginTop="24dp"
-            android:src="@drawable/ic_placeholder"
             android:layout_marginEnd="24dp"
+            android:src="@drawable/ic_placeholder"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -39,11 +39,11 @@
             android:id="@+id/btn_add"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:src="@drawable/ic_add"
             app:layout_constraintBottom_toBottomOf="@+id/img_register"
             app:layout_constraintEnd_toEndOf="@id/img_register"
             app:layout_constraintStart_toStartOf="@id/img_register"
-            app:layout_constraintTop_toBottomOf="@+id/img_register"
-            android:src="@drawable/ic_add" />
+            app:layout_constraintTop_toBottomOf="@+id/img_register" />
 
 
         <android.support.design.widget.TextInputLayout
@@ -52,6 +52,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:hint="Nombre"
+            android:theme="@style/MyEditTextTheme"
             app:layout_constraintEnd_toEndOf="@id/end_guideline"
             app:layout_constraintStart_toStartOf="@id/start_guideline"
             app:layout_constraintTop_toBottomOf="@+id/btn_add">
@@ -71,6 +72,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:hint="Apellido"
+            android:theme="@style/MyEditTextTheme"
             app:layout_constraintEnd_toEndOf="@id/end_guideline"
             app:layout_constraintStart_toStartOf="@id/start_guideline"
             app:layout_constraintTop_toBottomOf="@+id/til_name">
@@ -89,14 +91,15 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:drawableStart="@drawable/ic_address"
+            android:drawableStart="@drawable/ic_dni"
             android:drawablePadding="10dp"
-            android:hint="Direccion"
+            android:hint="Dni"
             android:inputType="text"
+            android:theme="@style/MyEditTextTheme"
             app:layout_constraintEnd_toEndOf="@id/end_guideline"
             app:layout_constraintStart_toStartOf="@id/start_guideline"
             app:layout_constraintTop_toBottomOf="@+id/til_last_name"
-            tools:text="Jr Rio Tumbes 405" />
+            tools:text="70692399" />
 
         <EditText
             android:id="@+id/edt_address"
@@ -107,9 +110,10 @@
             android:drawablePadding="10dp"
             android:hint="Direccion"
             android:inputType="text"
+            android:theme="@style/MyEditTextTheme"
             app:layout_constraintEnd_toEndOf="@id/end_guideline"
             app:layout_constraintStart_toStartOf="@id/start_guideline"
-            app:layout_constraintTop_toBottomOf="@+id/til_last_name"
+            app:layout_constraintTop_toBottomOf="@+id/edt_dni"
             tools:text="Jr Rio Tumbes 405" />
 
         <EditText
@@ -121,6 +125,7 @@
             android:drawablePadding="10dp"
             android:hint="Correo"
             android:inputType="textEmailAddress"
+            android:theme="@style/MyEditTextTheme"
             app:layout_constraintEnd_toEndOf="@id/end_guideline"
             app:layout_constraintStart_toStartOf="@id/start_guideline"
             app:layout_constraintTop_toBottomOf="@+id/edt_address"
@@ -135,6 +140,7 @@
             android:drawablePadding="10dp"
             android:hint="Celular"
             android:inputType="phone"
+            android:theme="@style/MyEditTextTheme"
             app:layout_constraintEnd_toEndOf="@id/end_guideline"
             app:layout_constraintStart_toStartOf="@id/start_guideline"
             app:layout_constraintTop_toBottomOf="@+id/edt_email"
@@ -147,8 +153,9 @@
             android:layout_marginTop="20dp"
             android:drawableStart="@drawable/ic_password"
             android:drawablePadding="10dp"
-            android:hint="Contrasena"
+            android:hint="Contraseña"
             android:inputType="textPassword"
+            android:theme="@style/MyEditTextTheme"
             app:layout_constraintEnd_toEndOf="@id/end_guideline"
             app:layout_constraintStart_toStartOf="@id/start_guideline"
             app:layout_constraintTop_toBottomOf="@+id/edt_phone"
@@ -161,8 +168,9 @@
             android:layout_marginTop="20dp"
             android:drawableStart="@drawable/ic_password"
             android:drawablePadding="10dp"
-            android:hint="Profesion y oficio"
+            android:hint="Repetir Contraseña"
             android:inputType="textPassword"
+            android:theme="@style/MyEditTextTheme"
             app:layout_constraintEnd_toEndOf="@id/end_guideline"
             app:layout_constraintStart_toStartOf="@id/start_guideline"
             app:layout_constraintTop_toBottomOf="@+id/edt_password"
@@ -178,6 +186,7 @@
             android:text="Tus mascotas"
             android:textColor="@color/colorPink"
             android:textSize="20sp"
+            android:theme="@style/MyEditTextTheme"
             app:layout_constraintEnd_toEndOf="@id/end_guideline"
             app:layout_constraintStart_toStartOf="@id/start_guideline"
             app:layout_constraintTop_toBottomOf="@+id/edt_rpt_password" />
@@ -222,10 +231,10 @@
                     android:id="@+id/pet_birthday"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:hint="Fecha de nacimiento"
-                    android:inputType="text"
                     android:drawableStart="@drawable/ic_birthday"
                     android:drawablePadding="10dp"
+                    android:hint="Fecha de nacimiento"
+                    android:inputType="text"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@id/pet_name"
                     app:layout_constraintTop_toBottomOf="@+id/pet_name" />
@@ -242,23 +251,23 @@
 
                 <com.github.siyamed.shapeimageview.CircularImageView
                     android:id="@+id/img_add"
-                    app:layout_constraintEnd_toStartOf="@id/pet_name"
                     android:layout_width="80dp"
                     android:layout_height="80dp"
                     android:layout_marginEnd="10dp"
+                    android:src="@drawable/ic_add_pet"
                     app:layout_constraintBottom_toBottomOf="@id/pet_breed"
+                    app:layout_constraintEnd_toStartOf="@id/pet_name"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/pet_name"
-                    android:src="@drawable/ic_add_pet" />
+                    app:layout_constraintTop_toTopOf="@id/pet_name" />
 
                 <ImageView
-                    app:layout_constraintTop_toBottomOf="@+id/img_add"
-                    app:layout_constraintStart_toStartOf="@id/img_add"
-                    app:layout_constraintEnd_toEndOf="@id/img_add"
-                    app:layout_constraintBottom_toBottomOf="@+id/img_add"
-                    android:src="@drawable/ic_add"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_add"
+                    app:layout_constraintBottom_toBottomOf="@+id/img_add"
+                    app:layout_constraintEnd_toEndOf="@id/img_add"
+                    app:layout_constraintStart_toStartOf="@id/img_add"
+                    app:layout_constraintTop_toBottomOf="@+id/img_add" />
 
 
                 <Button
@@ -269,9 +278,9 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="5dp"
                     android:text="Guardar"
-                    app:layout_constraintTop_toBottomOf="@+id/pet_breed"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent" />
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/pet_breed" />
             </android.support.constraint.ConstraintLayout>
 
 
