@@ -3,6 +3,7 @@ package com.papps.freddy_lazo.data.network.body;
 import com.google.gson.annotations.SerializedName;
 import com.papps.freddy_lazo.domain.model.PetRegister;
 import com.papps.freddy_lazo.domain.model.ScheduleDoctorRegister;
+import com.papps.freddy_lazo.domain.model.ServicesDoctorRegister;
 
 import java.util.List;
 
@@ -57,9 +58,9 @@ public class BodyDoctorRegister {
     @SerializedName("schedules")
     private List<ScheduleDoctorRegister> schedules;
     @SerializedName("services")
-    private List<ScheduleDoctorRegister> services;
+    private List<ServicesDoctorRegister> services;
 
-    public BodyDoctorRegister(String email, String password, String firstName, String lastName, String typeDocument, String numberDocument, String business_name, String address, String latitude, String longitude, String consultationPrice, String consultationTime, String shower_price, String shower_time, String tuition_number, String description, String phone, String photo, String type, String attention, String fcmToken, String device, List<PetRegister> pets, List<ScheduleDoctorRegister> schedules, List<ScheduleDoctorRegister> services) {
+    public BodyDoctorRegister(String email, String password, String firstName, String lastName, String typeDocument, String numberDocument, String business_name, String address, String latitude, String longitude, String consultationPrice, String consultationTime, String shower_price, String shower_time, String tuition_number, String description, String phone, String photo, String type, String attention, String fcmToken, String device, List<PetRegister> pets, List<ScheduleDoctorRegister> schedules, List<ServicesDoctorRegister> services) {
         this.email = email;
         this.password = password;
         this.firstName = firstName;

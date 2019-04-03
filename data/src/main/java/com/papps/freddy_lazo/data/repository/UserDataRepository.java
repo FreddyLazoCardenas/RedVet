@@ -6,6 +6,7 @@ import com.papps.freddy_lazo.data.network.RestApi;
 import com.papps.freddy_lazo.domain.model.Doctor;
 import com.papps.freddy_lazo.domain.model.PetRegister;
 import com.papps.freddy_lazo.domain.model.ScheduleDoctorRegister;
+import com.papps.freddy_lazo.domain.model.ServicesDoctorRegister;
 import com.papps.freddy_lazo.domain.repository.UserRepository;
 
 import java.util.ArrayList;
@@ -42,7 +43,7 @@ public class UserDataRepository implements UserRepository {
     }
 
     @Override
-    public Observable<Void> doctorRegister(String email, String password, String firstName, String lastName, String typeDocument, String numberDocument, String business_name, String address, String latitude, String longitude, String consultationPrice, String consultationTime, String shower_price, String shower_time, String tuition_number, String description, String phone, String photo, String type, String attention, String fcmToken, String device, List<PetRegister> pets, List<ScheduleDoctorRegister> schedules, List<ScheduleDoctorRegister> services) {
+    public Observable<Void> doctorRegister(String email, String password, String firstName, String lastName, String typeDocument, String numberDocument, String business_name, String address, String latitude, String longitude, String consultationPrice, String consultationTime, String shower_price, String shower_time, String tuition_number, String description, String phone, String photo, String type, String attention, String fcmToken, String device, List<PetRegister> pets, List<ScheduleDoctorRegister> schedules, List<ServicesDoctorRegister> services) {
         return mRestApi.doctorRegister(email, password, firstName, lastName, typeDocument, numberDocument, business_name, address, lastName, longitude, consultationTime, consultationPrice, shower_time, shower_price, tuition_number, description, phone, photo, type, attention, fcmToken, device, pets, schedules, services);
     }
 }

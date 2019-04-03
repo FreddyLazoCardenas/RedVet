@@ -4,6 +4,7 @@ import com.papps.freddy_lazo.domain.executor.PostExecutionThread;
 import com.papps.freddy_lazo.domain.executor.ThreadExecutor;
 import com.papps.freddy_lazo.domain.model.PetRegister;
 import com.papps.freddy_lazo.domain.model.ScheduleDoctorRegister;
+import com.papps.freddy_lazo.domain.model.ServicesDoctorRegister;
 import com.papps.freddy_lazo.domain.repository.UserRepository;
 
 import java.util.List;
@@ -34,7 +35,7 @@ public class DoctorSignUp extends UseCase {
     private String type;
     private String device;
     private List<ScheduleDoctorRegister> schedules;
-    private List<ScheduleDoctorRegister> services;
+    private List<ServicesDoctorRegister> services;
     private String phone;
     private String fcmToken;
     private List<PetRegister> pets;
@@ -44,7 +45,7 @@ public class DoctorSignUp extends UseCase {
         this.repository = repository;
     }
 
-    public void bindParams(String email, String password, String firstName, String lastName, String typeDocument, String numberDocument, String business_name, String address, String latitude, String longitude, String consultationPrice, String consultationTime, String shower_price, String shower_time, String tuition_number, String description, String phone, String photo, String type, String attention, String fcmToken, String device, List<PetRegister> pets, List<ScheduleDoctorRegister> schedules, List<ScheduleDoctorRegister> services) {
+    public void bindParams(String email, String password, String firstName, String lastName, String typeDocument, String numberDocument, String business_name, String address, String latitude, String longitude, String consultationPrice, String consultationTime, String shower_price, String shower_time, String tuition_number, String description, String phone, String photo, String type, String attention, String fcmToken, String device, List<PetRegister> pets, List<ScheduleDoctorRegister> schedules, List<ServicesDoctorRegister> services) {
         this.email = email;
         this.password = password;
         this.firstName = firstName;
