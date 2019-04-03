@@ -3,7 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.papps.freddy_lazo.redvet">
 
-    <application tools:ignore="GoogleAppIndexingWarning">
+    <application tools:ignore="GoogleAppIndexingWarning"
+        android:label="@string/app_pet_lover_name">
+
         <activity android:name=".view.activity.SplashActivity">
 
             <intent-filter>
