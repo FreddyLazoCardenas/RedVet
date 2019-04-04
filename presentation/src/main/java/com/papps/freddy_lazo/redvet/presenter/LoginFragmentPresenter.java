@@ -95,14 +95,14 @@ public class LoginFragmentPresenter implements Presenter<LoginFragmentView> {
         @Override
         public void onNext(Doctor doctor) {
             super.onNext(doctor);
-            Log.d("onNext","next doctor");
+            Log.d("onNext", "next doctor");
         }
 
         @Override
         public void onError(Throwable e) {
             super.onError(e);
-            if(e instanceof NullPointerException){
-                view.showErrorMessage("Cuenta de petLover");
+            if (e instanceof NullPointerException) {
+                view.showErrorMessage("Error esta cuenta es de petLover");
                 return;
             }
             view.showErrorMessage(e.getMessage());
@@ -124,17 +124,18 @@ public class LoginFragmentPresenter implements Presenter<LoginFragmentView> {
         @Override
         public void onNext(PetLover petLover) {
             super.onNext(petLover);
-            Log.d("onNext","next petLover");
+            Log.d("onNext", "next petLover");
         }
 
         @Override
         public void onError(Throwable e) {
             super.onError(e);
-            if(e instanceof NullPointerException){
-                view.showErrorMessage("Cuenta de doctor");
+            if (e instanceof NullPointerException) {
+                view.showErrorMessage("Error esta cuenta es de doctor");
                 return;
             }
-            view.showErrorMessage(e.getMessage());        }
+            view.showErrorMessage(e.getMessage());
+        }
 
         @Override
         public void onComplete() {
