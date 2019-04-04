@@ -222,7 +222,7 @@
             android:layout_marginTop="20dp"
             android:drawableStart="@drawable/ic_password"
             android:drawablePadding="10dp"
-            android:hint="Contrasena"
+            android:hint="Contraseña"
             android:inputType="textPassword"
             android:theme="@style/MyEditTextTheme"
             app:layout_constraintEnd_toEndOf="@id/end_guideline"

@@ -1,66 +1,51 @@
-package com.papps.freddy_lazo.data.network.body;
+package com.papps.freddy_lazo.domain.interactor;
 
-import com.google.gson.annotations.SerializedName;
+import com.papps.freddy_lazo.domain.executor.PostExecutionThread;
+import com.papps.freddy_lazo.domain.executor.ThreadExecutor;
 import com.papps.freddy_lazo.domain.model.PetRegister;
 import com.papps.freddy_lazo.domain.model.ScheduleDoctorRegister;
 import com.papps.freddy_lazo.domain.model.ServicesDoctorRegister;
+import com.papps.freddy_lazo.domain.repository.UserRepository;
 
 import java.util.List;
 
-public class BodyDoctorRegister {
+import io.reactivex.Observable;
 
-    @SerializedName("email")
+public class DoctorSignUp extends UseCase {
+
+    private final UserRepository repository;
     private String email;
-    @SerializedName("password")
     private String password;
-    @SerializedName("first_name")
     private String firstName;
-    @SerializedName("last_name")
     private String lastName;
-    @SerializedName("type_document")
     private String typeDocument;
-    @SerializedName("number_document")
     private String numberDocument;
-    @SerializedName("business_name")
     private String business_name;
-    @SerializedName("address")
     private String address;
-    @SerializedName("latitude")
     private String latitude;
-    @SerializedName("longitude")
     private String longitude;
-    @SerializedName("consultation_price")
     private String consultationPrice;
-    @SerializedName("consultation_time")
     private String consultationTime;
-    @SerializedName("shower_price")
     private String shower_price;
-    @SerializedName("shower_time")
     private String shower_time;
-    @SerializedName("tuition_number")
     private String tuition_number;
-    @SerializedName("description")
     private String description;
-    @SerializedName("phone")
-    private String phone;
-    @SerializedName("photo")
     private String photo;
-    @SerializedName("type")
-    private String type;
-    @SerializedName("attention")
     private String attention;
-    @SerializedName("fcm_token")
-    private String fcmToken;
-    @SerializedName("device")
+    private String type;
     private String device;
-    @SerializedName("pets")
-    private List<PetRegister> pets;
-    @SerializedName("schedules")
     private List<ScheduleDoctorRegister> schedules;
-    @SerializedName("services")
     private List<ServicesDoctorRegister> services;
+    private String phone;
+    private String fcmToken;
+    private List<PetRegister> pets;
 
-    public BodyDoctorRegister(String email, String password, String firstName, String lastName, String typeDocument, String numberDocument, String business_name, String address, String latitude, String longitude, String consultationPrice, String consultationTime, String shower_price, String shower_time, String tuition_number, String description, String phone, String photo, String type, String attention, String fcmToken, String device, List<PetRegister> pets, List<ScheduleDoctorRegister> schedules, List<ServicesDoctorRegister> services) {
+    public DoctorSignUp(UserRepository repository, ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
+        super(threadExecutor, postExecutionThread);
+        this.repository = repository;
+    }
+
+    public void bindParams(String email, String password, String firstName, String lastName, String typeDocument, String numberDocument, String business_name, String address, String latitude, String longitude, String consultationPrice, String consultationTime, String shower_price, String shower_time, String tuition_number, String description, String phone, String photo, String type, String attention, String fcmToken, String device, List<PetRegister> pets, List<ScheduleDoctorRegister> schedules, List<ServicesDoctorRegister> services) {
         this.email = email;
         this.password = password;
         this.firstName = firstName;
@@ -77,14 +62,21 @@ public class BodyDoctorRegister {
         this.shower_time = shower_time;
         this.tuition_number = tuition_number;
         this.description = description;
-        this.phone = phone;
         this.photo = photo;
         this.type = type;
         this.attention = attention;
-        this.fcmToken = fcmToken;
         this.device = device;
-        this.pets = pets;
         this.schedules = schedules;
         this.services = services;
+        this.phone = phone;
+        this.fcmToken = fcmToken;
+        this.pets = pets;
+    }
+
+    @Override
+    protected Observable buildUseCaseObservable() {
+        return repository.doctorRegister(email, password, firstName, lastName, typeDocument, numberDocument, business_name, address, latitude, longitude, consultationPrice, consultationTime, shower_price, shower_time, tuition_number, description, phone, photo, type, attention
+                , fcmToken, device, pets, schedules, services);
+
     }
 }

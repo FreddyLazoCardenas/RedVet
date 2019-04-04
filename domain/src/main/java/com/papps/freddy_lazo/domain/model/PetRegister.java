@@ -15,4 +15,8 @@ public class PetRegister {
         this.breed = breed;
         this.photo = photo;
     }
+
+    public PetRegister(int pet_id) {
+        this.pet_id = pet_id;
+    }
 }
