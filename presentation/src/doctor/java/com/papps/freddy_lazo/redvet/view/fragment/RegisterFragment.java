@@ -6,15 +6,17 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +27,9 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.papps.freddy_lazo.domain.model.PetRegister;
+import com.papps.freddy_lazo.domain.model.ScheduleDoctorRegister;
+import com.papps.freddy_lazo.domain.model.ServicesDoctorRegister;
 import com.papps.freddy_lazo.redvet.GlideApp;
 import com.papps.freddy_lazo.redvet.R;
 import com.papps.freddy_lazo.redvet.interfaces.RegisterFragmentView;
@@ -37,9 +42,11 @@ import com.papps.freddy_lazo.redvet.view.dialogFragment.CameraDialog;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import javax.inject.Inject;
 
@@ -53,6 +60,7 @@ public class RegisterFragment extends BaseFragment implements RegisterFragmentVi
 
     private static final int SELECT_FILE = 1;
     private static final int REQUEST_CAMERA = 0;
+    private static final int MAP_REQUEST_CODE = 2;
 
     private RegisterActivity activity;
     private File pictureFile;
@@ -95,18 +103,29 @@ public class RegisterFragment extends BaseFragment implements RegisterFragmentVi
     EditText etPassword;
     @BindView(R.id.edt_job)
     EditText etJob;
-    @BindView(R.id.edt_tuition)
+    @BindView(R.id.et_tuition)
     EditText etTuition;
     @BindView(R.id.attention_spinner)
     Spinner spinner;
+    @BindView(R.id.type_spinner)
+    Spinner typeSpinner;
     @BindView(R.id.group_shower)
     android.support.constraint.Group gShower;
     @BindView(R.id.group_consultation)
     android.support.constraint.Group gConsultation;
     @BindView(R.id.toggle)
     RadioGroup toggle;
+    @BindView(R.id.et_consultation_price)
+    EditText etConsultationPrice;
+    @BindView(R.id.et_shower_price)
+    EditText etShowerPrice;
+    @BindView(R.id.et_description)
+    TextInputEditText etDescription;
 
     private boolean fromServices;
+    private Double latitude;
+    private Double longitude;
+    private List<ServicesDoctorRegister> servicesDoctorRegisterList = new ArrayList<>();
 
 
     public static Fragment newInstance() {
@@ -143,7 +162,22 @@ public class RegisterFragment extends BaseFragment implements RegisterFragmentVi
         presenter.setView(this);
         setUpPetRv();
         setUpSpinner();
+        setUpTypeSpinner();
         getTypeDocument();
+        getType();
+    }
+
+    private void setUpTypeSpinner() {
+        ArrayList<String> arrayData = new ArrayList<>();
+        arrayData.add("Clinica");
+        arrayData.add("Veterinaria");
+        arrayData.add("Otro");
+
+        String[] arrayListData = arrayData.toArray(new String[0]);
+        ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<>(
+                activity, R.layout.spinner_item, arrayListData);
+        spinnerArrayAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item);
+        typeSpinner.setAdapter(spinnerArrayAdapter);
     }
 
     private void setUpSpinner() {
@@ -192,8 +226,8 @@ public class RegisterFragment extends BaseFragment implements RegisterFragmentVi
     }
 
     @OnClick(R.id.edt_address)
-    public void edtAddress(){
-        navigator.navigateToMapActivity(activity,1);
+    public void edtAddress() {
+        navigator.navigateToMapActivity(this, MAP_REQUEST_CODE);
     }
 
     @OnClick(R.id.img_add_services)
@@ -212,6 +246,10 @@ public class RegisterFragment extends BaseFragment implements RegisterFragmentVi
             List<ServicesModel> servicesModelList = activity.getData();
             if (!servicesModelList.isEmpty()) {
                 for (ServicesModel servicesModel : servicesModelList) {
+                    if(servicesModel.getState()){
+                        ServicesDoctorRegister data = new ServicesDoctorRegister(servicesModel.getId());
+                        servicesDoctorRegisterList.add(data);
+                    }
                     if (servicesModel.getState() && servicesModel.getName().toLowerCase().contains("consultas")) {
                         gConsultation.setVisibility(View.VISIBLE);
                     }
@@ -219,6 +257,8 @@ public class RegisterFragment extends BaseFragment implements RegisterFragmentVi
                         gShower.setVisibility(View.VISIBLE);
                     }
                 }
+            }else{
+                servicesDoctorRegisterList.clear();
             }
         }
     }
@@ -393,6 +433,93 @@ public class RegisterFragment extends BaseFragment implements RegisterFragmentVi
     }
 
     @Override
+    public String getLatitude() {
+        return latitude != null ? latitude.toString() : "0";
+    }
+
+    @Override
+    public String getLongitude() {
+        return longitude != null ? longitude.toString() : "0";
+    }
+
+    @Override
+    public String getConsultationPrice() {
+        return etConsultationPrice.getText().toString();
+    }
+
+    @Override
+    public String getConsultationTime() {
+        return etConsultationPrice.getVisibility() == View.VISIBLE ? "30" : null;
+    }
+
+    @Override
+    public String getShowerPrice() {
+        return etShowerPrice.getText().toString();
+    }
+
+    @Override
+    public String getShowerTime() {
+        return etShowerPrice.getVisibility() == View.VISIBLE ? "30" : null;
+    }
+
+    @Override
+    public String getDescription() {
+        return Objects.requireNonNull(etDescription.getText()).toString();
+    }
+
+    @Override
+    public String getType() {
+        switch (typeSpinner.getSelectedItemPosition()) {
+            case 0:
+                return "clinic";
+            case 1:
+                return "vet";
+            case 2:
+                return "other";
+            default:
+                return "other";
+        }
+    }
+
+    @Override
+    public String getAttention() {
+        switch (spinner.getSelectedItemPosition()) {
+            case 0:
+                return "at_home";
+            case 1:
+                return "local";
+            case 2:
+                return "both";
+            default:
+                return "at_home";
+        }
+    }
+
+    @Override
+    public String getFcmToken() {
+        return "dsadas";
+    }
+
+    @Override
+    public List<PetRegister> getPets() {
+        List<PetRegister> petRegisterList =  new ArrayList<>();
+        petRegisterList.add(new PetRegister(1));
+        return petRegisterList;
+    }
+
+    @Override
+    public List<ScheduleDoctorRegister> getSchedules() {
+        List<ScheduleDoctorRegister> scheduleDoctorRegisters =  new ArrayList<>();
+        scheduleDoctorRegisters.add(new ScheduleDoctorRegister(1,"09:00:00","16:00:00"));
+        return scheduleDoctorRegisters;
+    }
+
+    @Override
+    public List<ServicesDoctorRegister> getServices() {
+        return servicesDoctorRegisterList;
+    }
+
+    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == SELECT_FILE && resultCode == Activity.RESULT_OK) {
@@ -408,6 +535,19 @@ public class RegisterFragment extends BaseFragment implements RegisterFragmentVi
                 croppedFile = null;
                 // unSelectButtons();
             }
+        } else if (requestCode == MAP_REQUEST_CODE) {
+            if (resultCode == Activity.RESULT_OK) {
+                getData(data);
+            }
+        }
+    }
+
+    private void getData(Intent data) {
+        if (data != null) {
+            String address = data.getStringExtra("address");
+            latitude = data.getDoubleExtra("latitude", -1);
+            longitude = data.getDoubleExtra("longitude", -1);
+            etAddress.setText(address);
         }
     }
 
@@ -459,6 +599,19 @@ public class RegisterFragment extends BaseFragment implements RegisterFragmentVi
             }
             navigator.navigateToTakePictureCamera(this, pictureFile, REQUEST_CAMERA);
         }
+    }
+
+
+    @Override
+    public String getProfileBase64Image() {
+        if (croppedFile != null) {
+            Bitmap bm = BitmapFactory.decodeFile(croppedFile.getAbsolutePath());
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            bm.compress(Bitmap.CompressFormat.JPEG, 100, baos); //bm is the bitmap object
+            byte[] b = baos.toByteArray();
+            return Base64.encodeToString(b, Base64.DEFAULT);
+        } else
+            return "";
     }
 
     @Override

@@ -62,7 +62,7 @@ public class PetAdapter extends RecyclerView.Adapter<PetAdapter.PetViewHolder> {
         }
 
         @OnClick
-        public void itemClick(){
+        void itemClick(){
             if(!fromMap){
                 if(imgPet.getTag().equals("false")){
                     imgPet.setTag("true");

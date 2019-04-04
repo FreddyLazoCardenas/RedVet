@@ -1,6 +1,7 @@
 package com.papps.freddy_lazo.redvet.navigation;
 
 
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
@@ -57,8 +58,8 @@ public class Navigator extends BaseNavigator {
         activity.startActivity(HomeActivity.getCallingIntent(activity));
     }
 
-    public void navigateToMapActivity(BaseActivity activity, int requestCode) {
-        activity.startActivityForResult(MapActivity.getCallingIntent(activity), requestCode);
+    public void navigateToMapActivity(Fragment fragment, int requestCode) {
+        fragment.startActivityForResult(MapActivity.getCallingIntent(fragment), requestCode);
     }
 
 

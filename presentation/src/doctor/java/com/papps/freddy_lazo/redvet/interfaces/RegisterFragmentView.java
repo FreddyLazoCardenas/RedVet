@@ -1,6 +1,9 @@
 package com.papps.freddy_lazo.redvet.interfaces;
 
 
+import com.papps.freddy_lazo.domain.model.PetRegister;
+import com.papps.freddy_lazo.domain.model.ScheduleDoctorRegister;
+import com.papps.freddy_lazo.domain.model.ServicesDoctorRegister;
 import com.papps.freddy_lazo.redvet.model.NewsModel;
 
 import java.util.List;
@@ -73,9 +76,31 @@ public interface RegisterFragmentView extends BaseView {
 
     String getTypeDocument();
 
-    interface NewsFragmentView extends BaseView {
+    String getLatitude();
 
-        void listData(List<NewsModel> data);
+    String getLongitude();
 
-    }
+    String getConsultationPrice();
+
+    String getConsultationTime();
+
+    String getShowerPrice();
+
+    String getShowerTime();
+
+    String getDescription();
+
+    String getType();
+
+    String getAttention();
+
+    String getFcmToken();
+
+    List<PetRegister> getPets();
+
+    List<ScheduleDoctorRegister> getSchedules();
+
+    List<ServicesDoctorRegister> getServices();
+
+    String getProfileBase64Image();
 }
