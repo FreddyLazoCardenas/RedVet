@@ -5,18 +5,29 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.papps.freddy_lazo.data.sharedPreferences.PreferencesManager;
+import com.papps.freddy_lazo.redvet.BuildConfig;
 import com.papps.freddy_lazo.redvet.R;
-import com.papps.freddy_lazo.redvet.internal.dagger.component.DaggerLoginFragmentComponent;
 import com.papps.freddy_lazo.redvet.internal.dagger.component.DaggerProfileFragmentComponent;
+import com.papps.freddy_lazo.redvet.model.DoctorModel;
+import com.papps.freddy_lazo.redvet.model.PetLoverModel;
+import com.papps.freddy_lazo.redvet.model.PetLoverRegisterModel;
 import com.papps.freddy_lazo.redvet.view.activity.HomeActivity;
+
+import javax.inject.Inject;
 
 import butterknife.OnClick;
 
 public class ProfileFragment extends BaseFragment {
+
+
+    @Inject
+    PreferencesManager preferencesManager;
 
     private HomeActivity activity;
 
@@ -32,7 +43,17 @@ public class ProfileFragment extends BaseFragment {
 
     @Override
     public void initUI() {
+        getUserData(BuildConfig.FLAVOR);
+    }
 
+    private void getUserData(String flavor) {
+        if (flavor.equals("doctor")) {
+            DoctorModel doctorModel = DoctorModel.toModel(preferencesManager.getCurrentUser());
+            Log.d("das","dasd");
+        }else{
+            PetLoverModel petLoverRegisterModel = PetLoverModel.toModel(preferencesManager.getCurrentUser());
+            Log.d("das","dasd");
+        }
     }
 
     @Override
@@ -50,7 +71,7 @@ public class ProfileFragment extends BaseFragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        activity = (HomeActivity)getActivity();
+        activity = (HomeActivity) getActivity();
         initUI();
     }
 
@@ -70,7 +91,7 @@ public class ProfileFragment extends BaseFragment {
     }
 
     @OnClick(R.id.btn_log_out)
-    public void logOut(){
+    public void logOut() {
         navigator.navigateToLoginActivity(activity);
     }
 }

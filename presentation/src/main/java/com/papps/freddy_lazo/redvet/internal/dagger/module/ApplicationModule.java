@@ -5,6 +5,7 @@ import android.content.Context;
 import com.papps.freddy_lazo.data.executor.JobExecutor;
 import com.papps.freddy_lazo.data.repository.UserDataRepository;
 import com.papps.freddy_lazo.data.repository.UtilsDataRepository;
+import com.papps.freddy_lazo.data.sharedPreferences.PreferencesManager;
 import com.papps.freddy_lazo.domain.executor.PostExecutionThread;
 import com.papps.freddy_lazo.domain.executor.ThreadExecutor;
 import com.papps.freddy_lazo.domain.repository.UserRepository;
@@ -56,6 +57,12 @@ public class ApplicationModule {
     @Singleton
     UtilsRepository provideUserUtilsRepository(UtilsDataRepository utilsDataRepository) {
         return utilsDataRepository;
+    }
+
+    @Provides
+    @Singleton
+    PreferencesManager providePreferenceManager(Context context) {
+        return new PreferencesManager(context);
     }
 
 }

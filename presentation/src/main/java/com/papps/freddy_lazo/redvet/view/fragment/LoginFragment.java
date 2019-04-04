@@ -16,6 +16,7 @@ import com.papps.freddy_lazo.redvet.BuildConfig;
 import com.papps.freddy_lazo.redvet.R;
 import com.papps.freddy_lazo.redvet.interfaces.LoginFragmentView;
 import com.papps.freddy_lazo.redvet.internal.dagger.component.DaggerLoginFragmentComponent;
+import com.papps.freddy_lazo.redvet.model.DoctorModel;
 import com.papps.freddy_lazo.redvet.presenter.LoginFragmentPresenter;
 import com.papps.freddy_lazo.redvet.view.activity.LoginActivity;
 
@@ -139,6 +140,11 @@ public class LoginFragment extends BaseFragment implements LoginFragmentView {
     @Override
     public void successLogin() {
         navigator.navigateToHomeActivity(activity);
+    }
+
+    @Override
+    public void loginDoctorResponse(DoctorModel transform) {
+
     }
 
     @Override

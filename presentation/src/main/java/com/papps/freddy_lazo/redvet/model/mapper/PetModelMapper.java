@@ -28,4 +28,8 @@ public class PetModelMapper {
     public static PetModel transform(Pet pet) {
         return new PetModel(pet.getId(), pet.getDoctor_id(), pet.getPet_id());
     }
+
+    public static PetModel transformCustomer(Pet pet) {
+        return new PetModel(pet.getId(), pet.getDoctor_id(), pet.getPet_id());
+    }
 }

@@ -1,8 +1,14 @@
 package com.papps.freddy_lazo.redvet.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import com.google.gson.Gson;
+
+import java.util.ArrayList;
 import java.util.List;
 
-public class DoctorModel {
+public class DoctorModel implements Parcelable {
 
     private int user_id;
     private String type_document;
@@ -209,5 +215,77 @@ public class DoctorModel {
         this.api_token = api_token;
     }
 
+    public static DoctorModel toModel(String srtUser) {
+        return srtUser != null && !srtUser.isEmpty() ? new Gson().fromJson(srtUser, DoctorModel.class) : null;
+    }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(this.user_id);
+        dest.writeString(this.type_document);
+        dest.writeString(this.number_document);
+        dest.writeString(this.business_name);
+        dest.writeString(this.address);
+        dest.writeString(this.latitude);
+        dest.writeString(this.longitude);
+        dest.writeString(this.consultation_price);
+        dest.writeString(this.phone);
+        dest.writeString(this.type);
+        dest.writeString(this.tuition_number);
+        dest.writeString(this.description);
+        dest.writeString(this.attention);
+        dest.writeString(this.available);
+        dest.writeString(this.first_name);
+        dest.writeString(this.last_name);
+        dest.writeString(this.email);
+        dest.writeString(this.photo_url);
+        dest.writeString(this.api_token);
+        dest.writeList(this.petList);
+    }
+
+    protected DoctorModel(Parcel in) {
+        this.user_id = in.readInt();
+        this.type_document = in.readString();
+        this.number_document = in.readString();
+        this.business_name = in.readString();
+        this.address = in.readString();
+        this.latitude = in.readString();
+        this.longitude = in.readString();
+        this.consultation_price = in.readString();
+        this.phone = in.readString();
+        this.type = in.readString();
+        this.tuition_number = in.readString();
+        this.description = in.readString();
+        this.attention = in.readString();
+        this.available = in.readString();
+        this.first_name = in.readString();
+        this.last_name = in.readString();
+        this.email = in.readString();
+        this.photo_url = in.readString();
+        this.api_token = in.readString();
+        this.petList = new ArrayList<PetModel>();
+        in.readList(this.petList, PetModel.class.getClassLoader());
+    }
+
+    @Override
+    public String toString() {
+        return new Gson().toJson(this, DoctorModel.class);
+    }
+
+    public static final Parcelable.Creator<DoctorModel> CREATOR = new Parcelable.Creator<DoctorModel>() {
+        @Override
+        public DoctorModel createFromParcel(Parcel source) {
+            return new DoctorModel(source);
+        }
+
+        @Override
+        public DoctorModel[] newArray(int size) {
+            return new DoctorModel[size];
+        }
+    };
 }

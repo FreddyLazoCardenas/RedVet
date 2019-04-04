@@ -3,24 +3,33 @@ package com.papps.freddy_lazo.redvet.presenter;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.papps.freddy_lazo.data.exception.RedVetException;
+import com.papps.freddy_lazo.data.entity.mapper.PetLoverLoginMapper;
+import com.papps.freddy_lazo.data.sharedPreferences.PreferencesManager;
 import com.papps.freddy_lazo.domain.interactor.DefaultObserver;
 import com.papps.freddy_lazo.domain.interactor.DoctorLogin;
 import com.papps.freddy_lazo.domain.model.Doctor;
 import com.papps.freddy_lazo.domain.model.PetLover;
 import com.papps.freddy_lazo.redvet.R;
 import com.papps.freddy_lazo.redvet.interfaces.LoginFragmentView;
+import com.papps.freddy_lazo.redvet.model.DoctorModel;
+import com.papps.freddy_lazo.redvet.model.PetLoverModel;
+import com.papps.freddy_lazo.redvet.model.PetModel;
+import com.papps.freddy_lazo.redvet.model.mapper.DoctorModelMapper;
+import com.papps.freddy_lazo.redvet.model.mapper.PetLoverModelMapper;
+import com.papps.freddy_lazo.redvet.model.mapper.PetModelMapper;
 
 import javax.inject.Inject;
 
 public class LoginFragmentPresenter implements Presenter<LoginFragmentView> {
 
     private final DoctorLogin doctorLogin;
+    private final PreferencesManager preferencesManager;
     private LoginFragmentView view;
 
     @Inject
-    LoginFragmentPresenter(DoctorLogin doctorLogin) {
+    LoginFragmentPresenter(PreferencesManager preferencesManager,DoctorLogin doctorLogin) {
         this.doctorLogin = doctorLogin;
+        this.preferencesManager = preferencesManager;
     }
 
     private void login() {
@@ -95,6 +104,8 @@ public class LoginFragmentPresenter implements Presenter<LoginFragmentView> {
         @Override
         public void onNext(Doctor doctor) {
             super.onNext(doctor);
+            DoctorModel doctorModel = DoctorModelMapper.transform(doctor);
+            preferencesManager.saveCurrentUser(doctorModel.toString());
             Log.d("onNext", "next doctor");
         }
 
@@ -124,6 +135,8 @@ public class LoginFragmentPresenter implements Presenter<LoginFragmentView> {
         @Override
         public void onNext(PetLover petLover) {
             super.onNext(petLover);
+            PetLoverModel petLoverModel = PetLoverModelMapper.transform(petLover);
+            preferencesManager.saveCurrentUser(petLoverModel.toString());
             Log.d("onNext", "next petLover");
         }
 

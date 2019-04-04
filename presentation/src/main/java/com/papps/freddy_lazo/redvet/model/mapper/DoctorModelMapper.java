@@ -23,7 +23,7 @@ public class DoctorModelMapper {
         return doctorModelList;
     }
 
-    private static DoctorModel transform(Doctor doctor) {
+    public static DoctorModel transform(Doctor doctor) {
         return new DoctorModel(doctor.getUser_id(),doctor.getType_document(),doctor.getNumber_document(),doctor.getBusiness_name(),doctor.getAddress(),doctor.getLatitude(),doctor.getLongitude(),doctor.getConsultation_price(),doctor.getPhone(),doctor.getType(),doctor.getTuition_number()
                 ,doctor.getDescription(),doctor.getAttention(),doctor.getAvailable(),doctor.getFirst_name(),doctor.getLast_name(),doctor.getEmail(),doctor.getPhoto_url(),doctor.getApi_token(),PetModelMapper.transform(doctor.getPetList()));
     }

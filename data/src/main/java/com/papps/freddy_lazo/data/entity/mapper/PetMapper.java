@@ -12,10 +12,10 @@ public class PetMapper {
     }
 
     static List<Pet> transform(List<PetEntity> entity) {
-        if (entity == null) {
-            return null;
-        }
         List<Pet> entities = new ArrayList<>();
+        if (entity == null) {
+            return entities;
+        }
         for (PetEntity pet : entity){
             entities.add(transform(pet));
         }
@@ -23,6 +23,7 @@ public class PetMapper {
     }
 
     private static Pet transform(PetEntity entity){
-        return new Pet(entity.getId(),entity.getDoctor_id(),entity.getPet_id());
+        return new Pet(entity.getId(),entity.getDoctor_id(),entity.getPet_id(),entity.getName(),entity.getBirthday(),entity.getBreed(),entity.getPhoto());
     }
+
 }

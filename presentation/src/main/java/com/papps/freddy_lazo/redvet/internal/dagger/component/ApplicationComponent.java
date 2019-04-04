@@ -3,6 +3,7 @@ package com.papps.freddy_lazo.redvet.internal.dagger.component;
 
 import android.content.Context;
 
+import com.papps.freddy_lazo.data.sharedPreferences.PreferencesManager;
 import com.papps.freddy_lazo.domain.executor.PostExecutionThread;
 import com.papps.freddy_lazo.domain.executor.ThreadExecutor;
 import com.papps.freddy_lazo.domain.repository.UserRepository;
@@ -37,5 +38,7 @@ public interface ApplicationComponent {
     UserRepository userRepository();
 
     UtilsRepository utilsRepository();
+
+    PreferencesManager preferenceManager();
 
 }

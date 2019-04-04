@@ -10,14 +10,9 @@ public class Pet {
     private String breed;
     private String photo;
 
-    public Pet(int id, String doctor_id, String pet_id) {
+    public Pet(int id, String doctor_id, String pet_id, String name, String birthday, String breed, String photo) {
         this.id = id;
         this.doctor_id = doctor_id;
-        this.pet_id = pet_id;
-    }
-
-    public Pet(int id, String pet_id, String name, String birthday, String breed, String photo) {
-        this.id = id;
         this.pet_id = pet_id;
         this.name = name;
         this.birthday = birthday;
@@ -35,5 +30,21 @@ public class Pet {
 
     public String getPet_id() {
         return pet_id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getBirthday() {
+        return birthday;
+    }
+
+    public String getBreed() {
+        return breed;
+    }
+
+    public String getPhoto() {
+        return photo;
     }
 }

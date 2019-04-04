@@ -1,5 +1,7 @@
 package com.papps.freddy_lazo.redvet.interfaces;
 
+import com.papps.freddy_lazo.redvet.model.DoctorModel;
+
 public interface LoginFragmentView extends BaseView {
 
     String getEmail();
@@ -17,4 +19,6 @@ public interface LoginFragmentView extends BaseView {
     void hidePasswordError();
 
     void successLogin();
+
+    void loginDoctorResponse(DoctorModel transform);
 }
