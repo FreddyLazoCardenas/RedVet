@@ -101,8 +101,11 @@ public class LoginFragmentPresenter implements Presenter<LoginFragmentView> {
         @Override
         public void onError(Throwable e) {
             super.onError(e);
-            RedVetException exception = (RedVetException) e;
-            view.showErrorMessage(exception.getMessage());
+            if(e instanceof NullPointerException){
+                view.showErrorMessage("Cuenta de petLover");
+                return;
+            }
+            view.showErrorMessage(e.getMessage());
         }
 
         @Override
@@ -127,9 +130,11 @@ public class LoginFragmentPresenter implements Presenter<LoginFragmentView> {
         @Override
         public void onError(Throwable e) {
             super.onError(e);
-            RedVetException exception = (RedVetException) e;
-            view.showErrorMessage(exception.getMessage());
-        }
+            if(e instanceof NullPointerException){
+                view.showErrorMessage("Cuenta de doctor");
+                return;
+            }
+            view.showErrorMessage(e.getMessage());        }
 
         @Override
         public void onComplete() {

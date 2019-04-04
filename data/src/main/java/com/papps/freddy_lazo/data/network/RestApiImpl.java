@@ -18,7 +18,6 @@ import com.papps.freddy_lazo.data.network.response.DoctorSearchResponse;
 import com.papps.freddy_lazo.data.network.response.LoginResponse;
 import com.papps.freddy_lazo.data.network.response.NewsResponse;
 import com.papps.freddy_lazo.data.network.response.ServicesResponse;
-import com.papps.freddy_lazo.domain.model.PetLover;
 import com.papps.freddy_lazo.domain.model.PetRegister;
 import com.papps.freddy_lazo.domain.model.ScheduleDoctorRegister;
 import com.papps.freddy_lazo.domain.model.ServicesDoctorRegister;
@@ -51,8 +50,6 @@ public class RestApiImpl implements RestApi {
                 ResponseEntity<LoginResponse> body = response.body();
                 if (body != null && body.getMessage() == null) {
                     emitter.onNext(body.getData().getDoctorEntity());
-                    if(body.getData().getPetLoverEntity() != null)
-                        emitter.onError(new RedVetException("Error la cuenta es de petLover"));
                     emitter.onComplete();
                 }
             }
@@ -68,8 +65,6 @@ public class RestApiImpl implements RestApi {
                 ResponseEntity<LoginResponse> body = response.body();
                 if (body != null && body.getMessage() == null) {
                     emitter.onNext(body.getData().getPetLoverEntity());
-                    if(body.getData().getDoctorEntity() != null)
-                        emitter.onError(new RedVetException("Error la cuentas es de doctor"));
                     emitter.onComplete();
                 }
             }

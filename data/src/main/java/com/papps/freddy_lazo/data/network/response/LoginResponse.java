@@ -9,7 +9,7 @@ public class LoginResponse {
     @SerializedName("doctor")
     private DoctorEntity doctorEntity;
 
-    @SerializedName("pet-lover")
+    @SerializedName("pet_lover")
     private PetLoverEntity petLoverEntity;
 
     public DoctorEntity getDoctorEntity() {
