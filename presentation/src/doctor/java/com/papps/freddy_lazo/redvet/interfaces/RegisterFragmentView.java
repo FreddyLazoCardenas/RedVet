@@ -66,4 +66,7 @@ public interface RegisterFragmentView extends BaseView {
     void hideJobError();
 
     void hideTuitionError();
+
+    String getTypeDocument();
+
 }

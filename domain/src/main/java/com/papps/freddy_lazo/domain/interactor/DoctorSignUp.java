@@ -9,6 +9,8 @@ import com.papps.freddy_lazo.domain.repository.UserRepository;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import io.reactivex.Observable;
 
 public class DoctorSignUp extends UseCase {
@@ -40,6 +42,8 @@ public class DoctorSignUp extends UseCase {
     private String fcmToken;
     private List<PetRegister> pets;
 
+
+    @Inject
     public DoctorSignUp(UserRepository repository, ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
         super(threadExecutor, postExecutionThread);
         this.repository = repository;

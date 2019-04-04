@@ -97,7 +97,7 @@ public class RegisterFragmentPresenter implements Presenter<RegisterFragmentView
         if (!isValidJob(view.getJob()))
             return;
 
-        doctorSignUp.bindParams(view.getEmail(),view.getPassword(),view.getName(),view.getLastName(),view);
+//        doctorSignUp.bindParams(view.getEmail(),view.getPassword(),view.getName(),view.getLastName(),view.getTypeDocument(),view.getNumber(),view.getBusinessName(),view.getAddress(),);
 
     }
 

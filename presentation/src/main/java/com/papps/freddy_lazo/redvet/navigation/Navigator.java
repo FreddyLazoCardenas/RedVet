@@ -15,6 +15,7 @@ import com.papps.freddy_lazo.redvet.interfaces.ServicesListener;
 import com.papps.freddy_lazo.redvet.view.activity.BaseActivity;
 import com.papps.freddy_lazo.redvet.view.activity.HomeActivity;
 import com.papps.freddy_lazo.redvet.view.activity.LoginActivity;
+import com.papps.freddy_lazo.redvet.view.activity.MapActivity;
 import com.papps.freddy_lazo.redvet.view.activity.RegisterActivity;
 import com.papps.freddy_lazo.redvet.view.dialogFragment.CameraDialog;
 import com.papps.freddy_lazo.redvet.view.fragment.MapFragment;
@@ -54,6 +55,10 @@ public class Navigator extends BaseNavigator {
 
     public void navigateToHomeActivity(BaseActivity activity) {
         activity.startActivity(HomeActivity.getCallingIntent(activity));
+    }
+
+    public void navigateToMapActivity(BaseActivity activity, int requestCode) {
+        activity.startActivityForResult(MapActivity.getCallingIntent(activity), requestCode);
     }
 
 

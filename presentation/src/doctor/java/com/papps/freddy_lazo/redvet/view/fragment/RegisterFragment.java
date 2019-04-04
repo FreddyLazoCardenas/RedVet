@@ -14,12 +14,14 @@ import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -101,6 +103,8 @@ public class RegisterFragment extends BaseFragment implements RegisterFragmentVi
     android.support.constraint.Group gShower;
     @BindView(R.id.group_consultation)
     android.support.constraint.Group gConsultation;
+    @BindView(R.id.toggle)
+    RadioGroup toggle;
 
     private boolean fromServices;
 
@@ -139,6 +143,7 @@ public class RegisterFragment extends BaseFragment implements RegisterFragmentVi
         presenter.setView(this);
         setUpPetRv();
         setUpSpinner();
+        getTypeDocument();
     }
 
     private void setUpSpinner() {
@@ -372,6 +377,14 @@ public class RegisterFragment extends BaseFragment implements RegisterFragmentVi
     @Override
     public void hideTuitionError() {
         hideEtError(etTuition);
+    }
+
+    @Override
+    public String getTypeDocument() {
+        int id = toggle.getCheckedRadioButtonId();
+        View radioButton = toggle.findViewById(id);
+        int idx = toggle.indexOfChild(radioButton);
+        return idx == 0 ? "dni" : "ruc";
     }
 
     @Override

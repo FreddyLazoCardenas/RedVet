@@ -52,7 +52,7 @@
             android:layout_height="40dp"
             android:layout_marginTop="40dp"
             android:background="@drawable/outline"
-            android:checkedButton="@+id/ruc"
+            android:checkedButton="@+id/dni"
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="@id/end_guideline"
             app:layout_constraintStart_toStartOf="@id/start_guideline"
