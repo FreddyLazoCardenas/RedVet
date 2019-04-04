@@ -93,6 +93,7 @@ ext {
             rootbeer              : "com.scottyab:rootbeer-lib:${rootbeerVersion}",
             securedPreferences    : "online.devliving:securedpreferencestore:${securedPreferencesVersion}",
             scanQrCode            : "com.budiyev.android:code-scanner:${qrScanCodeVersion}"
+
     ]
 
     presentationTestDependencies = [

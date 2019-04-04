@@ -3,18 +3,17 @@ package com.papps.freddy_lazo.redvet.presenter;
 import com.papps.freddy_lazo.domain.interactor.DefaultObserver;
 import com.papps.freddy_lazo.domain.interactor.PetLoverNews;
 import com.papps.freddy_lazo.domain.model.News;
+import com.papps.freddy_lazo.redvet.interfaces.RegisterFragmentView;
 import com.papps.freddy_lazo.redvet.model.mapper.NewsModelMapper;
-import com.papps.freddy_lazo.redvet.presenter.Presenter;
-import com.papps.freddy_lazo.redvet.view.interfaces.NewsFragmentView;
 
 import java.util.List;
 
 import javax.inject.Inject;
 
-public class NewsFragmentPresenter implements Presenter<NewsFragmentView> {
+public class NewsFragmentPresenter implements Presenter<RegisterFragmentView.NewsFragmentView> {
 
     private final PetLoverNews petLoverNews;
-    private NewsFragmentView view;
+    private RegisterFragmentView.NewsFragmentView view;
 
     @Inject
     public NewsFragmentPresenter(PetLoverNews petLoverNews) {
@@ -42,7 +41,7 @@ public class NewsFragmentPresenter implements Presenter<NewsFragmentView> {
     }
 
     @Override
-    public void setView(NewsFragmentView view) {
+    public void setView(RegisterFragmentView.NewsFragmentView view) {
         this.view = view;
     }
 

@@ -72,4 +72,6 @@ dependencies {
     implementation presentationDependencies.glide
     implementation presentationDependencies.imageCropper
     implementation presentationDependencies.firebaseMessaging
+    implementation presentationDependencies.googlePlaces
+    implementation presentationDependencies.googleLocation
 }

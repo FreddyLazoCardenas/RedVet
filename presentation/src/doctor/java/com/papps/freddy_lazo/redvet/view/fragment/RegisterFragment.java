@@ -191,6 +191,11 @@ public class RegisterFragment extends BaseFragment implements RegisterFragmentVi
         navigator.showListDialog(activity, this);
     }
 
+    @OnClick(R.id.edt_address)
+    public void edtAddress(){
+        navigator.navigateToMapActivity(activity,1);
+    }
+
     @OnClick(R.id.img_add_services)
     public void services() {
         fromServices = true;

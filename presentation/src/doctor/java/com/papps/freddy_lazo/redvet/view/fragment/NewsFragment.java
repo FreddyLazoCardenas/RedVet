@@ -12,12 +12,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.papps.freddy_lazo.redvet.R;
+import com.papps.freddy_lazo.redvet.interfaces.RegisterFragmentView;
 import com.papps.freddy_lazo.redvet.internal.dagger.component.DaggerNewsFragmentComponent;
 import com.papps.freddy_lazo.redvet.model.NewsModel;
 import com.papps.freddy_lazo.redvet.presenter.NewsFragmentPresenter;
 import com.papps.freddy_lazo.redvet.view.activity.HomeActivity;
 import com.papps.freddy_lazo.redvet.view.adapter.NewsAdapter;
-import com.papps.freddy_lazo.redvet.view.interfaces.NewsFragmentView;
 
 import java.util.List;
 
@@ -25,7 +25,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 
-public class NewsFragment extends BaseFragment implements NewsFragmentView {
+public class NewsFragment extends BaseFragment implements RegisterFragmentView.NewsFragmentView {
 
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
