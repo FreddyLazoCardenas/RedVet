@@ -105,7 +105,7 @@ public class LoginFragmentPresenter implements Presenter<LoginFragmentView> {
         public void onNext(Doctor doctor) {
             super.onNext(doctor);
             DoctorModel doctorModel = DoctorModelMapper.transform(doctor);
-            preferencesManager.saveCurrentUser(doctorModel.toString());
+            preferencesManager.saveDoctorCurrentUser(doctorModel.toString());
             Log.d("onNext", "next doctor");
         }
 
@@ -136,7 +136,7 @@ public class LoginFragmentPresenter implements Presenter<LoginFragmentView> {
         public void onNext(PetLover petLover) {
             super.onNext(petLover);
             PetLoverModel petLoverModel = PetLoverModelMapper.transform(petLover);
-            preferencesManager.saveCurrentUser(petLoverModel.toString());
+            preferencesManager.savePetLoverCurrentUser(petLoverModel.toString());
             Log.d("onNext", "next petLover");
         }
 

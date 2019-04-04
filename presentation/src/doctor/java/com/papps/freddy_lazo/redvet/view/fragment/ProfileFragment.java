@@ -43,17 +43,12 @@ public class ProfileFragment extends BaseFragment {
 
     @Override
     public void initUI() {
-        getUserData(BuildConfig.FLAVOR);
+        getUserData();
     }
 
-    private void getUserData(String flavor) {
-        if (flavor.equals("doctor")) {
-            DoctorModel doctorModel = DoctorModel.toModel(preferencesManager.getCurrentUser());
+    private void getUserData() {
+            DoctorModel doctorModel = DoctorModel.toModel(preferencesManager.getDoctorCurrentUser());
             Log.d("das","dasd");
-        }else{
-            PetLoverModel petLoverRegisterModel = PetLoverModel.toModel(preferencesManager.getCurrentUser());
-            Log.d("das","dasd");
-        }
     }
 
     @Override
