@@ -1,8 +1,6 @@
 package com.papps.freddy_lazo.data.network.body;
 
 import com.google.gson.annotations.SerializedName;
-import com.papps.freddy_lazo.data.entity.PetEntity;
-import com.papps.freddy_lazo.data.entity.PetRegisterEntity;
 import com.papps.freddy_lazo.domain.model.PetRegister;
 
 import java.util.List;

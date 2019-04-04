@@ -5,10 +5,12 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.View;
+import android.widget.Toast;
 
 import com.papps.freddy_lazo.redvet.AndroidApplication;
 import com.papps.freddy_lazo.redvet.interfaces.BaseView;
 import com.papps.freddy_lazo.redvet.navigation.Navigator;
+import com.papps.freddy_lazo.redvet.view.activity.BaseActivity;
 
 import javax.inject.Inject;
 
@@ -29,6 +31,7 @@ public abstract class BaseFragment extends Fragment implements BaseView {
         unbinder = ButterKnife.bind(this, view);
 
     }
+
     AndroidApplication getAndroidApplication() {
         return (AndroidApplication) getActivity().getApplication();
     }
@@ -40,4 +43,9 @@ public abstract class BaseFragment extends Fragment implements BaseView {
             unbinder.unbind();
         }
     }
+
+    protected void showMessage(BaseActivity activity, String message) {
+        Toast.makeText(activity, message, Toast.LENGTH_LONG).show();
+    }
+
 }

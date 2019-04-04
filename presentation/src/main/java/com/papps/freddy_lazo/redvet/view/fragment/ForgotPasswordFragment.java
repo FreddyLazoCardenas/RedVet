@@ -9,15 +9,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.papps.freddy_lazo.redvet.R;
 import com.papps.freddy_lazo.redvet.interfaces.ForgotPasswordFragmentView;
 import com.papps.freddy_lazo.redvet.internal.dagger.component.DaggerForgotPasswordFragmentComponent;
-import com.papps.freddy_lazo.redvet.internal.dagger.component.DaggerLoginFragmentComponent;
 import com.papps.freddy_lazo.redvet.presenter.ForgotPasswordFragmentPresenter;
 import com.papps.freddy_lazo.redvet.view.activity.LoginActivity;
-import com.papps.freddy_lazo.redvet.view.activity.RegisterActivity;
 
 import javax.inject.Inject;
 
@@ -75,7 +72,7 @@ public class ForgotPasswordFragment extends BaseFragment implements ForgotPasswo
 
     @Override
     public void showErrorMessage(String message) {
-        Toast.makeText(activity, message, Toast.LENGTH_LONG).show();
+        showMessage(activity, message);
     }
 
     @Override
@@ -85,11 +82,36 @@ public class ForgotPasswordFragment extends BaseFragment implements ForgotPasswo
 
     @OnClick(R.id.button)
     public void button() {
-        presenter.recoverPassword();
+        presenter.validation();
     }
 
     @Override
     public String getEmail() {
         return etEmail.getText().toString();
+    }
+
+    @Override
+    public void showEmailError(String message) {
+        showEtError(etEmail, message);
+    }
+
+    @Override
+    public void hideEmailError() {
+        hideEtError(etEmail);
+    }
+
+    @Override
+    public void successRequest() {
+        showMessage(activity, getString(R.string.success_recover_password));
+        activity.onBackPressed();
+    }
+
+    private void hideEtError(EditText editText) {
+        editText.setError(null);
+    }
+
+    private void showEtError(EditText editText, String message) {
+        editText.setError(message);
+        editText.requestFocus();
     }
 }

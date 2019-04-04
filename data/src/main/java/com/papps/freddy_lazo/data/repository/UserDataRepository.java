@@ -1,9 +1,11 @@
 package com.papps.freddy_lazo.data.repository;
 
 import com.papps.freddy_lazo.data.entity.mapper.DoctorLoginMapper;
+import com.papps.freddy_lazo.data.entity.mapper.PetLoverLoginMapper;
 import com.papps.freddy_lazo.data.entity.mapper.SearchDoctorsMapper;
 import com.papps.freddy_lazo.data.network.RestApi;
 import com.papps.freddy_lazo.domain.model.Doctor;
+import com.papps.freddy_lazo.domain.model.PetLover;
 import com.papps.freddy_lazo.domain.model.PetRegister;
 import com.papps.freddy_lazo.domain.model.ScheduleDoctorRegister;
 import com.papps.freddy_lazo.domain.model.ServicesDoctorRegister;
@@ -28,8 +30,13 @@ public class UserDataRepository implements UserRepository {
     }
 
     @Override
-    public Observable<Doctor> login(String email, String password) {
-        return mRestApi.login(email, password).map(DoctorLoginMapper::transform);
+    public Observable<Doctor> loginDoctor(String email, String password) {
+        return mRestApi.loginDoctor(email, password).map(DoctorLoginMapper::transform);
+    }
+
+    @Override
+    public Observable<PetLover> loginPetLover(String email, String password) {
+        return mRestApi.loginPetLover(email, password).map(PetLoverLoginMapper::transform);
     }
 
     @Override

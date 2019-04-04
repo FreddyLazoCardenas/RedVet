@@ -2,6 +2,7 @@ package com.papps.freddy_lazo.data.network;
 
 import com.papps.freddy_lazo.data.entity.DoctorEntity;
 import com.papps.freddy_lazo.data.entity.NewsEntity;
+import com.papps.freddy_lazo.data.entity.PetLoverEntity;
 import com.papps.freddy_lazo.data.entity.ServicesEntity;
 import com.papps.freddy_lazo.domain.model.PetRegister;
 import com.papps.freddy_lazo.domain.model.ScheduleDoctorRegister;
@@ -14,7 +15,9 @@ import io.reactivex.Observable;
 
 public interface RestApi {
 
-    Observable<DoctorEntity> login(String email, String password);
+    Observable<DoctorEntity> loginDoctor(String email, String password);
+
+    Observable<PetLoverEntity> loginPetLover(String email, String password);
 
     Observable<List<ServicesEntity>> services();
 

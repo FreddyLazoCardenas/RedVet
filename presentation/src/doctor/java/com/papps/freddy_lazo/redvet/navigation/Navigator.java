@@ -57,11 +57,8 @@ public class Navigator extends BaseNavigator {
     }
 
     public void navigateToMapActivity(Fragment fragment, int requestCode) {
-        fragment.startActivity(MapActivity.getCallingIntent(fragment));
+        fragment.startActivityForResult(MapActivity.getCallingIntent(fragment), requestCode);
     }
-
-
-
 
     //fragments
 
@@ -141,7 +138,7 @@ public class Navigator extends BaseNavigator {
     }
     //Dialogs
 
-    public void showListDialog(BaseActivity activity,CameraDialog.OnClickListener listener){
+    public void showListDialog(BaseActivity activity, CameraDialog.OnClickListener listener) {
         dialogTransaction(activity, CameraDialog.newInstance(listener));
     }
 

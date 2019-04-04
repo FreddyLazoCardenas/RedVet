@@ -5,8 +5,10 @@ import android.content.Context;
 
 import com.papps.freddy_lazo.data.entity.DoctorEntity;
 import com.papps.freddy_lazo.data.entity.NewsEntity;
+import com.papps.freddy_lazo.data.entity.PetLoverEntity;
 import com.papps.freddy_lazo.data.entity.ResponseEntity;
 import com.papps.freddy_lazo.data.entity.ServicesEntity;
+import com.papps.freddy_lazo.data.exception.RedVetException;
 import com.papps.freddy_lazo.data.network.body.BodyDoctorRegister;
 import com.papps.freddy_lazo.data.network.body.BodyLogin;
 import com.papps.freddy_lazo.data.network.body.BodyPetLoverRegister;
@@ -16,6 +18,7 @@ import com.papps.freddy_lazo.data.network.response.DoctorSearchResponse;
 import com.papps.freddy_lazo.data.network.response.LoginResponse;
 import com.papps.freddy_lazo.data.network.response.NewsResponse;
 import com.papps.freddy_lazo.data.network.response.ServicesResponse;
+import com.papps.freddy_lazo.domain.model.PetLover;
 import com.papps.freddy_lazo.domain.model.PetRegister;
 import com.papps.freddy_lazo.domain.model.ScheduleDoctorRegister;
 import com.papps.freddy_lazo.domain.model.ServicesDoctorRegister;
@@ -40,7 +43,7 @@ public class RestApiImpl implements RestApi {
     }
 
     @Override
-    public Observable<DoctorEntity> login(String email, String password) {
+    public Observable<DoctorEntity> loginDoctor(String email, String password) {
         return Observable.create(emitter -> restService.login(new BodyLogin(email, password, "asdd", "android")).enqueue(new DefaultCallback<ResponseEntity<LoginResponse>>(emitter) {
             @Override
             public void onResponse(@NonNull Call<ResponseEntity<LoginResponse>> call, @NonNull Response<ResponseEntity<LoginResponse>> response) {
@@ -48,6 +51,25 @@ public class RestApiImpl implements RestApi {
                 ResponseEntity<LoginResponse> body = response.body();
                 if (body != null && body.getMessage() == null) {
                     emitter.onNext(body.getData().getDoctorEntity());
+                    if(body.getData().getPetLoverEntity() != null)
+                        emitter.onError(new RedVetException("Error la cuenta es de petLover"));
+                    emitter.onComplete();
+                }
+            }
+        }));
+    }
+
+   @Override
+    public Observable<PetLoverEntity> loginPetLover(String email, String password) {
+        return Observable.create(emitter -> restService.login(new BodyLogin(email, password, "asdd", "android")).enqueue(new DefaultCallback<ResponseEntity<LoginResponse>>(emitter) {
+            @Override
+            public void onResponse(@NonNull Call<ResponseEntity<LoginResponse>> call, @NonNull Response<ResponseEntity<LoginResponse>> response) {
+                super.onResponse(call, response);
+                ResponseEntity<LoginResponse> body = response.body();
+                if (body != null && body.getMessage() == null) {
+                    emitter.onNext(body.getData().getPetLoverEntity());
+                    if(body.getData().getDoctorEntity() != null)
+                        emitter.onError(new RedVetException("Error la cuentas es de doctor"));
                     emitter.onComplete();
                 }
             }

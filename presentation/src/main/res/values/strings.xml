@@ -8,4 +8,5 @@
     <string name="add_pets_data">Agregar datos de mascotas</string>
     <string name="add_services_data">Agregar datos de servicios</string>
     <string name="add_schedules_data">Agregar datos de horario</string>
+    <string name="success_recover_password">Ingresa a tu correo para reestablecer tu contraseña</string>
 </resources>

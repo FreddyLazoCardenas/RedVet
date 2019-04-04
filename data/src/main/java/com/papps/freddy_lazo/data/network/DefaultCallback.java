@@ -31,7 +31,7 @@ public class DefaultCallback<T> implements Callback<T> {
     @Override
     public void onFailure(@NonNull Call<T> call, @NonNull Throwable t) {
         if(!emitter.isDisposed()){
-            emitter.onError(new RedVetException("Error de servicio"));
+           // emitter.onError(new RedVetException("Error de servicio"));
         }
     }
 

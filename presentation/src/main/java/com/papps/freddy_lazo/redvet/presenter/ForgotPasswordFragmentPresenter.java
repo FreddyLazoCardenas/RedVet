@@ -1,15 +1,18 @@
 package com.papps.freddy_lazo.redvet.presenter;
 
+import android.text.TextUtils;
+
 import com.papps.freddy_lazo.data.exception.RedVetException;
 import com.papps.freddy_lazo.domain.interactor.DefaultObserver;
 import com.papps.freddy_lazo.domain.interactor.ForgotPassword;
+import com.papps.freddy_lazo.redvet.R;
 import com.papps.freddy_lazo.redvet.interfaces.ForgotPasswordFragmentView;
 
 import javax.inject.Inject;
 
 
 public class ForgotPasswordFragmentPresenter implements Presenter<ForgotPasswordFragmentView> {
-    
+
     private final ForgotPassword forgotPassword;
     private ForgotPasswordFragmentView view;
 
@@ -38,9 +41,29 @@ public class ForgotPasswordFragmentPresenter implements Presenter<ForgotPassword
         this.view = view;
     }
 
-    public void recoverPassword() {
+    private void recoverPassword() {
         forgotPassword.bindParams(view.getEmail());
         forgotPassword.execute(new ForgotPasswordObservable());
+    }
+
+    public void validation() {
+        if (!isValidEmail(view.getEmail()))
+            return;
+
+        recoverPassword();
+    }
+
+    private boolean isValidEmail(String email) {
+        if (TextUtils.isEmpty(email)) {
+            view.showEmailError(view.context().getString(R.string.text_required_field));
+            return false;
+        }
+        if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            view.showEmailError(view.context().getString(R.string.text_bad_format_field));
+            return false;
+        }
+        view.hideEmailError();
+        return true;
     }
 
     private class ForgotPasswordObservable extends DefaultObserver<Void> {
@@ -53,7 +76,6 @@ public class ForgotPasswordFragmentPresenter implements Presenter<ForgotPassword
         @Override
         public void onError(Throwable e) {
             super.onError(e);
-            super.onError(e);
             RedVetException exception = (RedVetException) e;
             view.showErrorMessage(exception.getMessage());
         }
@@ -61,6 +83,7 @@ public class ForgotPasswordFragmentPresenter implements Presenter<ForgotPassword
         @Override
         public void onComplete() {
             super.onComplete();
+            view.successRequest();
         }
     }
 }

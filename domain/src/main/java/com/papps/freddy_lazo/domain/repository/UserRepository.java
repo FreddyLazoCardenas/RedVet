@@ -1,6 +1,7 @@
 package com.papps.freddy_lazo.domain.repository;
 
 import com.papps.freddy_lazo.domain.model.Doctor;
+import com.papps.freddy_lazo.domain.model.PetLover;
 import com.papps.freddy_lazo.domain.model.PetRegister;
 import com.papps.freddy_lazo.domain.model.ScheduleDoctorRegister;
 import com.papps.freddy_lazo.domain.model.ServicesDoctorRegister;
@@ -12,7 +13,9 @@ import io.reactivex.Observable;
 
 public interface UserRepository {
 
-    Observable<Doctor> login(String email, String password);
+    Observable<Doctor> loginDoctor(String email, String password);
+
+    Observable<PetLover> loginPetLover(String email, String password);
 
     Observable<List<Doctor>> searchDoctors(ArrayList<String> type, ArrayList<Integer> services, ArrayList<Integer> pets, String text);
 

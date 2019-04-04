@@ -8,8 +8,11 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.papps.freddy_lazo.redvet.BuildConfig;
 import com.papps.freddy_lazo.redvet.R;
 import com.papps.freddy_lazo.redvet.interfaces.LoginFragmentView;
 import com.papps.freddy_lazo.redvet.internal.dagger.component.DaggerLoginFragmentComponent;
@@ -28,9 +31,9 @@ public class LoginFragment extends BaseFragment implements LoginFragmentView {
 
 
     @BindView(R.id.et_username)
-    TextView etUsername;
+    EditText etUsername;
     @BindView(R.id.et_password)
-    TextView etPassword;
+    EditText etPassword;
 
     private LoginActivity activity;
 
@@ -74,9 +77,8 @@ public class LoginFragment extends BaseFragment implements LoginFragmentView {
     }
 
     @OnClick(R.id.button_login)
-    public void login(){
-        //navigator.navigateToHomeActivity(activity);
-        presenter.login();
+    public void login() {
+        presenter.validation();
     }
 
     @Override
@@ -91,7 +93,7 @@ public class LoginFragment extends BaseFragment implements LoginFragmentView {
 
     @Override
     public void showErrorMessage(String message) {
-
+        Toast.makeText(activity, message, Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -105,7 +107,52 @@ public class LoginFragment extends BaseFragment implements LoginFragmentView {
     }
 
     @Override
+    public String getFlavor() {
+        return BuildConfig.FLAVOR;
+    }
+
+    @Override
     public String getPassword() {
         return etPassword.getText().toString();
+    }
+
+    @Override
+    public void showEmailError(String message) {
+        showEtError(etUsername, message);
+    }
+
+    @Override
+    public void hideEmailError() {
+        hideEtError(etUsername);
+    }
+
+    @Override
+    public void showPasswordError(String message) {
+        showEtError(etPassword, message);
+    }
+
+    @Override
+    public void hidePasswordError() {
+        hideEtError(etPassword);
+    }
+
+    @Override
+    public void successLogin() {
+        navigator.navigateToHomeActivity(activity);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        presenter.destroy();
+    }
+
+    private void hideEtError(EditText editText) {
+        editText.setError(null);
+    }
+
+    private void showEtError(EditText editText, String message) {
+        editText.setError(message);
+        editText.requestFocus();
     }
 }
