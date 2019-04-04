@@ -17,6 +17,7 @@ import com.papps.freddy_lazo.redvet.model.NewsModel;
 import com.papps.freddy_lazo.redvet.presenter.NewsFragmentPresenter;
 import com.papps.freddy_lazo.redvet.view.activity.HomeActivity;
 import com.papps.freddy_lazo.redvet.view.adapter.NewsAdapter;
+import com.papps.freddy_lazo.redvet.view.interfaces.NewsFragmentView;
 
 import java.util.List;
 

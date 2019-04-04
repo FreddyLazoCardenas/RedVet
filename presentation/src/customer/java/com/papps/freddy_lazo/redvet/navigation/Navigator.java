@@ -1,7 +1,6 @@
 package com.papps.freddy_lazo.redvet.navigation;
 
 
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
@@ -12,11 +11,9 @@ import android.support.v4.content.FileProvider;
 
 import com.papps.freddy_lazo.redvet.BuildConfig;
 import com.papps.freddy_lazo.redvet.R;
-import com.papps.freddy_lazo.redvet.interfaces.ServicesListener;
 import com.papps.freddy_lazo.redvet.view.activity.BaseActivity;
 import com.papps.freddy_lazo.redvet.view.activity.HomeActivity;
 import com.papps.freddy_lazo.redvet.view.activity.LoginActivity;
-import com.papps.freddy_lazo.redvet.view.activity.MapActivity;
 import com.papps.freddy_lazo.redvet.view.activity.RegisterActivity;
 import com.papps.freddy_lazo.redvet.view.dialogFragment.CameraDialog;
 import com.papps.freddy_lazo.redvet.view.fragment.MapFragment;
@@ -58,9 +55,7 @@ public class Navigator extends BaseNavigator {
         activity.startActivity(HomeActivity.getCallingIntent(activity));
     }
 
-    public void navigateToMapActivity(Fragment fragment, int requestCode) {
-        fragment.startActivityForResult(MapActivity.getCallingIntent(fragment), requestCode);
-    }
+
 
 
     //fragments

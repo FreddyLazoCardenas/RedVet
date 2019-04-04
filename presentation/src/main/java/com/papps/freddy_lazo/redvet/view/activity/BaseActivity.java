@@ -5,8 +5,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.View;
 
 import com.papps.freddy_lazo.redvet.AndroidApplication;
 import com.papps.freddy_lazo.redvet.interfaces.BaseView;
@@ -19,7 +17,6 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class BaseActivity extends AppCompatActivity implements BaseView {
