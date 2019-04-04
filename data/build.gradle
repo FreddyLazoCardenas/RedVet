@@ -41,5 +41,6 @@ dependencies {
     api dataDependencies.rxJava
     api dataDependencies.rxAndroid
     api dataDependencies.javaxInject
+    api dataDependencies.loggingInterceptor
 
 }

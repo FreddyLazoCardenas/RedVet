@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.papps.freddy_lazo.redvet.R;
 import com.papps.freddy_lazo.redvet.interfaces.LoginFragmentView;
@@ -17,12 +18,19 @@ import com.papps.freddy_lazo.redvet.view.activity.LoginActivity;
 
 import javax.inject.Inject;
 
+import butterknife.BindView;
 import butterknife.OnClick;
 
 public class LoginFragment extends BaseFragment implements LoginFragmentView {
 
     @Inject
     LoginFragmentPresenter presenter;
+
+
+    @BindView(R.id.et_username)
+    TextView etUsername;
+    @BindView(R.id.et_password)
+    TextView etPassword;
 
     private LoginActivity activity;
 
@@ -67,13 +75,13 @@ public class LoginFragment extends BaseFragment implements LoginFragmentView {
 
     @OnClick(R.id.button_login)
     public void login(){
-        navigator.navigateToHomeActivity(activity);
+        //navigator.navigateToHomeActivity(activity);
+        presenter.login();
     }
 
     @Override
     public void initUI() {
         presenter.setView(this);
-        presenter.login();
     }
 
     @Override
@@ -89,5 +97,15 @@ public class LoginFragment extends BaseFragment implements LoginFragmentView {
     @Override
     public void showErrorNetworkMessage(String message) {
 
+    }
+
+    @Override
+    public String getEmail() {
+        return etUsername.getText().toString();
+    }
+
+    @Override
+    public String getPassword() {
+        return etPassword.getText().toString();
     }
 }

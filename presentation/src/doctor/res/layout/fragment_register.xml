@@ -489,9 +489,13 @@
             style="@style/Widget.RetVet.ButtonSecondary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
             android:text="Registar"
-            tools:layout_editor_absoluteX="130dp"
-            tools:layout_editor_absoluteY="1640dp" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/end_guideline"
+            app:layout_constraintStart_toStartOf="@id/start_guideline"
+            app:layout_constraintTop_toBottomOf="@+id/et_consultation_price" />
 
         <android.support.constraint.Guideline
             android:id="@+id/start_guideline"

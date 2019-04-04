@@ -20,7 +20,8 @@ public class LoginFragmentPresenter implements Presenter<LoginFragmentView> {
     }
 
     public void login(){
-        doctorLogin.bindParams("richardisaac.pc92@gmail.com","123456");
+       // doctorLogin.bindParams("richardisaac.pc92@gmail.com","123456");
+        doctorLogin.bindParams(view.getEmail(),view.getPassword());
         doctorLogin.execute(new LoginObservable());
     }
 
