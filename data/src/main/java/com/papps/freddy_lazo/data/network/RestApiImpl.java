@@ -10,6 +10,7 @@ import com.papps.freddy_lazo.data.entity.ServicesEntity;
 import com.papps.freddy_lazo.data.network.body.BodyDoctorRegister;
 import com.papps.freddy_lazo.data.network.body.BodyLogin;
 import com.papps.freddy_lazo.data.network.body.BodyPetLoverRegister;
+import com.papps.freddy_lazo.data.network.body.BodyRecoverPassword;
 import com.papps.freddy_lazo.data.network.body.BodySearchDoctors;
 import com.papps.freddy_lazo.data.network.response.DoctorSearchResponse;
 import com.papps.freddy_lazo.data.network.response.LoginResponse;
@@ -62,6 +63,20 @@ public class RestApiImpl implements RestApi {
                 ResponseEntity<ServicesResponse> body = response.body();
                 if (body != null && body.getMessage() == null) {
                     emitter.onNext(body.getData().getServicesEntityList());
+                    emitter.onComplete();
+                }
+            }
+        }));
+    }
+
+    @Override
+    public Observable<Void> forgotPassword(String email) {
+        return Observable.create(emitter -> restService.forgotPassword(new BodyRecoverPassword(email)).enqueue(new DefaultCallback<ResponseEntity<Void>>(emitter) {
+            @Override
+            public void onResponse(@NonNull Call<ResponseEntity<Void>> call, @NonNull Response<ResponseEntity<Void>> response) {
+                super.onResponse(call, response);
+                ResponseEntity<Void> body = response.body();
+                if (body != null && body.getMessage() == null) {
                     emitter.onComplete();
                 }
             }

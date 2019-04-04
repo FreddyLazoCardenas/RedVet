@@ -11,6 +11,7 @@ public interface UtilsRepository {
 
     Observable<List<Service>> services();
 
+    Observable<Void> forgotPassword(String email);
 
     Observable<List<News>> petLoverNews(String query);
 

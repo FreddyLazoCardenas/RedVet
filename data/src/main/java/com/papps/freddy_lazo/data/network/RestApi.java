@@ -18,6 +18,8 @@ public interface RestApi {
 
     Observable<List<ServicesEntity>> services();
 
+    Observable<Void> forgotPassword(String email);
+
     Observable<List<NewsEntity>> petLoverNews(String path);
 
     Observable<List<DoctorEntity>> searchDoctors(ArrayList<String> type, ArrayList<Integer> services, ArrayList<Integer> pets, String text);

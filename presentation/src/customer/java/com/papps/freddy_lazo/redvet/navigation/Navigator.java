@@ -56,8 +56,6 @@ public class Navigator extends BaseNavigator {
     }
 
 
-
-
     //fragments
 
     public void navigateToLoginFragment(BaseActivity activity) {

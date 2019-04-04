@@ -33,4 +33,9 @@ public class UtilsDataRepository implements UtilsRepository {
     public Observable<List<News>> petLoverNews(String path) {
         return mRestApi.petLoverNews(path).map(NewsMapper::transform);
     }
+
+    @Override
+    public Observable<Void> forgotPassword(String email) {
+        return mRestApi.forgotPassword(email);
+    }
 }
