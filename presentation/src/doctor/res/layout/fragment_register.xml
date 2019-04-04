@@ -232,7 +232,7 @@
             app:layout_constraintTop_toBottomOf="@+id/edt_phone"
             tools:text="abc123" />
 
-        <EditText
+ <!--       <EditText
             android:id="@+id/edt_job"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -245,7 +245,7 @@
             app:layout_constraintEnd_toEndOf="@id/end_guideline"
             app:layout_constraintStart_toStartOf="@id/start_guideline"
             app:layout_constraintTop_toBottomOf="@+id/edt_password"
-            tools:text="Veterinario" />
+            tools:text="Veterinario" />-->
 
         <EditText
             android:id="@+id/et_tuition"
@@ -259,7 +259,7 @@
             android:theme="@style/MyEditTextTheme"
             app:layout_constraintEnd_toEndOf="@id/end_guideline"
             app:layout_constraintStart_toStartOf="@id/start_guideline"
-            app:layout_constraintTop_toBottomOf="@+id/edt_job"
+            app:layout_constraintTop_toBottomOf="@+id/edt_password"
             tools:text="654321235678" />
 
         <TextView
@@ -489,13 +489,9 @@
             style="@style/Widget.RetVet.ButtonSecondary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
             android:text="Registar"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@id/end_guideline"
-            app:layout_constraintStart_toStartOf="@id/start_guideline"
-            app:layout_constraintTop_toBottomOf="@+id/et_consultation_price" />
+            tools:layout_editor_absoluteX="130dp"
+            tools:layout_editor_absoluteY="1640dp" />
 
         <android.support.constraint.Guideline
             android:id="@+id/start_guideline"

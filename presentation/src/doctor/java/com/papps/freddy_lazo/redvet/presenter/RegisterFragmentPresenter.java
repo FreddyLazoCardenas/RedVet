@@ -4,10 +4,18 @@ import android.Manifest;
 import android.content.pm.PackageManager;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
+import android.view.View;
 
+import com.papps.freddy_lazo.data.exception.RedVetException;
+import com.papps.freddy_lazo.domain.interactor.DefaultObserver;
 import com.papps.freddy_lazo.domain.interactor.DoctorSignUp;
+import com.papps.freddy_lazo.domain.model.PetRegister;
+import com.papps.freddy_lazo.domain.model.ScheduleDoctorRegister;
+import com.papps.freddy_lazo.domain.model.ServicesDoctorRegister;
 import com.papps.freddy_lazo.redvet.R;
 import com.papps.freddy_lazo.redvet.interfaces.RegisterFragmentView;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -37,7 +45,7 @@ public class RegisterFragmentPresenter implements Presenter<RegisterFragmentView
 
     @Override
     public void destroy() {
-
+        doctorSignUp.unsubscribe();
     }
 
     @Override
@@ -80,8 +88,6 @@ public class RegisterFragmentPresenter implements Presenter<RegisterFragmentView
     public void validateData() {
         if (!isValidNumber(view.getNumber()))
             return;
-        if (!isValidBusinessName(view.getBusinessName()))
-            return;
         if (!isValidName(view.getName()))
             return;
         if (!isValidLastName(view.getLastName()))
@@ -94,23 +100,79 @@ public class RegisterFragmentPresenter implements Presenter<RegisterFragmentView
             return;
         if (!isValidPassword(view.getPassword()))
             return;
-        if (!isValidJob(view.getJob()))
+        if (!isValidPets(view.getPets()))
+            return;
+        if (!isValidServices(view.getServices()))
+            return;
+        if (!isValidSchedules(view.getSchedules()))
+            return;
+        if (!isValidConsultationPrice(view.getConsultationPriceVisibility()))
+            return;
+        if (!isValidShowerPrice(view.getShowerPriceVisibility()))
             return;
 
         doctorSignUp.bindParams(view.getEmail(), view.getPassword(), view.getName(), view.getLastName(), view.getTypeDocument(), view.getNumber(), view.getBusinessName()
                 , view.getAddress(), view.getLatitude(), view.getLongitude(), view.getConsultationPrice(), view.getConsultationTime(), view.getShowerPrice(), view.getShowerTime()
                 , view.getTuition(), view.getDescription(), view.getPhone(), view.getProfileBase64Image(), view.getType(), view.getAttention(), view.getFcmToken()
                 , "android", view.getPets(), view.getSchedules(), view.getServices());
-
+        doctorSignUp.execute(new DoctorSignUpObservable());
     }
 
-    private boolean isValidJob(String job) {
-        if (TextUtils.isEmpty(job)) {
-            view.showJobError(view.context().getString(R.string.text_required_field));
+    private boolean isValidSchedules(List<ScheduleDoctorRegister> schedules) {
+        if (schedules != null && !schedules.isEmpty()) {
+            return true;
+        } else {
+            view.showErrorMessage(view.context().getString(R.string.add_schedules_data));
             return false;
         }
-        view.hideJobError();
-        return true;
+    }
+
+    private boolean isValidServices(List<ServicesDoctorRegister> services) {
+        if (services != null && !services.isEmpty()) {
+            return true;
+        } else {
+            view.showErrorMessage(view.context().getString(R.string.add_services_data));
+            return false;
+        }
+    }
+
+    private boolean isValidPets(List<PetRegister> pets) {
+        if (pets != null && !pets.isEmpty()) {
+            return true;
+        } else {
+            view.showErrorMessage(view.context().getString(R.string.add_pets_data));
+            return false;
+        }
+    }
+
+    private boolean isValidConsultationPrice(int consultationPriceVisibility) {
+        if (consultationPriceVisibility == View.VISIBLE) {
+            if (view.getConsultationPrice().isEmpty()) {
+                view.showConsultationPriceError(view.context().getString(R.string.text_required_field));
+                return false;
+            } else {
+                view.hideConsultationPriceError();
+                return true;
+            }
+        } else {
+            view.hideConsultationPriceError();
+            return true;
+        }
+    }
+
+    private boolean isValidShowerPrice(int showerPriceVisibility) {
+        if (showerPriceVisibility == View.VISIBLE) {
+            if (view.getShowerPrice().isEmpty()) {
+                view.showShowerPriceError(view.context().getString(R.string.text_required_field));
+                return false;
+            } else {
+                view.hideShowerPriceError();
+                return true;
+            }
+        } else {
+            view.hideShowerPriceError();
+            return true;
+        }
     }
 
     private boolean isValidPassword(String password) {
@@ -189,13 +251,24 @@ public class RegisterFragmentPresenter implements Presenter<RegisterFragmentView
         return true;
     }
 
-    private boolean isValidBusinessName(String text) {
-        if (TextUtils.isEmpty(text)) {
-            view.showBusinessNameError(view.context().getString(R.string.text_required_field));
-            return false;
-        }
-        view.hideBusinessNameError();
-        return true;
-    }
+    private class DoctorSignUpObservable extends DefaultObserver<Void> {
 
+        @Override
+        protected void onStart() {
+            super.onStart();
+        }
+
+        @Override
+        public void onError(Throwable e) {
+            super.onError(e);
+            super.onError(e);
+            RedVetException exception = (RedVetException) e;
+            view.showErrorMessage(exception.getMessage());
+        }
+
+        @Override
+        public void onComplete() {
+            super.onComplete();
+        }
+    }
 }

@@ -5,4 +5,7 @@
     <string name="text_bad_format_field">Mal formato en campo</string>
     <string name="text_not_match">Contraseñas no coinciden</string>
     <string name="add_pet_data">Agregar datos de tu mascota</string>
+    <string name="add_pets_data">Agregar datos de mascotas</string>
+    <string name="add_services_data">Agregar datos de servicios</string>
+    <string name="add_schedules_data">Agregar datos de horario</string>
 </resources>

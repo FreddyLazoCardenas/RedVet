@@ -25,6 +25,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.papps.freddy_lazo.domain.model.PetRegister;
@@ -101,8 +102,6 @@ public class RegisterFragment extends BaseFragment implements RegisterFragmentVi
     EditText etPhone;
     @BindView(R.id.edt_password)
     EditText etPassword;
-    @BindView(R.id.edt_job)
-    EditText etJob;
     @BindView(R.id.et_tuition)
     EditText etTuition;
     @BindView(R.id.attention_spinner)
@@ -206,7 +205,7 @@ public class RegisterFragment extends BaseFragment implements RegisterFragmentVi
 
     @Override
     public void showErrorMessage(String message) {
-
+        Toast.makeText(activity, message, Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -246,7 +245,7 @@ public class RegisterFragment extends BaseFragment implements RegisterFragmentVi
             List<ServicesModel> servicesModelList = activity.getData();
             if (!servicesModelList.isEmpty()) {
                 for (ServicesModel servicesModel : servicesModelList) {
-                    if(servicesModel.getState()){
+                    if (servicesModel.getState()) {
                         ServicesDoctorRegister data = new ServicesDoctorRegister(servicesModel.getId());
                         servicesDoctorRegisterList.add(data);
                     }
@@ -257,7 +256,7 @@ public class RegisterFragment extends BaseFragment implements RegisterFragmentVi
                         gShower.setVisibility(View.VISIBLE);
                     }
                 }
-            }else{
+            } else {
                 servicesDoctorRegisterList.clear();
             }
         }
@@ -314,11 +313,6 @@ public class RegisterFragment extends BaseFragment implements RegisterFragmentVi
     }
 
     @Override
-    public String getJob() {
-        return etJob.getText().toString();
-    }
-
-    @Override
     public String getTuition() {
         return etTuition.getText().toString();
     }
@@ -326,12 +320,6 @@ public class RegisterFragment extends BaseFragment implements RegisterFragmentVi
     @Override
     public void showDocumentNumberError(String message) {
         showError(tilNumber, etNumber, message);
-    }
-
-    @Override
-    public void showBusinessNameError(String message) {
-        showError(tilRs, etRs, message);
-
     }
 
     @Override
@@ -365,23 +353,8 @@ public class RegisterFragment extends BaseFragment implements RegisterFragmentVi
     }
 
     @Override
-    public void showJobError(String message) {
-        showEtError(etJob, message);
-    }
-
-    @Override
-    public void showTuitionError(String message) {
-        showEtError(etTuition, message);
-    }
-
-    @Override
     public void hideDocumentNumberError() {
         hideError(tilNumber);
-    }
-
-    @Override
-    public void hideBusinessNameError() {
-        hideError(tilRs);
     }
 
     @Override
@@ -415,16 +388,6 @@ public class RegisterFragment extends BaseFragment implements RegisterFragmentVi
     }
 
     @Override
-    public void hideJobError() {
-        hideEtError(etJob);
-    }
-
-    @Override
-    public void hideTuitionError() {
-        hideEtError(etTuition);
-    }
-
-    @Override
     public String getTypeDocument() {
         int id = toggle.getCheckedRadioButtonId();
         View radioButton = toggle.findViewById(id);
@@ -448,8 +411,38 @@ public class RegisterFragment extends BaseFragment implements RegisterFragmentVi
     }
 
     @Override
+    public int getConsultationPriceVisibility() {
+        return etConsultationPrice.getVisibility();
+    }
+
+    @Override
+    public int getShowerPriceVisibility() {
+        return etShowerPrice.getVisibility();
+    }
+
+    @Override
+    public void showConsultationPriceError(String message) {
+        showEtError(etConsultationPrice, message);
+    }
+
+    @Override
+    public void hideConsultationPriceError() {
+        hideEtError(etConsultationPrice);
+    }
+
+    @Override
+    public void showShowerPriceError(String message) {
+        showEtError(etShowerPrice, message);
+    }
+
+    @Override
+    public void hideShowerPriceError() {
+        hideEtError(etShowerPrice);
+    }
+
+    @Override
     public String getConsultationTime() {
-        return etConsultationPrice.getVisibility() == View.VISIBLE ? "30" : null;
+        return getConsultationPriceVisibility() == View.VISIBLE ? "30" : null;
     }
 
     @Override
@@ -459,7 +452,7 @@ public class RegisterFragment extends BaseFragment implements RegisterFragmentVi
 
     @Override
     public String getShowerTime() {
-        return etShowerPrice.getVisibility() == View.VISIBLE ? "30" : null;
+        return getShowerPriceVisibility() == View.VISIBLE ? "30" : null;
     }
 
     @Override
@@ -502,15 +495,15 @@ public class RegisterFragment extends BaseFragment implements RegisterFragmentVi
 
     @Override
     public List<PetRegister> getPets() {
-        List<PetRegister> petRegisterList =  new ArrayList<>();
+        List<PetRegister> petRegisterList = new ArrayList<>();
         petRegisterList.add(new PetRegister(1));
         return petRegisterList;
     }
 
     @Override
     public List<ScheduleDoctorRegister> getSchedules() {
-        List<ScheduleDoctorRegister> scheduleDoctorRegisters =  new ArrayList<>();
-        scheduleDoctorRegisters.add(new ScheduleDoctorRegister(1,"09:00:00","16:00:00"));
+        List<ScheduleDoctorRegister> scheduleDoctorRegisters = new ArrayList<>();
+        scheduleDoctorRegisters.add(new ScheduleDoctorRegister(1, "09:00:00", "16:00:00"));
         return scheduleDoctorRegisters;
     }
 

@@ -30,14 +30,10 @@ public interface RegisterFragmentView extends BaseView {
 
     String getPassword();
 
-    String getJob();
-
     String getTuition();
 
     void showDocumentNumberError(String message);
-
-    void showBusinessNameError(String message);
-
+    
     void showNameError(String message);
 
     void showLastNameError(String message);
@@ -50,14 +46,8 @@ public interface RegisterFragmentView extends BaseView {
 
     void showPasswordError(String message);
 
-    void showJobError(String message);
-
-    void showTuitionError(String message);
-
     void hideDocumentNumberError();
-
-    void hideBusinessNameError();
-
+    
     void hideNameError();
 
     void hideLastNameError();
@@ -69,10 +59,6 @@ public interface RegisterFragmentView extends BaseView {
     void hidePhoneError();
 
     void hidePasswordError();
-
-    void hideJobError();
-
-    void hideTuitionError();
 
     String getTypeDocument();
 
@@ -103,4 +89,16 @@ public interface RegisterFragmentView extends BaseView {
     List<ServicesDoctorRegister> getServices();
 
     String getProfileBase64Image();
+
+    int getConsultationPriceVisibility();
+
+    int getShowerPriceVisibility();
+
+    void showConsultationPriceError(String message);
+
+    void hideConsultationPriceError();
+
+    void showShowerPriceError(String string);
+
+    void hideShowerPriceError();
 }
