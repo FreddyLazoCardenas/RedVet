@@ -232,27 +232,27 @@
             app:layout_constraintTop_toBottomOf="@+id/et_phone"
             tools:text="abc123" />
 
- <!--       <EditText
-            android:id="@+id/edt_job"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:drawableStart="@drawable/ic_password"
-            android:drawablePadding="10dp"
-            android:hint="Profesion y oficio"
-            android:inputType="text"
-            android:theme="@style/MyEditTextTheme"
-            app:layout_constraintEnd_toEndOf="@id/end_guideline"
-            app:layout_constraintStart_toStartOf="@id/start_guideline"
-            app:layout_constraintTop_toBottomOf="@+id/edt_password"
-            tools:text="Veterinario" />-->
+        <!--       <EditText
+                   android:id="@+id/edt_job"
+                   android:layout_width="0dp"
+                   android:layout_height="wrap_content"
+                   android:layout_marginTop="20dp"
+                   android:drawableStart="@drawable/ic_password"
+                   android:drawablePadding="10dp"
+                   android:hint="Profesion y oficio"
+                   android:inputType="text"
+                   android:theme="@style/MyEditTextTheme"
+                   app:layout_constraintEnd_toEndOf="@id/end_guideline"
+                   app:layout_constraintStart_toStartOf="@id/start_guideline"
+                   app:layout_constraintTop_toBottomOf="@+id/edt_password"
+                   tools:text="Veterinario" />-->
 
         <EditText
             android:id="@+id/et_tuition"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:drawableStart="@drawable/ic_password"
+            android:drawableStart="@drawable/ic_tuition"
             android:drawablePadding="10dp"
             android:hint="Nro de colegiatura"
             android:inputType="number"
@@ -415,6 +415,9 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginTop="20dp"
+            android:drawableStart="@drawable/ic_type"
+            android:drawablePadding="10dp"
+            android:gravity="center"
             android:text="Tipo"
             android:textColor="@color/colorPink"
             android:textSize="20sp"
