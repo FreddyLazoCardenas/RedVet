@@ -1,6 +1,7 @@
 package com.papps.freddy_lazo.data.entity;
 
 import com.google.gson.annotations.SerializedName;
+import com.papps.freddy_lazo.domain.model.ScheduleDoctorRegister;
 
 import java.util.List;
 
@@ -46,6 +47,10 @@ public class DoctorEntity {
     private String api_token;
     @SerializedName("pets")
     private List<PetEntity> petEntity;
+    @SerializedName("schedules")
+    private List<ScheduleEntity> schedules;
+    @SerializedName("services")
+    private List<ServicesDoctorEntity> services;
 
 
     public List<PetEntity> getPetEntity() {
@@ -130,5 +135,13 @@ public class DoctorEntity {
 
     public String getApi_token() {
         return api_token;
+    }
+
+    public List<ScheduleEntity> getSchedules() {
+        return schedules;
+    }
+
+    public List<ServicesDoctorEntity> getServices() {
+        return services;
     }
 }

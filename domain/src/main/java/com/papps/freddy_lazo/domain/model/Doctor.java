@@ -24,9 +24,11 @@ public class Doctor {
     private String photo_url;
     private String api_token;
     private List<Pet> petList;
+    private List<Schedule> scheduleList;
+    private List<ServiceDoctor> serviceList;
 
     public Doctor(int user_id, String type_document, String number_document, String business_name, String address, String latitude, String longitude, String consultation_price, String phone, String type, String tuition_number, String description, String attention
-            , String available, String first_name, String last_name, String email, String photo_url, String api_token, List<Pet> petList ) {
+            , String available, String first_name, String last_name, String email, String photo_url, String api_token, List<Pet> petList ,List<Schedule> scheduleList ,List<ServiceDoctor> serviceList) {
         this.user_id = user_id;
         this.type_document = type_document;
         this.number_document = number_document;
@@ -47,6 +49,8 @@ public class Doctor {
         this.photo_url = photo_url;
         this.api_token = api_token;
         this.petList = petList;
+        this.scheduleList = scheduleList;
+        this.serviceList = serviceList;
     }
 
     public List<Pet> getPetList() {
@@ -127,5 +131,13 @@ public class Doctor {
 
     public String getApi_token() {
         return api_token;
+    }
+
+    public List<Schedule> getScheduleList() {
+        return scheduleList;
+    }
+
+    public List<ServiceDoctor> getServiceList() {
+        return serviceList;
     }
 }

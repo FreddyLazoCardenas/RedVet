@@ -44,4 +44,7 @@ public interface RestService {
     @POST("pet-lover/update")
     Call<ResponseEntity<LoginResponse>> updatePetLover(@Body BodyPetLoverRegister bodyUpdatePetLover);
 
+    @POST("doctor/update")
+    Call<ResponseEntity<LoginResponse>> updateDoctor(@Body BodyDoctorRegister bodyUpdatePetLover);
+
 }

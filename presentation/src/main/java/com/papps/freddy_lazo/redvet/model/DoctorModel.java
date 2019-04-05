@@ -4,6 +4,8 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.google.gson.Gson;
+import com.papps.freddy_lazo.domain.model.Schedule;
+import com.papps.freddy_lazo.domain.model.ServiceDoctor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,9 +32,12 @@ public class DoctorModel implements Parcelable {
     private String photo_url;
     private String api_token;
     private List<PetLoverRegisterModel> petList;
+    private List<ScheduleModel> scheduleList;
+    private List<ServiceDoctorModel> serviceList;
+
 
     public DoctorModel(int user_id, String type_document, String number_document, String business_name, String address, String latitude, String longitude, String consultation_price, String phone, String type, String tuition_number, String description, String attention
-            , String available, String first_name, String last_name, String email, String photo_url, String api_token, List<PetLoverRegisterModel> petList) {
+            , String available, String first_name, String last_name, String email, String photo_url, String api_token, List<PetLoverRegisterModel> petList,List<ScheduleModel> scheduleList,List<ServiceDoctorModel> serviceList) {
         this.user_id = user_id;
         this.type_document = type_document;
         this.number_document = number_document;
@@ -53,6 +58,8 @@ public class DoctorModel implements Parcelable {
         this.photo_url = photo_url;
         this.api_token = api_token;
         this.petList = petList;
+        this.scheduleList = scheduleList;
+        this.serviceList = serviceList;
     }
 
     public List<PetLoverRegisterModel> getPetList() {
@@ -215,6 +222,22 @@ public class DoctorModel implements Parcelable {
         this.api_token = api_token;
     }
 
+    public List<ScheduleModel> getScheduleList() {
+        return scheduleList;
+    }
+
+    public void setScheduleList(List<ScheduleModel> scheduleList) {
+        this.scheduleList = scheduleList;
+    }
+
+    public List<ServiceDoctorModel> getServiceList() {
+        return serviceList;
+    }
+
+    public void setServiceList(List<ServiceDoctorModel> serviceList) {
+        this.serviceList = serviceList;
+    }
+
     public static DoctorModel toModel(String srtUser) {
         return srtUser != null && !srtUser.isEmpty() ? new Gson().fromJson(srtUser, DoctorModel.class) : null;
     }
@@ -246,6 +269,8 @@ public class DoctorModel implements Parcelable {
         dest.writeString(this.photo_url);
         dest.writeString(this.api_token);
         dest.writeList(this.petList);
+        dest.writeList(this.scheduleList);
+        dest.writeList(this.serviceList);
     }
 
     protected DoctorModel(Parcel in) {
@@ -268,8 +293,12 @@ public class DoctorModel implements Parcelable {
         this.email = in.readString();
         this.photo_url = in.readString();
         this.api_token = in.readString();
-        this.petList = new ArrayList<PetLoverRegisterModel>();
+        this.petList = new ArrayList<>();
         in.readList(this.petList, PetModel.class.getClassLoader());
+        this.scheduleList = new ArrayList<>();
+        in.readList(this.scheduleList, PetModel.class.getClassLoader());
+        this.serviceList = new ArrayList<>();
+        in.readList(this.serviceList, PetModel.class.getClassLoader());
     }
 
     @Override
