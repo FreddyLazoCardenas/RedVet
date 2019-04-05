@@ -13,21 +13,51 @@
 
 
         <TextView
+            android:id="@+id/txt_profile"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Registro"
+            android:text="MI PERFIL"
             android:textColor="@color/colorPink"
             android:textSize="24sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@+id/img_register"
+            app:layout_constraintBottom_toTopOf="@+id/attendance_counter"
+            app:layout_constraintEnd_toStartOf="@id/img_profile"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="@id/start_guideline"
-            app:layout_constraintTop_toTopOf="@id/img_register" />
+            app:layout_constraintTop_toTopOf="@id/img_profile"
+            app:layout_constraintVertical_chainStyle="packed" />
 
+        <TextView
+            android:id="@+id/attendance_counter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="10 atenciones"
+            android:textColor="@color/colorGreen"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/btn_log_out"
+            app:layout_constraintEnd_toEndOf="@id/txt_profile"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="@id/txt_profile"
+            app:layout_constraintTop_toBottomOf="@+id/txt_profile" />
+
+        <Button
+            android:id="@+id/btn_log_out"
+            style="@style/Widget.RetVet.ButtonSecondary"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:padding="5dp"
+            android:text="Cerrar Sesion"
+            app:layout_constraintBottom_toBottomOf="@+id/img_profile"
+            app:layout_constraintEnd_toEndOf="@id/txt_profile"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="@id/txt_profile"
+            app:layout_constraintTop_toBottomOf="@+id/attendance_counter" />
 
         <com.github.siyamed.shapeimageview.CircularImageView
-            android:id="@+id/img_register"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:id="@+id/img_profile"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_marginTop="24dp"
             android:layout_marginEnd="24dp"
             android:src="@drawable/ic_placeholder"
@@ -39,12 +69,12 @@
             android:id="@+id/btn_add"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_marginTop="70dp"
+            android:layout_marginTop="80dp"
             android:src="@drawable/ic_add"
-            app:layout_constraintBottom_toBottomOf="@+id/img_register"
-            app:layout_constraintEnd_toEndOf="@id/img_register"
-            app:layout_constraintStart_toStartOf="@id/img_register"
-            app:layout_constraintTop_toTopOf="@+id/img_register" />
+            app:layout_constraintBottom_toBottomOf="@+id/img_profile"
+            app:layout_constraintEnd_toEndOf="@id/img_profile"
+            app:layout_constraintStart_toStartOf="@id/img_profile"
+            app:layout_constraintTop_toTopOf="@+id/img_profile" />
 
         <RadioGroup
             android:id="@+id/toggle"
@@ -232,20 +262,6 @@
             app:layout_constraintTop_toBottomOf="@+id/et_phone"
             tools:text="abc123" />
 
- <!--       <EditText
-            android:id="@+id/edt_job"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:drawableStart="@drawable/ic_password"
-            android:drawablePadding="10dp"
-            android:hint="Profesion y oficio"
-            android:inputType="text"
-            android:theme="@style/MyEditTextTheme"
-            app:layout_constraintEnd_toEndOf="@id/end_guideline"
-            app:layout_constraintStart_toStartOf="@id/start_guideline"
-            app:layout_constraintTop_toBottomOf="@+id/edt_password"
-            tools:text="Veterinario" />-->
 
         <EditText
             android:id="@+id/et_tuition"
@@ -485,7 +501,7 @@
             tools:text="45.50" />
 
         <Button
-            android:id="@+id/btn_register"
+            android:id="@+id/btn_update"
             style="@style/Widget.RetVet.ButtonSecondary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

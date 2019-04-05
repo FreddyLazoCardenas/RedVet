@@ -28,6 +28,10 @@ public class PetRegister {
         this.photo = petBreed;
     }
 
+    public PetRegister(int id) {
+        this.id = id;
+    }
+
     public int getId() {
         return id;
     }

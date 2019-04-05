@@ -72,21 +72,21 @@ public class RegisterFragment extends BaseFragment implements RegisterFragmentVi
     @BindView(R.id.til_last_name)
     TextInputLayout tilLastName;
 
-    @BindView(R.id.edt_name)
+    @BindView(R.id.et_name)
     EditText etName;
-    @BindView(R.id.edt_last_name)
+    @BindView(R.id.et_last_name)
     EditText etLastName;
-    @BindView(R.id.edt_dni)
+    @BindView(R.id.et_dni)
     EditText etDni;
-    @BindView(R.id.edt_address)
+    @BindView(R.id.et_address)
     EditText etAddress;
-    @BindView(R.id.edt_email)
+    @BindView(R.id.et_email)
     EditText etEmail;
-    @BindView(R.id.edt_phone)
+    @BindView(R.id.et_phone)
     EditText etPhone;
-    @BindView(R.id.edt_password)
+    @BindView(R.id.et_password)
     EditText etPassword;
-    @BindView(R.id.edt_rpt_password)
+    @BindView(R.id.et_rpt_password)
     EditText etRptPassword;
     @BindView(R.id.pet_name)
     EditText etPetName;

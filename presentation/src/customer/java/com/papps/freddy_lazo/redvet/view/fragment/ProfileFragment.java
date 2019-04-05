@@ -33,7 +33,7 @@ import com.papps.freddy_lazo.redvet.presenter.RegisterFragmentPresenter;
 import com.papps.freddy_lazo.redvet.view.activity.HomeActivity;
 import com.papps.freddy_lazo.redvet.view.adapter.PetProfileAdapter;
 import com.papps.freddy_lazo.redvet.view.dialogFragment.CameraDialog;
-import com.papps.freddy_lazo.redvet.view.interfaces.ProfileFragmentView;
+import com.papps.freddy_lazo.redvet.interfaces.ProfileFragmentView;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 

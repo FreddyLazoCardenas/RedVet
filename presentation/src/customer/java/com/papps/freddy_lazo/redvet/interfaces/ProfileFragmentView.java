@@ -1,7 +1,6 @@
-package com.papps.freddy_lazo.redvet.view.interfaces;
+package com.papps.freddy_lazo.redvet.interfaces;
 
 import com.papps.freddy_lazo.domain.model.PetRegister;
-import com.papps.freddy_lazo.redvet.interfaces.BaseView;
 
 import java.util.ArrayList;
 

@@ -86,21 +86,21 @@ public class RegisterFragment extends BaseFragment implements RegisterFragmentVi
     @BindView(R.id.til_last_name)
     TextInputLayout tilLastName;
 
-    @BindView(R.id.edt_number)
+    @BindView(R.id.et_number)
     EditText etNumber;
     @BindView(R.id.edt_rs)
     EditText etRs;
-    @BindView(R.id.edt_name)
+    @BindView(R.id.et_name)
     EditText etName;
-    @BindView(R.id.edt_last_name)
+    @BindView(R.id.et_last_name)
     EditText etLastName;
-    @BindView(R.id.edt_address)
+    @BindView(R.id.et_address)
     EditText etAddress;
-    @BindView(R.id.edt_email)
+    @BindView(R.id.et_email)
     EditText etEmail;
-    @BindView(R.id.edt_phone)
+    @BindView(R.id.et_phone)
     EditText etPhone;
-    @BindView(R.id.edt_password)
+    @BindView(R.id.et_password)
     EditText etPassword;
     @BindView(R.id.et_tuition)
     EditText etTuition;
@@ -224,7 +224,7 @@ public class RegisterFragment extends BaseFragment implements RegisterFragmentVi
         navigator.showListDialog(activity, this);
     }
 
-    @OnClick(R.id.edt_address)
+    @OnClick(R.id.et_address)
     public void edtAddress() {
         navigator.navigateToMapActivity(this, MAP_REQUEST_CODE);
     }
