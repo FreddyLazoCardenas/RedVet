@@ -11,26 +11,24 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RadioGroup;
+import android.widget.Spinner;
 
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.papps.freddy_lazo.data.sharedPreferences.PreferencesManager;
 import com.papps.freddy_lazo.domain.model.PetRegister;
-import com.papps.freddy_lazo.redvet.BuildConfig;
 import com.papps.freddy_lazo.redvet.GlideApp;
 import com.papps.freddy_lazo.redvet.R;
 import com.papps.freddy_lazo.redvet.interfaces.ProfileFragmentView;
 import com.papps.freddy_lazo.redvet.internal.dagger.component.DaggerProfileFragmentComponent;
 import com.papps.freddy_lazo.redvet.model.DoctorModel;
-import com.papps.freddy_lazo.redvet.model.PetLoverModel;
-import com.papps.freddy_lazo.redvet.model.PetLoverRegisterModel;
 import com.papps.freddy_lazo.redvet.presenter.ProfileFragmentPresenter;
-import com.papps.freddy_lazo.redvet.presenter.RegisterFragmentPresenter;
 import com.papps.freddy_lazo.redvet.view.activity.HomeActivity;
 import com.papps.freddy_lazo.redvet.view.dialogFragment.CameraDialog;
 import com.theartofdev.edmodo.cropper.CropImage;
@@ -45,7 +43,6 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 public class ProfileFragment extends BaseFragment implements CameraDialog.OnClickListener, ProfileFragmentView {
-
 
     public static final int PERMISSION_REQUEST_CAMERA_CODE = 4;
     public static final int PERMISSION_REQUEST_GALLERY_CODE = 5;
@@ -76,11 +73,16 @@ public class ProfileFragment extends BaseFragment implements CameraDialog.OnClic
     EditText etPassword;
     @BindView(R.id.img_profile)
     ImageView imgProfile;
-
+    @BindView(R.id.attention_spinner)
+    Spinner spinner;
+    @BindView(R.id.type_spinner)
+    Spinner typeSpinner;
     @BindView(R.id.til_name)
     TextInputLayout tilName;
     @BindView(R.id.til_last_name)
     TextInputLayout tilLastName;
+    @BindView(R.id.toggle)
+    RadioGroup toggle;
 
     private File pictureFile;
     private HomeActivity activity;
@@ -102,6 +104,8 @@ public class ProfileFragment extends BaseFragment implements CameraDialog.OnClic
     public void initUI() {
         presenter.setView(this);
         getUserData();
+        setUpSpinner();
+        setUpTypeSpinner();
     }
 
     private void getUserData() {
@@ -109,8 +113,63 @@ public class ProfileFragment extends BaseFragment implements CameraDialog.OnClic
         fillUi();
     }
 
+    private void setUpTypeSpinner() {
+        ArrayList<String> arrayData = new ArrayList<>();
+        arrayData.add("Clinica");
+        arrayData.add("Veterinaria");
+        arrayData.add("Otro");
+
+        String[] arrayListData = arrayData.toArray(new String[0]);
+        ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<>(
+                activity, R.layout.spinner_item, arrayListData);
+        spinnerArrayAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item);
+        typeSpinner.setAdapter(spinnerArrayAdapter);
+        typeSpinner.setSelection(setTypeSpinnerItem(doctorModel.getType()));
+    }
+
+    private int setTypeSpinnerItem(String type) {
+        switch (type) {
+            case "clinic":
+                return 0;
+            case "vet":
+                return 1;
+            case "other":
+                return 2;
+            default:
+                return 0;
+        }
+    }
+
+    private void setUpSpinner() {
+        ArrayList<String> arrayData = new ArrayList<>();
+        arrayData.add("Casa");
+        arrayData.add("Local");
+        arrayData.add("Ambos");
+
+        String[] arrayListData = arrayData.toArray(new String[0]);
+        ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<>(
+                activity, R.layout.spinner_item, arrayListData);
+        spinnerArrayAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(spinnerArrayAdapter);
+        spinner.setSelection(setSpinnerItem(doctorModel.getAttention()));
+    }
+
+    private int setSpinnerItem(String attention) {
+        switch (attention) {
+            case "at_home":
+                return 0;
+            case "local":
+                return 1;
+            case "both":
+                return 2;
+            default:
+                return 0;
+        }
+    }
 
     private void fillUi() {
+        String typeDocument = doctorModel.getType_document();
+        toggle.check(typeDocument.equals("dni") ? R.id.dni : R.id.ruc);
         etName.setText(doctorModel.getFirst_name());
         etLastName.setText(doctorModel.getLast_name());
         etNumber.setText(doctorModel.getNumber_document());
@@ -118,7 +177,7 @@ public class ProfileFragment extends BaseFragment implements CameraDialog.OnClic
         etEmail.setText(doctorModel.getEmail());
         etPhone.setText(doctorModel.getPhone());
         displayPhoto(true, true);
-       // setUpRv();
+        // setUpRv();
     }
 
     private void displayPhoto(boolean refresh, boolean fromModel) {
@@ -190,7 +249,7 @@ public class ProfileFragment extends BaseFragment implements CameraDialog.OnClic
 
     @Override
     public void showErrorMessage(String message) {
-
+        showMessage(activity, message);
     }
 
     @Override
