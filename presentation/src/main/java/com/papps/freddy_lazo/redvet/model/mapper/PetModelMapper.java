@@ -3,6 +3,7 @@ package com.papps.freddy_lazo.redvet.model.mapper;
 import com.papps.freddy_lazo.domain.model.Pet;
 import com.papps.freddy_lazo.domain.model.Service;
 import com.papps.freddy_lazo.redvet.model.NewsModel;
+import com.papps.freddy_lazo.redvet.model.PetLoverRegisterModel;
 import com.papps.freddy_lazo.redvet.model.PetModel;
 import com.papps.freddy_lazo.redvet.model.ServicesModel;
 
@@ -14,8 +15,8 @@ public class PetModelMapper {
     public PetModelMapper() {
     }
 
-    public static List<PetModel> transform(List<Pet> pet) {
-        List<PetModel> petModels = new ArrayList<>();
+    public static List<PetLoverRegisterModel> transform(List<Pet> pet) {
+        List<PetLoverRegisterModel> petModels = new ArrayList<>();
         if (pet == null)
             return petModels;
 
@@ -25,11 +26,8 @@ public class PetModelMapper {
         return petModels;
     }
 
-    public static PetModel transform(Pet pet) {
-        return new PetModel(pet.getId(), pet.getDoctor_id(), pet.getPet_id());
+    public static PetLoverRegisterModel transform(Pet pet) {
+        return new PetLoverRegisterModel(pet.getId(),pet.getPet_id(),pet.getDoctor_id(),pet.getName(),pet.getBirthday(),pet.getBreed(),pet.getPhoto());
     }
 
-    public static PetModel transformCustomer(Pet pet) {
-        return new PetModel(pet.getId(), pet.getDoctor_id(), pet.getPet_id());
-    }
 }

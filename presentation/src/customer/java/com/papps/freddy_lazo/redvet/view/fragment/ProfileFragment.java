@@ -5,11 +5,16 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +23,7 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.papps.freddy_lazo.data.sharedPreferences.PreferencesManager;
+import com.papps.freddy_lazo.domain.model.PetRegister;
 import com.papps.freddy_lazo.redvet.GlideApp;
 import com.papps.freddy_lazo.redvet.R;
 import com.papps.freddy_lazo.redvet.internal.dagger.component.DaggerProfileFragmentComponent;
@@ -25,12 +31,15 @@ import com.papps.freddy_lazo.redvet.model.PetLoverModel;
 import com.papps.freddy_lazo.redvet.presenter.ProfileFragmentPresenter;
 import com.papps.freddy_lazo.redvet.presenter.RegisterFragmentPresenter;
 import com.papps.freddy_lazo.redvet.view.activity.HomeActivity;
+import com.papps.freddy_lazo.redvet.view.adapter.PetProfileAdapter;
 import com.papps.freddy_lazo.redvet.view.dialogFragment.CameraDialog;
 import com.papps.freddy_lazo.redvet.view.interfaces.ProfileFragmentView;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.util.ArrayList;
 
 import javax.inject.Inject;
 
@@ -50,6 +59,8 @@ public class ProfileFragment extends BaseFragment implements CameraDialog.OnClic
     PreferencesManager preferencesManager;
     @Inject
     ProfileFragmentPresenter presenter;
+    @Inject
+    PetProfileAdapter adapter;
 
     @BindView(R.id.et_name)
     EditText etName;
@@ -70,11 +81,20 @@ public class ProfileFragment extends BaseFragment implements CameraDialog.OnClic
     @BindView(R.id.img_profile)
     ImageView imgProfile;
 
+    @BindView(R.id.til_name)
+    TextInputLayout tilName;
+    @BindView(R.id.til_last_name)
+    TextInputLayout tilLastName;
+    @BindView(R.id.rv_pet)
+    RecyclerView rvPets;
+
 
     private HomeActivity activity;
     private PetLoverModel petLoverModel;
+    private PetRegister petLoverRegisterModel;
     private File pictureFile;
     private File croppedProfileFile;
+    private File croppedPetFile;
 
     public static Fragment newInstance() {
         return new ProfileFragment();
@@ -105,6 +125,13 @@ public class ProfileFragment extends BaseFragment implements CameraDialog.OnClic
         etEmail.setText(petLoverModel.getEmail());
         etPhone.setText(petLoverModel.getPhone());
         displayPhoto(true, true);
+        setUpRv();
+    }
+
+    private void setUpRv() {
+        rvPets.setLayoutManager(new LinearLayoutManager(activity));
+        rvPets.setAdapter(adapter);
+        adapter.bindList(petLoverModel.getPetList());
     }
 
     @Override
@@ -146,6 +173,11 @@ public class ProfileFragment extends BaseFragment implements CameraDialog.OnClic
         initUI();
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        presenter.destroy();
+    }
 
     @OnClick(R.id.img_profile)
     public void imgProfile() {
@@ -200,6 +232,210 @@ public class ProfileFragment extends BaseFragment implements CameraDialog.OnClic
         requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, RegisterFragmentPresenter.PERMISSION_REQUEST_GALLERY_CODE);
     }
 
+    @Override
+    public String getName() {
+        return etName.getText().toString();
+    }
+
+    @Override
+    public String getLastName() {
+        return etLastName.getText().toString();
+    }
+
+    @Override
+    public String getDni() {
+        return etDni.getText().toString();
+    }
+
+    @Override
+    public String getAddress() {
+        return etAddress.getText().toString();
+    }
+
+    @Override
+    public String getEmail() {
+        return etEmail.getText().toString();
+    }
+
+    @Override
+    public String getPhone() {
+        return etPhone.getText().toString();
+    }
+
+    @Override
+    public String getPassword() {
+        return etPassword.getText().toString();
+    }
+
+    @Override
+    public String getRepeatPassword() {
+        return etRepeatPassword.getText().toString();
+    }
+
+    @Override
+    public void showLastNameError(String message) {
+        showError(tilLastName, etLastName, message);
+    }
+
+    @Override
+    public void hideLastNameError() {
+        hideError(tilLastName);
+    }
+
+    @Override
+    public void showNameError(String message) {
+        showError(tilName, etName, message);
+    }
+
+    @Override
+    public void hideNameError() {
+        hideError(tilName);
+    }
+
+    @Override
+    public void showAddressError(String message) {
+        showEtError(etAddress, message);
+    }
+
+    @Override
+    public void hideAddressError() {
+        hideEtError(etAddress);
+    }
+
+    @Override
+    public void showEmailError(String message) {
+        showEtError(etEmail, message);
+    }
+
+    @Override
+    public void hideEmailError() {
+        hideEtError(etEmail);
+    }
+
+    @Override
+    public void showDniError(String message) {
+        showEtError(etDni, message);
+    }
+
+    @Override
+    public void hideDniError() {
+        hideEtError(etDni);
+    }
+
+    @Override
+    public void showRepeatPasswordError(String message) {
+        showEtError(etRepeatPassword, message);
+    }
+
+    @Override
+    public void hideRepeatPasswordError() {
+        hideEtError(etRepeatPassword);
+    }
+
+    @Override
+    public void showPasswordError(String message) {
+        showEtError(etPassword, message);
+    }
+
+    @Override
+    public void hidePasswordError() {
+        hideEtError(etPassword);
+    }
+
+    @Override
+    public void showPhoneError(String message) {
+        showEtError(etPhone, message);
+    }
+
+    @Override
+    public void hidePhoneError() {
+        hideEtError(etPhone);
+    }
+
+    @Override
+    public String getPetName() {
+        return null;
+        //return etPetName.getText().toString();
+    }
+
+    @Override
+    public String getPetBirthday() {
+        return null;
+        //return etPetBirthday.getText().toString();
+    }
+
+    @Override
+    public String getPetBreed() {
+        return null;
+        // return etpetBreed.getText().toString();
+    }
+
+    @Override
+    public void showPetNameError(String message) {
+        // showEtError(etPetName, message);
+    }
+
+    @Override
+    public void hidePetNameError() {
+        // hideEtError(etPetName);
+    }
+
+    @Override
+    public void showPetBirthdayError(String message) {
+        //showEtError(etPetBirthday, message);
+    }
+
+    @Override
+    public void hidePetBirthdayError() {
+        // hideEtError(etPetBirthday);
+    }
+
+    @Override
+    public void showPetBreedError(String message) {
+        //  showEtError(etpetBreed, message);
+    }
+
+    @Override
+    public void hidePetBreedError() {
+        // hideEtError(etpetBreed);
+    }
+
+    @Override
+    public void savePetData() {
+        // petLoverRegisterModel = new PetRegister(1, getPetName(), getPetBirthday(), getPetBreed(), getPetBase64Image());
+    }
+
+  /*  @Override
+    public String getPetBase64Image() {
+        if (croppedPetFile != null) {
+            Bitmap bm = BitmapFactory.decodeFile(croppedPetFile.getAbsolutePath());
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            bm.compress(Bitmap.CompressFormat.JPEG, 100, baos); //bm is the bitmap object
+            byte[] b = baos.toByteArray();
+            return Base64.encodeToString(b, Base64.DEFAULT);
+        } else
+            return "";
+    }*/
+
+    @Override
+    public String getProfileBase64Image() {
+        if (croppedProfileFile != null) {
+            Bitmap bm = BitmapFactory.decodeFile(croppedProfileFile.getAbsolutePath());
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            bm.compress(Bitmap.CompressFormat.JPEG, 100, baos); //bm is the bitmap object
+            byte[] b = baos.toByteArray();
+            return Base64.encodeToString(b, Base64.DEFAULT);
+        } else
+            return "";
+    }
+
+    @Override
+    public ArrayList<PetRegister> getPetData() {
+        ArrayList<PetRegister> petRegisters = new ArrayList<>();
+        petRegisters.add(0, petLoverRegisterModel);
+        return petRegisters;
+    }
+
 
     private void startCrop(Uri source) {
         croppedProfileFile = new File(getContext().getFilesDir(), PICTURE_CROPPED_FILE_NAME);
@@ -225,5 +461,33 @@ public class ProfileFragment extends BaseFragment implements CameraDialog.OnClic
                 .load(fromModel ? petLoverModel.getPhoto_url() : croppedProfileFile.getAbsolutePath())
                 .into(imgProfile);
     }
+
+    @OnClick(R.id.btn_update)
+    public void btnUpdate() {
+        presenter.validation();
+    }
+
+    private void showError(TextInputLayout inputLayout, EditText editText, String message) {
+        inputLayout.setErrorEnabled(true);
+        inputLayout.setError(message);
+        editText.requestFocus();
+    }
+
+    private void hideError(TextInputLayout inputLayout) {
+        if (inputLayout.isErrorEnabled()) {
+            inputLayout.setError(null);
+            inputLayout.setErrorEnabled(false);
+        }
+    }
+
+    private void showEtError(EditText editText, String message) {
+        editText.setError(message);
+        editText.requestFocus();
+    }
+
+    private void hideEtError(EditText editText) {
+        editText.setError(null);
+    }
+
 
 }

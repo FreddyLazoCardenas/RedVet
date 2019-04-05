@@ -29,10 +29,10 @@ public class DoctorModel implements Parcelable {
     private String email;
     private String photo_url;
     private String api_token;
-    private List<PetModel> petList;
+    private List<PetLoverRegisterModel> petList;
 
     public DoctorModel(int user_id, String type_document, String number_document, String business_name, String address, String latitude, String longitude, String consultation_price, String phone, String type, String tuition_number, String description, String attention
-            , String available, String first_name, String last_name, String email, String photo_url, String api_token, List<PetModel> petList) {
+            , String available, String first_name, String last_name, String email, String photo_url, String api_token, List<PetLoverRegisterModel> petList) {
         this.user_id = user_id;
         this.type_document = type_document;
         this.number_document = number_document;
@@ -55,11 +55,11 @@ public class DoctorModel implements Parcelable {
         this.petList = petList;
     }
 
-    public List<PetModel> getPetList() {
+    public List<PetLoverRegisterModel> getPetList() {
         return petList;
     }
 
-    public void setPetList(List<PetModel> petList) {
+    public void setPetList(List<PetLoverRegisterModel> petList) {
         this.petList = petList;
     }
 
@@ -268,7 +268,7 @@ public class DoctorModel implements Parcelable {
         this.email = in.readString();
         this.photo_url = in.readString();
         this.api_token = in.readString();
-        this.petList = new ArrayList<PetModel>();
+        this.petList = new ArrayList<PetLoverRegisterModel>();
         in.readList(this.petList, PetModel.class.getClassLoader());
     }
 

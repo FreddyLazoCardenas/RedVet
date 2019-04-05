@@ -72,6 +72,21 @@ public class RestApiImpl implements RestApi {
     }
 
     @Override
+    public Observable<PetLoverEntity> updatePetLover(String email, String password, String firstName, String lastName, String dni, String address, String phone, String photo, String fcmToken, List<PetRegister> pets) {
+        return Observable.create(emitter -> restService.updatePetLover(new BodyPetLoverRegister(email, password, firstName, lastName, dni, address, phone, photo, fcmToken, "android", pets)).enqueue(new DefaultCallback<ResponseEntity<LoginResponse>>(emitter) {
+            @Override
+            public void onResponse(@NonNull Call<ResponseEntity<LoginResponse>> call, @NonNull Response<ResponseEntity<LoginResponse>> response) {
+                super.onResponse(call, response);
+                ResponseEntity<LoginResponse> body = response.body();
+                if (body != null && body.getMessage() == null) {
+                    emitter.onNext(body.getData().getPetLoverEntity());
+                    emitter.onComplete();
+                }
+            }
+        }));
+    }
+
+    @Override
     public Observable<List<ServicesEntity>> services() {
         return Observable.create(emitter -> restService.services().enqueue(new DefaultCallback<ResponseEntity<ServicesResponse>>(emitter) {
             @Override

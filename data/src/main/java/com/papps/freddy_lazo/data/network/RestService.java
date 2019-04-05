@@ -41,4 +41,7 @@ public interface RestService {
     @POST("forgot-password")
     Call<ResponseEntity<Void>> forgotPassword(@Body BodyRecoverPassword bodyRecoverPassword);
 
+    @POST("pet-lover/update")
+    Call<ResponseEntity<LoginResponse>> updatePetLover(@Body BodyPetLoverRegister bodyUpdatePetLover);
+
 }

@@ -20,9 +20,9 @@ public class PetLoverModel implements Parcelable {
     private String photo_url;
     private String email;
     private String api_token;
-    private List<PetModel> petList;
+    private List<PetLoverRegisterModel> petList;
 
-    public PetLoverModel(int user_id, String dni, String address, String phone, String first_name, String last_name, String photo_url, String email, String api_token, List<PetModel> petList) {
+    public PetLoverModel(int user_id, String dni, String address, String phone, String first_name, String last_name, String photo_url, String email, String api_token, List<PetLoverRegisterModel> petList) {
         this.user_id = user_id;
         this.dni = dni;
         this.address = address;
@@ -107,11 +107,11 @@ public class PetLoverModel implements Parcelable {
         this.api_token = api_token;
     }
 
-    public List<PetModel> getPetList() {
+    public List<PetLoverRegisterModel> getPetList() {
         return petList;
     }
 
-    public void setPetList(List<PetModel> petList) {
+    public void setPetList(List<PetLoverRegisterModel> petList) {
         this.petList = petList;
     }
 
@@ -148,7 +148,7 @@ public class PetLoverModel implements Parcelable {
         this.photo_url = in.readString();
         this.email = in.readString();
         this.api_token = in.readString();
-        this.petList = new ArrayList<PetModel>();
+        this.petList = new ArrayList<PetLoverRegisterModel>();
         in.readList(this.petList, PetModel.class.getClassLoader());
     }
 

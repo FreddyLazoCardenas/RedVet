@@ -19,6 +19,8 @@ public interface RestApi {
 
     Observable<PetLoverEntity> loginPetLover(String email, String password);
 
+    Observable<PetLoverEntity> updatePetLover(String email, String password, String firstName, String lastName, String dni, String address, String phone, String photo, String fcmToken, List<PetRegister> pets);
+
     Observable<List<ServicesEntity>> services();
 
     Observable<Void> forgotPassword(String email);
