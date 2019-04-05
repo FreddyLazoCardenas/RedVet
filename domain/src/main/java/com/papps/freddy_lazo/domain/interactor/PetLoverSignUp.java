@@ -24,6 +24,7 @@ public class PetLoverSignUp extends UseCase {
     private String phone;
     private String fcmToken;
     private List<PetRegister> pets;
+    private String photo;
 
 
     @Inject
@@ -32,7 +33,7 @@ public class PetLoverSignUp extends UseCase {
         this.repository = repository;
     }
 
-    public void bindParams(String email, String password, String firstName, String lastName, String dni, String address, String phone, String fcmToken, List<PetRegister> pets) {
+    public void bindParams(String email, String password, String firstName, String lastName, String dni, String address, String phone, String photo, String fcmToken, List<PetRegister> pets) {
         this.email = email;
         this.password = password;
         this.firstName = firstName;
@@ -40,12 +41,13 @@ public class PetLoverSignUp extends UseCase {
         this.dni = dni;
         this.address = address;
         this.phone = phone;
+        this.photo = photo;
         this.fcmToken = fcmToken;
         this.pets = pets;
     }
 
     @Override
     protected Observable buildUseCaseObservable() {
-        return repository.signUpPetLover(email, password, firstName, lastName, dni, address, phone, fcmToken, pets);
+        return repository.signUpPetLover(email, password, firstName, lastName, dni, address, phone, photo, fcmToken, pets);
     }
 }

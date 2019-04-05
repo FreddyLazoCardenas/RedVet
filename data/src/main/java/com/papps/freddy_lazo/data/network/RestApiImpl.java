@@ -56,7 +56,7 @@ public class RestApiImpl implements RestApi {
         }));
     }
 
-   @Override
+    @Override
     public Observable<PetLoverEntity> loginPetLover(String email, String password) {
         return Observable.create(emitter -> restService.login(new BodyLogin(email, password, "asdd", "android")).enqueue(new DefaultCallback<ResponseEntity<LoginResponse>>(emitter) {
             @Override
@@ -131,8 +131,8 @@ public class RestApiImpl implements RestApi {
     }
 
     @Override
-    public Observable<Void> signUpPetLover(String email, String password, String firstName, String lastName, String dni, String address, String phone, String fcmToken, List<PetRegister> pets) {
-        return Observable.create(emitter -> restService.petLoverRegister(new BodyPetLoverRegister(email, password, firstName, lastName, dni, address, phone, fcmToken, "android", pets)).enqueue(new DefaultCallback<ResponseEntity<Void>>(emitter) {
+    public Observable<Void> signUpPetLover(String email, String password, String firstName, String lastName, String dni, String address, String phone, String photo, String fcmToken, List<PetRegister> pets) {
+        return Observable.create(emitter -> restService.petLoverRegister(new BodyPetLoverRegister(email, password, firstName, lastName, dni, address, phone, photo, fcmToken, "android", pets)).enqueue(new DefaultCallback<ResponseEntity<Void>>(emitter) {
             @Override
             public void onResponse(@NonNull Call<ResponseEntity<Void>> call, @NonNull Response<ResponseEntity<Void>> response) {
                 super.onResponse(call, response);

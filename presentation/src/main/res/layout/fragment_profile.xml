@@ -20,10 +20,10 @@
             android:textSize="24sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/attendance_counter"
-            app:layout_constraintEnd_toStartOf="@id/img_register"
+            app:layout_constraintEnd_toStartOf="@id/img_profile"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="@id/start_guideline"
-            app:layout_constraintTop_toTopOf="@id/img_register"
+            app:layout_constraintTop_toTopOf="@id/img_profile"
             app:layout_constraintVertical_chainStyle="packed" />
 
         <TextView
@@ -49,15 +49,12 @@
             android:text="Cerrar Sesion"
             app:layout_constraintEnd_toEndOf="@id/txt_profile"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintBottom_toBottomOf="@+id/img_register"
+            app:layout_constraintBottom_toBottomOf="@+id/img_profile"
             app:layout_constraintStart_toStartOf="@id/txt_profile"
             app:layout_constraintTop_toBottomOf="@+id/attendance_counter" />
 
-
-
-
-        <ImageView
-            android:id="@+id/img_register"
+        <com.github.siyamed.shapeimageview.CircularImageView
+            android:id="@+id/img_profile"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_marginTop="24dp"
@@ -72,10 +69,10 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_marginTop="80dp"
-            app:layout_constraintTop_toTopOf="@+id/img_register"
-            app:layout_constraintBottom_toBottomOf="@+id/img_register"
-            app:layout_constraintEnd_toEndOf="@id/img_register"
-            app:layout_constraintStart_toStartOf="@id/img_register"
+            app:layout_constraintTop_toTopOf="@+id/img_profile"
+            app:layout_constraintBottom_toBottomOf="@+id/img_profile"
+            app:layout_constraintEnd_toEndOf="@id/img_profile"
+            app:layout_constraintStart_toStartOf="@id/img_profile"
             android:src="@drawable/ic_add" />
 
 
@@ -92,7 +89,7 @@
             app:layout_constraintTop_toBottomOf="@+id/btn_add">
 
             <EditText
-                android:id="@+id/edt_name"
+                android:id="@+id/et_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="text"
@@ -111,7 +108,7 @@
             app:layout_constraintTop_toBottomOf="@+id/til_name">
 
             <EditText
-                android:id="@+id/edt_last_name"
+                android:id="@+id/et_last_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="text"
@@ -121,7 +118,7 @@
 
 
         <EditText
-            android:id="@+id/edt_dni"
+            android:id="@+id/et_dni"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
@@ -135,7 +132,7 @@
             tools:text="70692399" />
 
         <EditText
-            android:id="@+id/edt_address"
+            android:id="@+id/et_address"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
@@ -145,12 +142,12 @@
             android:inputType="text"
             app:layout_constraintEnd_toEndOf="@id/end_guideline"
             app:layout_constraintStart_toStartOf="@id/start_guideline"
-            app:layout_constraintTop_toBottomOf="@+id/edt_dni"
+            app:layout_constraintTop_toBottomOf="@+id/et_dni"
             tools:text="Jr Rio Tumbes 405" />
 
 
         <EditText
-            android:id="@+id/edt_email"
+            android:id="@+id/et_email"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
@@ -160,11 +157,11 @@
             android:inputType="textEmailAddress"
             app:layout_constraintEnd_toEndOf="@id/end_guideline"
             app:layout_constraintStart_toStartOf="@id/start_guideline"
-            app:layout_constraintTop_toBottomOf="@+id/edt_address"
+            app:layout_constraintTop_toBottomOf="@+id/et_address"
             tools:text="lazocardenasf@gmail.com" />
 
         <EditText
-            android:id="@+id/edt_phone"
+            android:id="@+id/et_phone"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
@@ -174,7 +171,7 @@
             android:inputType="phone"
             app:layout_constraintEnd_toEndOf="@id/end_guideline"
             app:layout_constraintStart_toStartOf="@id/start_guideline"
-            app:layout_constraintTop_toBottomOf="@+id/edt_email"
+            app:layout_constraintTop_toBottomOf="@+id/et_email"
             tools:text="943234599" />
 
 
@@ -186,12 +183,12 @@
             android:hint="Contraseña"
             app:layout_constraintEnd_toEndOf="@id/end_guideline"
             app:layout_constraintStart_toStartOf="@id/start_guideline"
-            app:layout_constraintTop_toBottomOf="@+id/edt_phone"
+            app:layout_constraintTop_toBottomOf="@+id/et_phone"
             app:passwordToggleEnabled="true"
             app:passwordToggleTint="@color/colorGreen">
 
             <EditText
-                android:id="@+id/edt_password"
+                android:id="@+id/et_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawableStart="@drawable/ic_password"
@@ -214,7 +211,7 @@
             app:passwordToggleTint="@color/colorGreen">
 
             <EditText
-                android:id="@+id/edt_repeat_password"
+                android:id="@+id/et_repeat_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawableStart="@drawable/ic_password"
@@ -272,7 +269,7 @@
             android:src="@drawable/ic_big_add" />
 
         <Button
-            android:id="@+id/btn_register"
+            android:id="@+id/btn_update"
             style="@style/Widget.RetVet.ButtonSecondary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

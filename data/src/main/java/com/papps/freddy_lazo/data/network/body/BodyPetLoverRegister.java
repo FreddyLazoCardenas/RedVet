@@ -21,6 +21,8 @@ public class BodyPetLoverRegister {
     private String address;
     @SerializedName("phone")
     private String phone;
+    @SerializedName("photo")
+    private String photo;
     @SerializedName("fcm_token")
     private String fcmToken;
     @SerializedName("device")
@@ -29,7 +31,7 @@ public class BodyPetLoverRegister {
     @SerializedName("pets")
     private List<PetRegister> pets;
 
-    public BodyPetLoverRegister(String email, String password, String firstName, String lastName, String dni, String address, String phone, String fcmToken, String device, List<PetRegister> pets) {
+    public BodyPetLoverRegister(String email, String password, String firstName, String lastName, String dni, String address, String phone, String photo ,String fcmToken, String device, List<PetRegister> pets) {
         this.email = email;
         this.password = password;
         this.firstName = firstName;
@@ -37,6 +39,7 @@ public class BodyPetLoverRegister {
         this.dni = dni;
         this.address = address;
         this.phone = phone;
+        this.photo = photo;
         this.fcmToken = fcmToken;
         this.device = device;
         this.pets = pets;

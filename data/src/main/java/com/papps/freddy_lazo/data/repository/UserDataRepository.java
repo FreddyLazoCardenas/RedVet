@@ -45,8 +45,8 @@ public class UserDataRepository implements UserRepository {
     }
 
     @Override
-    public Observable<Void> signUpPetLover(String email, String password, String firstName, String lastName, String dni, String address, String phone, String fcmToken, List<PetRegister> pets) {
-        return mRestApi.signUpPetLover(email, password, firstName, lastName, dni, address, phone, fcmToken, pets);
+    public Observable<Void> signUpPetLover(String email, String password, String firstName, String lastName, String dni, String address, String phone, String photo, String fcmToken, List<PetRegister> pets) {
+        return mRestApi.signUpPetLover(email, password, firstName, lastName, dni, address, phone, photo, fcmToken, pets);
     }
 
     @Override

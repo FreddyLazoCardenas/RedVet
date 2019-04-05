@@ -101,7 +101,7 @@ public class RegisterFragmentPresenter implements Presenter<RegisterFragmentView
         if (!validatePetModelData())
             return;
         view.showErrorMessage("Mandando servicio");
-        petLoverSignUp.bindParams(view.getEmail(),view.getPassword(),view.getName(),view.getLastName(),view.getDni(),view.getAddress(),view.getPhone(),view.getDeviceId(),view.getPetData());
+        petLoverSignUp.bindParams(view.getEmail(),view.getPassword(),view.getName(),view.getLastName(),view.getDni(),view.getAddress(),view.getPhone(),view.getProfileBase64Image(), view.getDeviceId(),view.getPetData());
         petLoverSignUp.execute(new PetLoverSignUpObservable());
     }
 
