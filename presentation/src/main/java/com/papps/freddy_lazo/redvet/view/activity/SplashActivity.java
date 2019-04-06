@@ -4,7 +4,9 @@ import android.os.Bundle;
 
 import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.papps.freddy_lazo.data.sharedPreferences.PreferencesManager;
 import com.papps.freddy_lazo.redvet.BuildConfig;
 import com.papps.freddy_lazo.redvet.R;
@@ -22,6 +24,7 @@ public class SplashActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+        Log.d("notificacion", "el token es " + FirebaseInstanceId.getInstance().getToken());
         injectView(this);
         buildInjection();
         setUpHandler();
@@ -29,12 +32,7 @@ public class SplashActivity extends BaseActivity {
 
     private void setUpHandler() {
         Handler ha = new Handler();
-        Runnable ru = new Runnable() {
-            @Override
-            public void run() {
-                splashLogic();
-            }
-        };
+        Runnable ru = () -> splashLogic();
         ha.postDelayed(ru,1000);
 
     }
