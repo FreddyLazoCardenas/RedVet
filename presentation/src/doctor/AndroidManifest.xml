@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.papps.freddy_lazo.redvet">
+    >
 
     <application
         android:label="@string/app_doctor_name"
         tools:ignore="GoogleAppIndexingWarning">
 
-        <activity android:name=".view.activity.SplashActivity">
+        <activity android:name="com.papps.freddy_lazo.redvet.view.activity.SplashActivity">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -15,8 +15,8 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".view.activity.RegisterActivity" />
-        <activity android:name=".view.activity.MapActivity" />
+        <activity android:name="com.papps.freddy_lazo.redvet.view.activity.RegisterActivity" />
+        <activity android:name="com.papps.freddy_lazo.redvet.view.activity.MapActivity" />
 
     </application>
 </manifest>

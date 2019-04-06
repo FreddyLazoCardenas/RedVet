@@ -72,8 +72,9 @@ dependencies {
     implementation presentationDependencies.glide
     implementation presentationDependencies.imageCropper
     implementation presentationDependencies.firebaseMessaging
+    implementation presentationDependencies.firebaseCore
     implementation presentationDependencies.googlePlaces
     implementation presentationDependencies.googleLocation
 }
-//apply plugin: 'com.google.gms.google-services'
+apply plugin: 'com.google.gms.google-services'
 
