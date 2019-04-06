@@ -5,11 +5,15 @@ import android.content.pm.PackageManager;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 
+import com.papps.freddy_lazo.domain.interactor.DefaultObserver;
 import com.papps.freddy_lazo.domain.interactor.PetLoverUpdate;
+import com.papps.freddy_lazo.domain.model.PetLover;
 import com.papps.freddy_lazo.redvet.R;
 import com.papps.freddy_lazo.redvet.interfaces.ProfileFragmentView;
 
 import javax.inject.Inject;
+
+import io.reactivex.Observer;
 
 public class ProfileFragmentPresenter implements Presenter<ProfileFragmentView> {
 
@@ -94,6 +98,8 @@ public class ProfileFragmentPresenter implements Presenter<ProfileFragmentView> 
             return;
         if (!validatePetModelData())
             return;
+        petLoverUpdate.bindParams(view.getEmail(), view.getPassword(), view.getName(), view.getLastName(), view.getDni(), view.getAddress(), view.getPhone(), view.getProfileBase64Image(), view.getToken(), view.getPetData());
+        petLoverUpdate.execute(new PetLoverUpdateObservable());
     }
 
     private boolean validatePetModelData() {
@@ -238,5 +244,29 @@ public class ProfileFragmentPresenter implements Presenter<ProfileFragmentView> 
         }
         view.hidePetBreedError();
         return true;
+    }
+
+    private class PetLoverUpdateObservable extends DefaultObserver<PetLover> {
+        @Override
+        protected void onStart() {
+            super.onStart();
+        }
+
+        @Override
+        public void onNext(PetLover petLover) {
+            super.onNext(petLover);
+            view.showErrorMessage("llego la datitaaaa");
+        }
+
+        @Override
+        public void onComplete() {
+            super.onComplete();
+        }
+
+        @Override
+        public void onError(Throwable e) {
+            super.onError(e);
+            view.showErrorMessage(e.getMessage());
+        }
     }
 }

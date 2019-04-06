@@ -72,7 +72,7 @@ public class RestApiImpl implements RestApi {
 
     @Override
     public Observable<PetLoverEntity> updatePetLover(String email, String password, String firstName, String lastName, String dni, String address, String phone, String photo, String fcmToken, List<PetRegister> pets) {
-        return Observable.create(emitter -> restService.updatePetLover(new BodyPetLoverRegister(email, password, firstName, lastName, dni, address, phone, photo, fcmToken, "android", pets)).enqueue(new DefaultCallback<ResponseEntity<LoginResponse>>(emitter) {
+        return Observable.create(emitter -> restService.updatePetLover("Bearer wuGnaJzXVEFFJkfo", new BodyPetLoverRegister(email, password, firstName, lastName, dni, address, phone, photo, fcmToken, "android", pets)).enqueue(new DefaultCallback<ResponseEntity<LoginResponse>>(emitter) {
             @Override
             public void onResponse(@NonNull Call<ResponseEntity<LoginResponse>> call, @NonNull Response<ResponseEntity<LoginResponse>> response) {
                 super.onResponse(call, response);
@@ -87,7 +87,7 @@ public class RestApiImpl implements RestApi {
 
     @Override
     public Observable<DoctorEntity> updateDoctor(String email, String password, String firstName, String lastName, String typeDocument, String numberDocument, String business_name, String address, String latitude, String longitude, String consultationPrice, String consultationTime, String shower_price, String shower_time, String tuition_number, String description, String phone, String photo, String type, String attention, String fcmToken, String device, List<PetRegister> pets, List<ScheduleDoctorRegister> schedules, List<ServicesDoctorRegister> services) {
-        return Observable.create(emitter -> restService.updateDoctor(new BodyDoctorRegister(email, password, firstName, lastName, typeDocument, numberDocument, business_name, address, latitude, longitude, consultationPrice, consultationTime, shower_price, shower_time, tuition_number, description, phone, photo, type, attention, fcmToken, device, pets, schedules, services)).enqueue(new DefaultCallback<ResponseEntity<LoginResponse>>(emitter) {
+        return Observable.create(emitter -> restService.updateDoctor("Bearer wuGnaJzXVEFFJkfo", new BodyDoctorRegister(email, password, firstName, lastName, typeDocument, numberDocument, business_name, address, latitude, longitude, consultationPrice, consultationTime, shower_price, shower_time, tuition_number, description, phone, photo, type, attention, fcmToken, device, pets, schedules, services)).enqueue(new DefaultCallback<ResponseEntity<LoginResponse>>(emitter) {
             @Override
             public void onResponse(@NonNull Call<ResponseEntity<LoginResponse>> call, @NonNull Response<ResponseEntity<LoginResponse>> response) {
                 super.onResponse(call, response);

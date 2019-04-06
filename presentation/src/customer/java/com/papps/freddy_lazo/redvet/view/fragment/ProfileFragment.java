@@ -401,6 +401,11 @@ public class ProfileFragment extends BaseFragment implements CameraDialog.OnClic
     }
 
     @Override
+    public String getToken() {
+        return "token";
+    }
+
+    @Override
     public void savePetData() {
         // petLoverRegisterModel = new PetRegister(1, getPetName(), getPetBirthday(), getPetBreed(), getPetBase64Image());
     }
