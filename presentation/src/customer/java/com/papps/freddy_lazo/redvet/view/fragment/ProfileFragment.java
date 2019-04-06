@@ -22,6 +22,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.papps.freddy_lazo.data.sharedPreferences.PreferencesManager;
 import com.papps.freddy_lazo.domain.model.PetRegister;
 import com.papps.freddy_lazo.redvet.GlideApp;
@@ -409,7 +410,7 @@ public class ProfileFragment extends BaseFragment implements CameraDialog.OnClic
 
     @Override
     public String getToken() {
-        return "token";
+        return FirebaseInstanceId.getInstance().getToken();
     }
 
     @Override

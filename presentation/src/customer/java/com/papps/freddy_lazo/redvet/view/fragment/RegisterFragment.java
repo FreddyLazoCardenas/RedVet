@@ -507,7 +507,6 @@ public class RegisterFragment extends BaseFragment implements RegisterFragmentVi
 
     @Override
     public String getDeviceId() {
-        //return FirebaseInstanceId.getInstance().getToken();
-        return "lalalalal";
+        return FirebaseInstanceId.getInstance().getToken();
     }
 }

@@ -25,6 +25,7 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.papps.freddy_lazo.data.sharedPreferences.PreferencesManager;
 import com.papps.freddy_lazo.domain.model.PetRegister;
 import com.papps.freddy_lazo.domain.model.ScheduleDoctorRegister;
@@ -643,7 +644,7 @@ public class ProfileFragment extends BaseFragment implements CameraDialog.OnClic
 
     @Override
     public String getFcmToken() {
-        return "test";
+        return FirebaseInstanceId.getInstance().getToken();
     }
 
     @Override

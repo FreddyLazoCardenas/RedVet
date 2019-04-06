@@ -28,6 +28,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.papps.freddy_lazo.domain.model.PetRegister;
 import com.papps.freddy_lazo.domain.model.ScheduleDoctorRegister;
 import com.papps.freddy_lazo.domain.model.ServicesDoctorRegister;
@@ -489,7 +490,7 @@ public class RegisterFragment extends BaseFragment implements RegisterFragmentVi
 
     @Override
     public String getFcmToken() {
-        return "dsadas";
+        return FirebaseInstanceId.getInstance().getToken();
     }
 
     @Override
