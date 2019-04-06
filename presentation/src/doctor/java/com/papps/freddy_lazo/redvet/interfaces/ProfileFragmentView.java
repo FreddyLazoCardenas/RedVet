@@ -15,7 +15,7 @@ public interface ProfileFragmentView extends BaseView {
 
     String getLastName();
 
-    String getDni();
+    String getNumber();
 
     String getAddress();
 
@@ -25,7 +25,6 @@ public interface ProfileFragmentView extends BaseView {
 
     String getPassword();
 
-    String getRepeatPassword();
 
     ArrayList<PetRegister> getPetData();
 
@@ -45,13 +44,9 @@ public interface ProfileFragmentView extends BaseView {
 
     void hideEmailError();
 
-    void showDniError(String string);
+    void showDocumentNumber(String string);
 
-    void hideDniError();
-
-    void showRepeatPasswordError(String string);
-
-    void hideRepeatPasswordError();
+    void hideDocumentNumber();
 
     void showPasswordError(String string);
 

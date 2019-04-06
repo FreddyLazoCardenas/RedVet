@@ -286,42 +286,37 @@ public class ProfileFragment extends BaseFragment implements CameraDialog.OnClic
 
     @Override
     public String getName() {
-        return null;
+        return etName.getText().toString();
     }
 
     @Override
     public String getLastName() {
-        return null;
+        return etLastName.getText().toString();
     }
 
     @Override
-    public String getDni() {
-        return null;
+    public String getNumber() {
+        return etNumber.getText().toString();
     }
 
     @Override
     public String getAddress() {
-        return null;
+        return etAddress.getText().toString();
     }
 
     @Override
     public String getEmail() {
-        return null;
+        return etEmail.getText().toString();
     }
 
     @Override
     public String getPhone() {
-        return null;
+        return etPhone.getText().toString();
     }
 
     @Override
     public String getPassword() {
-        return null;
-    }
-
-    @Override
-    public String getRepeatPassword() {
-        return null;
+        return etPassword.getText().toString();
     }
 
     @Override
@@ -330,83 +325,73 @@ public class ProfileFragment extends BaseFragment implements CameraDialog.OnClic
     }
 
     @Override
-    public void showLastNameError(String string) {
-
+    public void showLastNameError(String message) {
+        showError(tilLastName, etLastName, message);
     }
 
     @Override
     public void hideLastNameError() {
-
+        hideError(tilLastName);
     }
 
     @Override
-    public void showNameError(String string) {
-
+    public void showNameError(String message) {
+        showError(tilName, etName, message);
     }
 
     @Override
     public void hideNameError() {
-
+        hideError(tilName);
     }
 
     @Override
-    public void showAddressError(String string) {
-
+    public void showAddressError(String message) {
+        showEtError(etAddress, message);
     }
 
     @Override
     public void hideAddressError() {
-
+        hideEtError(etAddress);
     }
 
     @Override
-    public void showEmailError(String string) {
-
+    public void showEmailError(String message) {
+        showEtError(etEmail, message);
     }
 
     @Override
     public void hideEmailError() {
-
+        hideEtError(etEmail);
     }
 
     @Override
-    public void showDniError(String string) {
-
+    public void showDocumentNumber(String message) {
+        showEtError(etNumber, message);
     }
 
     @Override
-    public void hideDniError() {
-
+    public void hideDocumentNumber() {
+        hideEtError(etNumber);
     }
 
     @Override
-    public void showRepeatPasswordError(String string) {
-
-    }
-
-    @Override
-    public void hideRepeatPasswordError() {
-
-    }
-
-    @Override
-    public void showPasswordError(String string) {
-
+    public void showPasswordError(String message) {
+        showEtError(etPassword, message);
     }
 
     @Override
     public void hidePasswordError() {
-
+        hideEtError(etPassword);
     }
 
     @Override
-    public void showPhoneError(String string) {
-
+    public void showPhoneError(String message) {
+        showEtError(etPhone, message);
     }
 
     @Override
     public void hidePhoneError() {
-
+        hideEtError(etPhone);
     }
 
     @Override
@@ -479,5 +464,27 @@ public class ProfileFragment extends BaseFragment implements CameraDialog.OnClic
     @OnClick(R.id.img_profile)
     public void imgProfile() {
         navigator.showListDialog(activity, this);
+    }
+
+    private void showError(TextInputLayout inputLayout, EditText editText, String message) {
+        inputLayout.setErrorEnabled(true);
+        inputLayout.setError(message);
+        editText.requestFocus();
+    }
+
+    private void hideError(TextInputLayout inputLayout) {
+        if (inputLayout.isErrorEnabled()) {
+            inputLayout.setError(null);
+            inputLayout.setErrorEnabled(false);
+        }
+    }
+
+    private void showEtError(EditText editText, String message) {
+        editText.setError(message);
+        editText.requestFocus();
+    }
+
+    private void hideEtError(EditText editText) {
+        editText.setError(null);
     }
 }

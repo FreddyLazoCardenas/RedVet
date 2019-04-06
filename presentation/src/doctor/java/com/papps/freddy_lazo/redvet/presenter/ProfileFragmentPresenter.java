@@ -5,6 +5,7 @@ import android.content.pm.PackageManager;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 
+import com.papps.freddy_lazo.domain.interactor.DoctorUpdate;
 import com.papps.freddy_lazo.domain.interactor.PetLoverUpdate;
 import com.papps.freddy_lazo.redvet.R;
 import com.papps.freddy_lazo.redvet.interfaces.ProfileFragmentView;
@@ -15,12 +16,12 @@ public class ProfileFragmentPresenter implements Presenter<ProfileFragmentView> 
 
     private static final int PERMISSION_REQUEST_CAMERA_CODE = 4;
     private static final int PERMISSION_REQUEST_GALLERY_CODE = 5;
-    private final PetLoverUpdate petLoverUpdate;
+    private final DoctorUpdate doctorUpdate;
     private ProfileFragmentView view;
 
     @Inject
-    public ProfileFragmentPresenter(PetLoverUpdate petLoverUpdate) {
-        this.petLoverUpdate = petLoverUpdate;
+    public ProfileFragmentPresenter(DoctorUpdate doctorUpdate) {
+        this.doctorUpdate = doctorUpdate;
     }
 
     @Override
@@ -35,7 +36,7 @@ public class ProfileFragmentPresenter implements Presenter<ProfileFragmentView> 
 
     @Override
     public void destroy() {
-        petLoverUpdate.unsubscribe();
+        doctorUpdate.unsubscribe();
     }
 
     @Override
@@ -80,7 +81,7 @@ public class ProfileFragmentPresenter implements Presenter<ProfileFragmentView> 
             return;
         if (!isValidLastName(view.getLastName()))
             return;
-        if (!isValidDni(view.getDni()))
+        if (!isValidDocNumber(view.getNumber()))
             return;
         if (!isValidAddress(view.getAddress()))
             return;
@@ -90,10 +91,9 @@ public class ProfileFragmentPresenter implements Presenter<ProfileFragmentView> 
             return;
         if (!isValidPassword(view.getPassword()))
             return;
-        if (!isValidRepeatPassword(view.getRepeatPassword(), view.getPassword()))
-            return;
         if (!validatePetModelData())
             return;
+       // doctorUpdate.bindParams();
     }
 
     private boolean validatePetModelData() {
@@ -144,35 +144,16 @@ public class ProfileFragmentPresenter implements Presenter<ProfileFragmentView> 
         return true;
     }
 
-    private boolean isValidDni(String dni) {
-        if (TextUtils.isEmpty(dni)) {
-            view.showDniError(view.context().getString(R.string.text_required_field));
+    private boolean isValidDocNumber(String docNumber) {
+        if (TextUtils.isEmpty(docNumber)) {
+            view.showDocumentNumber(view.context().getString(R.string.text_required_field));
             return false;
         }
-        if (dni.length() != 8) {
-            view.showDniError(view.context().getString(R.string.text_bad_format_field));
+       /* if (docNumber.length() != 8) {
+            view.showDocumentNumber(view.context().getString(R.string.text_bad_format_field));
             return false;
-        }
-        view.hideDniError();
-        return true;
-    }
-
-
-    private boolean isValidRepeatPassword(String repeatPassword, String password) {
-        if (TextUtils.isEmpty(repeatPassword)) {
-            view.showRepeatPasswordError(view.context().getString(R.string.text_required_field));
-            return false;
-        }
-        if (repeatPassword.length() < 6) {
-            view.showRepeatPasswordError(view.context().getString(R.string.text_bad_format_field));
-            return false;
-        }
-
-        if (!repeatPassword.equals(password)) {
-            view.showRepeatPasswordError(view.context().getString(R.string.text_not_match));
-            return false;
-        }
-        view.hideRepeatPasswordError();
+        }*/
+        view.hideDocumentNumber();
         return true;
     }
 

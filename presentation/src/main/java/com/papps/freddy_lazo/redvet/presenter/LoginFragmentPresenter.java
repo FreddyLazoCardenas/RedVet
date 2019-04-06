@@ -13,10 +13,8 @@ import com.papps.freddy_lazo.redvet.R;
 import com.papps.freddy_lazo.redvet.interfaces.LoginFragmentView;
 import com.papps.freddy_lazo.redvet.model.DoctorModel;
 import com.papps.freddy_lazo.redvet.model.PetLoverModel;
-import com.papps.freddy_lazo.redvet.model.PetModel;
 import com.papps.freddy_lazo.redvet.model.mapper.DoctorModelMapper;
 import com.papps.freddy_lazo.redvet.model.mapper.PetLoverModelMapper;
-import com.papps.freddy_lazo.redvet.model.mapper.PetModelMapper;
 
 import javax.inject.Inject;
 
