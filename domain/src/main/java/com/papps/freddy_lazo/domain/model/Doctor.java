@@ -12,6 +12,9 @@ public class Doctor {
     private String latitude;
     private String longitude;
     private String consultation_price;
+    private String consultation_time;
+    private String shower_price;
+    private String shower_time;
     private String phone;
     private String type;
     private String tuition_number;
@@ -27,7 +30,7 @@ public class Doctor {
     private List<Schedule> scheduleList;
     private List<ServiceDoctor> serviceList;
 
-    public Doctor(int user_id, String type_document, String number_document, String business_name, String address, String latitude, String longitude, String consultation_price, String phone, String type, String tuition_number, String description, String attention
+    public Doctor(int user_id, String type_document, String number_document, String business_name, String address, String latitude, String longitude, String consultation_price,String consultation_time,String shower_price ,String shower_time, String phone, String type, String tuition_number, String description, String attention
             , String available, String first_name, String last_name, String email, String photo_url, String api_token, List<Pet> petList ,List<Schedule> scheduleList ,List<ServiceDoctor> serviceList) {
         this.user_id = user_id;
         this.type_document = type_document;
@@ -37,6 +40,9 @@ public class Doctor {
         this.latitude = latitude;
         this.longitude = longitude;
         this.consultation_price = consultation_price;
+        this.consultation_time = consultation_time;
+        this.shower_price = shower_price;
+        this.shower_time = shower_time;
         this.phone = phone;
         this.type = type;
         this.tuition_number = tuition_number;
@@ -139,5 +145,17 @@ public class Doctor {
 
     public List<ServiceDoctor> getServiceList() {
         return serviceList;
+    }
+
+    public String getConsultation_time() {
+        return consultation_time;
+    }
+
+    public String getShower_price() {
+        return shower_price;
+    }
+
+    public String getShower_time() {
+        return shower_time;
     }
 }

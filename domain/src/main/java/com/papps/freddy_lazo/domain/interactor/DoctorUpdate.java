@@ -40,6 +40,7 @@ public class DoctorUpdate extends UseCase {
     private List<ServicesDoctorRegister> services;
     private String phone;
     private String fcmToken;
+    private String apiToken;
     private List<PetRegister> pets;
 
     @Inject
@@ -48,7 +49,8 @@ public class DoctorUpdate extends UseCase {
         this.repository = repository;
     }
 
-    public void bindParams(String email, String password, String firstName, String lastName, String typeDocument, String numberDocument, String business_name, String address, String latitude, String longitude, String consultationPrice, String consultationTime, String shower_price, String shower_time, String tuition_number, String description, String phone, String photo, String type, String attention, String fcmToken, String device, List<PetRegister> pets, List<ScheduleDoctorRegister> schedules, List<ServicesDoctorRegister> services) {
+    public void bindParams(String apiToken ,String email, String password, String firstName, String lastName, String typeDocument, String numberDocument, String business_name, String address, String latitude, String longitude, String consultationPrice, String consultationTime, String shower_price, String shower_time, String tuition_number, String description, String phone, String photo, String type, String attention, String fcmToken, String device, List<PetRegister> pets, List<ScheduleDoctorRegister> schedules, List<ServicesDoctorRegister> services) {
+        this.apiToken = apiToken;
         this.email = email;
         this.password = password;
         this.firstName = firstName;
@@ -78,7 +80,7 @@ public class DoctorUpdate extends UseCase {
 
     @Override
     protected Observable buildUseCaseObservable() {
-        return repository.updateDoctor(email, password, firstName, lastName, typeDocument, numberDocument, business_name, address, latitude, longitude, consultationPrice, consultationTime, shower_price, shower_time, tuition_number, description, phone, photo, type, attention
+        return repository.updateDoctor(apiToken,email, password, firstName, lastName, typeDocument, numberDocument, business_name, address, latitude, longitude, consultationPrice, consultationTime, shower_price, shower_time, tuition_number, description, phone, photo, type, attention
                 , fcmToken, device, pets, schedules, services);
     }
 }

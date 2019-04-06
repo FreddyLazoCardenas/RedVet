@@ -1,9 +1,12 @@
 package com.papps.freddy_lazo.redvet.interfaces;
 
 import com.papps.freddy_lazo.domain.model.PetRegister;
+import com.papps.freddy_lazo.domain.model.ScheduleDoctorRegister;
+import com.papps.freddy_lazo.domain.model.ServicesDoctorRegister;
 import com.papps.freddy_lazo.redvet.interfaces.BaseView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public interface ProfileFragmentView extends BaseView {
 
@@ -25,6 +28,19 @@ public interface ProfileFragmentView extends BaseView {
 
     String getPassword();
 
+    String getApiToken();
+
+    String getTypeDocument();
+
+    String getType();
+
+    String getAttention();
+
+    String getBusinessName();
+
+    String getLatitude();
+
+    String getLongitude();
 
     ArrayList<PetRegister> getPetData();
 
@@ -62,6 +78,14 @@ public interface ProfileFragmentView extends BaseView {
 
     String getPetBreed();
 
+    String getTuition();
+
+    String getFcmToken();
+
+    List<ScheduleDoctorRegister> getSchedules();
+
+    List<ServicesDoctorRegister> getServices();
+
     String getProfileBase64Image();
 
     void savePetData();
@@ -77,4 +101,26 @@ public interface ProfileFragmentView extends BaseView {
     void showPetBreedError(String string);
 
     void hidePetBreedError();
+
+    int getConsultationPriceVisibility();
+
+    int getShowerPriceVisibility();
+
+    void showConsultationPriceError(String message);
+
+    void hideConsultationPriceError();
+
+    void showShowerPriceError(String string);
+
+    void hideShowerPriceError();
+
+    String getConsultationPrice();
+
+    String getConsultationTime();
+
+    String getShowerPrice();
+
+    String getShowerTime();
+
+    String getDescription();
 }

@@ -23,6 +23,12 @@ public class DoctorEntity {
     private String longitude;
     @SerializedName("consultation_price")
     private String consultation_price;
+    @SerializedName("consultation_time")
+    private String consultation_time;
+    @SerializedName("shower_price")
+    private String shower_price;
+    @SerializedName("shower_time")
+    private String shower_time;
     @SerializedName("phone")
     private String phone;
     @SerializedName("type")
@@ -143,5 +149,17 @@ public class DoctorEntity {
 
     public List<ServicesDoctorEntity> getServices() {
         return services;
+    }
+
+    public String getConsultation_time() {
+        return consultation_time;
+    }
+
+    public String getShower_price() {
+        return shower_price;
+    }
+
+    public String getShower_time() {
+        return shower_time;
     }
 }

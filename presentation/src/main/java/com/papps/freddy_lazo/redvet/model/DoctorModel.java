@@ -20,6 +20,9 @@ public class DoctorModel implements Parcelable {
     private String latitude;
     private String longitude;
     private String consultation_price;
+    private String consultation_time;
+    private String shower_price;
+    private String shower_time;
     private String phone;
     private String type;
     private String tuition_number;
@@ -36,7 +39,7 @@ public class DoctorModel implements Parcelable {
     private List<ServiceDoctorModel> serviceList;
 
 
-    public DoctorModel(int user_id, String type_document, String number_document, String business_name, String address, String latitude, String longitude, String consultation_price, String phone, String type, String tuition_number, String description, String attention
+    public DoctorModel(int user_id, String type_document, String number_document, String business_name, String address, String latitude, String longitude, String consultation_price, String consultation_time,String shower_price ,String shower_time,String phone, String type, String tuition_number, String description, String attention
             , String available, String first_name, String last_name, String email, String photo_url, String api_token, List<PetLoverRegisterModel> petList,List<ScheduleModel> scheduleList,List<ServiceDoctorModel> serviceList) {
         this.user_id = user_id;
         this.type_document = type_document;
@@ -46,6 +49,9 @@ public class DoctorModel implements Parcelable {
         this.latitude = latitude;
         this.longitude = longitude;
         this.consultation_price = consultation_price;
+        this.consultation_time = consultation_time;
+        this.shower_price = shower_price;
+        this.shower_time = shower_time;
         this.phone = phone;
         this.type = type;
         this.tuition_number = tuition_number;
@@ -238,6 +244,30 @@ public class DoctorModel implements Parcelable {
         this.serviceList = serviceList;
     }
 
+    public String getConsultation_time() {
+        return consultation_time;
+    }
+
+    public void setConsultation_time(String consultation_time) {
+        this.consultation_time = consultation_time;
+    }
+
+    public String getShower_price() {
+        return shower_price;
+    }
+
+    public void setShower_price(String shower_price) {
+        this.shower_price = shower_price;
+    }
+
+    public String getShower_time() {
+        return shower_time;
+    }
+
+    public void setShower_time(String shower_time) {
+        this.shower_time = shower_time;
+    }
+
     public static DoctorModel toModel(String srtUser) {
         return srtUser != null && !srtUser.isEmpty() ? new Gson().fromJson(srtUser, DoctorModel.class) : null;
     }
@@ -257,6 +287,9 @@ public class DoctorModel implements Parcelable {
         dest.writeString(this.latitude);
         dest.writeString(this.longitude);
         dest.writeString(this.consultation_price);
+        dest.writeString(this.consultation_time);
+        dest.writeString(this.shower_price);
+        dest.writeString(this.shower_time);
         dest.writeString(this.phone);
         dest.writeString(this.type);
         dest.writeString(this.tuition_number);
@@ -282,6 +315,9 @@ public class DoctorModel implements Parcelable {
         this.latitude = in.readString();
         this.longitude = in.readString();
         this.consultation_price = in.readString();
+        this.consultation_time = in.readString();
+        this.shower_price = in.readString();
+        this.shower_time = in.readString();
         this.phone = in.readString();
         this.type = in.readString();
         this.tuition_number = in.readString();

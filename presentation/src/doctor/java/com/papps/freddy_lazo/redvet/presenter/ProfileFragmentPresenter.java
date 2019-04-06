@@ -5,12 +5,16 @@ import android.content.pm.PackageManager;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 
+import com.papps.freddy_lazo.domain.interactor.DefaultObserver;
 import com.papps.freddy_lazo.domain.interactor.DoctorUpdate;
-import com.papps.freddy_lazo.domain.interactor.PetLoverUpdate;
+import com.papps.freddy_lazo.domain.model.Doctor;
 import com.papps.freddy_lazo.redvet.R;
 import com.papps.freddy_lazo.redvet.interfaces.ProfileFragmentView;
+import com.papps.freddy_lazo.redvet.model.DoctorModel;
 
 import javax.inject.Inject;
+
+import io.reactivex.Observer;
 
 public class ProfileFragmentPresenter implements Presenter<ProfileFragmentView> {
 
@@ -93,7 +97,10 @@ public class ProfileFragmentPresenter implements Presenter<ProfileFragmentView> 
             return;
         if (!validatePetModelData())
             return;
-       // doctorUpdate.bindParams();
+        doctorUpdate.bindParams(view.getApiToken(), view.getEmail(), view.getPassword(), view.getName(), view.getLastName(), view.getTypeDocument(), view.getNumber(), view.getBusinessName(), view.getAddress(), view.getLatitude(),
+                view.getLongitude(), view.getConsultationPrice(), view.getConsultationTime(), view.getShowerPrice(), view.getShowerTime(), view.getTuition(), view.getDescription(), view.getPhone(), view.getProfileBase64Image(),
+                view.getType(), view.getAttention(), view.getFcmToken(), "android", view.getPetData(), view.getSchedules(), view.getServices());
+        doctorUpdate.execute(new DoctorUpdateObservable());
     }
 
     private boolean validatePetModelData() {
@@ -219,5 +226,30 @@ public class ProfileFragmentPresenter implements Presenter<ProfileFragmentView> 
         }
         view.hidePetBreedError();
         return true;
+    }
+
+    private class DoctorUpdateObservable extends DefaultObserver<Doctor> {
+
+        @Override
+        protected void onStart() {
+            super.onStart();
+        }
+
+        @Override
+        public void onNext(Doctor doctor) {
+            super.onNext(doctor);
+            view.showErrorMessage("exitooo");
+        }
+
+        @Override
+        public void onError(Throwable e) {
+            super.onError(e);
+            view.showErrorMessage(e.getMessage());
+        }
+
+        @Override
+        public void onComplete() {
+            super.onComplete();
+        }
     }
 }

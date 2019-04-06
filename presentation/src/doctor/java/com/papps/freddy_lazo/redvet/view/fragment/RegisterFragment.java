@@ -162,8 +162,6 @@ public class RegisterFragment extends BaseFragment implements RegisterFragmentVi
         setUpPetRv();
         setUpSpinner();
         setUpTypeSpinner();
-        getTypeDocument();
-        getType();
     }
 
     private void setUpTypeSpinner() {
@@ -241,6 +239,7 @@ public class RegisterFragment extends BaseFragment implements RegisterFragmentVi
     public void onResume() {
         super.onResume();
         if (fromServices) {
+            servicesDoctorRegisterList.clear();
             fromServices = false;
             List<ServicesModel> servicesModelList = activity.getData();
             if (!servicesModelList.isEmpty()) {

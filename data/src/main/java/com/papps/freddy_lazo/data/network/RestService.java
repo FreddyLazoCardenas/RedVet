@@ -42,9 +42,9 @@ public interface RestService {
     Call<ResponseEntity<Void>> forgotPassword(@Body BodyRecoverPassword bodyRecoverPassword);
 
     @POST("pet-lover/update")
-    Call<ResponseEntity<LoginResponse>> updatePetLover(@Header("Authorization") String auth,@Body BodyPetLoverRegister bodyUpdatePetLover);
+    Call<ResponseEntity<LoginResponse>> updatePetLover(@Header("Authorization") String auth, @Body BodyPetLoverRegister bodyUpdatePetLover);
 
     @POST("doctor/update")
-    Call<ResponseEntity<LoginResponse>> updateDoctor(@Header("Authorization") String auth,@Body BodyDoctorRegister bodyUpdatePetLover);
+    Call<ResponseEntity<LoginResponse>> updateDoctor(@Header("Authorization") String auth, @Body BodyDoctorRegister bodyUpdatePetLover);
 
 }

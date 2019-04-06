@@ -41,6 +41,11 @@ public class PetRegister {
         this.id = id;
     }
 
+    public PetRegister(int id, int pet_id) {
+        this.id = id;
+        this.pet_id = pet_id;
+    }
+
     public int getId() {
         return id;
     }
