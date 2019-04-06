@@ -24,6 +24,7 @@ public class PetLoverUpdate extends UseCase {
     private String fcmToken;
     private List<PetRegister> pets;
     private String photo;
+    private String apiToken;
 
     @Inject
     PetLoverUpdate(UserRepository repository, ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
@@ -31,7 +32,8 @@ public class PetLoverUpdate extends UseCase {
         this.repository = repository;
     }
 
-    public void bindParams(String email, String password, String firstName, String lastName, String dni, String address, String phone, String photo, String fcmToken, List<PetRegister> pets) {
+    public void bindParams(String apiToken ,String email, String password, String firstName, String lastName, String dni, String address, String phone, String photo, String fcmToken, List<PetRegister> pets) {
+        this.apiToken = apiToken;
         this.email = email;
         this.password = password;
         this.firstName = firstName;
@@ -46,6 +48,6 @@ public class PetLoverUpdate extends UseCase {
 
     @Override
     protected Observable buildUseCaseObservable() {
-        return repository.updatePetLover(email, password, firstName, lastName, dni, address, phone, photo, fcmToken, pets);
+        return repository.updatePetLover(apiToken,email, password, firstName, lastName, dni, address, phone, photo, fcmToken, pets);
     }
 }

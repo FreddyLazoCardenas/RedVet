@@ -40,8 +40,8 @@ public class UserDataRepository implements UserRepository {
     }
 
     @Override
-    public Observable<PetLover> updatePetLover(String email, String password, String firstName, String lastName, String dni, String address, String phone, String photo, String fcmToken, List<PetRegister> pets) {
-        return mRestApi.updatePetLover(email, password, firstName, lastName, dni, address, phone, photo, fcmToken, pets).map(PetLoverLoginMapper::transform);
+    public Observable<PetLover> updatePetLover(String apiToken,String email, String password, String firstName, String lastName, String dni, String address, String phone, String photo, String fcmToken, List<PetRegister> pets) {
+        return mRestApi.updatePetLover(apiToken,email, password, firstName, lastName, dni, address, phone, photo, fcmToken, pets).map(PetLoverLoginMapper::transform);
     }
 
     @Override

@@ -13,8 +13,6 @@ import com.papps.freddy_lazo.redvet.interfaces.ProfileFragmentView;
 
 import javax.inject.Inject;
 
-import io.reactivex.Observer;
-
 public class ProfileFragmentPresenter implements Presenter<ProfileFragmentView> {
 
     private static final int PERMISSION_REQUEST_CAMERA_CODE = 4;
@@ -98,12 +96,12 @@ public class ProfileFragmentPresenter implements Presenter<ProfileFragmentView> 
             return;
         if (!validatePetModelData())
             return;
-        petLoverUpdate.bindParams(view.getEmail(), view.getPassword(), view.getName(), view.getLastName(), view.getDni(), view.getAddress(), view.getPhone(), view.getProfileBase64Image(), view.getToken(), view.getPetData());
+        petLoverUpdate.bindParams(view.getApiToken(), view.getEmail(), view.getPassword(), view.getName(), view.getLastName(), view.getDni(), view.getAddress(), view.getPhone(), view.getProfileBase64Image(), view.getToken(), view.getPetData());
         petLoverUpdate.execute(new PetLoverUpdateObservable());
     }
 
     private boolean validatePetModelData() {
-        if (view.getPetData() == null) {
+        if (view.getPetData() == null || view.getPetData().isEmpty()) {
             view.showErrorMessage(view.context().getString(R.string.add_pet_data));
             return false;
         }

@@ -4,13 +4,13 @@ public class Pet {
 
     private int id;
     private String doctor_id;
-    private String pet_id;
+    private int pet_id;
     private String name;
     private String birthday;
     private String breed;
     private String photo;
 
-    public Pet(int id, String doctor_id, String pet_id, String name, String birthday, String breed, String photo) {
+    public Pet(int id, String doctor_id, int pet_id, String name, String birthday, String breed, String photo) {
         this.id = id;
         this.doctor_id = doctor_id;
         this.pet_id = pet_id;
@@ -28,7 +28,7 @@ public class Pet {
         return doctor_id;
     }
 
-    public String getPet_id() {
+    public int getPet_id() {
         return pet_id;
     }
 

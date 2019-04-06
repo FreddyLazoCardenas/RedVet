@@ -3,17 +3,26 @@ package com.papps.freddy_lazo.domain.model;
 public class PetRegister {
 
     private int id;
-    private String pet_id;
+    private int pet_id;
     private String doctor_id;
     private String name;
     private String birthday;
     private String breed;
     private String photo;
 
-    public PetRegister(int id, String pet_id, String doctor_id, String name, String birthday, String breed, String photo) {
+    public PetRegister(int id, int pet_id, String doctor_id, String name, String birthday, String breed, String photo) {
         this.id = id;
         this.pet_id = pet_id;
         this.doctor_id = doctor_id;
+        this.name = name;
+        this.birthday = birthday;
+        this.breed = breed;
+        this.photo = photo;
+    }
+
+    public PetRegister(int id, int pet_id, String name, String birthday, String breed, String photo) {
+        this.id = id;
+        this.pet_id = pet_id;
         this.name = name;
         this.birthday = birthday;
         this.breed = breed;
@@ -36,7 +45,7 @@ public class PetRegister {
         return id;
     }
 
-    public String getPet_id() {
+    public int getPet_id() {
         return pet_id;
     }
 

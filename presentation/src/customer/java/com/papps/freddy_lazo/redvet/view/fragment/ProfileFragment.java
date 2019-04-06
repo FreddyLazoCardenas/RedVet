@@ -28,6 +28,7 @@ import com.papps.freddy_lazo.redvet.GlideApp;
 import com.papps.freddy_lazo.redvet.R;
 import com.papps.freddy_lazo.redvet.internal.dagger.component.DaggerProfileFragmentComponent;
 import com.papps.freddy_lazo.redvet.model.PetLoverModel;
+import com.papps.freddy_lazo.redvet.model.PetLoverRegisterModel;
 import com.papps.freddy_lazo.redvet.presenter.ProfileFragmentPresenter;
 import com.papps.freddy_lazo.redvet.presenter.RegisterFragmentPresenter;
 import com.papps.freddy_lazo.redvet.view.activity.HomeActivity;
@@ -40,6 +41,7 @@ import com.theartofdev.edmodo.cropper.CropImageView;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -273,6 +275,11 @@ public class ProfileFragment extends BaseFragment implements CameraDialog.OnClic
     }
 
     @Override
+    public String getApiToken() {
+        return petLoverModel.getApi_token();
+    }
+
+    @Override
     public void showLastNameError(String message) {
         showError(tilLastName, etLastName, message);
     }
@@ -431,13 +438,17 @@ public class ProfileFragment extends BaseFragment implements CameraDialog.OnClic
             byte[] b = baos.toByteArray();
             return Base64.encodeToString(b, Base64.DEFAULT);
         } else
-            return "";
+            return (petLoverModel.getPhoto_url() != null && petLoverModel.getPhoto_url().equals("")) ? null : petLoverModel.getPhoto_url();
     }
 
     @Override
     public ArrayList<PetRegister> getPetData() {
+        List<PetLoverRegisterModel> petData = petLoverModel.getPetList();
         ArrayList<PetRegister> petRegisters = new ArrayList<>();
-        petRegisters.add(0, petLoverRegisterModel);
+        for (PetLoverRegisterModel petLoverRegisterModel : petData) {
+            String photo = petLoverRegisterModel.getPhoto();
+            petRegisters.add(new PetRegister(petLoverRegisterModel.getId(), petLoverRegisterModel.getPet_id(), petLoverRegisterModel.getName(), petLoverRegisterModel.getBirthday(), petLoverRegisterModel.getBreed(), (photo != null && petLoverRegisterModel.getPhoto().equals("")) ? null : petLoverRegisterModel.getPhoto()));
+        }
         return petRegisters;
     }
 

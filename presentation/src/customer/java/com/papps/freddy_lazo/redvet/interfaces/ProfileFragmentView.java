@@ -26,6 +26,8 @@ public interface ProfileFragmentView extends BaseView {
 
     String getRepeatPassword();
 
+    String getApiToken();
+
     ArrayList<PetRegister> getPetData();
 
     void showLastNameError(String string);

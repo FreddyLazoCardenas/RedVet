@@ -4,20 +4,20 @@ public class PetEntity {
 
     private int id;
     private String doctor_id;
-    private String pet_id;
+    private int pet_id;
     private String name;
     private String birthday;
     private String breed;
     private String photo;
     private String photo_url;
 
-    public PetEntity(int id, String doctor_id, String pet_id) {
+    public PetEntity(int id, String doctor_id, int pet_id) {
         this.id = id;
         this.doctor_id = doctor_id;
         this.pet_id = pet_id;
     }
 
-    public PetEntity(int id, String doctor_id, String pet_id, String name, String birthday, String breed, String photo, String photo_url) {
+    public PetEntity(int id, String doctor_id, int pet_id, String name, String birthday, String breed, String photo, String photo_url) {
         this.id = id;
         this.doctor_id = doctor_id;
         this.pet_id = pet_id;
@@ -56,7 +56,7 @@ public class PetEntity {
         return doctor_id;
     }
 
-    public String getPet_id() {
+    public int getPet_id() {
         return pet_id;
     }
 
