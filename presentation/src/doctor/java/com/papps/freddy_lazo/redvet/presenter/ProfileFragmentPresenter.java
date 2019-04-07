@@ -5,27 +5,30 @@ import android.content.pm.PackageManager;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 
+import com.papps.freddy_lazo.data.sharedPreferences.PreferencesManager;
 import com.papps.freddy_lazo.domain.interactor.DefaultObserver;
 import com.papps.freddy_lazo.domain.interactor.DoctorUpdate;
 import com.papps.freddy_lazo.domain.model.Doctor;
 import com.papps.freddy_lazo.redvet.R;
 import com.papps.freddy_lazo.redvet.interfaces.ProfileFragmentView;
 import com.papps.freddy_lazo.redvet.model.DoctorModel;
+import com.papps.freddy_lazo.redvet.model.mapper.DoctorModelMapper;
 
 import javax.inject.Inject;
 
-import io.reactivex.Observer;
 
 public class ProfileFragmentPresenter implements Presenter<ProfileFragmentView> {
 
     private static final int PERMISSION_REQUEST_CAMERA_CODE = 4;
     private static final int PERMISSION_REQUEST_GALLERY_CODE = 5;
     private final DoctorUpdate doctorUpdate;
+    private final PreferencesManager preferencesManager;
     private ProfileFragmentView view;
 
     @Inject
-    public ProfileFragmentPresenter(DoctorUpdate doctorUpdate) {
+    public ProfileFragmentPresenter(PreferencesManager preferencesManager , DoctorUpdate doctorUpdate) {
         this.doctorUpdate = doctorUpdate;
+        this.preferencesManager = preferencesManager;
     }
 
     @Override
@@ -238,7 +241,10 @@ public class ProfileFragmentPresenter implements Presenter<ProfileFragmentView> 
         @Override
         public void onNext(Doctor doctor) {
             super.onNext(doctor);
+            DoctorModel doctorModel = DoctorModelMapper.transform(doctor);
+            preferencesManager.saveDoctorCurrentUser(doctorModel.toString());
             view.showErrorMessage("exitooo");
+            view.updateView();
         }
 
         @Override

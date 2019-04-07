@@ -123,4 +123,6 @@ public interface ProfileFragmentView extends BaseView {
     String getShowerTime();
 
     String getDescription();
+
+    void updateView();
 }

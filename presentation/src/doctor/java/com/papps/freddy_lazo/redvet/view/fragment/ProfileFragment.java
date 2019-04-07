@@ -15,6 +15,7 @@ import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -221,6 +222,7 @@ public class ProfileFragment extends BaseFragment implements CameraDialog.OnClic
         etNumber.setText(doctorModel.getNumber_document());
         etAddress.setText(doctorModel.getAddress());
         etEmail.setText(doctorModel.getEmail());
+        etRs.setText(doctorModel.getBusiness_name());
         etPhone.setText(doctorModel.getPhone());
         displayPhoto(true, true);
         etDescription.setText(doctorModel.getDescription());
@@ -230,19 +232,20 @@ public class ProfileFragment extends BaseFragment implements CameraDialog.OnClic
     }
 
     private void showerLogic() {
-        if (doctorModel.getShower_price() != null && !doctorModel.getShower_price().equals("")){
+        if (doctorModel.getShower_price() != null && !doctorModel.getShower_price().equals("")) {
             gShower.setVisibility(View.VISIBLE);
             etShowerPrice.setText(doctorModel.getShower_price());
-        }else{
+        } else {
             gShower.setVisibility(View.INVISIBLE);
         }
         gShower.requestLayout();
     }
+
     private void consultationLogic() {
-        if (doctorModel.getConsultation_price() != null && !doctorModel.getConsultation_price().equals("")){
+        if (doctorModel.getConsultation_price() != null && !doctorModel.getConsultation_price().equals("")) {
             gConsultation.setVisibility(View.VISIBLE);
             etConsultationPrice.setText(doctorModel.getConsultation_price());
-        }else{
+        } else {
             gConsultation.setVisibility(View.INVISIBLE);
         }
         gConsultation.requestLayout();
@@ -383,6 +386,11 @@ public class ProfileFragment extends BaseFragment implements CameraDialog.OnClic
     @Override
     public String getDescription() {
         return Objects.requireNonNull(etDescription.getText()).toString();
+    }
+
+    @Override
+    public void updateView() {
+        getUserData();
     }
 
     @Override
@@ -668,13 +676,14 @@ public class ProfileFragment extends BaseFragment implements CameraDialog.OnClic
     @Override
     public String getProfileBase64Image() {
         if (croppedProfileFile != null) {
-            Bitmap bm = BitmapFactory.decodeFile(croppedProfileFile.getAbsolutePath());
+            Bitmap bm = BitmapFactory.decodeFile(croppedProfileFile.getPath());
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             bm.compress(Bitmap.CompressFormat.JPEG, 100, baos); //bm is the bitmap object
             byte[] b = baos.toByteArray();
+            Log.d("profileImage",Base64.encodeToString(b, Base64.DEFAULT));
             return Base64.encodeToString(b, Base64.DEFAULT);
         } else
-            return null;
+            return (doctorModel.getPhoto_url() != null && doctorModel.getPhoto_url().equals("")) ? null : doctorModel.getPhoto_url();
     }
 
     @Override
