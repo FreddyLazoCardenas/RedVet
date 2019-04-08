@@ -11,7 +11,6 @@ import android.support.v4.content.FileProvider;
 
 import com.papps.freddy_lazo.redvet.BuildConfig;
 import com.papps.freddy_lazo.redvet.R;
-import com.papps.freddy_lazo.redvet.model.DoctorModel;
 import com.papps.freddy_lazo.redvet.view.activity.AppointmentActivity;
 import com.papps.freddy_lazo.redvet.view.activity.BaseActivity;
 import com.papps.freddy_lazo.redvet.view.activity.HomeActivity;
@@ -19,6 +18,7 @@ import com.papps.freddy_lazo.redvet.view.activity.LoginActivity;
 import com.papps.freddy_lazo.redvet.view.activity.RegisterActivity;
 import com.papps.freddy_lazo.redvet.view.dialogFragment.CameraDialog;
 import com.papps.freddy_lazo.redvet.view.dialogFragment.DoctorDialog;
+import com.papps.freddy_lazo.redvet.view.dialogFragment.SuccessAppointmentDialog;
 import com.papps.freddy_lazo.redvet.view.fragment.MapFragment;
 import com.papps.freddy_lazo.redvet.view.fragment.NewsFragment;
 import com.papps.freddy_lazo.redvet.view.fragment.NotificationsFragment;
@@ -142,13 +142,19 @@ public class Navigator extends BaseNavigator {
         fragment.startActivityForResult(Intent.createChooser(intent, "Select File"), requestCode);
     }
 
-    public void navigateDoctorDetailFragment(FragmentManager fm, String name , String doctor) {
-        DoctorDialog.newInstance(doctor).show(fm, name);
-    }
+
     //Dialogs
 
     public void showListDialog(BaseActivity activity, CameraDialog.OnClickListener listener) {
         dialogTransaction(activity, CameraDialog.newInstance(listener));
+    }
+
+    public void navigateDoctorDetailFragment(FragmentManager fm, String name , String doctor) {
+        DoctorDialog.newInstance(doctor).show(fm, name);
+    }
+
+    public void navigateSuccessAppointment(FragmentManager fm, String name){
+        SuccessAppointmentDialog.newInstance().show(fm, name);
     }
 
     // Pickers

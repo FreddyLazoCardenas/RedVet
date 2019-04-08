@@ -112,6 +112,7 @@ public class DoctorDialog extends BaseDialogFragment {
     @OnClick(R.id.btn_appointment)
     public void doctorAppointment() {
         navigator.navigateToAppointmentActivity(activity, doctorModel.toString());
+        dismiss();
     }
 
     @OnClick(R.id.img_dismiss)
