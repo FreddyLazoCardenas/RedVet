@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.Toast;
 
 import com.papps.freddy_lazo.redvet.AndroidApplication;
 import com.papps.freddy_lazo.redvet.interfaces.BaseView;
@@ -33,7 +34,7 @@ public class BaseActivity extends AppCompatActivity implements BaseView {
         Toolbar toolbar;
         */
     protected boolean isStopped;
-    private List<ServicesModel> data =  new ArrayList<>();
+    private List<ServicesModel> data = new ArrayList<>();
 
 
     @Override
@@ -79,6 +80,7 @@ public class BaseActivity extends AppCompatActivity implements BaseView {
 
     @Override
     public void showErrorMessage(String message) {
+        showMessage(this, message);
     }
 
     @Override
@@ -88,7 +90,7 @@ public class BaseActivity extends AppCompatActivity implements BaseView {
 
     @Override
     public void showErrorNetworkMessage(String message) {
-
+        showMessage(this, message);
     }
 
     public void data(List<ServicesModel> data) {
@@ -97,5 +99,9 @@ public class BaseActivity extends AppCompatActivity implements BaseView {
 
     public List<ServicesModel> getData() {
         return data;
+    }
+
+    protected void showMessage(BaseActivity activity, String message) {
+        Toast.makeText(activity, message, Toast.LENGTH_LONG).show();
     }
 }

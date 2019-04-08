@@ -3,16 +3,21 @@ package com.papps.freddy_lazo.data.network;
 import android.content.Context;
 
 
+import com.papps.freddy_lazo.data.entity.AppointmentEntity;
+import com.papps.freddy_lazo.data.entity.CreateAppointmentEntity;
 import com.papps.freddy_lazo.data.entity.DoctorEntity;
 import com.papps.freddy_lazo.data.entity.NewsEntity;
 import com.papps.freddy_lazo.data.entity.PetLoverEntity;
 import com.papps.freddy_lazo.data.entity.ResponseEntity;
 import com.papps.freddy_lazo.data.entity.ServicesEntity;
+import com.papps.freddy_lazo.data.network.body.BodyAppointment;
 import com.papps.freddy_lazo.data.network.body.BodyDoctorRegister;
 import com.papps.freddy_lazo.data.network.body.BodyLogin;
 import com.papps.freddy_lazo.data.network.body.BodyPetLoverRegister;
 import com.papps.freddy_lazo.data.network.body.BodyRecoverPassword;
 import com.papps.freddy_lazo.data.network.body.BodySearchDoctors;
+import com.papps.freddy_lazo.data.network.response.AppointmentResponse;
+import com.papps.freddy_lazo.data.network.response.CreateAppointmentResponse;
 import com.papps.freddy_lazo.data.network.response.DoctorSearchResponse;
 import com.papps.freddy_lazo.data.network.response.LoginResponse;
 import com.papps.freddy_lazo.data.network.response.NewsResponse;
@@ -181,6 +186,21 @@ public class RestApiImpl implements RestApi {
                 super.onResponse(call, response);
                 ResponseEntity<Void> body = response.body();
                 if (body != null && body.getMessage() == null) {
+                    emitter.onComplete();
+                }
+            }
+        }));
+    }
+
+    @Override
+    public Observable<CreateAppointmentEntity> createAppointment(String apiToken, int doctor_id, int pet_by_pet_lover_id, String date, String time, String type, String reason) {
+        return Observable.create(emitter -> restService.createAppointment("Bearer " + apiToken, new BodyAppointment(doctor_id, pet_by_pet_lover_id, date, time, type, reason)).enqueue(new DefaultCallback<ResponseEntity<CreateAppointmentResponse>>(emitter) {
+            @Override
+            public void onResponse(@NonNull Call<ResponseEntity<CreateAppointmentResponse>> call, @NonNull Response<ResponseEntity<CreateAppointmentResponse>> response) {
+                super.onResponse(call, response);
+                ResponseEntity<CreateAppointmentResponse> body = response.body();
+                if (body != null && body.getMessage() == null) {
+                    emitter.onNext(body.getData().getAppointment());
                     emitter.onComplete();
                 }
             }

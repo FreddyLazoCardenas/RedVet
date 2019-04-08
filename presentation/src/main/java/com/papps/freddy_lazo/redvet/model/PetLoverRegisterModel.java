@@ -10,6 +10,7 @@ public class PetLoverRegisterModel {
     private String birthday;
     private String breed;
     private String photo;
+    private boolean isSelected;
 
     public PetLoverRegisterModel(int id, int pet_id, String doctor_id, String name, String birthday, String breed, String photo) {
         this.id = id;
@@ -49,4 +50,11 @@ public class PetLoverRegisterModel {
         return photo;
     }
 
+    public boolean isSelected() {
+        return isSelected;
+    }
+
+    public void setSelected(boolean selected) {
+        isSelected = selected;
+    }
 }

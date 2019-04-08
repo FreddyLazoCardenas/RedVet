@@ -11,6 +11,7 @@ import android.support.v4.content.FileProvider;
 
 import com.papps.freddy_lazo.redvet.BuildConfig;
 import com.papps.freddy_lazo.redvet.R;
+import com.papps.freddy_lazo.redvet.model.DoctorModel;
 import com.papps.freddy_lazo.redvet.view.activity.AppointmentActivity;
 import com.papps.freddy_lazo.redvet.view.activity.BaseActivity;
 import com.papps.freddy_lazo.redvet.view.activity.HomeActivity;
@@ -59,8 +60,8 @@ public class Navigator extends BaseNavigator {
         activity.startActivity(HomeActivity.getCallingIntent(activity));
     }
 
-    public void navigateToAppointmentActivity(BaseActivity activity) {
-        activity.startActivity(AppointmentActivity.getCallingIntent(activity));
+    public void navigateToAppointmentActivity(BaseActivity activity , String doctorModel) {
+        activity.startActivity(AppointmentActivity.getCallingIntent(activity ,doctorModel));
     }
 
 

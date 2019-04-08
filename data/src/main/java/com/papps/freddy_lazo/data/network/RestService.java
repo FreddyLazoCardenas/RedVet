@@ -1,11 +1,14 @@
 package com.papps.freddy_lazo.data.network;
 
 import com.papps.freddy_lazo.data.entity.ResponseEntity;
+import com.papps.freddy_lazo.data.network.body.BodyAppointment;
 import com.papps.freddy_lazo.data.network.body.BodyDoctorRegister;
 import com.papps.freddy_lazo.data.network.body.BodyLogin;
 import com.papps.freddy_lazo.data.network.body.BodyPetLoverRegister;
 import com.papps.freddy_lazo.data.network.body.BodyRecoverPassword;
 import com.papps.freddy_lazo.data.network.body.BodySearchDoctors;
+import com.papps.freddy_lazo.data.network.response.AppointmentResponse;
+import com.papps.freddy_lazo.data.network.response.CreateAppointmentResponse;
 import com.papps.freddy_lazo.data.network.response.DoctorSearchResponse;
 import com.papps.freddy_lazo.data.network.response.LoginResponse;
 import com.papps.freddy_lazo.data.network.response.NewsResponse;
@@ -46,5 +49,8 @@ public interface RestService {
 
     @POST("doctor/update")
     Call<ResponseEntity<LoginResponse>> updateDoctor(@Header("Authorization") String auth, @Body BodyDoctorRegister bodyUpdatePetLover);
+
+    @POST("pet-lover/appointments/create")
+    Call<ResponseEntity<CreateAppointmentResponse>> createAppointment(@Header("Authorization") String auth, @Body BodyAppointment bodyUpdatePetLover);
 
 }

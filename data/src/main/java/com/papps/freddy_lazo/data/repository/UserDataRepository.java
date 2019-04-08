@@ -1,9 +1,13 @@
 package com.papps.freddy_lazo.data.repository;
 
+import com.papps.freddy_lazo.data.entity.mapper.AppointmentMapper;
+import com.papps.freddy_lazo.data.entity.mapper.CreateAppointmentMapper;
 import com.papps.freddy_lazo.data.entity.mapper.DoctorLoginMapper;
 import com.papps.freddy_lazo.data.entity.mapper.PetLoverLoginMapper;
 import com.papps.freddy_lazo.data.entity.mapper.SearchDoctorsMapper;
 import com.papps.freddy_lazo.data.network.RestApi;
+import com.papps.freddy_lazo.domain.model.Appointment;
+import com.papps.freddy_lazo.domain.model.CreateAppointment;
 import com.papps.freddy_lazo.domain.model.Doctor;
 import com.papps.freddy_lazo.domain.model.PetLover;
 import com.papps.freddy_lazo.domain.model.PetRegister;
@@ -40,13 +44,13 @@ public class UserDataRepository implements UserRepository {
     }
 
     @Override
-    public Observable<PetLover> updatePetLover(String apiToken,String email, String password, String firstName, String lastName, String dni, String address, String phone, String photo, String fcmToken, List<PetRegister> pets) {
-        return mRestApi.updatePetLover(apiToken,email, password, firstName, lastName, dni, address, phone, photo, fcmToken, pets).map(PetLoverLoginMapper::transform);
+    public Observable<PetLover> updatePetLover(String apiToken, String email, String password, String firstName, String lastName, String dni, String address, String phone, String photo, String fcmToken, List<PetRegister> pets) {
+        return mRestApi.updatePetLover(apiToken, email, password, firstName, lastName, dni, address, phone, photo, fcmToken, pets).map(PetLoverLoginMapper::transform);
     }
 
     @Override
-    public Observable<Doctor> updateDoctor(String apiToken,String email, String password, String firstName, String lastName, String typeDocument, String numberDocument, String business_name, String address, String latitude, String longitude, String consultationPrice, String consultationTime, String shower_price, String shower_time, String tuition_number, String description, String phone, String photo, String type, String attention, String fcmToken, String device, List<PetRegister> pets, List<ScheduleDoctorRegister> schedules, List<ServicesDoctorRegister> services) {
-        return mRestApi.updateDoctor(apiToken,email, password, firstName, lastName, typeDocument, numberDocument, business_name, address, latitude, longitude, consultationTime, consultationPrice, shower_time, shower_price, tuition_number, description, phone, photo, type, attention, fcmToken, device, pets, schedules, services).map(DoctorLoginMapper::transform);
+    public Observable<Doctor> updateDoctor(String apiToken, String email, String password, String firstName, String lastName, String typeDocument, String numberDocument, String business_name, String address, String latitude, String longitude, String consultationPrice, String consultationTime, String shower_price, String shower_time, String tuition_number, String description, String phone, String photo, String type, String attention, String fcmToken, String device, List<PetRegister> pets, List<ScheduleDoctorRegister> schedules, List<ServicesDoctorRegister> services) {
+        return mRestApi.updateDoctor(apiToken, email, password, firstName, lastName, typeDocument, numberDocument, business_name, address, latitude, longitude, consultationTime, consultationPrice, shower_time, shower_price, tuition_number, description, phone, photo, type, attention, fcmToken, device, pets, schedules, services).map(DoctorLoginMapper::transform);
     }
 
     @Override
@@ -62,5 +66,10 @@ public class UserDataRepository implements UserRepository {
     @Override
     public Observable<Void> doctorRegister(String email, String password, String firstName, String lastName, String typeDocument, String numberDocument, String business_name, String address, String latitude, String longitude, String consultationPrice, String consultationTime, String shower_price, String shower_time, String tuition_number, String description, String phone, String photo, String type, String attention, String fcmToken, String device, List<PetRegister> pets, List<ScheduleDoctorRegister> schedules, List<ServicesDoctorRegister> services) {
         return mRestApi.doctorRegister(email, password, firstName, lastName, typeDocument, numberDocument, business_name, address, latitude, longitude, consultationTime, consultationPrice, shower_time, shower_price, tuition_number, description, phone, photo, type, attention, fcmToken, device, pets, schedules, services);
+    }
+
+    @Override
+    public Observable<CreateAppointment> createAppointment(String apiToken, int doctor_id, int pet_by_pet_lover_id, String date, String time, String type, String reason) {
+        return mRestApi.createAppointment(apiToken, doctor_id, pet_by_pet_lover_id, date, time, type, reason).map(CreateAppointmentMapper::transform);
     }
 }

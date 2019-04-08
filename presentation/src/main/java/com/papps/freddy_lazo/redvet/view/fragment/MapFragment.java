@@ -222,8 +222,9 @@ public class MapFragment extends BaseFragment implements OnMapReadyCallback, Map
 
     @Override
     public boolean onMarkerClick(Marker marker) {
-        Log.d("onMarkerClick" , String.valueOf(marker.getTag()));
-        navigator.navigateDoctorDetailFragment(getFragmentManager(),MapFragment.class.getSimpleName(), String.valueOf(marker.getTag()));
+        Log.d("onMarkerClick", String.valueOf(marker.getTag()));
+        if (marker.getTag() != null)
+            navigator.navigateDoctorDetailFragment(getFragmentManager(), MapFragment.class.getSimpleName(), String.valueOf(marker.getTag()));
         return false;
     }
 }
