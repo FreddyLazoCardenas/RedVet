@@ -1,6 +1,7 @@
 package com.papps.freddy_lazo.data.network;
 
-import com.papps.freddy_lazo.data.entity.AppointmentEntity;
+import com.papps.freddy_lazo.data.entity.DoctorAppointmentEntity;
+import com.papps.freddy_lazo.data.entity.PetLoverAppointmentEntity;
 import com.papps.freddy_lazo.data.entity.CreateAppointmentEntity;
 import com.papps.freddy_lazo.data.entity.DoctorEntity;
 import com.papps.freddy_lazo.data.entity.NewsEntity;
@@ -26,6 +27,10 @@ public interface RestApi {
     Observable<DoctorEntity> updateDoctor(String apiToken, String email, String password, String firstName, String lastName, String typeDocument, String numberDocument, String business_name, String address, String latitude, String longitude, String consultationPrice, String consultationTime, String shower_price, String shower_time, String tuition_number, String description, String phone, String photo, String type, String attention, String fcmToken, String device, List<PetRegister> pets, List<ScheduleDoctorRegister> schedules, List<ServicesDoctorRegister> services);
 
     Observable<List<ServicesEntity>> services();
+
+    Observable<List<PetLoverAppointmentEntity>> petLoverAppointment(String apiToken);
+
+    Observable<List<DoctorAppointmentEntity>> doctorAppointment(String apiToken);
 
     Observable<Void> forgotPassword(String email);
 

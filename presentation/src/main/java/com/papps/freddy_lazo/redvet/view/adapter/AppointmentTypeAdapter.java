@@ -21,13 +21,13 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.AppointmentViewHolder> {
+public class AppointmentTypeAdapter extends RecyclerView.Adapter<AppointmentTypeAdapter.AppointmentViewHolder> {
 
     private List<CreateAppointmentObjectModel> data = new ArrayList<>();
     private Context context;
 
     @Inject
-    AppointmentAdapter() {
+    AppointmentTypeAdapter() {
         //empty constructor
     }
 

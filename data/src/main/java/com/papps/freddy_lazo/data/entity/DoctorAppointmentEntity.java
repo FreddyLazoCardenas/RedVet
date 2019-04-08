@@ -1,36 +1,37 @@
-package com.papps.freddy_lazo.redvet.model;
+package com.papps.freddy_lazo.data.entity;
 
-public class AppointmentModel {
+import com.google.gson.annotations.SerializedName;
 
+public class DoctorAppointmentEntity {
+
+    @SerializedName("id")
     private int id;
+    @SerializedName("doctor_id")
     private String doctor_id;
+    @SerializedName("pet_lover_id")
     private String pet_lover_id;
+    @SerializedName("pet_by_pet_lover_id")
     private String pet_by_pet_lover_id;
+    @SerializedName("date")
     private String date;
+    @SerializedName("time")
     private String time;
+    @SerializedName("type")
     private String type;
+    @SerializedName("reason")
     private String reason;
+    @SerializedName("status")
     private String status;
+    @SerializedName("status_reason")
     private String status_reason;
+    @SerializedName("qualification")
     private double qualification;
+    @SerializedName("diagnosis")
     private String diagnosis;
-    private DoctorModel doctor;
-
-    public AppointmentModel(int id, String doctor_id, String pet_lover_id, String pet_by_pet_lover_id, String date, String time, String type, String reason, String status, String status_reason, double qualification, String diagnosis, DoctorModel doctor) {
-        this.id = id;
-        this.doctor_id = doctor_id;
-        this.pet_lover_id = pet_lover_id;
-        this.pet_by_pet_lover_id = pet_by_pet_lover_id;
-        this.date = date;
-        this.time = time;
-        this.type = type;
-        this.reason = reason;
-        this.status = status;
-        this.status_reason = status_reason;
-        this.qualification = qualification;
-        this.diagnosis = diagnosis;
-        this.doctor = doctor;
-    }
+    @SerializedName("pet_lover")
+    private PetLoverEntity pet_lover;
+    @SerializedName("pet")
+    private PetEntity pet;
 
     public int getId() {
         return id;
@@ -80,7 +81,15 @@ public class AppointmentModel {
         return diagnosis;
     }
 
-    public DoctorModel getDoctor() {
-        return doctor;
+    public PetLoverEntity getDoctor() {
+        return pet_lover;
+    }
+
+    public PetLoverEntity getPet_lover() {
+        return pet_lover;
+    }
+
+    public PetEntity getPet() {
+        return pet;
     }
 }

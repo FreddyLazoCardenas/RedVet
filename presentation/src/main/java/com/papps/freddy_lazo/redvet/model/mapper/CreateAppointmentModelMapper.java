@@ -1,8 +1,6 @@
 package com.papps.freddy_lazo.redvet.model.mapper;
 
-import com.papps.freddy_lazo.domain.model.Appointment;
 import com.papps.freddy_lazo.domain.model.CreateAppointment;
-import com.papps.freddy_lazo.redvet.model.AppointmentModel;
 import com.papps.freddy_lazo.redvet.model.CreateAppointmentModel;
 
 public class CreateAppointmentModelMapper {

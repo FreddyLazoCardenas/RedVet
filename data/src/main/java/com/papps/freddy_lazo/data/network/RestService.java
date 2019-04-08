@@ -7,7 +7,8 @@ import com.papps.freddy_lazo.data.network.body.BodyLogin;
 import com.papps.freddy_lazo.data.network.body.BodyPetLoverRegister;
 import com.papps.freddy_lazo.data.network.body.BodyRecoverPassword;
 import com.papps.freddy_lazo.data.network.body.BodySearchDoctors;
-import com.papps.freddy_lazo.data.network.response.AppointmentResponse;
+import com.papps.freddy_lazo.data.network.response.DoctorAppointmentResponse;
+import com.papps.freddy_lazo.data.network.response.PetLoverAppointmentResponse;
 import com.papps.freddy_lazo.data.network.response.CreateAppointmentResponse;
 import com.papps.freddy_lazo.data.network.response.DoctorSearchResponse;
 import com.papps.freddy_lazo.data.network.response.LoginResponse;
@@ -40,6 +41,12 @@ public interface RestService {
 
     @GET("services")
     Call<ResponseEntity<ServicesResponse>> services();
+
+    @GET("pet-lover/appointments")
+    Call<ResponseEntity<PetLoverAppointmentResponse>> petLoverAppointment(@Header("Authorization") String auth);
+
+    @GET("doctor/appointments")
+    Call<ResponseEntity<DoctorAppointmentResponse>> doctorAppointment(@Header("Authorization") String auth);
 
     @POST("forgot-password")
     Call<ResponseEntity<Void>> forgotPassword(@Body BodyRecoverPassword bodyRecoverPassword);

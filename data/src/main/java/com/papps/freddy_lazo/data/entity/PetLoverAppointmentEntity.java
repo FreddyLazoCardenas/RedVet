@@ -2,7 +2,7 @@ package com.papps.freddy_lazo.data.entity;
 
 import com.google.gson.annotations.SerializedName;
 
-public class AppointmentEntity {
+public class PetLoverAppointmentEntity {
 
     @SerializedName("id")
     private int id;

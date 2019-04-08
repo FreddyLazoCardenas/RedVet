@@ -3,7 +3,8 @@ package com.papps.freddy_lazo.data.network;
 import android.content.Context;
 
 
-import com.papps.freddy_lazo.data.entity.AppointmentEntity;
+import com.papps.freddy_lazo.data.entity.DoctorAppointmentEntity;
+import com.papps.freddy_lazo.data.entity.PetLoverAppointmentEntity;
 import com.papps.freddy_lazo.data.entity.CreateAppointmentEntity;
 import com.papps.freddy_lazo.data.entity.DoctorEntity;
 import com.papps.freddy_lazo.data.entity.NewsEntity;
@@ -16,7 +17,8 @@ import com.papps.freddy_lazo.data.network.body.BodyLogin;
 import com.papps.freddy_lazo.data.network.body.BodyPetLoverRegister;
 import com.papps.freddy_lazo.data.network.body.BodyRecoverPassword;
 import com.papps.freddy_lazo.data.network.body.BodySearchDoctors;
-import com.papps.freddy_lazo.data.network.response.AppointmentResponse;
+import com.papps.freddy_lazo.data.network.response.DoctorAppointmentResponse;
+import com.papps.freddy_lazo.data.network.response.PetLoverAppointmentResponse;
 import com.papps.freddy_lazo.data.network.response.CreateAppointmentResponse;
 import com.papps.freddy_lazo.data.network.response.DoctorSearchResponse;
 import com.papps.freddy_lazo.data.network.response.LoginResponse;
@@ -114,6 +116,36 @@ public class RestApiImpl implements RestApi {
                 ResponseEntity<ServicesResponse> body = response.body();
                 if (body != null && body.getMessage() == null) {
                     emitter.onNext(body.getData().getServicesEntityList());
+                    emitter.onComplete();
+                }
+            }
+        }));
+    }
+
+    @Override
+    public Observable<List<PetLoverAppointmentEntity>> petLoverAppointment(String apiToken) {
+        return Observable.create(emitter -> restService.petLoverAppointment("Bearer " + apiToken).enqueue(new DefaultCallback<ResponseEntity<PetLoverAppointmentResponse>>(emitter) {
+            @Override
+            public void onResponse(@NonNull Call<ResponseEntity<PetLoverAppointmentResponse>> call, @NonNull Response<ResponseEntity<PetLoverAppointmentResponse>> response) {
+                super.onResponse(call, response);
+                ResponseEntity<PetLoverAppointmentResponse> body = response.body();
+                if (body != null && body.getMessage() == null) {
+                    emitter.onNext(body.getData().getAppointmentList());
+                    emitter.onComplete();
+                }
+            }
+        }));
+    }
+
+    @Override
+    public Observable<List<DoctorAppointmentEntity>> doctorAppointment(String apiToken) {
+        return Observable.create(emitter -> restService.doctorAppointment("Bearer " + apiToken).enqueue(new DefaultCallback<ResponseEntity<DoctorAppointmentResponse>>(emitter) {
+            @Override
+            public void onResponse(@NonNull Call<ResponseEntity<DoctorAppointmentResponse>> call, @NonNull Response<ResponseEntity<DoctorAppointmentResponse>> response) {
+                super.onResponse(call, response);
+                ResponseEntity<DoctorAppointmentResponse> body = response.body();
+                if (body != null && body.getMessage() == null) {
+                    emitter.onNext(body.getData().getAppointmentList());
                     emitter.onComplete();
                 }
             }

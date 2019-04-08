@@ -19,11 +19,11 @@ import com.papps.freddy_lazo.redvet.view.activity.RegisterActivity;
 import com.papps.freddy_lazo.redvet.view.dialogFragment.CameraDialog;
 import com.papps.freddy_lazo.redvet.view.dialogFragment.DoctorDialog;
 import com.papps.freddy_lazo.redvet.view.dialogFragment.SuccessAppointmentDialog;
+import com.papps.freddy_lazo.redvet.view.fragment.AppointmentFragment;
 import com.papps.freddy_lazo.redvet.view.fragment.MapFragment;
 import com.papps.freddy_lazo.redvet.view.fragment.NewsFragment;
 import com.papps.freddy_lazo.redvet.view.fragment.NotificationsFragment;
 import com.papps.freddy_lazo.redvet.view.fragment.ProfileFragment;
-import com.papps.freddy_lazo.redvet.view.fragment.QuotesFragment;
 import com.papps.freddy_lazo.redvet.view.fragment.RegisterFragment;
 import com.papps.freddy_lazo.redvet.view.fragment.ForgotPasswordFragment;
 import com.papps.freddy_lazo.redvet.view.fragment.LoginFragment;
@@ -91,7 +91,7 @@ public class Navigator extends BaseNavigator {
         activity.getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
         switch (itemId) {
             case R.id.action_quotes:
-                fragmentTransaction(activity, QuotesFragment.newInstance(), false);
+                fragmentTransaction(activity, AppointmentFragment.newInstance(), false);
                 break;
             case R.id.action_profile:
                 fragmentTransaction(activity, ProfileFragment.newInstance(), false);

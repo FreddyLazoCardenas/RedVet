@@ -1,6 +1,9 @@
-package com.papps.freddy_lazo.domain.model;
+package com.papps.freddy_lazo.redvet.model;
 
-public class Appointment {
+import com.papps.freddy_lazo.domain.model.Pet;
+import com.papps.freddy_lazo.domain.model.PetLover;
+
+public class DoctorAppointmentModel {
 
     private int id;
     private String doctor_id;
@@ -14,9 +17,11 @@ public class Appointment {
     private String status_reason;
     private double qualification;
     private String diagnosis;
-    private Doctor doctor;
+    private PetLoverModel petLover;
+    private PetLoverRegisterModel pet;
 
-    public Appointment(int id, String doctor_id, String pet_lover_id, String pet_by_pet_lover_id, String date, String time, String type, String reason, String status, String status_reason, double qualification, String diagnosis, Doctor doctor) {
+    public DoctorAppointmentModel(int id, String doctor_id, String pet_lover_id, String pet_by_pet_lover_id, String date, String time, String type, String reason, String status, String status_reason
+            , double qualification, String diagnosis, PetLoverModel petLover ,PetLoverRegisterModel pet ) {
         this.id = id;
         this.doctor_id = doctor_id;
         this.pet_lover_id = pet_lover_id;
@@ -29,7 +34,8 @@ public class Appointment {
         this.status_reason = status_reason;
         this.qualification = qualification;
         this.diagnosis = diagnosis;
-        this.doctor = doctor;
+        this.petLover = petLover;
+        this.pet = pet;
     }
 
     public int getId() {
@@ -80,7 +86,11 @@ public class Appointment {
         return diagnosis;
     }
 
-    public Doctor getDoctor() {
-        return doctor;
+    public PetLoverModel getPetLover() {
+        return petLover;
+    }
+
+    public PetLoverRegisterModel getPet() {
+        return pet;
     }
 }

@@ -1,12 +1,10 @@
 package com.papps.freddy_lazo.data.repository;
 
-import com.papps.freddy_lazo.data.entity.mapper.AppointmentMapper;
 import com.papps.freddy_lazo.data.entity.mapper.CreateAppointmentMapper;
 import com.papps.freddy_lazo.data.entity.mapper.DoctorLoginMapper;
 import com.papps.freddy_lazo.data.entity.mapper.PetLoverLoginMapper;
 import com.papps.freddy_lazo.data.entity.mapper.SearchDoctorsMapper;
 import com.papps.freddy_lazo.data.network.RestApi;
-import com.papps.freddy_lazo.domain.model.Appointment;
 import com.papps.freddy_lazo.domain.model.CreateAppointment;
 import com.papps.freddy_lazo.domain.model.Doctor;
 import com.papps.freddy_lazo.domain.model.PetLover;

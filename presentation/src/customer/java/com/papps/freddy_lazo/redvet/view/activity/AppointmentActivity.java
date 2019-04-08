@@ -16,14 +16,13 @@ import com.papps.freddy_lazo.data.sharedPreferences.PreferencesManager;
 import com.papps.freddy_lazo.redvet.R;
 import com.papps.freddy_lazo.redvet.interfaces.AppointmentActivityView;
 import com.papps.freddy_lazo.redvet.internal.dagger.component.DaggerAppointmentComponent;
-import com.papps.freddy_lazo.redvet.model.AppointmentModel;
 import com.papps.freddy_lazo.redvet.model.CreateAppointmentModel;
 import com.papps.freddy_lazo.redvet.model.CreateAppointmentObjectModel;
 import com.papps.freddy_lazo.redvet.model.DoctorModel;
 import com.papps.freddy_lazo.redvet.model.PetLoverModel;
 import com.papps.freddy_lazo.redvet.model.PetLoverRegisterModel;
 import com.papps.freddy_lazo.redvet.presenter.AppointmentActivityPresenter;
-import com.papps.freddy_lazo.redvet.view.adapter.AppointmentAdapter;
+import com.papps.freddy_lazo.redvet.view.adapter.AppointmentTypeAdapter;
 import com.papps.freddy_lazo.redvet.view.adapter.PetLoverPetsAdapter;
 
 
@@ -54,7 +53,7 @@ public class AppointmentActivity extends BaseActivity implements DatePickerDialo
     @BindView(R.id.rv_pet_lover)
     RecyclerView rvPetLover;
     @Inject
-    AppointmentAdapter adapter;
+    AppointmentTypeAdapter adapter;
     @Inject
     PetLoverPetsAdapter petsAdapter;
     @Inject

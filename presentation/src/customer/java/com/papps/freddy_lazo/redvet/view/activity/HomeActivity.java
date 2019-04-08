@@ -7,8 +7,12 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
 import android.view.MenuItem;
 
+import com.papps.freddy_lazo.data.sharedPreferences.PreferencesManager;
 import com.papps.freddy_lazo.redvet.R;
 import com.papps.freddy_lazo.redvet.internal.dagger.component.DaggerHomeComponent;
+import com.papps.freddy_lazo.redvet.model.PetLoverModel;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 
@@ -16,6 +20,8 @@ public class HomeActivity extends BaseActivity implements BottomNavigationView.O
 
     @BindView(R.id.bottom_navigation)
     BottomNavigationView bottomNav;
+    @Inject
+    PreferencesManager preferencesManager;
 
     public static Intent getCallingIntent(BaseActivity activity) {
         return new Intent(activity, HomeActivity.class)
@@ -39,7 +45,11 @@ public class HomeActivity extends BaseActivity implements BottomNavigationView.O
     public void initUI() {
         bottomNav.setOnNavigationItemSelectedListener(this);
         bottomNav.setSelectedItemId(R.id.action_map);
+    }
 
+
+    public PetLoverModel getModel(){
+        return PetLoverModel.toModel(preferencesManager.getPetLoverCurrentUser());
     }
 
     @Override

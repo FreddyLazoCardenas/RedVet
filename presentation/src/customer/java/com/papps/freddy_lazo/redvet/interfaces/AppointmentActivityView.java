@@ -1,6 +1,5 @@
 package com.papps.freddy_lazo.redvet.interfaces;
 
-import com.papps.freddy_lazo.redvet.model.AppointmentModel;
 import com.papps.freddy_lazo.redvet.model.CreateAppointmentModel;
 
 public interface AppointmentActivityView extends BaseView {

@@ -1,6 +1,5 @@
 package com.papps.freddy_lazo.domain.repository;
 
-import com.papps.freddy_lazo.domain.model.Appointment;
 import com.papps.freddy_lazo.domain.model.CreateAppointment;
 import com.papps.freddy_lazo.domain.model.Doctor;
 import com.papps.freddy_lazo.domain.model.PetLover;
@@ -10,8 +9,6 @@ import com.papps.freddy_lazo.domain.model.ServicesDoctorRegister;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.print.Doc;
 
 import io.reactivex.Observable;
 
