@@ -1,6 +1,9 @@
 <resources>
     <string name="app_pet_lover_name">PetLover</string>
     <string name="app_doctor_name">Medico</string>
+    <string name="doctor_clinic_type">Clínica</string>
+    <string name="doctor_vet_type">Médico Veterinario</string>
+    <string name="doctor_other_type">Otro</string>
     <string name="text_required_field">Campo requerido</string>
     <string name="text_bad_format_field">Mal formato en campo</string>
     <string name="text_not_match">Contraseñas no coinciden</string>

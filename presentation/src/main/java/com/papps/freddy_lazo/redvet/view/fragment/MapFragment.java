@@ -30,6 +30,7 @@ import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.papps.freddy_lazo.redvet.R;
 import com.papps.freddy_lazo.redvet.interfaces.MapFragmentView;
@@ -46,7 +47,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class MapFragment extends BaseFragment implements OnMapReadyCallback, MapFragmentView {
+public class MapFragment extends BaseFragment implements OnMapReadyCallback, MapFragmentView, GoogleMap.OnMarkerClickListener {
 
     private static final int REQUEST_LOCATION = 2;
     private HomeActivity activity;
@@ -190,6 +191,7 @@ public class MapFragment extends BaseFragment implements OnMapReadyCallback, Map
     @Override
     public void onMapReady(GoogleMap googleMap) {
         this.googleMap = googleMap;
+        googleMap.setOnMarkerClickListener(this);
         Log.d("onMapReady", "cargo el mapa");
         requestLastPosition();
         presenter.getDoctors();
@@ -206,15 +208,22 @@ public class MapFragment extends BaseFragment implements OnMapReadyCallback, Map
     }
 
     private void setDoctorMarkers(List<DoctorModel> data) {
-        for (DoctorModel doctorModel : data){
+        for (DoctorModel doctorModel : data) {
             LatLng latLng = new LatLng(Double.valueOf(doctorModel.getLatitude()), Double.valueOf(doctorModel.getLongitude()));
-            addDoctorMarker(latLng);
+            addDoctorMarker(latLng, doctorModel);
         }
     }
 
-    private void addDoctorMarker(LatLng latLng) {
-        if(googleMap != null){
-            googleMap.addMarker(new MarkerOptions().position(latLng).icon(bitmapDescriptorFromVector(activity, R.drawable.ic_doctor_marker)));
+    private void addDoctorMarker(LatLng latLng, DoctorModel doctorModel) {
+        if (googleMap != null) {
+            googleMap.addMarker(new MarkerOptions().position(latLng).icon(bitmapDescriptorFromVector(activity, R.drawable.ic_doctor_marker))).setTag(doctorModel);
         }
+    }
+
+    @Override
+    public boolean onMarkerClick(Marker marker) {
+        Log.d("onMarkerClick" , String.valueOf(marker.getTag()));
+        navigator.navigateDoctorDetailFragment(getFragmentManager(),MapFragment.class.getSimpleName(), String.valueOf(marker.getTag()));
+        return false;
     }
 }

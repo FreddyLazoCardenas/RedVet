@@ -22,7 +22,7 @@ import butterknife.Unbinder;
 public class BaseDialogFragment extends DialogFragment {
 
     @Inject
-    Navigator mNavigator;
+    Navigator navigator;
 
     private Unbinder mUnbinder;
 
