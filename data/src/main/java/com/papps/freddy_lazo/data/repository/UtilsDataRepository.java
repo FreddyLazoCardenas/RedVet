@@ -2,6 +2,7 @@ package com.papps.freddy_lazo.data.repository;
 
 import com.papps.freddy_lazo.data.entity.mapper.AppointmentDoctorMapper;
 import com.papps.freddy_lazo.data.entity.mapper.AppointmentPetLoverMapper;
+import com.papps.freddy_lazo.data.entity.mapper.AppointmentPhotoMapper;
 import com.papps.freddy_lazo.data.entity.mapper.NewsMapper;
 import com.papps.freddy_lazo.data.entity.mapper.ServicesMapper;
 import com.papps.freddy_lazo.data.network.RestApi;
@@ -56,32 +57,32 @@ public class UtilsDataRepository implements UtilsRepository {
 
     @Override
     public Observable<DoctorAppointment> doctorConfirmAppointment(String apiToken, int appointmentId) {
-        return null;
+        return mRestApi.doctorConfirmAppointment(apiToken, appointmentId).map(AppointmentDoctorMapper::transform);
     }
 
     @Override
     public Observable<DoctorAppointment> doctorFinishAppointment(String apiToken, int appointmentId, String diagnosis) {
-        return null;
+        return mRestApi.doctorFinishAppointment(apiToken, appointmentId, diagnosis).map(AppointmentDoctorMapper::transform);
     }
 
     @Override
     public Observable<DoctorAppointment> doctorCancelAppointment(String apiToken, int appointmentId, String reason) {
-        return null;
+        return mRestApi.doctorCancelAppointment(apiToken, appointmentId, reason).map(AppointmentDoctorMapper::transform);
     }
 
     @Override
     public Observable<PetLoverAppointment> petLoverCancelAppointment(String apiToken, int appointmentId) {
-        return null;
+        return mRestApi.petLoverCancelAppointment(apiToken, appointmentId).map(AppointmentPetLoverMapper::transform);
     }
 
     @Override
     public Observable<AppointmentPhoto> doctorUploadAppointmentPhoto(String apiToken, int appointmentId, String photo) {
-        return null;
+        return mRestApi.doctorUploadAppointmentPhoto(apiToken, appointmentId, photo).map(AppointmentPhotoMapper::transform);
     }
 
     @Override
     public Observable<Void> doctorDeleteAppointmentPhoto(String apiToken, int appointmentId, int appointment_photo_id) {
-        return null;
+        return mRestApi.doctorDeleteAppointmentPhoto(apiToken, appointmentId, appointment_photo_id);
     }
 
 
