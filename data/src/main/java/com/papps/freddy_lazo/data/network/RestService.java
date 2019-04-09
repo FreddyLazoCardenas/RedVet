@@ -2,11 +2,17 @@ package com.papps.freddy_lazo.data.network;
 
 import com.papps.freddy_lazo.data.entity.ResponseEntity;
 import com.papps.freddy_lazo.data.network.body.BodyAppointment;
+import com.papps.freddy_lazo.data.network.body.BodyCancelAppointment;
+import com.papps.freddy_lazo.data.network.body.BodyConfirmAppointment;
+import com.papps.freddy_lazo.data.network.body.BodyDeletePhoto;
 import com.papps.freddy_lazo.data.network.body.BodyDoctorRegister;
+import com.papps.freddy_lazo.data.network.body.BodyFinishAppointment;
 import com.papps.freddy_lazo.data.network.body.BodyLogin;
 import com.papps.freddy_lazo.data.network.body.BodyPetLoverRegister;
 import com.papps.freddy_lazo.data.network.body.BodyRecoverPassword;
 import com.papps.freddy_lazo.data.network.body.BodySearchDoctors;
+import com.papps.freddy_lazo.data.network.body.BodyUploadPhoto;
+import com.papps.freddy_lazo.data.network.response.AppointmentPhotoResponse;
 import com.papps.freddy_lazo.data.network.response.DoctorAppointmentResponse;
 import com.papps.freddy_lazo.data.network.response.PetLoverAppointmentResponse;
 import com.papps.freddy_lazo.data.network.response.CreateAppointmentResponse;
@@ -60,4 +66,21 @@ public interface RestService {
     @POST("pet-lover/appointments/create")
     Call<ResponseEntity<CreateAppointmentResponse>> createAppointment(@Header("Authorization") String auth, @Body BodyAppointment bodyUpdatePetLover);
 
+    @POST("doctor/appointments/confirm")
+    Call<ResponseEntity<DoctorAppointmentResponse>> doctorConfirmAppointment(@Header("Authorization") String auth, @Body BodyConfirmAppointment bodyConfirmAppointment);
+
+    @POST("doctor/appointments/finish")
+    Call<ResponseEntity<DoctorAppointmentResponse>> doctorFinishAppointment(@Header("Authorization") String auth, @Body BodyFinishAppointment bodyFinishAppointment);
+
+    @POST("doctor/appointments/cancel")
+    Call<ResponseEntity<DoctorAppointmentResponse>> doctorCancelAppointment(@Header("Authorization") String auth, @Body BodyCancelAppointment bodyFinishAppointment);
+
+    @POST("pet-lover/appointments/cancel")
+    Call<ResponseEntity<PetLoverAppointmentResponse>> petLoverCancelAppointment(@Header("Authorization") String auth, @Body BodyCancelAppointment bodyCancelAppointment);
+
+    @POST("doctor/appointments/upload-photo")
+    Call<ResponseEntity<AppointmentPhotoResponse>> doctorUploadAppointmentPhoto(@Header("Authorization") String auth, @Body BodyUploadPhoto bodyUploadPhoto);
+
+    @POST("doctor/appointments/upload-photo")
+    Call<ResponseEntity<Void>> doctorDeleteAppointmentPhoto(@Header("Authorization") String auth, @Body BodyDeletePhoto bodyDeletePhoto);
 }

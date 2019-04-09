@@ -11,10 +11,15 @@ public class DoctorAppointmentResponse {
     @SerializedName("appointments")
     private List<DoctorAppointmentEntity> appointmentList;
 
+    @SerializedName("appointment")
+    private DoctorAppointmentEntity appointment;
+
 
     public List<DoctorAppointmentEntity> getAppointmentList() {
         return appointmentList;
     }
 
-
+    public DoctorAppointmentEntity getAppointment() {
+        return appointment;
+    }
 }
