@@ -10,10 +10,15 @@ public class PetLoverAppointmentResponse {
     @SerializedName("appointments")
     private List<PetLoverAppointmentEntity> appointmentList;
 
+    @SerializedName("appointment")
+    private PetLoverAppointmentEntity appointment;
+
 
     public List<PetLoverAppointmentEntity> getAppointmentList() {
         return appointmentList;
     }
 
-
+    public PetLoverAppointmentEntity getAppointment() {
+        return appointment;
+    }
 }

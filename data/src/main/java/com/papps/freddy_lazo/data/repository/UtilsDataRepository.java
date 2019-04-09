@@ -5,6 +5,7 @@ import com.papps.freddy_lazo.data.entity.mapper.AppointmentPetLoverMapper;
 import com.papps.freddy_lazo.data.entity.mapper.NewsMapper;
 import com.papps.freddy_lazo.data.entity.mapper.ServicesMapper;
 import com.papps.freddy_lazo.data.network.RestApi;
+import com.papps.freddy_lazo.domain.model.AppointmentPhoto;
 import com.papps.freddy_lazo.domain.model.DoctorAppointment;
 import com.papps.freddy_lazo.domain.model.PetLoverAppointment;
 import com.papps.freddy_lazo.domain.model.News;
@@ -52,4 +53,36 @@ public class UtilsDataRepository implements UtilsRepository {
     public Observable<Void> forgotPassword(String email) {
         return mRestApi.forgotPassword(email);
     }
+
+    @Override
+    public Observable<DoctorAppointment> doctorConfirmAppointment(String apiToken, int appointmentId) {
+        return null;
+    }
+
+    @Override
+    public Observable<DoctorAppointment> doctorFinishAppointment(String apiToken, int appointmentId, String diagnosis) {
+        return null;
+    }
+
+    @Override
+    public Observable<DoctorAppointment> doctorCancelAppointment(String apiToken, int appointmentId, String reason) {
+        return null;
+    }
+
+    @Override
+    public Observable<PetLoverAppointment> petLoverCancelAppointment(String apiToken, int appointmentId) {
+        return null;
+    }
+
+    @Override
+    public Observable<AppointmentPhoto> doctorUploadAppointmentPhoto(String apiToken, int appointmentId, String photo) {
+        return null;
+    }
+
+    @Override
+    public Observable<Void> doctorDeleteAppointmentPhoto(String apiToken, int appointmentId, int appointment_photo_id) {
+        return null;
+    }
+
+
 }

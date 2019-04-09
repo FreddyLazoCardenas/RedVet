@@ -6,6 +6,9 @@ import com.papps.freddy_lazo.data.entity.AppointmentPhotoEntity;
 public class AppointmentPhotoResponse {
 
     @SerializedName("appointment_photo")
-    private AppointmentPhotoEntity appointment;
+    private AppointmentPhotoEntity appointment_photo;
 
+    public AppointmentPhotoEntity getAppointment_photo() {
+        return appointment_photo;
+    }
 }
