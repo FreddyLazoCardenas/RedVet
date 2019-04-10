@@ -134,8 +134,8 @@ public class AppointmentFragment extends BaseFragment implements AppointmentFrag
             case "pending":
                 navigator.navigatePendingDialog(activity, data.toString());
                 break;
-            case "canceled":
-                navigator.navigateConfirmedDialog(activity, data.toString());
+            case "finished":
+                //navigator.navigateConfirmedDialog(activity, data.toString());
                 break;
             case "confirmed":
                 navigator.navigateConfirmedDialog(activity, data.toString());

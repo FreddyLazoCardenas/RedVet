@@ -112,6 +112,13 @@ public class ConfirmedAppointmentDialog extends BaseDialogFragment {
     @OnClick(R.id.btn_cancel)
     public void btnCancelAppointment() {
         navigator.navigateCancelAppointmentActivity(activity, model.getId());
+        dismiss();
+    }
+
+    @OnClick(R.id.iv_appointment_diagnosis)
+    public void btnDiagnosisAppointment() {
+        navigator.navigateToDiagnoseAppointmentActivity(activity, model.toString());
+        dismiss();
     }
 
     @Override

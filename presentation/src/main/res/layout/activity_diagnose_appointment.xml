@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/header_view"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/colorWhite"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/img_header"
+            android:layout_width="15dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:rotation="180"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_app_arrow"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:gravity="center"
+            android:text="Diagnostico"
+            android:textColor="@color/colorPink"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/img_header"
+            app:layout_constraintTop_toTopOf="parent" />
+    </android.support.constraint.ConstraintLayout>
+
+
+    <com.github.siyamed.shapeimageview.CircularImageView
+        android:id="@+id/img_pet"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="24dp"
+        android:src="@drawable/ic_placeholder"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/header_view" />
+
+    <TextView
+        android:id="@+id/tv_pet_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/tv_pet_birthday"
+        app:layout_constraintStart_toEndOf="@id/img_pet"
+        app:layout_constraintTop_toTopOf="@+id/img_pet"
+        app:layout_constraintVertical_chainStyle="packed"
+        tools:text="Freddy Lazo" />
+
+    <TextView
+        android:id="@+id/tv_pet_birthday"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:drawableStart="@drawable/ic_birthday"
+        android:drawablePadding="10dp"
+        android:gravity="center"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/tv_date"
+        app:layout_constraintStart_toStartOf="@id/tv_pet_name"
+        app:layout_constraintTop_toBottomOf="@+id/tv_pet_name"
+        tools:text="16/02/1994" />
+
+    <TextView
+        android:id="@+id/tv_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:drawableStart="@drawable/ic_quotes"
+        android:drawablePadding="10dp"
+        android:gravity="center"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/tv_time"
+        app:layout_constraintStart_toStartOf="@id/tv_pet_name"
+        app:layout_constraintTop_toBottomOf="@+id/tv_pet_birthday"
+        tools:text="23 NOV" />
+
+    <TextView
+        android:id="@+id/tv_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:drawableStart="@drawable/ic_time"
+        android:drawablePadding="10dp"
+        android:gravity="center"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@id/img_pet"
+        app:layout_constraintStart_toStartOf="@id/tv_pet_name"
+        app:layout_constraintTop_toBottomOf="@+id/tv_date"
+        tools:text="Hora 12:30" />
+
+    <EditText
+        android:id="@+id/et_diagnose"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="20dp"
+        android:drawablePadding="10dp"
+        android:background="@drawable/edit_txt_bg"
+        android:drawableStart="@drawable/ic_edit_pink_24dp"
+        android:padding="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_time" />
+
+
+    <TextView
+        android:id="@+id/tv_attach"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:drawableStart="@drawable/ic_attach"
+        android:drawablePadding="10dp"
+        android:gravity="start|center"
+        android:text="Adjuntar"
+        android:textColor="@color/colorGreen"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_diagnose" />
+
+    <TextView
+        android:id="@+id/tv_content"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:text="Adjunta imagenes y documentos complementarios"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_attach" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/ic_big_add"
+        android:tint="@color/colorGreen"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_content" />
+
+    <Button
+        android:id="@+id/btn_finish_appointment"
+        style="@style/Widget.RetVet.ButtonPrimary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:text="Guardar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</android.support.constraint.ConstraintLayout>
+
