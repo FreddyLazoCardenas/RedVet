@@ -5,11 +5,14 @@ import android.content.pm.PackageManager;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 
+import com.papps.freddy_lazo.data.sharedPreferences.PreferencesManager;
 import com.papps.freddy_lazo.domain.interactor.DefaultObserver;
 import com.papps.freddy_lazo.domain.interactor.PetLoverUpdate;
 import com.papps.freddy_lazo.domain.model.PetLover;
 import com.papps.freddy_lazo.redvet.R;
 import com.papps.freddy_lazo.redvet.interfaces.ProfileFragmentView;
+import com.papps.freddy_lazo.redvet.model.PetLoverModel;
+import com.papps.freddy_lazo.redvet.model.mapper.PetLoverModelMapper;
 
 import javax.inject.Inject;
 
@@ -18,11 +21,13 @@ public class ProfileFragmentPresenter implements Presenter<ProfileFragmentView> 
     private static final int PERMISSION_REQUEST_CAMERA_CODE = 4;
     private static final int PERMISSION_REQUEST_GALLERY_CODE = 5;
     private final PetLoverUpdate petLoverUpdate;
+    private final PreferencesManager preferencesManager;
     private ProfileFragmentView view;
 
     @Inject
-    public ProfileFragmentPresenter(PetLoverUpdate petLoverUpdate) {
+    public ProfileFragmentPresenter(PreferencesManager preferencesManager  , PetLoverUpdate petLoverUpdate) {
         this.petLoverUpdate = petLoverUpdate;
+        this.preferencesManager = preferencesManager;
     }
 
     @Override
@@ -253,12 +258,16 @@ public class ProfileFragmentPresenter implements Presenter<ProfileFragmentView> 
         @Override
         public void onNext(PetLover petLover) {
             super.onNext(petLover);
-            view.showErrorMessage("llego la datitaaaa");
+            PetLoverModel petLoverModel = PetLoverModelMapper.transform(petLover);
+            preferencesManager.saveDoctorCurrentUser(petLoverModel.toString());
+            view.showErrorMessage("exitooo");
+            view.updateView();
         }
 
         @Override
         public void onComplete() {
             super.onComplete();
+            view.updateView();
         }
 
         @Override

@@ -85,4 +85,6 @@ public interface ProfileFragmentView extends BaseView {
     void hidePetBreedError();
 
     String getToken();
+
+    void updateView();
 }

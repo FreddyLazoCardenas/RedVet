@@ -8,6 +8,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -187,8 +188,7 @@ public class DiagnoseAppointmentActivity extends BaseActivity implements Diagnos
     private void startCrop(Uri source) {
         croppedFile = new File(getFilesDir(), PICTURE_CROPPED_FILE_NAME);
         CropImage.activity(source)
-                .setCropShape(CropImageView.CropShape.OVAL)
-                .setFixAspectRatio(true)
+                .setCropShape(Build.VERSION.SDK_INT >= Build.VERSION_CODES.P ? CropImageView.CropShape.RECTANGLE : CropImageView.CropShape.OVAL)                .setFixAspectRatio(true)
                 .setBorderCornerThickness(0)
                 .setOutputCompressFormat(Bitmap.CompressFormat.JPEG)
                 .setOutputCompressQuality(50)

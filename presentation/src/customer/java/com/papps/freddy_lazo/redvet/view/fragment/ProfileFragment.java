@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -414,6 +415,11 @@ public class ProfileFragment extends BaseFragment implements CameraDialog.OnClic
     }
 
     @Override
+    public void updateView() {
+        getUserData();
+    }
+
+    @Override
     public void savePetData() {
         // petLoverRegisterModel = new PetRegister(1, getPetName(), getPetBirthday(), getPetBreed(), getPetBase64Image());
     }
@@ -439,7 +445,7 @@ public class ProfileFragment extends BaseFragment implements CameraDialog.OnClic
             byte[] b = baos.toByteArray();
             return Base64.encodeToString(b, Base64.NO_WRAP);
         } else
-            return (petLoverModel.getPhoto_url() != null && petLoverModel.getPhoto_url().equals("")) ? null : petLoverModel.getPhoto_url();
+            return (petLoverModel.getPhoto_url() != null && !petLoverModel.getPhoto_url().equals("")) ? null : petLoverModel.getPhoto_url();
     }
 
     @Override
@@ -457,8 +463,7 @@ public class ProfileFragment extends BaseFragment implements CameraDialog.OnClic
     private void startCrop(Uri source) {
         croppedProfileFile = new File(getContext().getFilesDir(), PICTURE_CROPPED_FILE_NAME);
         CropImage.activity(source)
-                .setCropShape(CropImageView.CropShape.OVAL)
-                .setFixAspectRatio(true)
+                .setCropShape(Build.VERSION.SDK_INT >= Build.VERSION_CODES.P ? CropImageView.CropShape.RECTANGLE : CropImageView.CropShape.OVAL).setFixAspectRatio(true)
                 .setBorderCornerThickness(0)
                 .setOutputCompressFormat(Bitmap.CompressFormat.JPEG)
                 .setOutputCompressQuality(50)
