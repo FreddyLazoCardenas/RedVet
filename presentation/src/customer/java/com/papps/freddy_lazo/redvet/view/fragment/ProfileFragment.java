@@ -437,7 +437,7 @@ public class ProfileFragment extends BaseFragment implements CameraDialog.OnClic
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             bm.compress(Bitmap.CompressFormat.JPEG, 100, baos); //bm is the bitmap object
             byte[] b = baos.toByteArray();
-            return Base64.encodeToString(b, Base64.DEFAULT);
+            return Base64.encodeToString(b, Base64.NO_WRAP);
         } else
             return (petLoverModel.getPhoto_url() != null && petLoverModel.getPhoto_url().equals("")) ? null : petLoverModel.getPhoto_url();
     }

@@ -489,7 +489,7 @@ public class RegisterFragment extends BaseFragment implements RegisterFragmentVi
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             bm.compress(Bitmap.CompressFormat.JPEG, 100, baos); //bm is the bitmap object
             byte[] b = baos.toByteArray();
-            return Base64.encodeToString(b, Base64.DEFAULT);
+            return Base64.encodeToString(b, Base64.NO_WRAP);
         } else
             return "";
     }
@@ -501,7 +501,7 @@ public class RegisterFragment extends BaseFragment implements RegisterFragmentVi
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             bm.compress(Bitmap.CompressFormat.JPEG, 100, baos); //bm is the bitmap object
             byte[] b = baos.toByteArray();
-            return Base64.encodeToString(b, Base64.DEFAULT);
+            return Base64.encodeToString(b, Base64.NO_WRAP);
         } else
             return "";
     }

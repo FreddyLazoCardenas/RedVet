@@ -680,8 +680,8 @@ public class ProfileFragment extends BaseFragment implements CameraDialog.OnClic
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             bm.compress(Bitmap.CompressFormat.JPEG, 100, baos); //bm is the bitmap object
             byte[] b = baos.toByteArray();
-            Log.d("profileImage",Base64.encodeToString(b, Base64.DEFAULT));
-            return Base64.encodeToString(b, Base64.DEFAULT);
+            Log.d("profileImage",Base64.encodeToString(b, Base64.NO_WRAP));
+            return Base64.encodeToString(b, Base64.NO_WRAP);
         } else
             return (doctorModel.getPhoto_url() != null && doctorModel.getPhoto_url().equals("")) ? null : doctorModel.getPhoto_url();
     }
