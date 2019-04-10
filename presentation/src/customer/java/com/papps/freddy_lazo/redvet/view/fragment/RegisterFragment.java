@@ -491,7 +491,7 @@ public class RegisterFragment extends BaseFragment implements RegisterFragmentVi
             byte[] b = baos.toByteArray();
             return Base64.encodeToString(b, Base64.NO_WRAP);
         } else
-            return "";
+            return null;
     }
 
     @Override
@@ -503,7 +503,7 @@ public class RegisterFragment extends BaseFragment implements RegisterFragmentVi
             byte[] b = baos.toByteArray();
             return Base64.encodeToString(b, Base64.NO_WRAP);
         } else
-            return "";
+            return null;
     }
 
     @Override

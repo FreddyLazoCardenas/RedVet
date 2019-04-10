@@ -2,8 +2,8 @@ package com.papps.freddy_lazo.domain.model;
 
 public class PetRegister {
 
-    private int id;
-    private int pet_id;
+    private Integer id;
+    private Integer pet_id;
     private String doctor_id;
     private String name;
     private String birthday;
@@ -29,12 +29,12 @@ public class PetRegister {
         this.photo = photo;
     }
 
-    public PetRegister(int id, String petName, String petBirthday, String petBreed, String petBase64Image) {
-        this.id = id;
+    public PetRegister(int pet_id, String petName, String petBirthday, String petBreed, String petBase64Image) {
+        this.pet_id = pet_id;
         this.name = petName;
         this.birthday = petBirthday;
-        this.breed = petBase64Image;
-        this.photo = petBreed;
+        this.breed = petBreed;
+        this.photo = petBase64Image;
     }
 
     public PetRegister(int id) {

@@ -180,7 +180,7 @@ public class DiagnoseAppointmentActivity extends BaseActivity implements Diagnos
             byte[] b = baos.toByteArray();
             return Base64.encodeToString(b, Base64.NO_WRAP);
         } else
-            return "";
+            return null;
     }
 
 
