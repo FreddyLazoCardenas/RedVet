@@ -7,11 +7,15 @@ import android.text.TextUtils;
 
 import com.papps.freddy_lazo.domain.interactor.DefaultObserver;
 import com.papps.freddy_lazo.domain.interactor.DoctorAppointmentFinish;
+import com.papps.freddy_lazo.domain.interactor.DoctorUploadAppointmentPhoto;
+import com.papps.freddy_lazo.domain.model.AppointmentPhoto;
 import com.papps.freddy_lazo.domain.model.RedVetAppointment;
 import com.papps.freddy_lazo.redvet.R;
 import com.papps.freddy_lazo.redvet.interfaces.DiagnoseAppointmentView;
 
 import javax.inject.Inject;
+
+import io.reactivex.Observer;
 
 
 public class DiagnoseAppointmentPresenter implements Presenter<DiagnoseAppointmentView> {
@@ -20,11 +24,13 @@ public class DiagnoseAppointmentPresenter implements Presenter<DiagnoseAppointme
     public static final int PERMISSION_REQUEST_CAMERA_CODE = 4;
     public static final int PERMISSION_REQUEST_GALLERY_CODE = 5;
     private final DoctorAppointmentFinish doctorAppointmentFinish;
+    private final DoctorUploadAppointmentPhoto doctorUploadAppointmentPhoto;
     private DiagnoseAppointmentView view;
 
     @Inject
-    public DiagnoseAppointmentPresenter(DoctorAppointmentFinish doctorAppointmentFinish) {
+    public DiagnoseAppointmentPresenter(DoctorAppointmentFinish doctorAppointmentFinish, DoctorUploadAppointmentPhoto doctorUploadAppointmentPhoto) {
         this.doctorAppointmentFinish = doctorAppointmentFinish;
+        this.doctorUploadAppointmentPhoto = doctorUploadAppointmentPhoto;
     }
 
     @Override
@@ -43,12 +49,17 @@ public class DiagnoseAppointmentPresenter implements Presenter<DiagnoseAppointme
         sendRequest();
     }
 
-    private boolean validateDiagnoseField(String diagnose){
-        if(TextUtils.isEmpty(diagnose)){
+    private boolean validateDiagnoseField(String diagnose) {
+        if (TextUtils.isEmpty(diagnose)) {
             view.showErrorMessage(view.context().getString(R.string.add_diagnose_data));
             return false;
         }
         return true;
+    }
+
+    public void uploadPhoto(String photo) {
+        doctorUploadAppointmentPhoto.bindParams(view.getApiToken(), view.getAppointmentId(), photo);
+        doctorUploadAppointmentPhoto.execute(new UploadPhotoObservable());
     }
 
     private void sendRequest() {
@@ -91,6 +102,7 @@ public class DiagnoseAppointmentPresenter implements Presenter<DiagnoseAppointme
     @Override
     public void destroy() {
         doctorAppointmentFinish.unsubscribe();
+        doctorUploadAppointmentPhoto.unsubscribe();
     }
 
     @Override
@@ -120,6 +132,28 @@ public class DiagnoseAppointmentPresenter implements Presenter<DiagnoseAppointme
             super.onComplete();
             view.showErrorMessage("exitooo");
             view.successRequest();
+        }
+    }
+
+    private class UploadPhotoObservable extends DefaultObserver<AppointmentPhoto> {
+        @Override
+        public void onComplete() {
+            super.onComplete();
+        }
+
+        @Override
+        protected void onStart() {
+            super.onStart();
+        }
+
+        @Override
+        public void onError(Throwable e) {
+            super.onError(e);
+        }
+
+        @Override
+        public void onNext(AppointmentPhoto appointmentPhoto) {
+            super.onNext(appointmentPhoto);
         }
     }
 }

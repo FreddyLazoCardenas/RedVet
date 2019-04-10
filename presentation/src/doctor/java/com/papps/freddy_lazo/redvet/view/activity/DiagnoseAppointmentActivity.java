@@ -6,10 +6,12 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Base64;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -28,6 +30,7 @@ import com.papps.freddy_lazo.redvet.view.dialogFragment.CameraDialog;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 
 import javax.inject.Inject;
@@ -53,6 +56,8 @@ public class DiagnoseAppointmentActivity extends BaseActivity implements Diagnos
     EditText etDiagnose;
     @BindView(R.id.img_pet)
     ImageView ivPet;
+    @BindView(R.id.iv_diagnose)
+    ImageView ivPetDiagnose;
     @BindView(R.id.tv_pet_name)
     TextView petName;
     @BindView(R.id.tv_pet_birthday)
@@ -97,22 +102,22 @@ public class DiagnoseAppointmentActivity extends BaseActivity implements Diagnos
     }
 
     private void fillUi() {
-        displayPhoto(model.getPetLover().getPhoto_url(), true);
+        displayPhoto(model.getPetLover().getPhoto_url(), false);
         petName.setText(model.getPet().getName());
         petBirthday.setText(model.getPet().getBirthday());
         appointmentDate.setText(model.getDate());
         appointmentTime.setText(model.getTime());
     }
 
-    public void displayPhoto(String photoUrl, boolean refresh) {
+    public void displayPhoto(String photoUrl, boolean fromDiagnose) {
         GlideApp.with(this)
                 .asBitmap()
                 .dontAnimate()
-                .diskCacheStrategy(refresh ? DiskCacheStrategy.NONE : DiskCacheStrategy.ALL)
-                .skipMemoryCache(refresh)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .skipMemoryCache(true)
                 .placeholder(R.drawable.ic_placeholder)
                 .load(photoUrl)
-                .into(ivPet);
+                .into(fromDiagnose ? ivPetDiagnose : ivPet);
     }
 
     @Override
@@ -159,11 +164,23 @@ public class DiagnoseAppointmentActivity extends BaseActivity implements Diagnos
         } else if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
             if (resultCode == Activity.RESULT_OK) {
                 displayPhoto(croppedFile.getAbsolutePath(), true);
+                presenter.uploadPhoto(getPetDiagnoseBase64Image());
             } else {
                 croppedFile = null;
                 // unSelectButtons();
             }
         }
+    }
+
+    public String getPetDiagnoseBase64Image() {
+        if (croppedFile != null) {
+            Bitmap bm = BitmapFactory.decodeFile(croppedFile.getAbsolutePath());
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            bm.compress(Bitmap.CompressFormat.JPEG, 100, baos); //bm is the bitmap object
+            byte[] b = baos.toByteArray();
+            return Base64.encodeToString(b, Base64.DEFAULT);
+        } else
+            return "";
     }
 
 
