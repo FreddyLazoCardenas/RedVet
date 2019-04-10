@@ -9,8 +9,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.papps.freddy_lazo.redvet.R;
+import com.papps.freddy_lazo.redvet.model.CreateAppointmentObjectModel;
 import com.papps.freddy_lazo.redvet.model.DoctorAppointmentModel;
 import com.papps.freddy_lazo.redvet.model.PetLoverAppointmentModel;
+import com.papps.freddy_lazo.redvet.view.fragment.BaseFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,11 +21,14 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.AppointmentViewHolder> {
 
     private List<DoctorAppointmentModel> data = new ArrayList<>();
     private Context context;
+    private onClickAdapter listener;
+
 
     @Inject
     public AppointmentAdapter() {
@@ -54,6 +59,10 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
         }
     }
 
+    public void setView(BaseFragment fragment) {
+        listener = (onClickAdapter) fragment;
+    }
+
     class AppointmentViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.txt_date)
@@ -70,5 +79,14 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
             tvDate.setText(data.get(position).getDate());
             tvTime.setText(data.get(position).getTime());
         }
+
+        @OnClick
+        public void itemClicked() {
+            listener.itemClicked(data.get(getAdapterPosition()));
+        }
+    }
+
+    public interface onClickAdapter {
+        void itemClicked(DoctorAppointmentModel data);
     }
 }

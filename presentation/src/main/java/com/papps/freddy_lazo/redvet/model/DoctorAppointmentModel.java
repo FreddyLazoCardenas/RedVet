@@ -1,5 +1,6 @@
 package com.papps.freddy_lazo.redvet.model;
 
+import com.google.gson.Gson;
 import com.papps.freddy_lazo.domain.model.Pet;
 import com.papps.freddy_lazo.domain.model.PetLover;
 
@@ -93,4 +94,14 @@ public class DoctorAppointmentModel {
     public PetLoverRegisterModel getPet() {
         return pet;
     }
+
+    @Override
+    public String toString() {
+        return new Gson().toJson(this, DoctorAppointmentModel.class);
+    }
+
+    public static DoctorAppointmentModel toModel(String srtUser) {
+        return srtUser != null && !srtUser.isEmpty() ? new Gson().fromJson(srtUser, DoctorAppointmentModel.class) : null;
+    }
+
 }

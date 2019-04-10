@@ -17,6 +17,7 @@ import com.papps.freddy_lazo.redvet.view.activity.LoginActivity;
 import com.papps.freddy_lazo.redvet.view.activity.MapActivity;
 import com.papps.freddy_lazo.redvet.view.activity.RegisterActivity;
 import com.papps.freddy_lazo.redvet.view.dialogFragment.CameraDialog;
+import com.papps.freddy_lazo.redvet.view.dialogFragment.PendingAppointmentDialog;
 import com.papps.freddy_lazo.redvet.view.fragment.AppointmentFragment;
 import com.papps.freddy_lazo.redvet.view.fragment.NewsFragment;
 import com.papps.freddy_lazo.redvet.view.fragment.NotificationsFragment;
@@ -136,6 +137,10 @@ public class Navigator extends BaseNavigator {
 
     public void showListDialog(BaseActivity activity, CameraDialog.OnClickListener listener) {
         dialogTransaction(activity, CameraDialog.newInstance(listener));
+    }
+
+    public void confirmAppointment(BaseActivity activity,String data) {
+        dialogTransaction(activity, PendingAppointmentDialog.newInstance(data));
     }
 
 }

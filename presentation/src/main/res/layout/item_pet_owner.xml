@@ -8,9 +8,9 @@
 
 
     <ImageView
-        android:id="@+id/img_pet"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
+        android:id="@+id/img_owner"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:layout_marginStart="15dp"
         android:layout_marginEnd="24dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -19,7 +19,7 @@
         android:src="@drawable/ic_placeholder" />
 
     <TextView
-        android:id="@+id/txt_name"
+        android:id="@+id/tv_owner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
@@ -27,8 +27,8 @@
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/txt_pet_relationship"
-        app:layout_constraintStart_toEndOf="@id/img_pet"
-        app:layout_constraintTop_toTopOf="@id/img_pet"
+        app:layout_constraintStart_toEndOf="@id/img_owner"
+        app:layout_constraintTop_toTopOf="@id/img_owner"
         app:layout_constraintVertical_chainStyle="packed"
         tools:text="Freddy Lazo" />
 
@@ -40,9 +40,9 @@
         android:layout_height="wrap_content"
         android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/txt_dni"
-        app:layout_constraintStart_toStartOf="@id/txt_name"
-        app:layout_constraintTop_toBottomOf="@+id/txt_name"
-        tools:text="Dueno" />
+        app:layout_constraintStart_toStartOf="@id/tv_owner"
+        app:layout_constraintTop_toBottomOf="@+id/tv_owner"
+        android:text="Dueno" />
 
     <TextView
         android:id="@+id/txt_dni"
@@ -53,8 +53,28 @@
         android:gravity="center"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="@id/img_pet"
-        app:layout_constraintStart_toStartOf="@id/txt_name"
+        app:layout_constraintStart_toStartOf="@id/tv_owner"
         app:layout_constraintTop_toBottomOf="@+id/txt_pet_relationship"
         tools:text="70692399" />
+
+    <ImageView
+        android:id="@+id/phone"
+        android:tint="@color/colorPink"
+        android:src="@drawable/ic_doctor_phone"
+        android:layout_margin="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/chat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <ImageView
+        android:id="@+id/chat"
+        android:layout_margin="10dp"
+        android:tint="@color/colorPink"
+        android:src="@drawable/ic_chat"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
 </android.support.constraint.ConstraintLayout>
