@@ -130,6 +130,17 @@ public class AppointmentFragment extends BaseFragment implements AppointmentFrag
     @Override
     public void itemClicked(DoctorAppointmentModel data) {
         Log.d("itemClicked", data.getStatus());
-        navigator.confirmAppointment(activity, data.toString());
+        switch (data.getStatus()) {
+            case "pending":
+                navigator.navigatePendingDialog(activity, data.toString());
+                break;
+            case "canceled":
+                navigator.navigateConfirmedDialog(activity, data.toString());
+                break;
+            case "confirmed":
+                navigator.navigateConfirmedDialog(activity, data.toString());
+                break;
+
+        }
     }
 }

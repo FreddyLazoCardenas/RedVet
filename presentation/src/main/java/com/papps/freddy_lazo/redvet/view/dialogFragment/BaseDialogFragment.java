@@ -8,9 +8,11 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.view.View;
 import android.view.Window;
+import android.widget.Toast;
 
 import com.papps.freddy_lazo.redvet.AndroidApplication;
 import com.papps.freddy_lazo.redvet.navigation.Navigator;
+import com.papps.freddy_lazo.redvet.view.activity.BaseActivity;
 
 import java.util.Objects;
 
@@ -50,6 +52,10 @@ public class BaseDialogFragment extends DialogFragment {
 
     protected AndroidApplication getAndroidApplication() {
         return (AndroidApplication) getActivity().getApplication();
+    }
+
+    protected void showMessage(BaseActivity activity, String message) {
+        Toast.makeText(activity, message, Toast.LENGTH_LONG).show();
     }
 
 }

@@ -1,5 +1,6 @@
 package com.papps.freddy_lazo.redvet.view.dialogFragment;
 
+
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -20,11 +21,11 @@ public class SuccessAppointmentDialog extends BaseDialogFragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.dialog_succes_appointment,container,false);
+        return inflater.inflate(R.layout.dialog_succes_appointment, container, false);
     }
 
     @OnClick(R.id.btn_appointment)
-    public void btnOk(){
+    public void btnOk() {
         dismiss();
     }
 }

@@ -10,6 +10,7 @@ import com.papps.freddy_lazo.data.entity.CreateAppointmentEntity;
 import com.papps.freddy_lazo.data.entity.DoctorEntity;
 import com.papps.freddy_lazo.data.entity.NewsEntity;
 import com.papps.freddy_lazo.data.entity.PetLoverEntity;
+import com.papps.freddy_lazo.data.entity.RedVetAppointmentEntity;
 import com.papps.freddy_lazo.data.entity.ResponseEntity;
 import com.papps.freddy_lazo.data.entity.ServicesEntity;
 import com.papps.freddy_lazo.data.network.body.BodyAppointment;
@@ -247,7 +248,7 @@ public class RestApiImpl implements RestApi {
     }
 
     @Override
-    public Observable<DoctorAppointmentEntity> doctorConfirmAppointment(String apiToken, int appointmentId) {
+    public Observable<RedVetAppointmentEntity> doctorConfirmAppointment(String apiToken, int appointmentId) {
         return Observable.create(emitter -> restService.doctorConfirmAppointment("Bearer " + apiToken, new BodyConfirmAppointment(appointmentId)).enqueue(new DefaultCallback<ResponseEntity<DoctorAppointmentResponse>>(emitter) {
             @Override
             public void onResponse(@NonNull Call<ResponseEntity<DoctorAppointmentResponse>> call, @NonNull Response<ResponseEntity<DoctorAppointmentResponse>> response) {
@@ -262,7 +263,7 @@ public class RestApiImpl implements RestApi {
     }
 
     @Override
-    public Observable<DoctorAppointmentEntity> doctorFinishAppointment(String apiToken, int appointmentId, String diagnosis) {
+    public Observable<RedVetAppointmentEntity> doctorFinishAppointment(String apiToken, int appointmentId, String diagnosis) {
         return Observable.create(emitter -> restService.doctorFinishAppointment("Bearer " + apiToken, new BodyFinishAppointment(appointmentId, diagnosis)).enqueue(new DefaultCallback<ResponseEntity<DoctorAppointmentResponse>>(emitter) {
             @Override
             public void onResponse(@NonNull Call<ResponseEntity<DoctorAppointmentResponse>> call, @NonNull Response<ResponseEntity<DoctorAppointmentResponse>> response) {
@@ -277,7 +278,7 @@ public class RestApiImpl implements RestApi {
     }
 
     @Override
-    public Observable<DoctorAppointmentEntity> doctorCancelAppointment(String apiToken, int appointmentId, String reason) {
+    public Observable<RedVetAppointmentEntity> doctorCancelAppointment(String apiToken, int appointmentId, String reason) {
         return Observable.create(emitter -> restService.doctorCancelAppointment("Bearer " + apiToken, new BodyCancelAppointment(appointmentId, reason)).enqueue(new DefaultCallback<ResponseEntity<DoctorAppointmentResponse>>(emitter) {
             @Override
             public void onResponse(@NonNull Call<ResponseEntity<DoctorAppointmentResponse>> call, @NonNull Response<ResponseEntity<DoctorAppointmentResponse>> response) {

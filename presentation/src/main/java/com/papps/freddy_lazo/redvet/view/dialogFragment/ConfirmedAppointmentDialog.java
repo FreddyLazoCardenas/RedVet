@@ -1,6 +1,7 @@
 package com.papps.freddy_lazo.redvet.view.dialogFragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -14,12 +15,8 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.papps.freddy_lazo.data.sharedPreferences.PreferencesManager;
 import com.papps.freddy_lazo.redvet.GlideApp;
 import com.papps.freddy_lazo.redvet.R;
-import com.papps.freddy_lazo.redvet.interfaces.PendingAppointmentDialogView;
-import com.papps.freddy_lazo.redvet.internal.dagger.component.DaggerLoginFragmentComponent;
-import com.papps.freddy_lazo.redvet.internal.dagger.component.DaggerPendingAppointmentDialogComponent;
+import com.papps.freddy_lazo.redvet.internal.dagger.component.DaggerConfirmedAppointmentDialogComponent;
 import com.papps.freddy_lazo.redvet.model.DoctorAppointmentModel;
-import com.papps.freddy_lazo.redvet.model.DoctorModel;
-import com.papps.freddy_lazo.redvet.presenter.DoctorPendingAppointmentPresenter;
 import com.papps.freddy_lazo.redvet.view.activity.HomeActivity;
 
 import javax.inject.Inject;
@@ -27,7 +24,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class PendingAppointmentDialog extends BaseDialogFragment implements PendingAppointmentDialogView {
+public class ConfirmedAppointmentDialog extends BaseDialogFragment {
 
     @BindView(R.id.img_pet)
     ImageView imgPet;
@@ -47,20 +44,17 @@ public class PendingAppointmentDialog extends BaseDialogFragment implements Pend
     TextView tvPetLoverName;
     @BindView(R.id.txt_dni)
     TextView tvDni;
-
-    @Inject
-    DoctorPendingAppointmentPresenter presenter;
     @Inject
     PreferencesManager preferencesManager;
-
 
     private DoctorAppointmentModel model;
     private HomeActivity activity;
 
-    public static PendingAppointmentDialog newInstance(String data) {
+
+    public static ConfirmedAppointmentDialog newInstance(String data) {
         Bundle args = new Bundle();
         args.putString("data", data);
-        PendingAppointmentDialog dialog = new PendingAppointmentDialog();
+        ConfirmedAppointmentDialog dialog = new ConfirmedAppointmentDialog();
         dialog.setCancelable(false);
         dialog.setArguments(args);
         return dialog;
@@ -69,7 +63,7 @@ public class PendingAppointmentDialog extends BaseDialogFragment implements Pend
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.dialog_quote, container, false);
+        return inflater.inflate(R.layout.dialog_confirm_appointment, container, false);
     }
 
     @Override
@@ -80,7 +74,7 @@ public class PendingAppointmentDialog extends BaseDialogFragment implements Pend
 
 
     private void buildInjection() {
-        DaggerPendingAppointmentDialogComponent.builder()
+        DaggerConfirmedAppointmentDialogComponent.builder()
                 .applicationComponent(getAndroidApplication().getApplicationComponent())
                 .build().inject(this);
     }
@@ -90,6 +84,7 @@ public class PendingAppointmentDialog extends BaseDialogFragment implements Pend
         super.onActivityCreated(savedInstanceState);
         initUI();
     }
+
 
     private void fillUi() {
         displayPhoto(model.getPet().getPhoto(), imgPet);
@@ -114,49 +109,29 @@ public class PendingAppointmentDialog extends BaseDialogFragment implements Pend
                 .into(img);
     }
 
+    @OnClick(R.id.btn_cancel)
+    public void btnCancelAppointment() {
+        navigator.navigateCancelAppointmentActivity(activity, model.getId());
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+    }
+
     @OnClick(R.id.img_dismiss)
-    public void dismissImg() {
+    public void btnDismiss() {
         dismiss();
     }
 
-    @OnClick({R.id.tv_confirm, R.id.iv_confirm})
-    public void confirm() {
-        presenter.sendRequest();
-    }
-
-    @Override
-    public String getApiToken() {
-        return DoctorModel.toModel(preferencesManager.getDoctorCurrentUser()).getApi_token();
-    }
-
-    @Override
-    public int getAppointmentId() {
-        return model.getId();
-    }
-
-    @Override
-    public void initUI() {
+    private void initUI() {
         if (getArguments() != null) {
             activity = (HomeActivity) getActivity();
             String data = getArguments().getString("data");
             model = DoctorAppointmentModel.toModel(data);
-            presenter.setView(this);
             fillUi();
         }
     }
 
-    @Override
-    public Context context() {
-        return activity;
-    }
-
-    @Override
-    public void showErrorMessage(String message) {
-        showMessage(activity, message);
-    }
-
-    @Override
-    public void showErrorNetworkMessage(String message) {
-
-    }
 }

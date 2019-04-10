@@ -4,6 +4,7 @@ import com.papps.freddy_lazo.domain.model.AppointmentPhoto;
 import com.papps.freddy_lazo.domain.model.DoctorAppointment;
 import com.papps.freddy_lazo.domain.model.PetLoverAppointment;
 import com.papps.freddy_lazo.domain.model.News;
+import com.papps.freddy_lazo.domain.model.RedVetAppointment;
 import com.papps.freddy_lazo.domain.model.Service;
 
 import java.util.List;
@@ -22,11 +23,11 @@ public interface UtilsRepository {
 
     Observable<List<News>> petLoverNews(String query);
 
-    Observable<DoctorAppointment> doctorConfirmAppointment(String apiToken, int appointmentId);
+    Observable<RedVetAppointment> doctorConfirmAppointment(String apiToken, int appointmentId);
 
-    Observable<DoctorAppointment> doctorFinishAppointment(String apiToken, int appointmentId, String diagnosis);
+    Observable<RedVetAppointment> doctorFinishAppointment(String apiToken, int appointmentId, String diagnosis);
 
-    Observable<DoctorAppointment> doctorCancelAppointment(String apiToken, int appointmentId, String reason);
+    Observable<RedVetAppointment> doctorCancelAppointment(String apiToken, int appointmentId, String reason);
 
     Observable<PetLoverAppointment> petLoverCancelAppointment(String apiToken, int appointmentId);
 

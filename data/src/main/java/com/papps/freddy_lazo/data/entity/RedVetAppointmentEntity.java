@@ -1,9 +1,8 @@
 package com.papps.freddy_lazo.data.entity;
 
-import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class DoctorAppointmentEntity {
+public class RedVetAppointmentEntity {
 
     @SerializedName("id")
     private int id;
@@ -29,10 +28,6 @@ public class DoctorAppointmentEntity {
     private double qualification;
     @SerializedName("diagnosis")
     private String diagnosis;
-    @SerializedName("pet_lover")
-    private PetLoverEntity pet_lover;
-    @SerializedName("pet")
-    private PetEntity pet;
 
     public int getId() {
         return id;
@@ -82,11 +77,4 @@ public class DoctorAppointmentEntity {
         return diagnosis;
     }
 
-    public PetLoverEntity getDoctor() {
-        return pet_lover;
-    }
-
-    public PetEntity getPet() {
-        return pet;
-    }
 }

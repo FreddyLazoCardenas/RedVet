@@ -3,6 +3,7 @@ package com.papps.freddy_lazo.data.network.response;
 import com.google.gson.annotations.SerializedName;
 import com.papps.freddy_lazo.data.entity.DoctorAppointmentEntity;
 import com.papps.freddy_lazo.data.entity.PetLoverAppointmentEntity;
+import com.papps.freddy_lazo.data.entity.RedVetAppointmentEntity;
 
 import java.util.List;
 
@@ -12,14 +13,14 @@ public class DoctorAppointmentResponse {
     private List<DoctorAppointmentEntity> appointmentList;
 
     @SerializedName("appointment")
-    private DoctorAppointmentEntity appointment;
+    private RedVetAppointmentEntity appointment;
 
 
     public List<DoctorAppointmentEntity> getAppointmentList() {
         return appointmentList;
     }
 
-    public DoctorAppointmentEntity getAppointment() {
+    public RedVetAppointmentEntity getAppointment() {
         return appointment;
     }
 }

@@ -4,12 +4,14 @@ import com.papps.freddy_lazo.data.entity.mapper.AppointmentDoctorMapper;
 import com.papps.freddy_lazo.data.entity.mapper.AppointmentPetLoverMapper;
 import com.papps.freddy_lazo.data.entity.mapper.AppointmentPhotoMapper;
 import com.papps.freddy_lazo.data.entity.mapper.NewsMapper;
+import com.papps.freddy_lazo.data.entity.mapper.RedVetAppointmentMapper;
 import com.papps.freddy_lazo.data.entity.mapper.ServicesMapper;
 import com.papps.freddy_lazo.data.network.RestApi;
 import com.papps.freddy_lazo.domain.model.AppointmentPhoto;
 import com.papps.freddy_lazo.domain.model.DoctorAppointment;
 import com.papps.freddy_lazo.domain.model.PetLoverAppointment;
 import com.papps.freddy_lazo.domain.model.News;
+import com.papps.freddy_lazo.domain.model.RedVetAppointment;
 import com.papps.freddy_lazo.domain.model.Service;
 import com.papps.freddy_lazo.domain.repository.UtilsRepository;
 
@@ -56,18 +58,18 @@ public class UtilsDataRepository implements UtilsRepository {
     }
 
     @Override
-    public Observable<DoctorAppointment> doctorConfirmAppointment(String apiToken, int appointmentId) {
-        return mRestApi.doctorConfirmAppointment(apiToken, appointmentId).map(AppointmentDoctorMapper::transform);
+    public Observable<RedVetAppointment> doctorConfirmAppointment(String apiToken, int appointmentId) {
+        return mRestApi.doctorConfirmAppointment(apiToken, appointmentId).map(RedVetAppointmentMapper::transform);
     }
 
     @Override
-    public Observable<DoctorAppointment> doctorFinishAppointment(String apiToken, int appointmentId, String diagnosis) {
-        return mRestApi.doctorFinishAppointment(apiToken, appointmentId, diagnosis).map(AppointmentDoctorMapper::transform);
+    public Observable<RedVetAppointment> doctorFinishAppointment(String apiToken, int appointmentId, String diagnosis) {
+        return mRestApi.doctorFinishAppointment(apiToken, appointmentId, diagnosis).map(RedVetAppointmentMapper::transform);
     }
 
     @Override
-    public Observable<DoctorAppointment> doctorCancelAppointment(String apiToken, int appointmentId, String reason) {
-        return mRestApi.doctorCancelAppointment(apiToken, appointmentId, reason).map(AppointmentDoctorMapper::transform);
+    public Observable<RedVetAppointment> doctorCancelAppointment(String apiToken, int appointmentId, String reason) {
+        return mRestApi.doctorCancelAppointment(apiToken, appointmentId, reason).map(RedVetAppointmentMapper::transform);
     }
 
     @Override
