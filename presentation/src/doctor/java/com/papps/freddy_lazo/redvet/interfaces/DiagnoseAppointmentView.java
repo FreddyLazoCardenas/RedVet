@@ -8,4 +8,8 @@ public interface DiagnoseAppointmentView extends BaseView {
     int getAppointmentId();
 
     void successRequest();
+
+    void requestCameraPermission();
+
+    void requestGalleryPermission();
 }

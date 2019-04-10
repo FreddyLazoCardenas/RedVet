@@ -139,11 +139,43 @@ public class Navigator extends BaseNavigator {
         }
     }
 
+    public void navigateToTakePictureCamera(BaseActivity activity, File photoFile, int requestCode) {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (takePictureIntent.resolveActivity(Objects.requireNonNull(activity.getBaseContext()).getPackageManager()) != null) {
+            if (photoFile != null) {
+                Uri photoURI = FileProvider.getUriForFile(activity,
+                        BuildConfig.APPLICATION_ID + ".fileprovider",
+                        photoFile);
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
+                    takePictureIntent.putExtra("android.intent.extras.LENS_FACING_FRONT", 1);
+                    takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                    activity.startActivityForResult(takePictureIntent, requestCode);
+                } else {
+                    takePictureIntent.putExtra("android.intent.extras.CAMERA_FACING", 1);
+                    takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                    activity.startActivityForResult(takePictureIntent, requestCode);
+                }
+
+
+            } else {
+                throw new NullPointerException("File for saving picture is null.");
+            }
+        }
+    }
+
     public void navigateToGallery(Fragment fragment, int requestCode) {
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
         fragment.startActivityForResult(Intent.createChooser(intent, "Select File"), requestCode);
+    }
+
+    public void navigateToGallery(BaseActivity activity, int requestCode) {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        activity.startActivityForResult(Intent.createChooser(intent, "Select File"), requestCode);
     }
     //Dialogs
 
@@ -159,7 +191,7 @@ public class Navigator extends BaseNavigator {
         dialogTransaction(activity, ConfirmedAppointmentDialog.newInstance(data));
     }
 
-    public void navigateOtherReasonCancelAppointment(BaseActivity activity, int id , CancelOtherReasonAppointmentDialog.SuccessRequest listener) {
+    public void navigateOtherReasonCancelAppointment(BaseActivity activity, int id, CancelOtherReasonAppointmentDialog.SuccessRequest listener) {
         dialogTransaction(activity, CancelOtherReasonAppointmentDialog.newInstance(id, listener));
     }
 }

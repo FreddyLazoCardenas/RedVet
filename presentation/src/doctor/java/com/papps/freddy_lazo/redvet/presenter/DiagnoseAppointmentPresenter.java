@@ -1,5 +1,8 @@
 package com.papps.freddy_lazo.redvet.presenter;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 
 import com.papps.freddy_lazo.domain.interactor.DefaultObserver;
@@ -13,6 +16,9 @@ import javax.inject.Inject;
 
 public class DiagnoseAppointmentPresenter implements Presenter<DiagnoseAppointmentView> {
 
+
+    public static final int PERMISSION_REQUEST_CAMERA_CODE = 4;
+    public static final int PERMISSION_REQUEST_GALLERY_CODE = 5;
     private final DoctorAppointmentFinish doctorAppointmentFinish;
     private DiagnoseAppointmentView view;
 
@@ -48,6 +54,38 @@ public class DiagnoseAppointmentPresenter implements Presenter<DiagnoseAppointme
     private void sendRequest() {
         doctorAppointmentFinish.bindParams(view.getApiToken(), view.getAppointmentId(), view.getDiagnose());
         doctorAppointmentFinish.execute(new AppointmentFinishObservable());
+    }
+
+    public boolean checkCameraHardware() {
+        return view.context().getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA);
+    }
+
+    public boolean checkPermissions() {
+        if (ContextCompat.checkSelfPermission(view.context(),
+                Manifest.permission.CAMERA)
+                != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(PERMISSION_REQUEST_CAMERA_CODE);
+            return false;
+        }
+        return true;
+    }
+
+    private void requestPermissions(int permissionCode) {
+        if (permissionCode == PERMISSION_REQUEST_CAMERA_CODE) {
+            view.requestCameraPermission();
+        } else if (permissionCode == PERMISSION_REQUEST_GALLERY_CODE) {
+            view.requestGalleryPermission();
+        }
+    }
+
+    public boolean checkGalleryPermissions() {
+        if (ContextCompat.checkSelfPermission(view.context(),
+                Manifest.permission.READ_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(PERMISSION_REQUEST_GALLERY_CODE);
+            return false;
+        }
+        return true;
     }
 
     @Override
