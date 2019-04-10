@@ -3,6 +3,7 @@ package com.papps.freddy_lazo.data.network;
 import android.content.Context;
 
 
+import com.papps.freddy_lazo.data.entity.AppointmentPhotoEntity;
 import com.papps.freddy_lazo.data.entity.DoctorAppointmentEntity;
 import com.papps.freddy_lazo.data.entity.PetLoverAppointmentEntity;
 import com.papps.freddy_lazo.data.entity.CreateAppointmentEntity;
@@ -12,11 +13,17 @@ import com.papps.freddy_lazo.data.entity.PetLoverEntity;
 import com.papps.freddy_lazo.data.entity.ResponseEntity;
 import com.papps.freddy_lazo.data.entity.ServicesEntity;
 import com.papps.freddy_lazo.data.network.body.BodyAppointment;
+import com.papps.freddy_lazo.data.network.body.BodyCancelAppointment;
+import com.papps.freddy_lazo.data.network.body.BodyConfirmAppointment;
+import com.papps.freddy_lazo.data.network.body.BodyDeletePhoto;
 import com.papps.freddy_lazo.data.network.body.BodyDoctorRegister;
+import com.papps.freddy_lazo.data.network.body.BodyFinishAppointment;
 import com.papps.freddy_lazo.data.network.body.BodyLogin;
 import com.papps.freddy_lazo.data.network.body.BodyPetLoverRegister;
 import com.papps.freddy_lazo.data.network.body.BodyRecoverPassword;
 import com.papps.freddy_lazo.data.network.body.BodySearchDoctors;
+import com.papps.freddy_lazo.data.network.body.BodyUploadPhoto;
+import com.papps.freddy_lazo.data.network.response.AppointmentPhotoResponse;
 import com.papps.freddy_lazo.data.network.response.DoctorAppointmentResponse;
 import com.papps.freddy_lazo.data.network.response.PetLoverAppointmentResponse;
 import com.papps.freddy_lazo.data.network.response.CreateAppointmentResponse;
@@ -233,6 +240,95 @@ public class RestApiImpl implements RestApi {
                 ResponseEntity<CreateAppointmentResponse> body = response.body();
                 if (body != null && body.getMessage() == null) {
                     emitter.onNext(body.getData().getAppointment());
+                    emitter.onComplete();
+                }
+            }
+        }));
+    }
+
+    @Override
+    public Observable<DoctorAppointmentEntity> doctorConfirmAppointment(String apiToken, int appointmentId) {
+        return Observable.create(emitter -> restService.doctorConfirmAppointment("Bearer " + apiToken, new BodyConfirmAppointment(appointmentId)).enqueue(new DefaultCallback<ResponseEntity<DoctorAppointmentResponse>>(emitter) {
+            @Override
+            public void onResponse(@NonNull Call<ResponseEntity<DoctorAppointmentResponse>> call, @NonNull Response<ResponseEntity<DoctorAppointmentResponse>> response) {
+                super.onResponse(call, response);
+                ResponseEntity<DoctorAppointmentResponse> body = response.body();
+                if (body != null && body.getMessage() == null) {
+                    emitter.onNext(body.getData().getAppointment());
+                    emitter.onComplete();
+                }
+            }
+        }));
+    }
+
+    @Override
+    public Observable<DoctorAppointmentEntity> doctorFinishAppointment(String apiToken, int appointmentId, String diagnosis) {
+        return Observable.create(emitter -> restService.doctorFinishAppointment("Bearer " + apiToken, new BodyFinishAppointment(appointmentId, diagnosis)).enqueue(new DefaultCallback<ResponseEntity<DoctorAppointmentResponse>>(emitter) {
+            @Override
+            public void onResponse(@NonNull Call<ResponseEntity<DoctorAppointmentResponse>> call, @NonNull Response<ResponseEntity<DoctorAppointmentResponse>> response) {
+                super.onResponse(call, response);
+                ResponseEntity<DoctorAppointmentResponse> body = response.body();
+                if (body != null && body.getMessage() == null) {
+                    emitter.onNext(body.getData().getAppointment());
+                    emitter.onComplete();
+                }
+            }
+        }));
+    }
+
+    @Override
+    public Observable<DoctorAppointmentEntity> doctorCancelAppointment(String apiToken, int appointmentId, String reason) {
+        return Observable.create(emitter -> restService.doctorCancelAppointment("Bearer " + apiToken, new BodyCancelAppointment(appointmentId, reason)).enqueue(new DefaultCallback<ResponseEntity<DoctorAppointmentResponse>>(emitter) {
+            @Override
+            public void onResponse(@NonNull Call<ResponseEntity<DoctorAppointmentResponse>> call, @NonNull Response<ResponseEntity<DoctorAppointmentResponse>> response) {
+                super.onResponse(call, response);
+                ResponseEntity<DoctorAppointmentResponse> body = response.body();
+                if (body != null && body.getMessage() == null) {
+                    emitter.onNext(body.getData().getAppointment());
+                    emitter.onComplete();
+                }
+            }
+        }));
+    }
+
+    @Override
+    public Observable<PetLoverAppointmentEntity> petLoverCancelAppointment(String apiToken, int appointmentId) {
+        return Observable.create(emitter -> restService.petLoverCancelAppointment("Bearer " + apiToken, new BodyCancelAppointment(appointmentId)).enqueue(new DefaultCallback<ResponseEntity<PetLoverAppointmentResponse>>(emitter) {
+            @Override
+            public void onResponse(@NonNull Call<ResponseEntity<PetLoverAppointmentResponse>> call, @NonNull Response<ResponseEntity<PetLoverAppointmentResponse>> response) {
+                super.onResponse(call, response);
+                ResponseEntity<PetLoverAppointmentResponse> body = response.body();
+                if (body != null && body.getMessage() == null) {
+                    emitter.onNext(body.getData().getAppointment());
+                    emitter.onComplete();
+                }
+            }
+        }));
+    }
+
+    @Override
+    public Observable<AppointmentPhotoEntity> doctorUploadAppointmentPhoto(String apiToken, int appointmentId, String photo) {
+        return Observable.create(emitter -> restService.doctorUploadAppointmentPhoto("Bearer " + apiToken, new BodyUploadPhoto(appointmentId, photo)).enqueue(new DefaultCallback<ResponseEntity<AppointmentPhotoResponse>>(emitter) {
+            @Override
+            public void onResponse(@NonNull Call<ResponseEntity<AppointmentPhotoResponse>> call, @NonNull Response<ResponseEntity<AppointmentPhotoResponse>> response) {
+                super.onResponse(call, response);
+                ResponseEntity<AppointmentPhotoResponse> body = response.body();
+                if (body != null && body.getMessage() == null) {
+                    emitter.onNext(body.getData().getAppointment_photo());
+                    emitter.onComplete();
+                }
+            }
+        }));
+    }
+
+    @Override
+    public Observable<Void> doctorDeleteAppointmentPhoto(String apiToken, int appointmentId, int appointment_photo_id) {
+        return Observable.create(emitter -> restService.doctorDeleteAppointmentPhoto("Bearer " + apiToken, new BodyDeletePhoto(appointmentId, appointment_photo_id)).enqueue(new DefaultCallback<ResponseEntity<Void>>(emitter) {
+            @Override
+            public void onResponse(@NonNull Call<ResponseEntity<Void>> call, @NonNull Response<ResponseEntity<Void>> response) {
+                super.onResponse(call, response);
+                ResponseEntity<Void> body = response.body();
+                if (body != null && body.getMessage() == null) {
                     emitter.onComplete();
                 }
             }

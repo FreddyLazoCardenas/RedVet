@@ -2,9 +2,11 @@ package com.papps.freddy_lazo.data.repository;
 
 import com.papps.freddy_lazo.data.entity.mapper.AppointmentDoctorMapper;
 import com.papps.freddy_lazo.data.entity.mapper.AppointmentPetLoverMapper;
+import com.papps.freddy_lazo.data.entity.mapper.AppointmentPhotoMapper;
 import com.papps.freddy_lazo.data.entity.mapper.NewsMapper;
 import com.papps.freddy_lazo.data.entity.mapper.ServicesMapper;
 import com.papps.freddy_lazo.data.network.RestApi;
+import com.papps.freddy_lazo.domain.model.AppointmentPhoto;
 import com.papps.freddy_lazo.domain.model.DoctorAppointment;
 import com.papps.freddy_lazo.domain.model.PetLoverAppointment;
 import com.papps.freddy_lazo.domain.model.News;
@@ -52,4 +54,36 @@ public class UtilsDataRepository implements UtilsRepository {
     public Observable<Void> forgotPassword(String email) {
         return mRestApi.forgotPassword(email);
     }
+
+    @Override
+    public Observable<DoctorAppointment> doctorConfirmAppointment(String apiToken, int appointmentId) {
+        return mRestApi.doctorConfirmAppointment(apiToken, appointmentId).map(AppointmentDoctorMapper::transform);
+    }
+
+    @Override
+    public Observable<DoctorAppointment> doctorFinishAppointment(String apiToken, int appointmentId, String diagnosis) {
+        return mRestApi.doctorFinishAppointment(apiToken, appointmentId, diagnosis).map(AppointmentDoctorMapper::transform);
+    }
+
+    @Override
+    public Observable<DoctorAppointment> doctorCancelAppointment(String apiToken, int appointmentId, String reason) {
+        return mRestApi.doctorCancelAppointment(apiToken, appointmentId, reason).map(AppointmentDoctorMapper::transform);
+    }
+
+    @Override
+    public Observable<PetLoverAppointment> petLoverCancelAppointment(String apiToken, int appointmentId) {
+        return mRestApi.petLoverCancelAppointment(apiToken, appointmentId).map(AppointmentPetLoverMapper::transform);
+    }
+
+    @Override
+    public Observable<AppointmentPhoto> doctorUploadAppointmentPhoto(String apiToken, int appointmentId, String photo) {
+        return mRestApi.doctorUploadAppointmentPhoto(apiToken, appointmentId, photo).map(AppointmentPhotoMapper::transform);
+    }
+
+    @Override
+    public Observable<Void> doctorDeleteAppointmentPhoto(String apiToken, int appointmentId, int appointment_photo_id) {
+        return mRestApi.doctorDeleteAppointmentPhoto(apiToken, appointmentId, appointment_photo_id);
+    }
+
+
 }
