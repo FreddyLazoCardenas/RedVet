@@ -15,7 +15,7 @@ public class DoctorAppointmentModelMapper {
         if (data == null) {
             return null;
         }
-        return new DoctorAppointmentModel(data.getId(),data.getDoctor_id(),data.getPet_lover_id(),data.getPet_by_pet_lover_id(),data.getDate(),data.getTime(),data.getType(),data.getReason(),data.getStatus(),data.getStatus_reason(),data.getQualification(),data.getDiagnosis(),PetLoverModelMapper.transform(data.getPetLover()), PetModelMapper.transform(data.getPets()));
+        return new DoctorAppointmentModel(data.getId(),data.getDoctor_id(),data.getPet_lover_id(),data.getPet_by_pet_lover_id(),data.getDate(),data.getTime(),data.getType(),data.getReason(),data.getStatus(),data.getStatus_reason(),data.getQualification(),data.getDiagnosis(),PetLoverModelMapper.transform(data.getPetLover()), PetModelMapper.transform(data.getPets()),AppointmentPhotoModelMapper.transform(data.getPhotos()));
     }
 
     public static List<DoctorAppointmentModel> transform(List<DoctorAppointment> data) {

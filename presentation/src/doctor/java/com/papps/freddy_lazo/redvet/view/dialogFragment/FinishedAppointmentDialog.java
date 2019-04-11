@@ -3,6 +3,8 @@ package com.papps.freddy_lazo.redvet.view.dialogFragment;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,19 +12,22 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.papps.freddy_lazo.data.entity.mapper.AppointmentPhotoMapper;
 import com.papps.freddy_lazo.data.sharedPreferences.PreferencesManager;
 import com.papps.freddy_lazo.redvet.GlideApp;
 import com.papps.freddy_lazo.redvet.R;
 import com.papps.freddy_lazo.redvet.internal.dagger.component.DaggerFinishedAppointmentDialogComponent;
+import com.papps.freddy_lazo.redvet.model.AppointmentPhotoModel;
 import com.papps.freddy_lazo.redvet.model.DoctorAppointmentModel;
 import com.papps.freddy_lazo.redvet.view.activity.HomeActivity;
+import com.papps.freddy_lazo.redvet.view.adapter.AppointmentPhotoAdapter;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class FinishedAppointmentDialog extends BaseDialogFragment {
+public class FinishedAppointmentDialog extends BaseDialogFragment implements AppointmentPhotoAdapter.onClickAdapter, PhotoListDialog.OnClickListener {
 
     @BindView(R.id.img_pet)
     ImageView imgPet;
@@ -44,8 +49,12 @@ public class FinishedAppointmentDialog extends BaseDialogFragment {
     TextView tvDni;
     @BindView(R.id.diagnose_content)
     TextView diagnoseContent;
+    @BindView(R.id.rv_attach)
+    RecyclerView rvAttach;
     @Inject
     PreferencesManager preferencesManager;
+    @Inject
+    AppointmentPhotoAdapter adapter;
 
     private DoctorAppointmentModel model;
     private HomeActivity activity;
@@ -97,6 +106,7 @@ public class FinishedAppointmentDialog extends BaseDialogFragment {
         tvPetLoverName.setText(model.getPetLover().getFirst_name());
         tvDni.setText(model.getPetLover().getDni());
         diagnoseContent.setText(model.getDiagnosis());
+        adapter.bindList(model.getPhotos());
     }
 
     public void displayPhoto(String photoUrl, ImageView img) {
@@ -116,7 +126,6 @@ public class FinishedAppointmentDialog extends BaseDialogFragment {
     }
 
 
-
     @OnClick(R.id.img_dismiss)
     public void btnDismiss() {
         dismiss();
@@ -127,8 +136,29 @@ public class FinishedAppointmentDialog extends BaseDialogFragment {
             activity = (HomeActivity) getActivity();
             String data = getArguments().getString("data");
             model = DoctorAppointmentModel.toModel(data);
+            setUpRv();
             fillUi();
         }
     }
 
+    private void setUpRv() {
+        rvAttach.setLayoutManager(new LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false));
+        rvAttach.setAdapter(adapter);
+        adapter.setListener(this);
+    }
+
+    @Override
+    public void itemClicked(AppointmentPhotoModel data) {
+        navigator.showPhotoListDialog(activity, this);
+    }
+
+    @Override
+    public void delete() {
+
+    }
+
+    @Override
+    public void cancel() {
+
+    }
 }

@@ -81,7 +81,7 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
         }
 
         @OnClick
-        public void itemClicked() {
+        void itemClicked() {
             listener.itemClicked(data.get(getAdapterPosition()));
         }
     }

@@ -6,4 +6,9 @@
         <item>Cámara</item>
         <item>Galería</item>
     </string-array>
+    <string-array
+        name="string_array_photo">
+        <item>Eliminar</item>
+        <item>Cancelar</item>
+    </string-array>
 </resources>

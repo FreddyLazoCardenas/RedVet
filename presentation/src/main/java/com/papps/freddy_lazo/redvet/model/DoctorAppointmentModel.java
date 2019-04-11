@@ -4,6 +4,8 @@ import com.google.gson.Gson;
 import com.papps.freddy_lazo.domain.model.Pet;
 import com.papps.freddy_lazo.domain.model.PetLover;
 
+import java.util.List;
+
 public class DoctorAppointmentModel {
 
     private int id;
@@ -20,9 +22,10 @@ public class DoctorAppointmentModel {
     private String diagnosis;
     private PetLoverModel petLover;
     private PetLoverRegisterModel pet;
+    private List<AppointmentPhotoModel> photos;
 
     public DoctorAppointmentModel(int id, String doctor_id, String pet_lover_id, String pet_by_pet_lover_id, String date, String time, String type, String reason, String status, String status_reason
-            , double qualification, String diagnosis, PetLoverModel petLover ,PetLoverRegisterModel pet ) {
+            , double qualification, String diagnosis, PetLoverModel petLover ,PetLoverRegisterModel pet,List<AppointmentPhotoModel> photos ) {
         this.id = id;
         this.doctor_id = doctor_id;
         this.pet_lover_id = pet_lover_id;
@@ -37,6 +40,7 @@ public class DoctorAppointmentModel {
         this.diagnosis = diagnosis;
         this.petLover = petLover;
         this.pet = pet;
+        this.photos = photos;
     }
 
     public int getId() {
@@ -93,6 +97,10 @@ public class DoctorAppointmentModel {
 
     public PetLoverRegisterModel getPet() {
         return pet;
+    }
+
+    public List<AppointmentPhotoModel> getPhotos() {
+        return photos;
     }
 
     @Override

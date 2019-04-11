@@ -23,6 +23,7 @@ import com.papps.freddy_lazo.redvet.view.dialogFragment.CancelOtherReasonAppoint
 import com.papps.freddy_lazo.redvet.view.dialogFragment.ConfirmedAppointmentDialog;
 import com.papps.freddy_lazo.redvet.view.dialogFragment.FinishedAppointmentDialog;
 import com.papps.freddy_lazo.redvet.view.dialogFragment.PendingAppointmentDialog;
+import com.papps.freddy_lazo.redvet.view.dialogFragment.PhotoListDialog;
 import com.papps.freddy_lazo.redvet.view.fragment.AppointmentFragment;
 import com.papps.freddy_lazo.redvet.view.fragment.NewsFragment;
 import com.papps.freddy_lazo.redvet.view.fragment.NotificationsFragment;
@@ -182,6 +183,10 @@ public class Navigator extends BaseNavigator {
 
     public void showListDialog(BaseActivity activity, CameraDialog.OnClickListener listener) {
         dialogTransaction(activity, CameraDialog.newInstance(listener));
+    }
+
+    public void showPhotoListDialog(BaseActivity activity, PhotoListDialog.OnClickListener listener) {
+        dialogTransaction(activity, PhotoListDialog.newInstance(listener));
     }
 
     public void navigatePendingDialog(BaseActivity activity, String data) {

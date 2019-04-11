@@ -12,6 +12,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Base64;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -23,11 +25,14 @@ import com.papps.freddy_lazo.redvet.GlideApp;
 import com.papps.freddy_lazo.redvet.R;
 import com.papps.freddy_lazo.redvet.interfaces.DiagnoseAppointmentView;
 import com.papps.freddy_lazo.redvet.internal.dagger.component.DaggerDiagnoseAppointmentComponent;
+import com.papps.freddy_lazo.redvet.model.AppointmentPhotoModel;
 import com.papps.freddy_lazo.redvet.model.DoctorAppointmentModel;
 import com.papps.freddy_lazo.redvet.model.DoctorModel;
 import com.papps.freddy_lazo.redvet.presenter.DiagnoseAppointmentPresenter;
 import com.papps.freddy_lazo.redvet.presenter.RegisterFragmentPresenter;
+import com.papps.freddy_lazo.redvet.view.adapter.AppointmentPhotoAdapter;
 import com.papps.freddy_lazo.redvet.view.dialogFragment.CameraDialog;
+import com.papps.freddy_lazo.redvet.view.dialogFragment.PhotoListDialog;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
@@ -39,7 +44,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class DiagnoseAppointmentActivity extends BaseActivity implements DiagnoseAppointmentView, CameraDialog.OnClickListener {
+public class DiagnoseAppointmentActivity extends BaseActivity implements DiagnoseAppointmentView, CameraDialog.OnClickListener , AppointmentPhotoAdapter.onClickAdapter, PhotoListDialog.OnClickListener {
 
     private static final String PICTURE_FILE_NAME = "profileComplete.jpg";
     private static final String PICTURE_CROPPED_FILE_NAME = "profile.jpg";
@@ -67,6 +72,10 @@ public class DiagnoseAppointmentActivity extends BaseActivity implements Diagnos
     TextView appointmentDate;
     @BindView(R.id.tv_time)
     TextView appointmentTime;
+    @BindView(R.id.rv_attach)
+    RecyclerView rvAttach;
+    @Inject
+    AppointmentPhotoAdapter adapter;
 
 
     private DoctorAppointmentModel model;
@@ -99,7 +108,14 @@ public class DiagnoseAppointmentActivity extends BaseActivity implements Diagnos
         super.initUI();
         model = DoctorAppointmentModel.toModel(getIntent().getStringExtra("data"));
         presenter.setView(this);
+        setUpRv();
         fillUi();
+    }
+
+    private void setUpRv() {
+        rvAttach.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
+        rvAttach.setAdapter(adapter);
+        adapter.setListener(this);
     }
 
     private void fillUi() {
@@ -108,6 +124,7 @@ public class DiagnoseAppointmentActivity extends BaseActivity implements Diagnos
         petBirthday.setText(model.getPet().getBirthday());
         appointmentDate.setText(model.getDate());
         appointmentTime.setText(model.getTime());
+        adapter.bindList(model.getPhotos());
     }
 
     public void displayPhoto(String photoUrl, boolean fromDiagnose) {
@@ -240,5 +257,25 @@ public class DiagnoseAppointmentActivity extends BaseActivity implements Diagnos
         if (presenter.checkGalleryPermissions()) {
             navigator.navigateToGallery(this, SELECT_FILE);
         }
+    }
+
+    @OnClick(R.id.img_header)
+    public void imgHeader(){
+        finish();
+    }
+
+    @Override
+    public void itemClicked(AppointmentPhotoModel data) {
+        navigator.showPhotoListDialog(this, this);
+    }
+
+    @Override
+    public void delete() {
+
+    }
+
+    @Override
+    public void cancel() {
+
     }
 }
