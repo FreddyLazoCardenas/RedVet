@@ -2,6 +2,8 @@ package com.papps.freddy_lazo.data.entity;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 public class PetLoverAppointmentEntity {
 
     @SerializedName("id")
@@ -31,7 +33,7 @@ public class PetLoverAppointmentEntity {
     @SerializedName("doctor")
     private DoctorEntity doctor;
     @SerializedName("photos")
-    private AppointmentPhotoEntity photos;
+    private List<AppointmentPhotoEntity> photos;
 
     public int getId() {
         return id;
@@ -85,7 +87,7 @@ public class PetLoverAppointmentEntity {
         return doctor;
     }
 
-    public AppointmentPhotoEntity getPhotos() {
+    public List<AppointmentPhotoEntity> getPhotos() {
         return photos;
     }
 }

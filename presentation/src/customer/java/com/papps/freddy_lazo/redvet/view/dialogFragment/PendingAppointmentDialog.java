@@ -16,9 +16,10 @@ import com.papps.freddy_lazo.redvet.GlideApp;
 import com.papps.freddy_lazo.redvet.R;
 import com.papps.freddy_lazo.redvet.interfaces.PendingAppointmentDialogView;
 import com.papps.freddy_lazo.redvet.internal.dagger.component.DaggerPendingAppointmentDialogComponent;
-import com.papps.freddy_lazo.redvet.model.DoctorAppointmentModel;
 import com.papps.freddy_lazo.redvet.model.DoctorModel;
 import com.papps.freddy_lazo.redvet.model.PetLoverAppointmentModel;
+import com.papps.freddy_lazo.redvet.model.PetLoverModel;
+import com.papps.freddy_lazo.redvet.model.PetLoverRegisterModel;
 import com.papps.freddy_lazo.redvet.presenter.PetLoverPendingAppointmentPresenter;
 import com.papps.freddy_lazo.redvet.view.activity.HomeActivity;
 
@@ -56,6 +57,8 @@ public class PendingAppointmentDialog extends BaseDialogFragment implements Pend
 
     private PetLoverAppointmentModel model;
     private HomeActivity activity;
+    private PetLoverModel petLoverModel;
+    private PetLoverRegisterModel pet;
 
     public static PendingAppointmentDialog newInstance(String data) {
         Bundle args = new Bundle();
@@ -92,7 +95,7 @@ public class PendingAppointmentDialog extends BaseDialogFragment implements Pend
     }
 
     private void fillUi() {
-        displayPhoto(model.getPet().getPhoto(), imgPet);
+   /*     displayPhoto(model.getPet().getPhoto(), imgPet);
         displayPhoto(model.getPetLover().getPhoto_url(), imgOwner);
         tvPet.setText(model.getPet().getName());
         tvPetBirthday.setText(model.getPet().getBirthday());
@@ -100,7 +103,7 @@ public class PendingAppointmentDialog extends BaseDialogFragment implements Pend
         time.setText(model.getTime());
         address.setText(model.getPetLover().getAddress());
         tvPetLoverName.setText(model.getPetLover().getFirst_name());
-        tvDni.setText(model.getPetLover().getDni());
+        tvDni.setText(model.getPetLover().getDni());*/
     }
 
     public void displayPhoto(String photoUrl, ImageView img) {
@@ -139,9 +142,20 @@ public class PendingAppointmentDialog extends BaseDialogFragment implements Pend
         if (getArguments() != null) {
             activity = (HomeActivity) getActivity();
             String data = getArguments().getString("data");
-            model = DoctorAppointmentModel.toModel(data);
+            model = PetLoverAppointmentModel.toModel(data);
+            petLoverModel = PetLoverModel.toModel(preferencesManager.getPetLoverCurrentUser());
             presenter.setView(this);
+            getPetData(model.getPet_by_pet_lover_id());
             fillUi();
+        }
+    }
+
+    private void getPetData(String petId) {
+        for (PetLoverRegisterModel petLoverRegisterModel : petLoverModel.getPetList()) {
+            if (petLoverRegisterModel.getId() == Integer.valueOf(petId)) {
+                pet = petLoverRegisterModel;
+                break;
+            }
         }
     }
 

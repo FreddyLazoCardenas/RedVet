@@ -29,6 +29,8 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
+import retrofit2.http.PUT;
 
 public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.AppointmentViewHolder> {
 
@@ -124,6 +126,11 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
                 }
             }
             return "";
+        }
+
+        @OnClick
+        public void itemClicked(){
+            listener.itemClicked(data.get(getAdapterPosition()));
         }
     }
 

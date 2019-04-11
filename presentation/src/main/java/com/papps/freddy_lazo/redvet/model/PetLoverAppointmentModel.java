@@ -1,5 +1,9 @@
 package com.papps.freddy_lazo.redvet.model;
 
+import com.google.gson.Gson;
+
+import java.util.List;
+
 public class PetLoverAppointmentModel {
 
     private int id;
@@ -15,9 +19,9 @@ public class PetLoverAppointmentModel {
     private double qualification;
     private String diagnosis;
     private DoctorModel doctor;
-    private AppointmentPhotoModel photos;
+    private List<AppointmentPhotoModel> photos;
 
-    public PetLoverAppointmentModel(int id, String doctor_id, String pet_lover_id, String pet_by_pet_lover_id, String date, String time, String type, String reason, String status, String status_reason, double qualification, String diagnosis, DoctorModel doctor,AppointmentPhotoModel photos) {
+    public PetLoverAppointmentModel(int id, String doctor_id, String pet_lover_id, String pet_by_pet_lover_id, String date, String time, String type, String reason, String status, String status_reason, double qualification, String diagnosis, DoctorModel doctor, List<AppointmentPhotoModel> photos) {
         this.id = id;
         this.doctor_id = doctor_id;
         this.pet_lover_id = pet_lover_id;
@@ -86,7 +90,16 @@ public class PetLoverAppointmentModel {
         return doctor;
     }
 
-    public AppointmentPhotoModel getPhotos() {
+    public List<AppointmentPhotoModel> getPhotos() {
         return photos;
+    }
+
+    @Override
+    public String toString() {
+        return new Gson().toJson(this, PetLoverAppointmentModel.class);
+    }
+
+    public static PetLoverAppointmentModel toModel(String srtUser) {
+        return srtUser != null && !srtUser.isEmpty() ? new Gson().fromJson(srtUser, PetLoverAppointmentModel.class) : null;
     }
 }

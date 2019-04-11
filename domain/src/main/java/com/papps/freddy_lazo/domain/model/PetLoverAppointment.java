@@ -1,5 +1,7 @@
 package com.papps.freddy_lazo.domain.model;
 
+import java.util.List;
+
 public class PetLoverAppointment {
 
     private int id;
@@ -15,9 +17,9 @@ public class PetLoverAppointment {
     private double qualification;
     private String diagnosis;
     private Doctor doctor;
-    private AppointmentPhoto photos;
+    private List<AppointmentPhoto> photos;
 
-    public PetLoverAppointment(int id, String doctor_id, String pet_lover_id, String pet_by_pet_lover_id, String date, String time, String type, String reason, String status, String status_reason, double qualification, String diagnosis, Doctor doctor, AppointmentPhoto photos) {
+    public PetLoverAppointment(int id, String doctor_id, String pet_lover_id, String pet_by_pet_lover_id, String date, String time, String type, String reason, String status, String status_reason, double qualification, String diagnosis, Doctor doctor,List<AppointmentPhoto> photos) {
         this.id = id;
         this.doctor_id = doctor_id;
         this.pet_lover_id = pet_lover_id;
@@ -86,7 +88,7 @@ public class PetLoverAppointment {
         return doctor;
     }
 
-    public AppointmentPhoto getPhotos() {
+    public List<AppointmentPhoto> getPhotos() {
         return photos;
     }
 }
