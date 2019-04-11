@@ -17,7 +17,10 @@ import com.papps.freddy_lazo.redvet.view.activity.HomeActivity;
 import com.papps.freddy_lazo.redvet.view.activity.LoginActivity;
 import com.papps.freddy_lazo.redvet.view.activity.RegisterActivity;
 import com.papps.freddy_lazo.redvet.view.dialogFragment.CameraDialog;
+import com.papps.freddy_lazo.redvet.view.dialogFragment.ConfirmedAppointmentDialog;
 import com.papps.freddy_lazo.redvet.view.dialogFragment.DoctorDialog;
+import com.papps.freddy_lazo.redvet.view.dialogFragment.FinishedAppointmentDialog;
+import com.papps.freddy_lazo.redvet.view.dialogFragment.PendingAppointmentDialog;
 import com.papps.freddy_lazo.redvet.view.dialogFragment.SuccessAppointmentDialog;
 import com.papps.freddy_lazo.redvet.view.fragment.AppointmentFragment;
 import com.papps.freddy_lazo.redvet.view.fragment.MapFragment;
@@ -165,6 +168,18 @@ public class Navigator extends BaseNavigator {
 
     public void navigateToTimePicker(BaseActivity activity){
         TimePickerFragment.newInstance(activity).show(activity.getSupportFragmentManager(), "timePicker");
+    }
+
+    public void navigatePendingDialog(BaseActivity activity, String data) {
+        dialogTransaction(activity, PendingAppointmentDialog.newInstance(data));
+    }
+
+    public void navigateConfirmedDialog(BaseActivity activity, String data) {
+        dialogTransaction(activity, ConfirmedAppointmentDialog.newInstance(data));
+    }
+
+    public void navigateFinishedDialog(BaseActivity activity, String data) {
+        dialogTransaction(activity, FinishedAppointmentDialog.newInstance(data));
     }
 
 }

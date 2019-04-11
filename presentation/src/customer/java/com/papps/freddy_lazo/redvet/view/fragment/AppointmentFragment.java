@@ -29,7 +29,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 
-public class AppointmentFragment extends BaseFragment implements AppointmentFragmentView , AppointmentHeaderAdapter.onClickAdapter {
+public class AppointmentFragment extends BaseFragment implements AppointmentFragmentView, AppointmentHeaderAdapter.onClickAdapter, AppointmentAdapter.onClickAdapter {
 
 
     @BindView(R.id.rv_appointments)
@@ -72,10 +72,11 @@ public class AppointmentFragment extends BaseFragment implements AppointmentFrag
     private void setUpRv() {
         rvAppointments.setLayoutManager(new LinearLayoutManager(activity));
         rvAppointments.setAdapter(adapter);
+        adapter.setView(this);
         rvHeader.setLayoutManager(new LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false));
         rvHeader.setAdapter(headerAdapter);
         headerAdapter.setView(this);
-        List<CreateAppointmentObjectModel> data =  new ArrayList<>();
+        List<CreateAppointmentObjectModel> data = new ArrayList<>();
         data.add(new CreateAppointmentObjectModel("Pendientes"));
         data.add(new CreateAppointmentObjectModel("Confirmadas"));
         data.add(new CreateAppointmentObjectModel("Finalizadas"));
@@ -122,6 +123,23 @@ public class AppointmentFragment extends BaseFragment implements AppointmentFrag
 
     @Override
     public void data(List<CreateAppointmentObjectModel> data) {
-        Log.d("dasd","dasd");
+        Log.d("dasd", "dasd");
+    }
+
+    @Override
+    public void itemClicked(PetLoverAppointmentModel data) {
+        Log.d("itemClicked", data.getStatus());
+        switch (data.getStatus()) {
+            case "pending":
+                navigator.navigatePendingDialog(activity, data.toString());
+                break;
+            case "finished":
+                navigator.navigateFinishedDialog(activity, data.toString());
+                break;
+            case "confirmed":
+                navigator.navigateConfirmedDialog(activity, data.toString());
+                break;
+
+        }
     }
 }

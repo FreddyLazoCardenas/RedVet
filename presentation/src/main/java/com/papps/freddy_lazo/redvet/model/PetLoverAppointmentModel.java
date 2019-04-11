@@ -15,8 +15,9 @@ public class PetLoverAppointmentModel {
     private double qualification;
     private String diagnosis;
     private DoctorModel doctor;
+    private AppointmentPhotoModel photos;
 
-    public PetLoverAppointmentModel(int id, String doctor_id, String pet_lover_id, String pet_by_pet_lover_id, String date, String time, String type, String reason, String status, String status_reason, double qualification, String diagnosis, DoctorModel doctor) {
+    public PetLoverAppointmentModel(int id, String doctor_id, String pet_lover_id, String pet_by_pet_lover_id, String date, String time, String type, String reason, String status, String status_reason, double qualification, String diagnosis, DoctorModel doctor,AppointmentPhotoModel photos) {
         this.id = id;
         this.doctor_id = doctor_id;
         this.pet_lover_id = pet_lover_id;
@@ -30,6 +31,7 @@ public class PetLoverAppointmentModel {
         this.qualification = qualification;
         this.diagnosis = diagnosis;
         this.doctor = doctor;
+        this.photos = photos;
     }
 
     public int getId() {
@@ -82,5 +84,9 @@ public class PetLoverAppointmentModel {
 
     public DoctorModel getDoctor() {
         return doctor;
+    }
+
+    public AppointmentPhotoModel getPhotos() {
+        return photos;
     }
 }

@@ -14,6 +14,7 @@ import com.papps.freddy_lazo.redvet.R;
 import com.papps.freddy_lazo.redvet.model.PetLoverAppointmentModel;
 import com.papps.freddy_lazo.redvet.model.PetLoverModel;
 import com.papps.freddy_lazo.redvet.model.PetLoverRegisterModel;
+import com.papps.freddy_lazo.redvet.view.fragment.BaseFragment;
 
 import java.text.DateFormatSymbols;
 import java.text.ParseException;
@@ -34,6 +35,7 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
     private final PetLoverModel petLoverModel;
     private List<PetLoverAppointmentModel> data = new ArrayList<>();
     private Context context;
+    private onClickAdapter listener;
 
     @Inject
     public AppointmentAdapter(PreferencesManager preferencesManager) {
@@ -64,6 +66,11 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
             notifyDataSetChanged();
         }
     }
+
+    public void setView(BaseFragment fragment) {
+        listener = (onClickAdapter) fragment;
+    }
+
 
     class AppointmentViewHolder extends RecyclerView.ViewHolder {
 
@@ -118,5 +125,9 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
             }
             return "";
         }
+    }
+
+    public interface onClickAdapter {
+        void itemClicked(PetLoverAppointmentModel data);
     }
 }

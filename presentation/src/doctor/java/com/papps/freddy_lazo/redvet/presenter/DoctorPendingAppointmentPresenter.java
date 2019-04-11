@@ -14,7 +14,7 @@ public class DoctorPendingAppointmentPresenter implements Presenter<PendingAppoi
     private PendingAppointmentDialogView view;
 
     @Inject
-    public DoctorPendingAppointmentPresenter(DoctorAppointmentConfirm doctorAppointmentConfirm) {
+    DoctorPendingAppointmentPresenter(DoctorAppointmentConfirm doctorAppointmentConfirm) {
         this.doctorAppointmentConfirm = doctorAppointmentConfirm;
     }
 

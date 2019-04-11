@@ -167,7 +167,7 @@ public class AppointmentActivity extends BaseActivity implements DatePickerDialo
     @Override
     public void successResponse(CreateAppointmentModel data) {
         navigator.navigateSuccessAppointment(getSupportFragmentManager(), this.getLocalClassName());
-        finish();
+        //finish();
     }
 
     @Override

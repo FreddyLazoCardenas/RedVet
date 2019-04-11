@@ -30,6 +30,8 @@ public class PetLoverAppointmentEntity {
     private String diagnosis;
     @SerializedName("doctor")
     private DoctorEntity doctor;
+    @SerializedName("photos")
+    private AppointmentPhotoEntity photos;
 
     public int getId() {
         return id;
@@ -81,5 +83,9 @@ public class PetLoverAppointmentEntity {
 
     public DoctorEntity getDoctor() {
         return doctor;
+    }
+
+    public AppointmentPhotoEntity getPhotos() {
+        return photos;
     }
 }

@@ -24,6 +24,6 @@ public class AppointmentPetLoverMapper {
     }
 
     public static PetLoverAppointment transform(PetLoverAppointmentEntity data) {
-        return new PetLoverAppointment(data.getId(), data.getDoctor_id(), data.getPet_lover_id(), data.getPet_by_pet_lover_id(), data.getDate(), data.getTime(), data.getType(), data.getReason(), data.getStatus(), data.getStatus_reason(), data.getQualification(), data.getDiagnosis(), SearchDoctorsMapper.transform(data.getDoctor()));
+        return new PetLoverAppointment(data.getId(), data.getDoctor_id(), data.getPet_lover_id(), data.getPet_by_pet_lover_id(), data.getDate(), data.getTime(), data.getType(), data.getReason(), data.getStatus(), data.getStatus_reason(), data.getQualification(), data.getDiagnosis(), SearchDoctorsMapper.transform(data.getDoctor()),AppointmentPhotoMapper.transform(data.getPhotos()));
     }
 }
