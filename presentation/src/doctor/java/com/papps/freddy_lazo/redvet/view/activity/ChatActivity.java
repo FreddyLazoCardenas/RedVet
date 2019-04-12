@@ -3,6 +3,7 @@ package com.papps.freddy_lazo.redvet.view.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.EditText;
 
@@ -11,6 +12,11 @@ import com.papps.freddy_lazo.redvet.R;
 import com.papps.freddy_lazo.redvet.interfaces.ChatActivityView;
 import com.papps.freddy_lazo.redvet.internal.dagger.component.DaggerRedVetChatComponent;
 import com.papps.freddy_lazo.redvet.model.PetLoverModel;
+import com.papps.freddy_lazo.redvet.model.RedVetMessageModel;
+import com.papps.freddy_lazo.redvet.presenter.DoctorChatPresenter;
+import com.papps.freddy_lazo.redvet.view.adapter.MessagesAdapter;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -23,8 +29,10 @@ public class ChatActivity extends BaseActivity implements ChatActivityView {
     RecyclerView rvChat;
     @BindView(R.id.et_chat)
     EditText etChat;
-   /* @Inject
-    PetLoverChatPresenter presenter;*/
+    @Inject
+    MessagesAdapter adapter;
+    @Inject
+    DoctorChatPresenter presenter;
     @Inject
     PreferencesManager preferencesManager;
     private int appointmentId;
@@ -55,7 +63,7 @@ public class ChatActivity extends BaseActivity implements ChatActivityView {
 
     @Override
     public String getApiToken() {
-        return PetLoverModel.toModel(preferencesManager.getPetLoverCurrentUser()).getApi_token();
+        return PetLoverModel.toModel(preferencesManager.getDoctorCurrentUser()).getApi_token();
     }
 
     @Override
@@ -64,13 +72,40 @@ public class ChatActivity extends BaseActivity implements ChatActivityView {
     }
 
     @Override
+    public String getMessage() {
+        return etChat.getText().toString();
+    }
+
+    @Override
+    public void successRequest(List<RedVetMessageModel> data) {
+        adapter.bindList(data);
+    }
+
+    @Override
+    public void successSendMessage(RedVetMessageModel data) {
+        adapter.addMessage(data);
+    }
+
+    @Override
     public void initUI() {
-       /* presenter.setView(this);
-        presenter.getMessages();*/
+        presenter.setView(this);
+        presenter.getMessages();
+        setUpRv();
+    }
+
+    private void setUpRv() {
+        rvChat.setLayoutManager(new LinearLayoutManager(this));
+        rvChat.setAdapter(adapter);
     }
 
     @OnClick(R.id.send_btn)
-    public void sendMessageClicked(){
-       // presenter.sendMessage(etChat.getText().toString());
+    public void sendMessageClicked() {
+        presenter.validate();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        presenter.destroy();
     }
 }

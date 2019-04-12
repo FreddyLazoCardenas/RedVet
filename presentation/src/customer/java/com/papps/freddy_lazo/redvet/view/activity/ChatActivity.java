@@ -103,4 +103,11 @@ public class ChatActivity extends BaseActivity implements ChatActivityView {
     public void sendMessageClicked() {
         presenter.validate();
     }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        presenter.destroy();
+    }
 }

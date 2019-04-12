@@ -161,4 +161,9 @@ public class FinishedAppointmentDialog extends BaseDialogFragment implements App
     public void cancel() {
 
     }
+
+    @OnClick(R.id.chat)
+    public void chatClicked() {
+        navigator.navigateToChatActivity(activity, model.getId());
+    }
 }

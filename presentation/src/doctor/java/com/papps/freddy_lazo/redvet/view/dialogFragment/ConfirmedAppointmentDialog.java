@@ -141,4 +141,9 @@ public class ConfirmedAppointmentDialog extends BaseDialogFragment {
         }
     }
 
+    @OnClick(R.id.chat)
+    public void chatClicked() {
+        navigator.navigateToChatActivity(activity, model.getId());
+    }
+
 }

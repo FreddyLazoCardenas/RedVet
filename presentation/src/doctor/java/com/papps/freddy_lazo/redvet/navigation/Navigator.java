@@ -13,6 +13,7 @@ import com.papps.freddy_lazo.redvet.BuildConfig;
 import com.papps.freddy_lazo.redvet.R;
 import com.papps.freddy_lazo.redvet.view.activity.BaseActivity;
 import com.papps.freddy_lazo.redvet.view.activity.CancelAppointmentActivity;
+import com.papps.freddy_lazo.redvet.view.activity.ChatActivity;
 import com.papps.freddy_lazo.redvet.view.activity.DiagnoseAppointmentActivity;
 import com.papps.freddy_lazo.redvet.view.activity.HomeActivity;
 import com.papps.freddy_lazo.redvet.view.activity.LoginActivity;
@@ -203,5 +204,9 @@ public class Navigator extends BaseNavigator {
 
     public void navigateOtherReasonCancelAppointment(BaseActivity activity, int id, CancelOtherReasonAppointmentDialog.SuccessRequest listener) {
         dialogTransaction(activity, CancelOtherReasonAppointmentDialog.newInstance(id, listener));
+    }
+
+    public void navigateToChatActivity(BaseActivity activity , int appointmentId){
+        activity.startActivity(ChatActivity.getCallingIntent(activity ,appointmentId));
     }
 }
