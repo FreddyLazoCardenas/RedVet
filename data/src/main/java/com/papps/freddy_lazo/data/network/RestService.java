@@ -81,6 +81,6 @@ public interface RestService {
     @POST("doctor/appointments/upload-photo")
     Call<ResponseEntity<AppointmentPhotoResponse>> doctorUploadAppointmentPhoto(@Header("Authorization") String auth, @Body BodyUploadPhoto bodyUploadPhoto);
 
-    @POST("doctor/appointments/upload-photo")
+    @POST("doctor/appointments/delete-photo")
     Call<ResponseEntity<Void>> doctorDeleteAppointmentPhoto(@Header("Authorization") String auth, @Body BodyDeletePhoto bodyDeletePhoto);
 }

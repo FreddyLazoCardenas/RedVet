@@ -259,7 +259,7 @@ public class ProfileFragmentPresenter implements Presenter<ProfileFragmentView> 
         public void onNext(PetLover petLover) {
             super.onNext(petLover);
             PetLoverModel petLoverModel = PetLoverModelMapper.transform(petLover);
-            preferencesManager.saveDoctorCurrentUser(petLoverModel.toString());
+            preferencesManager.savePetLoverCurrentUser(petLoverModel.toString());
             view.showErrorMessage("exitooo");
             view.updateView();
         }

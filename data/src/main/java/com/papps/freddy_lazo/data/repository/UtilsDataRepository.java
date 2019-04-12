@@ -73,8 +73,8 @@ public class UtilsDataRepository implements UtilsRepository {
     }
 
     @Override
-    public Observable<PetLoverAppointment> petLoverCancelAppointment(String apiToken, int appointmentId) {
-        return mRestApi.petLoverCancelAppointment(apiToken, appointmentId).map(AppointmentPetLoverMapper::transform);
+    public Observable<PetLoverAppointment> petLoverCancelAppointment(String apiToken, int appointmentId, String reason) {
+        return mRestApi.petLoverCancelAppointment(apiToken, appointmentId, reason).map(AppointmentPetLoverMapper::transform);
     }
 
     @Override

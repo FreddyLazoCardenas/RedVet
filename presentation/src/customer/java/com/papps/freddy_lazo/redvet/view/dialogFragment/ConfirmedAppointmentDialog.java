@@ -16,6 +16,9 @@ import com.papps.freddy_lazo.redvet.GlideApp;
 import com.papps.freddy_lazo.redvet.R;
 import com.papps.freddy_lazo.redvet.internal.dagger.component.DaggerConfirmedAppointmentDialogComponent;
 import com.papps.freddy_lazo.redvet.model.DoctorAppointmentModel;
+import com.papps.freddy_lazo.redvet.model.PetLoverAppointmentModel;
+import com.papps.freddy_lazo.redvet.model.PetLoverModel;
+import com.papps.freddy_lazo.redvet.model.PetLoverRegisterModel;
 import com.papps.freddy_lazo.redvet.view.activity.HomeActivity;
 
 import javax.inject.Inject;
@@ -39,14 +42,18 @@ public class ConfirmedAppointmentDialog extends BaseDialogFragment {
     TextView time;
     @BindView(R.id.txt_address)
     TextView address;
-    @BindView(R.id.tv_owner)
-    TextView tvPetLoverName;
+    @BindView(R.id.tv_doctor_name)
+    TextView tvDoctorName;
+    @BindView(R.id.tv_doctor_job)
+    TextView tvDoctorJob;
     @BindView(R.id.txt_dni)
     TextView tvDni;
     @Inject
     PreferencesManager preferencesManager;
 
-    private DoctorAppointmentModel model;
+    private PetLoverAppointmentModel model;
+    private PetLoverRegisterModel pet;
+    private PetLoverModel petLoverModel;
     private HomeActivity activity;
 
 
@@ -62,7 +69,7 @@ public class ConfirmedAppointmentDialog extends BaseDialogFragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.dialog_confirm_appointment, container, false);
+        return inflater.inflate(R.layout.dialog_pl_confirmed, container, false);
     }
 
     @Override
@@ -86,15 +93,16 @@ public class ConfirmedAppointmentDialog extends BaseDialogFragment {
 
 
     private void fillUi() {
-        displayPhoto(model.getPet().getPhoto(), imgPet);
-        displayPhoto(model.getPetLover().getPhoto_url(), imgOwner);
-        tvPet.setText(model.getPet().getName());
-        tvPetBirthday.setText(model.getPet().getBirthday());
+        displayPhoto(pet.getPhoto(), imgPet);
+        displayPhoto(model.getDoctor().getPhoto_url(), imgOwner);
+        tvPet.setText(pet.getName());
+        tvPetBirthday.setText(pet.getBirthday());
         date.setText(model.getDate());
         time.setText(model.getTime());
-        address.setText(model.getPetLover().getAddress());
-        tvPetLoverName.setText(model.getPetLover().getFirst_name());
-        tvDni.setText(model.getPetLover().getDni());
+        address.setText(model.getDoctor().getAddress());
+        tvDoctorName.setText(model.getDoctor().getFirst_name());
+        tvDni.setText(model.getDoctor().getNumber_document());
+        tvDoctorJob.setText(model.getDoctor().getType());
     }
 
     public void displayPhoto(String photoUrl, ImageView img) {
@@ -110,20 +118,8 @@ public class ConfirmedAppointmentDialog extends BaseDialogFragment {
 
     @OnClick(R.id.btn_cancel)
     public void btnCancelAppointment() {
-        //navigator.navigateCancelAppointmentActivity(activity, model.getId());
+        navigator.navigateCancelAppointmentActivity(activity, model.getId());
         dismiss();
-    }
-
-    @OnClick(R.id.iv_appointment_diagnosis)
-    public void btnDiagnosisAppointment() {
-        //navigator.navigateToDiagnoseAppointmentActivity(activity, model.toString());
-        dismiss();
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
     }
 
     @OnClick(R.id.img_dismiss)
@@ -135,8 +131,20 @@ public class ConfirmedAppointmentDialog extends BaseDialogFragment {
         if (getArguments() != null) {
             activity = (HomeActivity) getActivity();
             String data = getArguments().getString("data");
-            model = DoctorAppointmentModel.toModel(data);
+            model = PetLoverAppointmentModel.toModel(data);
+            petLoverModel = PetLoverModel.toModel(preferencesManager.getPetLoverCurrentUser());
+            //presenter.setView(this);
+            getPetData(model.getPet_by_pet_lover_id());
             fillUi();
+        }
+    }
+
+    private void getPetData(String petId) {
+        for (PetLoverRegisterModel petLoverRegisterModel : petLoverModel.getPetList()) {
+            if (petLoverRegisterModel.getId() == Integer.valueOf(petId)) {
+                pet = petLoverRegisterModel;
+                break;
+            }
         }
     }
 

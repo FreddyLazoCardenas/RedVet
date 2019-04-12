@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="10dp"
+    android:fillViewport="true">
+
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        app:cardCornerRadius="30dp"
+        app:cardElevation="5dp">
+
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/img_dismiss"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:padding="5dp"
+                android:src="@drawable/ic_close_pink"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.github.siyamed.shapeimageview.CircularImageView
+                android:id="@+id/img_pet"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:src="@drawable/ic_placeholder"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/img_dismiss" />
+
+            <TextView
+                android:id="@+id/txt_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/img_pet"
+                tools:text="El gato con botas" />
+
+            <TextView
+                android:id="@+id/txt_pet_birthday"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:drawableStart="@drawable/ic_birthday"
+                android:drawablePadding="10dp"
+                android:gravity="center"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txt_name"
+                tools:text="16 FEB 1994" />
+
+            <TextView
+                android:id="@+id/start_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:drawableStart="@drawable/ic_quotes"
+                android:drawablePadding="10dp"
+                android:gravity="center"
+                android:text="Inicio"
+                android:textColor="@color/colorGreen"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toStartOf="@+id/txt_date"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txt_pet_birthday" />
+
+            <TextView
+                android:id="@+id/txt_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:textColor="@color/colorGray"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/start_date"
+                app:layout_constraintEnd_toStartOf="@+id/start_time"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/start_date"
+                app:layout_constraintTop_toTopOf="@+id/start_date"
+                tools:text="23/12/19" />
+
+            <TextView
+                android:id="@+id/start_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="50dp"
+                android:drawableStart="@drawable/ic_tmp_date"
+                android:drawablePadding="10dp"
+                android:gravity="center"
+                android:text="Hora"
+                android:textColor="@color/colorGreen"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="@+id/start_date"
+                app:layout_constraintEnd_toStartOf="@+id/txt_time"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/txt_date"
+                app:layout_constraintTop_toTopOf="@+id/start_date" />
+
+            <TextView
+                android:id="@+id/txt_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:textColor="@color/colorGray"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/start_date"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/start_time"
+                app:layout_constraintTop_toTopOf="@+id/start_date"
+                tools:text="3:00" />
+
+            <TextView
+                android:id="@+id/txt_address"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="20dp"
+                android:drawableStart="@drawable/ic_address"
+                android:drawableEnd="@drawable/ic_tmp_directions"
+                android:drawablePadding="10dp"
+                android:gravity="center"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/start_date"
+                tools:text="Av San luis 1025 . San Luis . Lima" />
+
+            <include
+                android:id="@+id/include"
+                layout="@layout/item_doctor_appointment"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txt_address" />
+
+
+            <TextView
+                android:id="@+id/diagnose_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:drawableStart="@drawable/ic_diagnosis"
+                android:drawablePadding="10dp"
+                android:text="Diagnosticar"
+                android:textColor="@color/colorGreen"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/include" />
+
+            <TextView
+                android:id="@+id/diagnose_content"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@id/diagnose_title"
+                app:layout_constraintTop_toBottomOf="@+id/diagnose_title"
+                tools:text="Este perro es gil" />
+
+            <TextView
+                android:id="@+id/tv_attach"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:drawableStart="@drawable/ic_attach"
+                android:drawablePadding="10dp"
+                android:gravity="center|start"
+                android:text="Adjuntos"
+                android:textColor="@color/colorGreen"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/diagnose_content" />
+
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_attach"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
+                app:layout_constraintEnd_toEndOf="@id/tv_attach"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_attach" />
+
+            <View
+                android:id="@+id/view"
+                android:layout_width="0dp"
+                android:layout_height="120dp"
+                android:layout_marginTop="30dp"
+                android:background="@drawable/ic_pink_shadow"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rv_attach" />
+
+            <Button
+                android:id="@+id/btn_cancel"
+                style="@style/Widget.RetVet.ButtonSecondary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="Regresar"
+                android:textColor="@color/colorWhite"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toBottomOf="@id/view"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/view" />
+
+        </android.support.constraint.ConstraintLayout>
+
+    </android.support.v7.widget.CardView>
+
+
+</ScrollView>

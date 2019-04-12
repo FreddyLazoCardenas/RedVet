@@ -13,6 +13,7 @@ public class PetLoverAppointmentCancel extends UseCase {
     private final UtilsRepository repository;
     private String apiToken;
     private int appointmentId;
+    private String reason;
 
     @Inject
     PetLoverAppointmentCancel(UtilsRepository repository, ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
@@ -20,13 +21,14 @@ public class PetLoverAppointmentCancel extends UseCase {
         this.repository = repository;
     }
 
-    public void bindParams(String apiToken, int appointmentId) {
+    public void bindParams(String apiToken, int appointmentId, String reason) {
         this.apiToken = apiToken;
         this.appointmentId = appointmentId;
+        this.reason = reason;
     }
 
     @Override
     protected Observable buildUseCaseObservable() {
-        return repository.petLoverCancelAppointment(apiToken, appointmentId);
+        return repository.petLoverCancelAppointment(apiToken, appointmentId,reason);
     }
 }

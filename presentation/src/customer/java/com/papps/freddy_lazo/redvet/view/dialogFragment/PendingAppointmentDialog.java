@@ -44,8 +44,10 @@ public class PendingAppointmentDialog extends BaseDialogFragment implements Pend
     TextView time;
     @BindView(R.id.txt_address)
     TextView address;
-    @BindView(R.id.tv_owner)
-    TextView tvPetLoverName;
+    @BindView(R.id.tv_doctor_name)
+    TextView tvDoctorName;
+    @BindView(R.id.tv_doctor_job)
+    TextView tvDoctorJob;
     @BindView(R.id.txt_dni)
     TextView tvDni;
 
@@ -95,15 +97,16 @@ public class PendingAppointmentDialog extends BaseDialogFragment implements Pend
     }
 
     private void fillUi() {
-   /*     displayPhoto(model.getPet().getPhoto(), imgPet);
-        displayPhoto(model.getPetLover().getPhoto_url(), imgOwner);
-        tvPet.setText(model.getPet().getName());
-        tvPetBirthday.setText(model.getPet().getBirthday());
+        displayPhoto(pet.getPhoto(), imgPet);
+        displayPhoto(model.getDoctor().getPhoto_url(), imgOwner);
+        tvPet.setText(pet.getName());
+        tvPetBirthday.setText(pet.getBirthday());
         date.setText(model.getDate());
         time.setText(model.getTime());
-        address.setText(model.getPetLover().getAddress());
-        tvPetLoverName.setText(model.getPetLover().getFirst_name());
-        tvDni.setText(model.getPetLover().getDni());*/
+        address.setText(model.getDoctor().getAddress());
+        tvDoctorName.setText(model.getDoctor().getFirst_name());
+        tvDni.setText(model.getDoctor().getNumber_document());
+        tvDoctorJob.setText(model.getDoctor().getType());
     }
 
     public void displayPhoto(String photoUrl, ImageView img) {
@@ -122,9 +125,9 @@ public class PendingAppointmentDialog extends BaseDialogFragment implements Pend
         dismiss();
     }
 
-    @OnClick({R.id.tv_confirm, R.id.iv_confirm})
+    @OnClick(R.id.tv_confirm)
     public void confirm() {
-        //   presenter.sendRequest();
+        dismiss();
     }
 
     @Override
@@ -173,4 +176,6 @@ public class PendingAppointmentDialog extends BaseDialogFragment implements Pend
     public void showErrorNetworkMessage(String message) {
 
     }
+
+
 }

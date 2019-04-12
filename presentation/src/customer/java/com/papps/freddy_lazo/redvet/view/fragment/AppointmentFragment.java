@@ -134,10 +134,10 @@ public class AppointmentFragment extends BaseFragment implements AppointmentFrag
                 navigator.navigatePendingDialog(activity, data.toString());
                 break;
             case "finished":
-                //navigator.navigateFinishedDialog(activity, data.toString());
+                navigator.navigateFinishedDialog(activity, data.toString());
                 break;
             case "confirmed":
-                //navigator.navigateConfirmedDialog(activity, data.toString());
+                navigator.navigateConfirmedDialog(activity, data.toString());
                 break;
 
         }

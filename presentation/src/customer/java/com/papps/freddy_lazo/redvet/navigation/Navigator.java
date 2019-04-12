@@ -13,14 +13,17 @@ import com.papps.freddy_lazo.redvet.BuildConfig;
 import com.papps.freddy_lazo.redvet.R;
 import com.papps.freddy_lazo.redvet.view.activity.AppointmentActivity;
 import com.papps.freddy_lazo.redvet.view.activity.BaseActivity;
+import com.papps.freddy_lazo.redvet.view.activity.CancelAppointmentActivity;
 import com.papps.freddy_lazo.redvet.view.activity.HomeActivity;
 import com.papps.freddy_lazo.redvet.view.activity.LoginActivity;
 import com.papps.freddy_lazo.redvet.view.activity.RegisterActivity;
 import com.papps.freddy_lazo.redvet.view.dialogFragment.CameraDialog;
+import com.papps.freddy_lazo.redvet.view.dialogFragment.CancelOtherReasonAppointmentDialog;
 import com.papps.freddy_lazo.redvet.view.dialogFragment.ConfirmedAppointmentDialog;
 import com.papps.freddy_lazo.redvet.view.dialogFragment.DoctorDialog;
 import com.papps.freddy_lazo.redvet.view.dialogFragment.FinishedAppointmentDialog;
 import com.papps.freddy_lazo.redvet.view.dialogFragment.PendingAppointmentDialog;
+import com.papps.freddy_lazo.redvet.view.dialogFragment.PhotoListDialog;
 import com.papps.freddy_lazo.redvet.view.dialogFragment.SuccessAppointmentDialog;
 import com.papps.freddy_lazo.redvet.view.fragment.AppointmentFragment;
 import com.papps.freddy_lazo.redvet.view.fragment.MapFragment;
@@ -182,4 +185,15 @@ public class Navigator extends BaseNavigator {
         dialogTransaction(activity, FinishedAppointmentDialog.newInstance(data));
     }
 
+    public void navigateCancelAppointmentActivity(HomeActivity activity, int id) {
+        activity.startActivity(CancelAppointmentActivity.getCallingIntent(activity, id));
+    }
+
+    public void navigateOtherReasonCancelAppointment(BaseActivity activity, int id, CancelOtherReasonAppointmentDialog.SuccessRequest listener) {
+        dialogTransaction(activity, CancelOtherReasonAppointmentDialog.newInstance(id, listener));
+    }
+
+    public void showPhotoListDialog(BaseActivity activity, PhotoListDialog.OnClickListener listener) {
+        dialogTransaction(activity, PhotoListDialog.newInstance(listener));
+    }
 }
