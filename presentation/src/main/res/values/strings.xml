@@ -10,6 +10,7 @@
     <string name="add_pet_data">Agregar datos de tu mascota</string>
     <string name="add_pets_data">Agregar datos de mascotas</string>
     <string name="add_date_data">Agregar fecha de cita</string>
+    <string name="add_message_data">Agregar un mensaje</string>
     <string name="add_time_data">Agregar hora de cita</string>
     <string name="add_reason_data">Agregar razón de cita</string>
     <string name="add_type_data">Agregar tipo de cita</string>

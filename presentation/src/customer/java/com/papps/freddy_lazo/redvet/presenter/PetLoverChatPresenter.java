@@ -1,15 +1,18 @@
 package com.papps.freddy_lazo.redvet.presenter;
 
+import android.text.TextUtils;
+
 import com.papps.freddy_lazo.domain.interactor.DefaultObserver;
 import com.papps.freddy_lazo.domain.interactor.PetLoverChatList;
 import com.papps.freddy_lazo.domain.interactor.PetLoverSendMessage;
 import com.papps.freddy_lazo.domain.model.RedVetMessage;
+import com.papps.freddy_lazo.redvet.R;
 import com.papps.freddy_lazo.redvet.interfaces.ChatActivityView;
+import com.papps.freddy_lazo.redvet.model.mapper.RedVetMessageModelMapper;
 
 import java.util.List;
 
 import javax.inject.Inject;
-
 
 
 public class PetLoverChatPresenter implements Presenter<ChatActivityView> {
@@ -34,13 +37,27 @@ public class PetLoverChatPresenter implements Presenter<ChatActivityView> {
 
     }
 
-    public void getMessages(){
-        petLoverChatList.bindParams(view.getApiToken(),view.getAppointmentId());
+    public void getMessages() {
+        petLoverChatList.bindParams(view.getApiToken(), view.getAppointmentId());
         petLoverChatList.execute(new MessagesObservable());
     }
 
-    public void sendMessage(String message){
-        petLoverSendMessage.bindParams(view.getApiToken(),view.getAppointmentId(),message);
+    public void validate() {
+        if (!validateMessage(view.getMessage()))
+            return;
+        sendMessage();
+    }
+
+    private boolean validateMessage(String message) {
+        if (TextUtils.isEmpty(message)) {
+            view.showErrorMessage(view.context().getString(R.string.add_message_data));
+            return false;
+        }
+        return true;
+    }
+
+    private void sendMessage() {
+        petLoverSendMessage.bindParams(view.getApiToken(), view.getAppointmentId(), view.getMessage());
         petLoverSendMessage.execute(new SendMessageObservable());
     }
 
@@ -66,6 +83,7 @@ public class PetLoverChatPresenter implements Presenter<ChatActivityView> {
         public void onNext(List<RedVetMessage> redVetMessages) {
             super.onNext(redVetMessages);
             view.showErrorMessage("Exito");
+            view.successRequest(RedVetMessageModelMapper.transform(redVetMessages));
         }
 
         @Override
@@ -97,6 +115,7 @@ public class PetLoverChatPresenter implements Presenter<ChatActivityView> {
         public void onNext(RedVetMessage redVetMessage) {
             super.onNext(redVetMessage);
             view.showErrorMessage("Exito");
+            view.successSendMessage(RedVetMessageModelMapper.transform(redVetMessage));
         }
 
         @Override
