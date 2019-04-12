@@ -10,9 +10,11 @@ import com.papps.freddy_lazo.data.network.body.BodyFinishAppointment;
 import com.papps.freddy_lazo.data.network.body.BodyLogin;
 import com.papps.freddy_lazo.data.network.body.BodyPetLoverRegister;
 import com.papps.freddy_lazo.data.network.body.BodyRecoverPassword;
+import com.papps.freddy_lazo.data.network.body.BodyRedVetChat;
 import com.papps.freddy_lazo.data.network.body.BodySearchDoctors;
 import com.papps.freddy_lazo.data.network.body.BodyUploadPhoto;
 import com.papps.freddy_lazo.data.network.response.AppointmentPhotoResponse;
+import com.papps.freddy_lazo.data.network.response.ChatRedVetResponse;
 import com.papps.freddy_lazo.data.network.response.DoctorAppointmentResponse;
 import com.papps.freddy_lazo.data.network.response.PetLoverAppointmentResponse;
 import com.papps.freddy_lazo.data.network.response.CreateAppointmentResponse;
@@ -83,4 +85,18 @@ public interface RestService {
 
     @POST("doctor/appointments/delete-photo")
     Call<ResponseEntity<Void>> doctorDeleteAppointmentPhoto(@Header("Authorization") String auth, @Body BodyDeletePhoto bodyDeletePhoto);
+
+    @GET("pet-lover/appointments/chat/{appointment_id}")
+    Call<ResponseEntity<ChatRedVetResponse>> petLoverChat(@Header("Authorization") String auth, @Path("appointment_id") int appointmentId);
+
+    @GET("doctor/appointments/chat/{appointment_id}")
+    Call<ResponseEntity<ChatRedVetResponse>> doctorChat(@Header("Authorization") String auth, @Path("appointment_id") int appointmentId);
+
+    @POST("pet-lover/appointments/chat/send")
+    Call<ResponseEntity<ChatRedVetResponse>> sendPetLoverMessage(@Header("Authorization") String auth, @Body BodyRedVetChat bodyRedVetChat);
+
+    @POST("doctor/appointments/chat/send")
+    Call<ResponseEntity<ChatRedVetResponse>> sendDoctorMessage(@Header("Authorization") String auth, @Body BodyRedVetChat bodyRedVetChat);
+
+
 }

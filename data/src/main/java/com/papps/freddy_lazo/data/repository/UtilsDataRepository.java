@@ -5,6 +5,7 @@ import com.papps.freddy_lazo.data.entity.mapper.AppointmentPetLoverMapper;
 import com.papps.freddy_lazo.data.entity.mapper.AppointmentPhotoMapper;
 import com.papps.freddy_lazo.data.entity.mapper.NewsMapper;
 import com.papps.freddy_lazo.data.entity.mapper.RedVetAppointmentMapper;
+import com.papps.freddy_lazo.data.entity.mapper.RedVetMessageMapper;
 import com.papps.freddy_lazo.data.entity.mapper.ServicesMapper;
 import com.papps.freddy_lazo.data.network.RestApi;
 import com.papps.freddy_lazo.domain.model.AppointmentPhoto;
@@ -12,6 +13,7 @@ import com.papps.freddy_lazo.domain.model.DoctorAppointment;
 import com.papps.freddy_lazo.domain.model.PetLoverAppointment;
 import com.papps.freddy_lazo.domain.model.News;
 import com.papps.freddy_lazo.domain.model.RedVetAppointment;
+import com.papps.freddy_lazo.domain.model.RedVetMessage;
 import com.papps.freddy_lazo.domain.model.Service;
 import com.papps.freddy_lazo.domain.repository.UtilsRepository;
 
@@ -85,6 +87,26 @@ public class UtilsDataRepository implements UtilsRepository {
     @Override
     public Observable<Void> doctorDeleteAppointmentPhoto(String apiToken, int appointmentId, int appointment_photo_id) {
         return mRestApi.doctorDeleteAppointmentPhoto(apiToken, appointmentId, appointment_photo_id);
+    }
+
+    @Override
+    public Observable<List<RedVetMessage>> petLoverChat(String auth, int appointmentId) {
+        return mRestApi.petLoverChat(auth, appointmentId).map(RedVetMessageMapper::transform);
+    }
+
+    @Override
+    public Observable<List<RedVetMessage>> doctorChat(String auth, int appointmentId) {
+        return mRestApi.doctorChat(auth, appointmentId).map(RedVetMessageMapper::transform);
+    }
+
+    @Override
+    public Observable<RedVetMessage> sendPetLoverMessage(String auth, int appointmentId, String message) {
+        return mRestApi.sendPetLoverMessage(auth, appointmentId,message).map(RedVetMessageMapper::transform);
+    }
+
+    @Override
+    public Observable<RedVetMessage> sendDoctorMessage(String auth, int appointmentId, String message) {
+        return mRestApi.sendDoctorMessage(auth, appointmentId,message).map(RedVetMessageMapper::transform);
     }
 
 

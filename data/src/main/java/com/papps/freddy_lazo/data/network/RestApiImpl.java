@@ -11,6 +11,7 @@ import com.papps.freddy_lazo.data.entity.DoctorEntity;
 import com.papps.freddy_lazo.data.entity.NewsEntity;
 import com.papps.freddy_lazo.data.entity.PetLoverEntity;
 import com.papps.freddy_lazo.data.entity.RedVetAppointmentEntity;
+import com.papps.freddy_lazo.data.entity.RedVetMessageEntity;
 import com.papps.freddy_lazo.data.entity.ResponseEntity;
 import com.papps.freddy_lazo.data.entity.ServicesEntity;
 import com.papps.freddy_lazo.data.network.body.BodyAppointment;
@@ -22,9 +23,11 @@ import com.papps.freddy_lazo.data.network.body.BodyFinishAppointment;
 import com.papps.freddy_lazo.data.network.body.BodyLogin;
 import com.papps.freddy_lazo.data.network.body.BodyPetLoverRegister;
 import com.papps.freddy_lazo.data.network.body.BodyRecoverPassword;
+import com.papps.freddy_lazo.data.network.body.BodyRedVetChat;
 import com.papps.freddy_lazo.data.network.body.BodySearchDoctors;
 import com.papps.freddy_lazo.data.network.body.BodyUploadPhoto;
 import com.papps.freddy_lazo.data.network.response.AppointmentPhotoResponse;
+import com.papps.freddy_lazo.data.network.response.ChatRedVetResponse;
 import com.papps.freddy_lazo.data.network.response.DoctorAppointmentResponse;
 import com.papps.freddy_lazo.data.network.response.PetLoverAppointmentResponse;
 import com.papps.freddy_lazo.data.network.response.CreateAppointmentResponse;
@@ -330,6 +333,66 @@ public class RestApiImpl implements RestApi {
                 super.onResponse(call, response);
                 ResponseEntity<Void> body = response.body();
                 if (body != null && body.getMessage() == null) {
+                    emitter.onComplete();
+                }
+            }
+        }));
+    }
+
+    @Override
+    public Observable<List<RedVetMessageEntity>> petLoverChat(String auth, int appointmentId) {
+        return Observable.create(emitter -> restService.petLoverChat("Bearer " + auth, appointmentId).enqueue(new DefaultCallback<ResponseEntity<ChatRedVetResponse>>(emitter) {
+            @Override
+            public void onResponse(@NonNull Call<ResponseEntity<ChatRedVetResponse>> call, @NonNull Response<ResponseEntity<ChatRedVetResponse>> response) {
+                super.onResponse(call, response);
+                ResponseEntity<ChatRedVetResponse> body = response.body();
+                if (body != null && body.getMessage() == null) {
+                    emitter.onNext(body.getData().getMessages());
+                    emitter.onComplete();
+                }
+            }
+        }));
+    }
+
+    @Override
+    public Observable<List<RedVetMessageEntity>> doctorChat(String auth, int appointmentId) {
+        return Observable.create(emitter -> restService.doctorChat("Bearer " + auth, appointmentId).enqueue(new DefaultCallback<ResponseEntity<ChatRedVetResponse>>(emitter) {
+            @Override
+            public void onResponse(@NonNull Call<ResponseEntity<ChatRedVetResponse>> call, @NonNull Response<ResponseEntity<ChatRedVetResponse>> response) {
+                super.onResponse(call, response);
+                ResponseEntity<ChatRedVetResponse> body = response.body();
+                if (body != null && body.getMessage() == null) {
+                    emitter.onNext(body.getData().getMessages());
+                    emitter.onComplete();
+                }
+            }
+        }));
+    }
+
+    @Override
+    public Observable<RedVetMessageEntity> sendPetLoverMessage(String auth, int appointmentId, String message) {
+        return Observable.create(emitter -> restService.sendPetLoverMessage("Bearer " + auth, new BodyRedVetChat(appointmentId, message)).enqueue(new DefaultCallback<ResponseEntity<ChatRedVetResponse>>(emitter) {
+            @Override
+            public void onResponse(@NonNull Call<ResponseEntity<ChatRedVetResponse>> call, @NonNull Response<ResponseEntity<ChatRedVetResponse>> response) {
+                super.onResponse(call, response);
+                ResponseEntity<ChatRedVetResponse> body = response.body();
+                if (body != null && body.getMessage() == null) {
+                    emitter.onNext(body.getData().getMessage());
+                    emitter.onComplete();
+                }
+            }
+        }));
+    }
+
+    @Override
+    public Observable<RedVetMessageEntity> sendDoctorMessage(String auth, int appointmentId, String message) {
+        return Observable.create(emitter -> restService.sendDoctorMessage("Bearer " + auth, new BodyRedVetChat(appointmentId, message)).enqueue(new DefaultCallback<ResponseEntity<ChatRedVetResponse>>(emitter) {
+            @Override
+            public void onResponse(@NonNull Call<ResponseEntity<ChatRedVetResponse>> call, @NonNull Response<ResponseEntity<ChatRedVetResponse>> response) {
+                super.onResponse(call, response);
+                ResponseEntity<ChatRedVetResponse> body = response.body();
+                if (body != null && body.getMessage() == null) {
+                    emitter.onNext(body.getData().getMessage());
                     emitter.onComplete();
                 }
             }

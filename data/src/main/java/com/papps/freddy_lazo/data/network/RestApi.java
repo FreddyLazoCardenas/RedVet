@@ -8,6 +8,7 @@ import com.papps.freddy_lazo.data.entity.DoctorEntity;
 import com.papps.freddy_lazo.data.entity.NewsEntity;
 import com.papps.freddy_lazo.data.entity.PetLoverEntity;
 import com.papps.freddy_lazo.data.entity.RedVetAppointmentEntity;
+import com.papps.freddy_lazo.data.entity.RedVetMessageEntity;
 import com.papps.freddy_lazo.data.entity.ServicesEntity;
 import com.papps.freddy_lazo.domain.model.PetRegister;
 import com.papps.freddy_lazo.domain.model.ScheduleDoctorRegister;
@@ -52,9 +53,17 @@ public interface RestApi {
 
     Observable<RedVetAppointmentEntity> doctorCancelAppointment(String apiToken, int appointmentId, String reason);
 
-    Observable<PetLoverAppointmentEntity> petLoverCancelAppointment(String apiToken, int appointmentId,String reason);
+    Observable<PetLoverAppointmentEntity> petLoverCancelAppointment(String apiToken, int appointmentId, String reason);
 
     Observable<AppointmentPhotoEntity> doctorUploadAppointmentPhoto(String apiToken, int appointmentId, String photo);
 
     Observable<Void> doctorDeleteAppointmentPhoto(String apiToken, int appointmentId, int appointment_photo_id);
+
+    Observable<List<RedVetMessageEntity>> petLoverChat(String auth, int appointmentId);
+
+    Observable<List<RedVetMessageEntity>> doctorChat(String auth, int appointmentId);
+
+    Observable<RedVetMessageEntity> sendPetLoverMessage(String auth, int appointmentId, String message);
+
+    Observable<RedVetMessageEntity> sendDoctorMessage(String auth, int appointmentId, String message);
 }
