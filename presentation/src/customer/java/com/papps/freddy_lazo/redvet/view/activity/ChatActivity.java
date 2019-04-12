@@ -84,7 +84,8 @@ public class ChatActivity extends BaseActivity implements ChatActivityView {
 
     @Override
     public void successSendMessage(RedVetMessageModel data) {
-    adapter.addMessage(data);
+        etChat.getText().clear();
+        adapter.addMessage(data);
     }
 
     @Override
