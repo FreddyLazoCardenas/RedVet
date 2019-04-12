@@ -19,7 +19,6 @@ import com.papps.freddy_lazo.redvet.R;
 import com.papps.freddy_lazo.redvet.interfaces.PetLoverAppointmentView;
 import com.papps.freddy_lazo.redvet.internal.dagger.component.DaggerFinishedAppointmentDialogComponent;
 import com.papps.freddy_lazo.redvet.model.AppointmentPhotoModel;
-import com.papps.freddy_lazo.redvet.model.DoctorAppointmentModel;
 import com.papps.freddy_lazo.redvet.model.PetLoverAppointmentModel;
 import com.papps.freddy_lazo.redvet.model.PetLoverModel;
 import com.papps.freddy_lazo.redvet.model.PetLoverRegisterModel;
@@ -218,5 +217,10 @@ public class FinishedAppointmentDialog extends BaseDialogFragment implements App
     @Override
     public int getPhotoAppointmentId() {
         return photoId;
+    }
+
+    @OnClick(R.id.chat)
+    public void chatClicked() {
+        navigator.navigateToChatActivity(activity, getAppointmentId());
     }
 }

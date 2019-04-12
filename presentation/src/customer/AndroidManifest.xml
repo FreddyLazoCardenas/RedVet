@@ -17,7 +17,6 @@
         <activity android:name="com.papps.freddy_lazo.redvet.view.activity.HomeActivity"/>
         <activity android:name="com.papps.freddy_lazo.redvet.view.activity.AppointmentActivity"/>
         <activity android:name="com.papps.freddy_lazo.redvet.view.activity.CancelAppointmentActivity"/>
-
-
+        <activity android:name="com.papps.freddy_lazo.redvet.view.activity.ChatActivity"/>
     </application>
 </manifest>

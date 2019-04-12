@@ -14,6 +14,7 @@ import com.papps.freddy_lazo.redvet.R;
 import com.papps.freddy_lazo.redvet.view.activity.AppointmentActivity;
 import com.papps.freddy_lazo.redvet.view.activity.BaseActivity;
 import com.papps.freddy_lazo.redvet.view.activity.CancelAppointmentActivity;
+import com.papps.freddy_lazo.redvet.view.activity.ChatActivity;
 import com.papps.freddy_lazo.redvet.view.activity.HomeActivity;
 import com.papps.freddy_lazo.redvet.view.activity.LoginActivity;
 import com.papps.freddy_lazo.redvet.view.activity.RegisterActivity;
@@ -68,6 +69,10 @@ public class Navigator extends BaseNavigator {
 
     public void navigateToAppointmentActivity(BaseActivity activity , String doctorModel) {
         activity.startActivity(AppointmentActivity.getCallingIntent(activity ,doctorModel));
+    }
+
+    public void navigateToChatActivity(BaseActivity activity , int appointmentId){
+        activity.startActivity(ChatActivity.getCallingIntent(activity ,appointmentId));
     }
 
 

@@ -176,6 +176,9 @@ public class PendingAppointmentDialog extends BaseDialogFragment implements Pend
     public void showErrorNetworkMessage(String message) {
 
     }
-
+    @OnClick(R.id.chat)
+    public void chatClicked() {
+        navigator.navigateToChatActivity(activity, model.getId());
+    }
 
 }
