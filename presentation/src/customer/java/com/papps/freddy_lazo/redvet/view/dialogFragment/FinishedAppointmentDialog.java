@@ -223,4 +223,9 @@ public class FinishedAppointmentDialog extends BaseDialogFragment implements App
     public void chatClicked() {
         navigator.navigateToChatActivity(activity, getAppointmentId());
     }
+
+    @OnClick(R.id.phone)
+    public void phoneClicked() {
+        navigator.navigatePhoneCall(activity, model.getDoctor().getPhone());
+    }
 }

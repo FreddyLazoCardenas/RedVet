@@ -201,4 +201,8 @@ public class Navigator extends BaseNavigator {
     public void showPhotoListDialog(BaseActivity activity, PhotoListDialog.OnClickListener listener) {
         dialogTransaction(activity, PhotoListDialog.newInstance(listener));
     }
+
+    public void navigatePhoneCall(BaseActivity activity, String phone){
+        activity.startActivity(new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", phone, null)));
+    }
 }

@@ -209,4 +209,8 @@ public class Navigator extends BaseNavigator {
     public void navigateToChatActivity(BaseActivity activity , int appointmentId){
         activity.startActivity(ChatActivity.getCallingIntent(activity ,appointmentId));
     }
+
+    public void navigatePhoneCall(BaseActivity activity, String phone){
+        activity.startActivity(new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", phone, null)));
+    }
 }

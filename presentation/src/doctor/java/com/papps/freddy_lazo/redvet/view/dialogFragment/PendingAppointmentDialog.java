@@ -164,4 +164,9 @@ public class PendingAppointmentDialog extends BaseDialogFragment implements Pend
     public void chatClicked() {
         navigator.navigateToChatActivity(activity, model.getId());
     }
+
+    @OnClick(R.id.phone)
+    public void phoneClicked() {
+        navigator.navigatePhoneCall(activity, model.getPetLover().getPhone());
+    }
 }

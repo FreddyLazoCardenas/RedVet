@@ -93,9 +93,7 @@ public class DoctorDialog extends BaseDialogFragment {
 
     @OnClick(R.id.btn_call)
     public void callDoctor() {
-        String phone = doctorModel.getPhone();
-        Intent intent = new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", phone, null));
-        startActivity(intent);
+        navigator.navigatePhoneCall(activity, doctorModel.getPhone());
     }
 
     @OnClick(R.id.btn_whatsapp)

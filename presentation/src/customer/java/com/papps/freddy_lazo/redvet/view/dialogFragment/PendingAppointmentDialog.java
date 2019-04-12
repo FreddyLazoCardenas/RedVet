@@ -181,4 +181,9 @@ public class PendingAppointmentDialog extends BaseDialogFragment implements Pend
         navigator.navigateToChatActivity(activity, model.getId());
     }
 
+    @OnClick(R.id.phone)
+    public void phoneClicked() {
+        navigator.navigatePhoneCall(activity, model.getDoctor().getPhone());
+    }
+
 }
