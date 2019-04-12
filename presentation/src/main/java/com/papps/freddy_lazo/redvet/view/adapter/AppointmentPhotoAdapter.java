@@ -71,6 +71,21 @@ public class AppointmentPhotoAdapter extends RecyclerView.Adapter<AppointmentPho
         return data.size();
     }
 
+    public void itemDeleted(int photoId) {
+        int index = getItemIndex(photoId);
+        data.remove(index);
+        notifyItemRemoved(index);
+    }
+
+    private int getItemIndex(int photoId) {
+        for (AppointmentPhotoModel appointmentPhotoModel : data) {
+            if (appointmentPhotoModel.getId() == photoId) {
+                return data.indexOf(appointmentPhotoModel);
+            }
+        }
+        return 0;
+    }
+
     class PhotoAppointmentHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.iv_photo)

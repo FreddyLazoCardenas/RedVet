@@ -6,4 +6,6 @@ public interface PetLoverAppointmentView extends BaseView {
     int getAppointmentId();
 
     int getPhotoAppointmentId();
+
+    void successDelete();
 }

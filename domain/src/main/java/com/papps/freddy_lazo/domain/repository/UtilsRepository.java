@@ -34,7 +34,7 @@ public interface UtilsRepository {
 
     Observable<AppointmentPhoto> doctorUploadAppointmentPhoto(String apiToken, int appointmentId, String photo);
 
-    Observable<Void> doctorDeleteAppointmentPhoto(String apiToken, int appointmentId, int appointment_photo_id);
+    Observable<List<Void>> doctorDeleteAppointmentPhoto(String apiToken, int appointmentId, int appointment_photo_id);
 
     Observable<List<RedVetMessage>> petLoverChat(String auth, int appointmentId);
 

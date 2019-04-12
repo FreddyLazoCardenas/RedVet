@@ -22,7 +22,7 @@ public class DefaultCallback<T> implements Callback<T> {
     public void onResponse(@NonNull Call<T> call, @NonNull Response<T> response) {
         if (isSuccessful(emitter, response)) {
             ResponseEntity body = ((ResponseEntity) response.body());
-            if (body != null && body.getMessage() != null){
+            if (body != null && body.getMessage() != null) {
                 emitter.onError(new RedVetException(body.getMessage()));
             }
         }
@@ -30,13 +30,13 @@ public class DefaultCallback<T> implements Callback<T> {
 
     @Override
     public void onFailure(@NonNull Call<T> call, @NonNull Throwable t) {
-        if(!emitter.isDisposed()){
-           // emitter.onError(new RedVetException("Error de servicio"));
+        if (!emitter.isDisposed()) {
+            emitter.onError(new RedVetException("Error de servicio" + t.getMessage()));
         }
     }
 
     private boolean isSuccessful(ObservableEmitter emitter, Response response) {
-        if(emitter.isDisposed()){
+        if (emitter.isDisposed()) {
             return false;
         }
         return response.isSuccessful();

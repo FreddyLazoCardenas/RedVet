@@ -4,6 +4,8 @@ import com.papps.freddy_lazo.domain.interactor.DefaultObserver;
 import com.papps.freddy_lazo.domain.interactor.DoctorDeleteAppointmentPhoto;
 import com.papps.freddy_lazo.redvet.interfaces.PetLoverAppointmentView;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 
@@ -28,7 +30,7 @@ public class PetLoverFinishedAppointmentPresenter implements Presenter<PetLoverA
     }
 
     public void sendRequest() {
-        doctorDeleteAppointmentPhoto.bindParams(view.getApiToken(),view.getAppointmentId(),view.getPhotoAppointmentId());
+        doctorDeleteAppointmentPhoto.bindParams(view.getApiToken(), view.getAppointmentId(), view.getPhotoAppointmentId());
         doctorDeleteAppointmentPhoto.execute(new DeletePhotoObservable());
     }
 
@@ -42,7 +44,7 @@ public class PetLoverFinishedAppointmentPresenter implements Presenter<PetLoverA
         this.view = view;
     }
 
-    private class DeletePhotoObservable extends DefaultObserver<Void> {
+    private class DeletePhotoObservable extends DefaultObserver<List<Void>> {
 
         @Override
         protected void onStart() {
@@ -58,6 +60,7 @@ public class PetLoverFinishedAppointmentPresenter implements Presenter<PetLoverA
         @Override
         public void onComplete() {
             super.onComplete();
+            view.successDelete();
         }
     }
 }

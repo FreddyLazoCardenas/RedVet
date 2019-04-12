@@ -326,12 +326,12 @@ public class RestApiImpl implements RestApi {
     }
 
     @Override
-    public Observable<Void> doctorDeleteAppointmentPhoto(String apiToken, int appointmentId, int appointment_photo_id) {
-        return Observable.create(emitter -> restService.doctorDeleteAppointmentPhoto("Bearer " + apiToken, new BodyDeletePhoto(appointmentId, appointment_photo_id)).enqueue(new DefaultCallback<ResponseEntity<Void>>(emitter) {
+    public Observable<List<Void>> doctorDeleteAppointmentPhoto(String apiToken, int appointmentId, int appointment_photo_id) {
+        return Observable.create(emitter -> restService.doctorDeleteAppointmentPhoto("Bearer " + apiToken, new BodyDeletePhoto(appointmentId, appointment_photo_id)).enqueue(new DefaultCallback<ResponseEntity<List<Void>>>(emitter) {
             @Override
-            public void onResponse(@NonNull Call<ResponseEntity<Void>> call, @NonNull Response<ResponseEntity<Void>> response) {
+            public void onResponse(@NonNull Call<ResponseEntity<List<Void>>> call, @NonNull Response<ResponseEntity<List<Void>>> response) {
                 super.onResponse(call, response);
-                ResponseEntity<Void> body = response.body();
+                ResponseEntity<List<Void>> body = response.body();
                 if (body != null && body.getMessage() == null) {
                     emitter.onComplete();
                 }

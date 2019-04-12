@@ -219,6 +219,11 @@ public class FinishedAppointmentDialog extends BaseDialogFragment implements App
         return photoId;
     }
 
+    @Override
+    public void successDelete() {
+        adapter.itemDeleted(photoId);
+    }
+
     @OnClick(R.id.chat)
     public void chatClicked() {
         navigator.navigateToChatActivity(activity, getAppointmentId());

@@ -23,6 +23,8 @@ import com.papps.freddy_lazo.data.network.response.LoginResponse;
 import com.papps.freddy_lazo.data.network.response.NewsResponse;
 import com.papps.freddy_lazo.data.network.response.ServicesResponse;
 
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -84,7 +86,7 @@ public interface RestService {
     Call<ResponseEntity<AppointmentPhotoResponse>> doctorUploadAppointmentPhoto(@Header("Authorization") String auth, @Body BodyUploadPhoto bodyUploadPhoto);
 
     @POST("doctor/appointments/delete-photo")
-    Call<ResponseEntity<Void>> doctorDeleteAppointmentPhoto(@Header("Authorization") String auth, @Body BodyDeletePhoto bodyDeletePhoto);
+    Call<ResponseEntity<List<Void>>> doctorDeleteAppointmentPhoto(@Header("Authorization") String auth, @Body BodyDeletePhoto bodyDeletePhoto);
 
     @GET("pet-lover/appointments/chat/{appointment_id}")
     Call<ResponseEntity<ChatRedVetResponse>> petLoverChat(@Header("Authorization") String auth, @Path("appointment_id") int appointmentId);
