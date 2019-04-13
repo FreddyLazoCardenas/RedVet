@@ -56,11 +56,13 @@ public class PendingAppointmentDialog extends BaseDialogFragment implements Pend
 
     private DoctorAppointmentModel model;
     private HomeActivity activity;
+    private RequestInterface listener;
 
-    public static PendingAppointmentDialog newInstance(String data) {
+    public static PendingAppointmentDialog newInstance(String data , RequestInterface listener) {
         Bundle args = new Bundle();
         args.putString("data", data);
         PendingAppointmentDialog dialog = new PendingAppointmentDialog();
+        dialog.listener = listener;
         dialog.setCancelable(false);
         dialog.setArguments(args);
         return dialog;
@@ -135,6 +137,12 @@ public class PendingAppointmentDialog extends BaseDialogFragment implements Pend
     }
 
     @Override
+    public void successRequest() {
+        listener.successPendingRequest(getAppointmentId());
+        dismiss();
+    }
+
+    @Override
     public void initUI() {
         if (getArguments() != null) {
             activity = (HomeActivity) getActivity();
@@ -168,5 +176,10 @@ public class PendingAppointmentDialog extends BaseDialogFragment implements Pend
     @OnClick(R.id.phone)
     public void phoneClicked() {
         navigator.navigatePhoneCall(activity, model.getPetLover().getPhone());
+    }
+
+    public interface RequestInterface{
+
+        void successPendingRequest(int id);
     }
 }

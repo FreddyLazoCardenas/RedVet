@@ -15,6 +15,7 @@ import com.papps.freddy_lazo.redvet.model.PetLoverAppointmentModel;
 import com.papps.freddy_lazo.redvet.view.fragment.BaseFragment;
 
 import java.util.ArrayList;
+import java.util.BitSet;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -26,9 +27,10 @@ import butterknife.OnClick;
 public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.AppointmentViewHolder> {
 
     private List<DoctorAppointmentModel> data = new ArrayList<>();
+    private List<DoctorAppointmentModel> filterData = new ArrayList<>();
     private Context context;
     private onClickAdapter listener;
-
+    private boolean isFiltering;
 
     @Inject
     public AppointmentAdapter() {
@@ -49,18 +51,65 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
 
     @Override
     public int getItemCount() {
-        return data.size();
+        return isFiltering ? filterData.size() : data.size();
     }
 
     public void bindList(List<DoctorAppointmentModel> data) {
-        if (data != null) {
+        if (data != null)
             this.data = data;
-            notifyDataSetChanged();
+        notifyDataSetChanged();
+    }
+
+    public void setFiltering(boolean isFiltering) {
+        this.isFiltering = isFiltering;
+    }
+
+    public boolean isFiltering() {
+        return isFiltering;
+    }
+
+    public void bindFilterList(String appointmentStatus) {
+        filterData.clear();
+        for (DoctorAppointmentModel model : data) {
+            if (model.getStatus().equals(appointmentStatus)) {
+                filterData.add(model);
+            }
         }
+        notifyDataSetChanged();
     }
 
     public void setView(BaseFragment fragment) {
         listener = (onClickAdapter) fragment;
+    }
+
+    public void removeAppointment(int id) {
+        int index = getItemIndex(id);
+        data.remove(index);
+        if (isFiltering) {
+            int filteringIndex = getFilterItemIndex(id);
+            filterData.remove(filteringIndex);
+            notifyItemRemoved(filteringIndex);
+        } else {
+            notifyItemRemoved(index);
+        }
+    }
+
+    private int getFilterItemIndex(int id) {
+        for (DoctorAppointmentModel model : filterData) {
+            if (model.getId() == id) {
+                return filterData.indexOf(model);
+            }
+        }
+        return 0;
+    }
+
+    private int getItemIndex(int id) {
+        for (DoctorAppointmentModel model : data) {
+            if (model.getId() == id) {
+                return data.indexOf(model);
+            }
+        }
+        return 0;
     }
 
     class AppointmentViewHolder extends RecyclerView.ViewHolder {
@@ -76,13 +125,14 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
         }
 
         public void bind(int position) {
-            tvDate.setText(data.get(position).getDate());
-            tvTime.setText(data.get(position).getTime());
+            DoctorAppointmentModel bindData = isFiltering ? filterData.get(position) : data.get(position);
+            tvDate.setText(bindData.getDate());
+            tvTime.setText(bindData.getTime());
         }
 
         @OnClick
         void itemClicked() {
-            listener.itemClicked(data.get(getAdapterPosition()));
+            listener.itemClicked(isFiltering ? filterData.get(getAdapterPosition()) : data.get(getAdapterPosition()));
         }
     }
 

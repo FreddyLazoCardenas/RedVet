@@ -190,16 +190,16 @@ public class Navigator extends BaseNavigator {
         dialogTransaction(activity, PhotoListDialog.newInstance(listener));
     }
 
-    public void navigatePendingDialog(BaseActivity activity, String data) {
-        dialogTransaction(activity, PendingAppointmentDialog.newInstance(data));
+    public void navigatePendingDialog(BaseActivity activity, String data , PendingAppointmentDialog.RequestInterface listener) {
+        dialogTransaction(activity, PendingAppointmentDialog.newInstance(data , listener));
     }
 
-    public void navigateConfirmedDialog(BaseActivity activity, String data) {
-        dialogTransaction(activity, ConfirmedAppointmentDialog.newInstance(data));
+    public void navigateConfirmedDialog(BaseActivity activity, String data, ConfirmedAppointmentDialog.RequestInterface listener) {
+        dialogTransaction(activity, ConfirmedAppointmentDialog.newInstance(data,listener));
     }
 
-    public void navigateFinishedDialog(BaseActivity activity, String data) {
-        dialogTransaction(activity, FinishedAppointmentDialog.newInstance(data));
+    public void navigateFinishedDialog(BaseActivity activity, String data, FinishedAppointmentDialog.RequestInterface listener) {
+        dialogTransaction(activity, FinishedAppointmentDialog.newInstance(data, listener));
     }
 
     public void navigateOtherReasonCancelAppointment(BaseActivity activity, int id, CancelOtherReasonAppointmentDialog.SuccessRequest listener) {

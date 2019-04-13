@@ -58,12 +58,14 @@ public class FinishedAppointmentDialog extends BaseDialogFragment implements App
 
     private DoctorAppointmentModel model;
     private HomeActivity activity;
+    private RequestInterface listener;
 
 
-    public static FinishedAppointmentDialog newInstance(String data) {
+    public static FinishedAppointmentDialog newInstance(String data, RequestInterface listener) {
         Bundle args = new Bundle();
         args.putString("data", data);
         FinishedAppointmentDialog dialog = new FinishedAppointmentDialog();
+        dialog.listener = listener;
         dialog.setCancelable(false);
         dialog.setArguments(args);
         return dialog;
@@ -170,5 +172,9 @@ public class FinishedAppointmentDialog extends BaseDialogFragment implements App
     @OnClick(R.id.phone)
     public void phoneClicked() {
         navigator.navigatePhoneCall(activity, model.getPetLover().getPhone());
+    }
+
+    public interface RequestInterface {
+        void successFinishedRequest(int id);
     }
 }

@@ -49,12 +49,14 @@ public class ConfirmedAppointmentDialog extends BaseDialogFragment {
 
     private DoctorAppointmentModel model;
     private HomeActivity activity;
+    private RequestInterface listener;
 
 
-    public static ConfirmedAppointmentDialog newInstance(String data) {
+    public static ConfirmedAppointmentDialog newInstance(String data, RequestInterface listener) {
         Bundle args = new Bundle();
         args.putString("data", data);
         ConfirmedAppointmentDialog dialog = new ConfirmedAppointmentDialog();
+        dialog.listener = listener;
         dialog.setCancelable(false);
         dialog.setArguments(args);
         return dialog;
@@ -112,7 +114,7 @@ public class ConfirmedAppointmentDialog extends BaseDialogFragment {
     @OnClick(R.id.btn_cancel)
     public void btnCancelAppointment() {
         navigator.navigateCancelAppointmentActivity(activity, model.getId());
-        dismiss();
+       // dismiss();
     }
 
     @OnClick(R.id.iv_appointment_diagnosis)
@@ -151,4 +153,7 @@ public class ConfirmedAppointmentDialog extends BaseDialogFragment {
         navigator.navigatePhoneCall(activity, model.getPetLover().getPhone());
     }
 
+    public interface RequestInterface {
+        void successConfirmedRequest(int id);
+    }
 }

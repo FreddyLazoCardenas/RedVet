@@ -65,6 +65,7 @@ public class DoctorPendingAppointmentPresenter implements Presenter<PendingAppoi
         @Override
         public void onComplete() {
             super.onComplete();
+            view.successRequest();
         }
     }
 }

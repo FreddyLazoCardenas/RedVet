@@ -22,6 +22,9 @@ import com.papps.freddy_lazo.redvet.presenter.AppointmentFragmentPresenter;
 import com.papps.freddy_lazo.redvet.view.activity.HomeActivity;
 import com.papps.freddy_lazo.redvet.view.adapter.AppointmentAdapter;
 import com.papps.freddy_lazo.redvet.view.adapter.AppointmentHeaderAdapter;
+import com.papps.freddy_lazo.redvet.view.dialogFragment.ConfirmedAppointmentDialog;
+import com.papps.freddy_lazo.redvet.view.dialogFragment.FinishedAppointmentDialog;
+import com.papps.freddy_lazo.redvet.view.dialogFragment.PendingAppointmentDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +33,8 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 
-public class AppointmentFragment extends BaseFragment implements AppointmentFragmentView, AppointmentHeaderAdapter.onClickAdapter, AppointmentAdapter.onClickAdapter {
+public class AppointmentFragment extends BaseFragment implements AppointmentFragmentView, AppointmentHeaderAdapter.onClickAdapter, AppointmentAdapter.onClickAdapter,
+        PendingAppointmentDialog.RequestInterface, FinishedAppointmentDialog.RequestInterface, ConfirmedAppointmentDialog.RequestInterface {
 
 
     @BindView(R.id.rv_appointments)
@@ -124,7 +128,39 @@ public class AppointmentFragment extends BaseFragment implements AppointmentFrag
 
     @Override
     public void data(List<CreateAppointmentObjectModel> data) {
+        adapter.setFiltering(isDataFiltering(data));
+        if (adapter.isFiltering())
+            adapter.bindFilterList(getAppointmentStatus(data));
+        else
+            adapter.bindList(null);
+    }
 
+    private boolean isDataFiltering(List<CreateAppointmentObjectModel> data) {
+        for (CreateAppointmentObjectModel model : data) {
+            if (model.isSelected()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private String getAppointmentStatus(List<CreateAppointmentObjectModel> data) {
+        String appointmentName = "";
+        for (CreateAppointmentObjectModel model : data) {
+            if (model.isSelected()) {
+                appointmentName = model.getName();
+            }
+        }
+        switch (appointmentName) {
+            case "Pendientes":
+                return "pending";
+            case "Confirmadas":
+                return "confirmed";
+            case "Finalizadas":
+                return "finished";
+            default:
+                return "pending";
+        }
     }
 
     @Override
@@ -132,15 +168,30 @@ public class AppointmentFragment extends BaseFragment implements AppointmentFrag
         Log.d("itemClicked", data.getStatus());
         switch (data.getStatus()) {
             case "pending":
-                navigator.navigatePendingDialog(activity, data.toString());
+                navigator.navigatePendingDialog(activity, data.toString() , this);
                 break;
             case "finished":
-                navigator.navigateFinishedDialog(activity, data.toString());
+                navigator.navigateFinishedDialog(activity, data.toString(),this);
                 break;
             case "confirmed":
-                navigator.navigateConfirmedDialog(activity, data.toString());
+                navigator.navigateConfirmedDialog(activity, data.toString(),this);
                 break;
 
         }
+    }
+
+    @Override
+    public void successPendingRequest(int id) {
+        adapter.removeAppointment(id);
+    }
+
+    @Override
+    public void successFinishedRequest(int id) {
+        adapter.removeAppointment(id);
+    }
+
+    @Override
+    public void successConfirmedRequest(int id) {
+        adapter.removeAppointment(id);
     }
 }

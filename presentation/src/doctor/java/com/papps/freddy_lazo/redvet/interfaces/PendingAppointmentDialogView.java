@@ -4,4 +4,6 @@ public interface PendingAppointmentDialogView extends BaseView {
     String getApiToken();
 
     int getAppointmentId();
+
+    void successRequest();
 }
