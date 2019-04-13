@@ -53,7 +53,7 @@ public interface RestApi {
 
     Observable<RedVetAppointmentEntity> doctorCancelAppointment(String apiToken, int appointmentId, String reason);
 
-    Observable<PetLoverAppointmentEntity> petLoverCancelAppointment(String apiToken, int appointmentId, String reason);
+    Observable<RedVetAppointmentEntity> petLoverCancelAppointment(String apiToken, int appointmentId, String reason);
 
     Observable<AppointmentPhotoEntity> doctorUploadAppointmentPhoto(String apiToken, int appointmentId, String photo);
 

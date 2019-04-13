@@ -296,7 +296,7 @@ public class RestApiImpl implements RestApi {
     }
 
     @Override
-    public Observable<PetLoverAppointmentEntity> petLoverCancelAppointment(String apiToken, int appointmentId, String reason) {
+    public Observable<RedVetAppointmentEntity> petLoverCancelAppointment(String apiToken, int appointmentId, String reason) {
         return Observable.create(emitter -> restService.petLoverCancelAppointment("Bearer " + apiToken, new BodyCancelAppointment(appointmentId, reason)).enqueue(new DefaultCallback<ResponseEntity<PetLoverAppointmentResponse>>(emitter) {
             @Override
             public void onResponse(@NonNull Call<ResponseEntity<PetLoverAppointmentResponse>> call, @NonNull Response<ResponseEntity<PetLoverAppointmentResponse>> response) {

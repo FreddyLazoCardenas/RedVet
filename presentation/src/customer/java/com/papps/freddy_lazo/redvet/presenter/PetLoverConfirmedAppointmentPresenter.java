@@ -46,7 +46,7 @@ public class PetLoverConfirmedAppointmentPresenter implements Presenter<PetLover
     }
 
     public void validate() {
-        if (validateReason(view.getReason()))
+        if (!validateReason(view.getReason()))
             return;
         sendRequest();
     }

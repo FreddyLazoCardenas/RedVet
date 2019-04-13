@@ -114,12 +114,12 @@ public class CancelAppointmentActivity extends BaseActivity implements CancelOth
 
     @Override
     public void successRequest() {
-
+finish();
     }
 
     @Override
     public void success() {
-
+        finish();
     }
 
     @Override

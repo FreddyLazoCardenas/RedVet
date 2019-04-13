@@ -1,5 +1,6 @@
 package com.papps.freddy_lazo.data.repository;
 
+import com.papps.freddy_lazo.data.entity.RedVetAppointmentEntity;
 import com.papps.freddy_lazo.data.entity.mapper.AppointmentDoctorMapper;
 import com.papps.freddy_lazo.data.entity.mapper.AppointmentPetLoverMapper;
 import com.papps.freddy_lazo.data.entity.mapper.AppointmentPhotoMapper;
@@ -75,8 +76,8 @@ public class UtilsDataRepository implements UtilsRepository {
     }
 
     @Override
-    public Observable<PetLoverAppointment> petLoverCancelAppointment(String apiToken, int appointmentId, String reason) {
-        return mRestApi.petLoverCancelAppointment(apiToken, appointmentId, reason).map(AppointmentPetLoverMapper::transform);
+    public Observable<RedVetAppointment> petLoverCancelAppointment(String apiToken, int appointmentId, String reason) {
+        return mRestApi.petLoverCancelAppointment(apiToken, appointmentId, reason).map(RedVetAppointmentMapper::transform);
     }
 
     @Override

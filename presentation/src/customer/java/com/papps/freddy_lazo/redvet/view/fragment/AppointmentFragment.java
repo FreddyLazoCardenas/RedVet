@@ -123,7 +123,39 @@ public class AppointmentFragment extends BaseFragment implements AppointmentFrag
 
     @Override
     public void data(List<CreateAppointmentObjectModel> data) {
-        Log.d("dasd", "dasd");
+        adapter.setFiltering(isDataFiltering(data));
+        if (adapter.isFiltering())
+            adapter.bindFilterList(getAppointmentStatus(data));
+        else
+            adapter.bindList(null);
+    }
+
+    private boolean isDataFiltering(List<CreateAppointmentObjectModel> data) {
+        for (CreateAppointmentObjectModel model : data) {
+            if (model.isSelected()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private String getAppointmentStatus(List<CreateAppointmentObjectModel> data) {
+        String appointmentName = "";
+        for (CreateAppointmentObjectModel model : data) {
+            if (model.isSelected()) {
+                appointmentName = model.getName();
+            }
+        }
+        switch (appointmentName) {
+            case "Pendientes":
+                return "pending";
+            case "Confirmadas":
+                return "confirmed";
+            case "Finalizadas":
+                return "finished";
+            default:
+                return "pending";
+        }
     }
 
     @Override

@@ -36,8 +36,10 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
 
     private final PetLoverModel petLoverModel;
     private List<PetLoverAppointmentModel> data = new ArrayList<>();
+    private List<PetLoverAppointmentModel> filterData = new ArrayList<>();
     private Context context;
     private onClickAdapter listener;
+    private boolean isFiltering;
 
     @Inject
     public AppointmentAdapter(PreferencesManager preferencesManager) {
@@ -59,20 +61,36 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
 
     @Override
     public int getItemCount() {
-        return data.size();
+        return isFiltering ? filterData.size() : data.size();
     }
 
     public void bindList(List<PetLoverAppointmentModel> data) {
-        if (data != null) {
+        if (data != null)
             this.data = data;
-            notifyDataSetChanged();
-        }
+        notifyDataSetChanged();
     }
 
     public void setView(BaseFragment fragment) {
         listener = (onClickAdapter) fragment;
     }
 
+    public void setFiltering(boolean isFiltering) {
+        this.isFiltering = isFiltering;
+    }
+
+    public boolean isFiltering() {
+        return isFiltering;
+    }
+
+    public void bindFilterList(String appointmentStatus) {
+        filterData.clear();
+        for(PetLoverAppointmentModel model : data){
+            if(model.getStatus().equals(appointmentStatus)){
+                filterData.add(model);
+            }
+        }
+        notifyDataSetChanged();
+    }
 
     class AppointmentViewHolder extends RecyclerView.ViewHolder {
 
@@ -91,11 +109,12 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
         }
 
         public void bind(int position) {
-            Calendar calendar = convertToDate(data.get(position).getDate());
+            PetLoverAppointmentModel bindData = isFiltering ? filterData.get(position) : data.get(position);
+            Calendar calendar = convertToDate(bindData.getDate());
             tvDate.setText(calendar.get(Calendar.DAY_OF_MONTH) + " \n" + getMonthForInt(calendar.get(Calendar.MONTH)));
-            tvTime.setText(data.get(position).getTime());
-            tvPetName.setText(getPetName(data.get(position).getPet_by_pet_lover_id()));
-            tvType.setText(data.get(position).getDoctor().getType());
+            tvTime.setText(bindData.getTime());
+            tvPetName.setText(getPetName(bindData.getPet_by_pet_lover_id()));
+            tvType.setText(bindData.getDoctor().getType());
         }
 
         private Calendar convertToDate(String txt) {
@@ -129,8 +148,8 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
         }
 
         @OnClick
-        public void itemClicked(){
-            listener.itemClicked(data.get(getAdapterPosition()));
+        public void itemClicked() {
+            listener.itemClicked(isFiltering ? filterData.get(getAdapterPosition()) : data.get(getAdapterPosition()));
         }
     }
 

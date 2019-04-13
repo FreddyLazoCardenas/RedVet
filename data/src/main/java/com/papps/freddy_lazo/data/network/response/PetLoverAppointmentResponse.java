@@ -2,6 +2,7 @@ package com.papps.freddy_lazo.data.network.response;
 
 import com.google.gson.annotations.SerializedName;
 import com.papps.freddy_lazo.data.entity.PetLoverAppointmentEntity;
+import com.papps.freddy_lazo.data.entity.RedVetAppointmentEntity;
 
 import java.util.List;
 
@@ -11,14 +12,14 @@ public class PetLoverAppointmentResponse {
     private List<PetLoverAppointmentEntity> appointmentList;
 
     @SerializedName("appointment")
-    private PetLoverAppointmentEntity appointment;
+    private RedVetAppointmentEntity appointment;
 
 
     public List<PetLoverAppointmentEntity> getAppointmentList() {
         return appointmentList;
     }
 
-    public PetLoverAppointmentEntity getAppointment() {
+    public RedVetAppointmentEntity getAppointment() {
         return appointment;
     }
 }
