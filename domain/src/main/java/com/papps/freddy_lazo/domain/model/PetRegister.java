@@ -9,6 +9,7 @@ public class PetRegister {
     private String birthday;
     private String breed;
     private String photo;
+    private String photo_url;
 
     public PetRegister(int id, int pet_id, String doctor_id, String name, String birthday, String breed, String photo) {
         this.id = id;
@@ -72,5 +73,9 @@ public class PetRegister {
 
     public String getPhoto() {
         return photo;
+    }
+
+    public String getPhoto_url() {
+        return photo_url;
     }
 }

@@ -97,7 +97,7 @@ public class PendingAppointmentDialog extends BaseDialogFragment implements Pend
     }
 
     private void fillUi() {
-        displayPhoto(pet.getPhoto(), imgPet);
+        displayPhoto(pet.getPhoto_url(), imgPet);
         displayPhoto(model.getDoctor().getPhoto_url(), imgOwner);
         tvPet.setText(pet.getName());
         tvPetBirthday.setText(pet.getBirthday());

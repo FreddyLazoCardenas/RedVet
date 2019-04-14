@@ -9,6 +9,9 @@
     <string name="text_not_match">Contraseñas no coinciden</string>
     <string name="add_pet_data">Agregar datos de tu mascota</string>
     <string name="add_pets_data">Agregar datos de mascotas</string>
+    <string name="add_pet_mame">Agregar nombre de mascota</string>
+    <string name="add_pet_birthday">Agregar fecha de nacimiento de mascota</string>
+    <string name="add_pet_breed">Agregar raza de mascota</string>
     <string name="add_date_data">Agregar fecha de cita</string>
     <string name="add_message_data">Agregar un mensaje</string>
     <string name="add_time_data">Agregar hora de cita</string>

@@ -9,6 +9,6 @@ public class PetLoverRegisterModelMapper {
     }
 
     public static PetLoverRegisterModel transform(PetRegister petRegister) {
-        return new PetLoverRegisterModel(petRegister.getId(),petRegister.getPet_id(),petRegister.getDoctor_id(),petRegister.getName(),petRegister.getBirthday(),petRegister.getBreed(),petRegister.getPhoto());
+        return new PetLoverRegisterModel(petRegister.getId(),petRegister.getPet_id(),petRegister.getDoctor_id(),petRegister.getName(),petRegister.getBirthday(),petRegister.getBreed(),petRegister.getPhoto(),petRegister.getPhoto_url());
     }
 }

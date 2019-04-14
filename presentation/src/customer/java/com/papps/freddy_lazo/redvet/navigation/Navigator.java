@@ -11,6 +11,7 @@ import android.support.v4.content.FileProvider;
 
 import com.papps.freddy_lazo.redvet.BuildConfig;
 import com.papps.freddy_lazo.redvet.R;
+import com.papps.freddy_lazo.redvet.model.PetLoverRegisterModel;
 import com.papps.freddy_lazo.redvet.view.activity.AppointmentActivity;
 import com.papps.freddy_lazo.redvet.view.activity.BaseActivity;
 import com.papps.freddy_lazo.redvet.view.activity.CancelAppointmentActivity;
@@ -25,6 +26,8 @@ import com.papps.freddy_lazo.redvet.view.dialogFragment.ConfirmedAppointmentDial
 import com.papps.freddy_lazo.redvet.view.dialogFragment.DoctorDialog;
 import com.papps.freddy_lazo.redvet.view.dialogFragment.FinishedAppointmentDialog;
 import com.papps.freddy_lazo.redvet.view.dialogFragment.PendingAppointmentDialog;
+import com.papps.freddy_lazo.redvet.view.dialogFragment.PetEditDialog;
+import com.papps.freddy_lazo.redvet.view.dialogFragment.PetListDialog;
 import com.papps.freddy_lazo.redvet.view.dialogFragment.PhotoListDialog;
 import com.papps.freddy_lazo.redvet.view.dialogFragment.SuccessAppointmentDialog;
 import com.papps.freddy_lazo.redvet.view.fragment.AppointmentFragment;
@@ -68,12 +71,12 @@ public class Navigator extends BaseNavigator {
         activity.startActivity(HomeActivity.getCallingIntent(activity));
     }
 
-    public void navigateToAppointmentActivity(BaseActivity activity , String doctorModel) {
-        activity.startActivity(AppointmentActivity.getCallingIntent(activity ,doctorModel));
+    public void navigateToAppointmentActivity(BaseActivity activity, String doctorModel) {
+        activity.startActivity(AppointmentActivity.getCallingIntent(activity, doctorModel));
     }
 
-    public void navigateToChatActivity(BaseActivity activity , int appointmentId){
-        activity.startActivity(ChatActivity.getCallingIntent(activity ,appointmentId));
+    public void navigateToChatActivity(BaseActivity activity, int appointmentId) {
+        activity.startActivity(ChatActivity.getCallingIntent(activity, appointmentId));
     }
 
 
@@ -161,21 +164,25 @@ public class Navigator extends BaseNavigator {
         dialogTransaction(activity, CameraDialog.newInstance(listener));
     }
 
-    public void navigateDoctorDetailFragment(FragmentManager fm, String name , String doctor) {
+    public void showPetListDialog(BaseActivity activity, PetListDialog.OnClickListener listener) {
+        dialogTransaction(activity, PetListDialog.newInstance(listener));
+    }
+
+    public void navigateDoctorDetailFragment(FragmentManager fm, String name, String doctor) {
         DoctorDialog.newInstance(doctor).show(fm, name);
     }
 
-    public void navigateSuccessAppointment(BaseActivity activity ){
+    public void navigateSuccessAppointment(BaseActivity activity) {
         dialogTransaction(activity, SuccessAppointmentDialog.newInstance());
     }
 
     // Pickers
 
-    public void navigateToDatePicker(BaseActivity activity){
+    public void navigateToDatePicker(BaseActivity activity) {
         DatePickerFragment.newInstance(activity).show(activity.getSupportFragmentManager(), "datePicker");
     }
 
-    public void navigateToTimePicker(BaseActivity activity){
+    public void navigateToTimePicker(BaseActivity activity) {
         TimePickerFragment.newInstance(activity).show(activity.getSupportFragmentManager(), "timePicker");
     }
 
@@ -183,8 +190,8 @@ public class Navigator extends BaseNavigator {
         dialogTransaction(activity, PendingAppointmentDialog.newInstance(data));
     }
 
-    public void navigateConfirmedDialog(BaseActivity activity, String data,ConfirmedAppointmentDialog.RequestInterface listener) {
-        dialogTransaction(activity, ConfirmedAppointmentDialog.newInstance(data,listener));
+    public void navigateConfirmedDialog(BaseActivity activity, String data, ConfirmedAppointmentDialog.RequestInterface listener) {
+        dialogTransaction(activity, ConfirmedAppointmentDialog.newInstance(data, listener));
     }
 
     public void navigateFinishedDialog(BaseActivity activity, String data) {
@@ -192,7 +199,7 @@ public class Navigator extends BaseNavigator {
     }
 
     public void navigateCancelAppointmentActivity(BaseDialogFragment fragment, int id, int requestCode) {
-        fragment.startActivityForResult(CancelAppointmentActivity.getCallingIntent(fragment, id),requestCode);
+        fragment.startActivityForResult(CancelAppointmentActivity.getCallingIntent(fragment, id), requestCode);
     }
 
     public void navigateOtherReasonCancelAppointment(BaseActivity activity, int id, CancelOtherReasonAppointmentDialog.SuccessRequest listener) {
@@ -203,7 +210,11 @@ public class Navigator extends BaseNavigator {
         dialogTransaction(activity, PhotoListDialog.newInstance(listener));
     }
 
-    public void navigatePhoneCall(BaseActivity activity, String phone){
+    public void navigatePhoneCall(BaseActivity activity, String phone) {
         activity.startActivity(new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", phone, null)));
+    }
+
+    public void navigateEditPet(BaseActivity activity, PetLoverRegisterModel model, PetEditDialog.PetEditInterface listener) {
+        dialogTransaction(activity, PetEditDialog.newInstance(model, listener));
     }
 }

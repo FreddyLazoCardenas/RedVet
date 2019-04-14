@@ -11,8 +11,11 @@ import android.widget.TextView;
 
 import com.papps.freddy_lazo.redvet.GlideApp;
 import com.papps.freddy_lazo.redvet.R;
+import com.papps.freddy_lazo.redvet.model.AppointmentPhotoModel;
 import com.papps.freddy_lazo.redvet.model.PetLoverRegisterModel;
 import com.papps.freddy_lazo.redvet.model.PetModel;
+import com.papps.freddy_lazo.redvet.view.fragment.BaseFragment;
+import com.papps.freddy_lazo.redvet.view.fragment.ProfileFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +31,7 @@ public class PetProfileAdapter extends RecyclerView.Adapter<PetProfileAdapter.Pe
 
     private List<PetLoverRegisterModel> data = new ArrayList<>();
     private Context context;
+    private onClickAdapter listener;
 
     @Inject
     PetProfileAdapter() {
@@ -57,6 +61,31 @@ public class PetProfileAdapter extends RecyclerView.Adapter<PetProfileAdapter.Pe
         this.data = data;
     }
 
+    public void setListener(BaseFragment baseFragment) {
+        listener = (onClickAdapter) baseFragment;
+    }
+
+    public void removePet(PetLoverRegisterModel petLoverRegisterModel) {
+        int index = data.indexOf(petLoverRegisterModel);
+        data.remove(petLoverRegisterModel);
+        notifyItemRemoved(index);
+    }
+
+    public void updateData(PetLoverRegisterModel model) {
+        int index = getItemIndex(model);
+        data.set(index, model);
+        notifyItemChanged(index);
+    }
+
+    private int getItemIndex(PetLoverRegisterModel model){
+        for (PetLoverRegisterModel petLoverRegisterModel : data){
+            if(petLoverRegisterModel.getId() == model.getId()){
+                return data.indexOf(petLoverRegisterModel);
+            }
+        }
+        return -1;
+    }
+
 
     class PetViewHolder extends RecyclerView.ViewHolder {
 
@@ -79,7 +108,7 @@ public class PetProfileAdapter extends RecyclerView.Adapter<PetProfileAdapter.Pe
             tvPetName.setText(data.get(position).getName());
             tvPetBirthday.setText(data.get(position).getBirthday());
             tvBreed.setText(data.get(position).getBreed());
-            loadImage(data.get(position).getPhoto());
+            loadImage(data.get(position).getPhoto_url());
         }
 
         private void loadImage(String photo) {
@@ -93,8 +122,12 @@ public class PetProfileAdapter extends RecyclerView.Adapter<PetProfileAdapter.Pe
 
         @OnClick
         void itemClick() {
-
+            listener.itemClicked(data.get(getAdapterPosition()));
         }
+    }
+
+    public interface onClickAdapter {
+        void itemClicked(PetLoverRegisterModel data);
     }
 
 }

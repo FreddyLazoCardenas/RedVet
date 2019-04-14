@@ -104,4 +104,8 @@ public class BaseActivity extends AppCompatActivity implements BaseView {
     protected void showMessage(BaseActivity activity, String message) {
         Toast.makeText(activity, message, Toast.LENGTH_LONG).show();
     }
+
+    public Navigator getNavigator() {
+        return navigator;
+    }
 }

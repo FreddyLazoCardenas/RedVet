@@ -23,7 +23,7 @@ public class PetMapper {
     }
 
     public static Pet transform(PetEntity entity){
-        return new Pet(entity.getId(),entity.getDoctor_id(),entity.getPet_id(),entity.getName(),entity.getBirthday(),entity.getBreed(),entity.getPhoto());
+        return new Pet(entity.getId(),entity.getDoctor_id(),entity.getPet_id(),entity.getName(),entity.getBirthday(),entity.getBreed(),entity.getPhoto(),entity.getPhoto_url());
     }
 
 }

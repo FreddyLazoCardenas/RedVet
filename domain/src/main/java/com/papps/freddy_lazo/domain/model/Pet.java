@@ -9,8 +9,9 @@ public class Pet {
     private String birthday;
     private String breed;
     private String photo;
+    private String photo_url;
 
-    public Pet(int id, String doctor_id, int pet_id, String name, String birthday, String breed, String photo) {
+    public Pet(int id, String doctor_id, int pet_id, String name, String birthday, String breed, String photo,String photo_url) {
         this.id = id;
         this.doctor_id = doctor_id;
         this.pet_id = pet_id;
@@ -18,6 +19,7 @@ public class Pet {
         this.birthday = birthday;
         this.breed = breed;
         this.photo = photo;
+        this.photo_url = photo_url;
     }
 
     public int getId() {
@@ -46,5 +48,9 @@ public class Pet {
 
     public String getPhoto() {
         return photo;
+    }
+
+    public String getPhoto_url() {
+        return photo_url;
     }
 }

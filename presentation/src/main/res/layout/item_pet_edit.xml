@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorWhite"
+    android:padding="10dp">
+
+    <EditText
+        android:id="@+id/pet_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Nombre"
+        android:inputType="text"
+        android:theme="@style/MyEditTextTheme"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/img_add"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/pet_birthday"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:drawableStart="@drawable/ic_birthday"
+        android:drawablePadding="10dp"
+        android:hint="Fecha de nacimiento"
+        android:inputType="text"
+        android:theme="@style/MyEditTextTheme"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/pet_name"
+        app:layout_constraintTop_toBottomOf="@+id/pet_name" />
+
+    <EditText
+        android:id="@+id/pet_breed"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Raza"
+        android:inputType="text"
+        android:theme="@style/MyEditTextTheme"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/pet_name"
+        app:layout_constraintTop_toBottomOf="@+id/pet_birthday" />
+
+    <com.github.siyamed.shapeimageview.CircularImageView
+        android:id="@+id/img_add"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginEnd="10dp"
+        android:src="@drawable/ic_add_pet"
+        app:layout_constraintBottom_toBottomOf="@id/pet_breed"
+        app:layout_constraintEnd_toStartOf="@id/pet_name"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/pet_name" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_add"
+        app:layout_constraintBottom_toBottomOf="@+id/img_add"
+        app:layout_constraintEnd_toEndOf="@id/img_add"
+        app:layout_constraintStart_toStartOf="@id/img_add"
+        app:layout_constraintTop_toBottomOf="@+id/img_add" />
+
+
+    <Button
+        android:id="@+id/btn_pet_save"
+        style="@style/Widget.RetVet.ButtonSecondary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="5dp"
+        android:text="Guardar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/pet_breed" />
+</android.support.constraint.ConstraintLayout>
+

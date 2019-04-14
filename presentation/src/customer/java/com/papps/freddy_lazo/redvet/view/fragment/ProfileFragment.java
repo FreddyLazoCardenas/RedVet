@@ -38,6 +38,8 @@ import com.papps.freddy_lazo.redvet.view.activity.HomeActivity;
 import com.papps.freddy_lazo.redvet.view.adapter.PetProfileAdapter;
 import com.papps.freddy_lazo.redvet.view.dialogFragment.CameraDialog;
 import com.papps.freddy_lazo.redvet.interfaces.ProfileFragmentView;
+import com.papps.freddy_lazo.redvet.view.dialogFragment.PetEditDialog;
+import com.papps.freddy_lazo.redvet.view.dialogFragment.PetListDialog;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
@@ -51,7 +53,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class ProfileFragment extends BaseFragment implements CameraDialog.OnClickListener, ProfileFragmentView {
+public class ProfileFragment extends BaseFragment implements CameraDialog.OnClickListener, ProfileFragmentView, PetProfileAdapter.onClickAdapter, PetListDialog.OnClickListener, PetEditDialog.PetEditInterface {
 
 
     private static final String PICTURE_FILE_NAME = "profileComplete.jpg";
@@ -96,7 +98,7 @@ public class ProfileFragment extends BaseFragment implements CameraDialog.OnClic
 
     private HomeActivity activity;
     private PetLoverModel petLoverModel;
-    private PetRegister petLoverRegisterModel;
+    private PetLoverRegisterModel petLoverRegisterModel;
     private File pictureFile;
     private File croppedProfileFile;
     private File croppedPetFile;
@@ -136,6 +138,7 @@ public class ProfileFragment extends BaseFragment implements CameraDialog.OnClic
     private void setUpRv() {
         rvPets.setLayoutManager(new LinearLayoutManager(activity));
         rvPets.setAdapter(adapter);
+        adapter.setListener(this);
         adapter.bindList(petLoverModel.getPetList());
     }
 
@@ -521,4 +524,24 @@ public class ProfileFragment extends BaseFragment implements CameraDialog.OnClic
     }
 
 
+    @Override
+    public void itemClicked(PetLoverRegisterModel data) {
+        petLoverRegisterModel = data;
+        navigator.showPetListDialog(activity, this);
+    }
+
+    @Override
+    public void delete() {
+        adapter.removePet(petLoverRegisterModel);
+    }
+
+    @Override
+    public void edit() {
+        navigator.navigateEditPet(activity,petLoverRegisterModel,this);
+    }
+
+    @Override
+    public void updatePet(PetLoverRegisterModel model) {
+        adapter.updateData(model);
+    }
 }

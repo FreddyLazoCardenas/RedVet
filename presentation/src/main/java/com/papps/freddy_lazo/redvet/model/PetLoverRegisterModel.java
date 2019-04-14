@@ -10,9 +10,10 @@ public class PetLoverRegisterModel {
     private String birthday;
     private String breed;
     private String photo;
+    private String photo_url;
     private boolean isSelected;
 
-    public PetLoverRegisterModel(int id, int pet_id, String doctor_id, String name, String birthday, String breed, String photo) {
+    public PetLoverRegisterModel(int id, int pet_id, String doctor_id, String name, String birthday, String breed, String photo,String photo_url) {
         this.id = id;
         this.pet_id = pet_id;
         this.doctor_id = doctor_id;
@@ -20,6 +21,7 @@ public class PetLoverRegisterModel {
         this.birthday = birthday;
         this.breed = breed;
         this.photo = photo;
+        this.photo_url = photo_url;
     }
 
     public int getId() {
@@ -56,5 +58,29 @@ public class PetLoverRegisterModel {
 
     public void setSelected(boolean selected) {
         isSelected = selected;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setBirthday(String birthday) {
+        this.birthday = birthday;
+    }
+
+    public void setBreed(String breed) {
+        this.breed = breed;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
+    }
+
+    public String getPhoto_url() {
+        return photo_url;
+    }
+
+    public void setPhoto_url(String photo_url) {
+        this.photo_url = photo_url;
     }
 }

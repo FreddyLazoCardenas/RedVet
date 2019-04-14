@@ -6,7 +6,7 @@
     android:layout_height="100dp"
     android:background="@color/colorLightGray">
 
-    <ImageView
+    <com.github.siyamed.shapeimageview.CircularImageView
         android:id="@+id/img_pet"
         android:layout_width="80dp"
         android:layout_height="80dp"

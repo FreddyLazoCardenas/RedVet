@@ -27,7 +27,7 @@ public class PetModelMapper {
     }
 
     public static PetLoverRegisterModel transform(Pet pet) {
-        return new PetLoverRegisterModel(pet.getId(),pet.getPet_id(),pet.getDoctor_id(),pet.getName(),pet.getBirthday(),pet.getBreed(),pet.getPhoto());
+        return new PetLoverRegisterModel(pet.getId(),pet.getPet_id(),pet.getDoctor_id(),pet.getName(),pet.getBirthday(),pet.getBreed(),pet.getPhoto(),pet.getPhoto_url());
     }
 
 }

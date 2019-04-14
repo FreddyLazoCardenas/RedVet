@@ -98,7 +98,7 @@ public class ConfirmedAppointmentDialog extends BaseDialogFragment {
 
 
     private void fillUi() {
-        displayPhoto(pet.getPhoto(), imgPet);
+        displayPhoto(pet.getPhoto_url(), imgPet);
         displayPhoto(model.getDoctor().getPhoto_url(), imgOwner);
         tvPet.setText(pet.getName());
         tvPetBirthday.setText(pet.getBirthday());
