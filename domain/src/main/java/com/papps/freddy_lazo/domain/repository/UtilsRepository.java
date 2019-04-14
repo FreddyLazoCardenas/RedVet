@@ -22,7 +22,7 @@ public interface UtilsRepository {
 
     Observable<Void> forgotPassword(String email);
 
-    Observable<List<News>> petLoverNews(String query);
+    Observable<List<News>> petLoverNews(String query, String apiToken);
 
     Observable<RedVetAppointment> doctorConfirmAppointment(String apiToken, int appointmentId);
 

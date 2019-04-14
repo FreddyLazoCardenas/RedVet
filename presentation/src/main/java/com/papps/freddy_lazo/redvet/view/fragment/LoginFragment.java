@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.papps.freddy_lazo.redvet.BuildConfig;
 import com.papps.freddy_lazo.redvet.R;
 import com.papps.freddy_lazo.redvet.interfaces.LoginFragmentView;
@@ -145,6 +146,11 @@ public class LoginFragment extends BaseFragment implements LoginFragmentView {
     @Override
     public void loginDoctorResponse(DoctorModel transform) {
 
+    }
+
+    @Override
+    public String getFcmToken() {
+        return FirebaseInstanceId.getInstance().getToken();
     }
 
     @Override

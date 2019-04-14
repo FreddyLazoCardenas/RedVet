@@ -11,6 +11,7 @@ import com.papps.freddy_lazo.redvet.interfaces.PetLoverConfirmedView;
 import com.papps.freddy_lazo.redvet.internal.dagger.component.DaggerCancelAppointmentComponent;
 import com.papps.freddy_lazo.redvet.model.PetLoverModel;
 import com.papps.freddy_lazo.redvet.presenter.PetLoverConfirmedAppointmentPresenter;
+import com.papps.freddy_lazo.redvet.view.dialogFragment.BaseDialogFragment;
 import com.papps.freddy_lazo.redvet.view.dialogFragment.CancelOtherReasonAppointmentDialog;
 
 import javax.inject.Inject;
@@ -34,8 +35,8 @@ public class CancelAppointmentActivity extends BaseActivity implements CancelOth
     private String reason;
     private int appointmentId;
 
-    public static Intent getCallingIntent(BaseActivity activity, int appointmentId) {
-        return new Intent(activity, CancelAppointmentActivity.class).putExtra("id", appointmentId);
+    public static Intent getCallingIntent(BaseDialogFragment fragment, int appointmentId) {
+        return new Intent(fragment.getContext(), CancelAppointmentActivity.class).putExtra("id", appointmentId);
     }
 
     @Override
@@ -112,14 +113,16 @@ public class CancelAppointmentActivity extends BaseActivity implements CancelOth
 
     }
 
+
     @Override
     public void successRequest() {
-finish();
+        setResult(RESULT_OK);
+        finish();
     }
 
     @Override
     public void success() {
-        finish();
+        successRequest();
     }
 
     @Override

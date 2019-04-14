@@ -9,6 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.papps.freddy_lazo.redvet.R;
+import com.papps.freddy_lazo.redvet.view.activity.AppointmentActivity;
+import com.papps.freddy_lazo.redvet.view.activity.BaseActivity;
 
 import butterknife.OnClick;
 
@@ -27,5 +29,10 @@ public class SuccessAppointmentDialog extends BaseDialogFragment {
     @OnClick(R.id.btn_appointment)
     public void btnOk() {
         dismiss();
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
     }
 }

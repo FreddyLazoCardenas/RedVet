@@ -12,6 +12,7 @@ public class PetLoverNews extends UseCase {
 
     private final UtilsRepository repository;
     private String path;
+    private String apiToken;
 
     @Inject
     PetLoverNews(UtilsRepository repository, ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
@@ -19,12 +20,13 @@ public class PetLoverNews extends UseCase {
         this.repository = repository;
     }
 
-    public void bindParams(String path){
+    public void bindParams(String path,String apiToken){
         this.path = path;
+        this.apiToken = apiToken;
     }
 
     @Override
     protected Observable buildUseCaseObservable() {
-        return repository.petLoverNews(path);
+        return repository.petLoverNews(path,apiToken);
     }
 }

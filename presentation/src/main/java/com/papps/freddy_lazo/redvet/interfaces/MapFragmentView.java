@@ -7,4 +7,6 @@ import java.util.List;
 public interface MapFragmentView extends BaseView {
 
     void getListData(List<DoctorModel> data);
+
+    String getApiToken();
 }

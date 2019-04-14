@@ -32,13 +32,13 @@ public class UserDataRepository implements UserRepository {
     }
 
     @Override
-    public Observable<Doctor> loginDoctor(String email, String password) {
-        return mRestApi.loginDoctor(email, password).map(DoctorLoginMapper::transform);
+    public Observable<Doctor> loginDoctor(String email, String password, String fcm_token) {
+        return mRestApi.loginDoctor(email, password,fcm_token).map(DoctorLoginMapper::transform);
     }
 
     @Override
-    public Observable<PetLover> loginPetLover(String email, String password) {
-        return mRestApi.loginPetLover(email, password).map(PetLoverLoginMapper::transform);
+    public Observable<PetLover> loginPetLover(String email, String password, String fcm_token) {
+        return mRestApi.loginPetLover(email, password,fcm_token).map(PetLoverLoginMapper::transform);
     }
 
     @Override
@@ -52,8 +52,8 @@ public class UserDataRepository implements UserRepository {
     }
 
     @Override
-    public Observable<List<Doctor>> searchDoctors(ArrayList<String> type, ArrayList<Integer> services, ArrayList<Integer> pets, String text) {
-        return mRestApi.searchDoctors(type, services, pets, text).map(SearchDoctorsMapper::transform);
+    public Observable<List<Doctor>> searchDoctors(ArrayList<String> type, ArrayList<Integer> services, ArrayList<Integer> pets, String text,String apiToken) {
+        return mRestApi.searchDoctors(type, services, pets, text,apiToken).map(SearchDoctorsMapper::transform);
     }
 
     @Override

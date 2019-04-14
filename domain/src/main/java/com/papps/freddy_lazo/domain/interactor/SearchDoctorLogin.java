@@ -17,6 +17,7 @@ public class SearchDoctorLogin extends UseCase {
     private ArrayList<Integer> services;
     private ArrayList<Integer> pets;
     private String text;
+    private String apiToken;
 
     @Inject
     SearchDoctorLogin(UserRepository repository, ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
@@ -24,15 +25,16 @@ public class SearchDoctorLogin extends UseCase {
         this.repository = repository;
     }
 
-    public void bindParams(ArrayList<String> type, ArrayList<Integer> services, ArrayList<Integer> pets, String text) {
+    public void bindParams(ArrayList<String> type, ArrayList<Integer> services, ArrayList<Integer> pets, String text, String apiToken) {
         this.type = type;
         this.services = services;
         this.pets = pets;
         this.text = text;
+        this.apiToken = apiToken;
     }
 
     @Override
     protected Observable buildUseCaseObservable() {
-        return repository.searchDoctors(type, services, pets, text);
+        return repository.searchDoctors(type, services, pets, text, apiToken);
     }
 }

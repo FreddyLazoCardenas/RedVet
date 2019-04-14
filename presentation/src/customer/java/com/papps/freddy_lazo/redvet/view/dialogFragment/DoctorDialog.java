@@ -8,9 +8,12 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.papps.freddy_lazo.redvet.GlideApp;
 import com.papps.freddy_lazo.redvet.R;
 import com.papps.freddy_lazo.redvet.internal.dagger.component.DaggerDoctorDialogFragmentComponent;
 import com.papps.freddy_lazo.redvet.internal.dagger.component.DaggerLoginFragmentComponent;
@@ -27,6 +30,8 @@ public class DoctorDialog extends BaseDialogFragment {
     TextView name;
     @BindView(R.id.txt_job)
     TextView job;
+    @BindView(R.id.img_register)
+    ImageView ivDoctor;
 
     public static final String DOCTOR_DATA = "doctor_model";
 
@@ -69,9 +74,22 @@ public class DoctorDialog extends BaseDialogFragment {
         }
     }
 
+
+    public void displayPhoto(boolean refresh) {
+        GlideApp.with(activity)
+                .asBitmap()
+                .dontAnimate()
+                .diskCacheStrategy(refresh ? DiskCacheStrategy.NONE : DiskCacheStrategy.ALL)
+                .skipMemoryCache(refresh)
+                .placeholder(R.drawable.ic_placeholder)
+                .load(doctorModel.getPhoto_url())
+                .into(ivDoctor);
+    }
+
     private void fillUi() {
         name.setText(doctorModel.getFirst_name());
         job.setText(setJobText());
+        displayPhoto(true);
     }
 
     private int setJobText() {

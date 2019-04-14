@@ -9,4 +9,5 @@ public interface NewsFragmentView extends BaseView {
 
     void listData(List<NewsModel> data);
 
+    String getApiToken();
 }

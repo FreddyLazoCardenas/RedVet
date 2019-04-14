@@ -37,7 +37,7 @@ public class MapFragmentPresenter implements Presenter<MapFragmentView> {
     }
 
     public void getDoctors(){
-        searchDoctorLogin.bindParams(new ArrayList<>(), new ArrayList<>(),new ArrayList<>() , "");
+        searchDoctorLogin.bindParams(new ArrayList<>(), new ArrayList<>(),new ArrayList<>() , "",view.getApiToken());
         searchDoctorLogin.execute(new SearchDoctorObservable());
     }
 

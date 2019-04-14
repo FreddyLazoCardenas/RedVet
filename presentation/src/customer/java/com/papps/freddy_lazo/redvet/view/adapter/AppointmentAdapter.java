@@ -92,6 +92,36 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
         notifyDataSetChanged();
     }
 
+    public void removeAppointment(int id) {
+        int index = getItemIndex(id);
+        data.remove(index);
+        if (isFiltering) {
+            int filteringIndex = getFilterItemIndex(id);
+            filterData.remove(filteringIndex);
+            notifyItemRemoved(filteringIndex);
+        } else {
+            notifyItemRemoved(index);
+        }
+    }
+
+    private int getFilterItemIndex(int id) {
+        for (PetLoverAppointmentModel model : filterData) {
+            if (model.getId() == id) {
+                return filterData.indexOf(model);
+            }
+        }
+        return 0;
+    }
+
+    private int getItemIndex(int id) {
+        for (PetLoverAppointmentModel model : data) {
+            if (model.getId() == id) {
+                return data.indexOf(model);
+            }
+        }
+        return 0;
+    }
+
     class AppointmentViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.txt_date)

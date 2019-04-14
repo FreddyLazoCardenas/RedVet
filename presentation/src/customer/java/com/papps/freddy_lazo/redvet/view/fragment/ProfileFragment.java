@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -445,7 +446,15 @@ public class ProfileFragment extends BaseFragment implements CameraDialog.OnClic
             byte[] b = baos.toByteArray();
             return Base64.encodeToString(b, Base64.NO_WRAP);
         } else
-            return (petLoverModel.getPhoto_url() != null && !petLoverModel.getPhoto_url().equals("")) ? null : petLoverModel.getPhoto_url();
+            return (petLoverModel.getPhoto_url() != null ? getBase64FromImageView() : null);
+    }
+
+    private String getBase64FromImageView() {
+        Bitmap bitmap = ((BitmapDrawable) imgProfile.getDrawable()).getBitmap();
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos); //bm is the bitmap object
+        byte[] b = baos.toByteArray();
+        return Base64.encodeToString(b, Base64.NO_WRAP);
     }
 
     @Override

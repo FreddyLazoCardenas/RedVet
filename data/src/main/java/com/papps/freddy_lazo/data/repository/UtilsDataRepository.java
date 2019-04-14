@@ -51,8 +51,8 @@ public class UtilsDataRepository implements UtilsRepository {
     }
 
     @Override
-    public Observable<List<News>> petLoverNews(String path) {
-        return mRestApi.petLoverNews(path).map(NewsMapper::transform);
+    public Observable<List<News>> petLoverNews(String path, String apiToken) {
+        return mRestApi.petLoverNews(path, apiToken).map(NewsMapper::transform);
     }
 
     @Override
@@ -102,12 +102,12 @@ public class UtilsDataRepository implements UtilsRepository {
 
     @Override
     public Observable<RedVetMessage> sendPetLoverMessage(String auth, int appointmentId, String message) {
-        return mRestApi.sendPetLoverMessage(auth, appointmentId,message).map(RedVetMessageMapper::transform);
+        return mRestApi.sendPetLoverMessage(auth, appointmentId, message).map(RedVetMessageMapper::transform);
     }
 
     @Override
     public Observable<RedVetMessage> sendDoctorMessage(String auth, int appointmentId, String message) {
-        return mRestApi.sendDoctorMessage(auth, appointmentId,message).map(RedVetMessageMapper::transform);
+        return mRestApi.sendDoctorMessage(auth, appointmentId, message).map(RedVetMessageMapper::transform);
     }
 
 

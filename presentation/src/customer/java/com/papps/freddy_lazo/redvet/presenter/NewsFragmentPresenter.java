@@ -36,7 +36,7 @@ public class NewsFragmentPresenter implements Presenter<NewsFragmentView> {
     }
 
     public void getNews() {
-        petLoverNews.bindParams("pet-lover");
+        petLoverNews.bindParams("pet-lover",view.getApiToken());
         petLoverNews.execute(new NewsObservable());
     }
 

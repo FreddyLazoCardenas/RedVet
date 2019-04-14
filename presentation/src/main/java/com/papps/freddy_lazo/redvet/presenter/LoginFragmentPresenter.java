@@ -31,7 +31,7 @@ public class LoginFragmentPresenter implements Presenter<LoginFragmentView> {
     }
 
     private void login() {
-        doctorLogin.bindParams(view.getEmail(), view.getPassword(), view.getFlavor());
+        doctorLogin.bindParams(view.getEmail(), view.getPassword(), view.getFlavor(),view.getFcmToken());
         if (view.getFlavor().equals("doctor"))
             doctorLogin.execute(new DoctorLoginObservable());
         else

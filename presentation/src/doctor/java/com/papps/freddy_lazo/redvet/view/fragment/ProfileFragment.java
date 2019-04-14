@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -344,7 +345,7 @@ public class ProfileFragment extends BaseFragment implements CameraDialog.OnClic
     private void startCrop(Uri source) {
         croppedProfileFile = new File(getContext().getFilesDir(), PICTURE_CROPPED_FILE_NAME);
         CropImage.activity(source)
-                .setCropShape(Build.VERSION.SDK_INT >= Build.VERSION_CODES.P ? CropImageView.CropShape.RECTANGLE : CropImageView.CropShape.OVAL)                .setFixAspectRatio(true)
+                .setCropShape(Build.VERSION.SDK_INT >= Build.VERSION_CODES.P ? CropImageView.CropShape.RECTANGLE : CropImageView.CropShape.OVAL).setFixAspectRatio(true)
                 .setBorderCornerThickness(0)
                 .setOutputCompressFormat(Bitmap.CompressFormat.JPEG)
                 .setOutputCompressQuality(50)
@@ -675,15 +676,22 @@ public class ProfileFragment extends BaseFragment implements CameraDialog.OnClic
 
     @Override
     public String getProfileBase64Image() {
-        if (croppedProfileFile != null) {
+        if (croppedProfileFile != null) {   // se ha seteado foto
             Bitmap bm = BitmapFactory.decodeFile(croppedProfileFile.getPath());
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             bm.compress(Bitmap.CompressFormat.JPEG, 100, baos); //bm is the bitmap object
             byte[] b = baos.toByteArray();
-            Log.d("profileImage",Base64.encodeToString(b, Base64.NO_WRAP));
             return Base64.encodeToString(b, Base64.NO_WRAP);
-        } else
-            return (doctorModel.getPhoto_url() != null && doctorModel.getPhoto_url().equals("")) ? null : doctorModel.getPhoto_url();
+        } else      // no haya foto  o  no se haya seteado una
+            return (doctorModel.getPhoto_url() != null ? getBase64FromImageView() : null);
+    }
+
+    private String getBase64FromImageView() {
+        Bitmap bitmap = ((BitmapDrawable) imgProfile.getDrawable()).getBitmap();
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos); //bm is the bitmap object
+        byte[] b = baos.toByteArray();
+        return Base64.encodeToString(b, Base64.NO_WRAP);
     }
 
     @Override

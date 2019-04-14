@@ -7,4 +7,7 @@ import java.util.List;
 public interface NewsFragmentView extends BaseView {
 
     void listData(List<NewsModel> transform);
+
+    String getApiToken();
+
 }

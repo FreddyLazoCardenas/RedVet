@@ -21,6 +21,7 @@ import com.papps.freddy_lazo.redvet.presenter.AppointmentFragmentPresenter;
 import com.papps.freddy_lazo.redvet.view.activity.HomeActivity;
 import com.papps.freddy_lazo.redvet.view.adapter.AppointmentAdapter;
 import com.papps.freddy_lazo.redvet.view.adapter.AppointmentHeaderAdapter;
+import com.papps.freddy_lazo.redvet.view.dialogFragment.ConfirmedAppointmentDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +30,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 
-public class AppointmentFragment extends BaseFragment implements AppointmentFragmentView, AppointmentHeaderAdapter.onClickAdapter, AppointmentAdapter.onClickAdapter {
+public class AppointmentFragment extends BaseFragment implements AppointmentFragmentView, AppointmentHeaderAdapter.onClickAdapter, AppointmentAdapter.onClickAdapter, ConfirmedAppointmentDialog.RequestInterface {
 
 
     @BindView(R.id.rv_appointments)
@@ -169,9 +170,14 @@ public class AppointmentFragment extends BaseFragment implements AppointmentFrag
                 navigator.navigateFinishedDialog(activity, data.toString());
                 break;
             case "confirmed":
-                navigator.navigateConfirmedDialog(activity, data.toString());
+                navigator.navigateConfirmedDialog(activity, data.toString(), this);
                 break;
 
         }
+    }
+
+    @Override
+    public void successCancelRequest(int id) {
+        adapter.removeAppointment(id);
     }
 }

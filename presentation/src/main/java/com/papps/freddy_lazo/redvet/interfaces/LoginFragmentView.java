@@ -21,4 +21,6 @@ public interface LoginFragmentView extends BaseView {
     void successLogin();
 
     void loginDoctorResponse(DoctorModel transform);
+
+    String getFcmToken();
 }

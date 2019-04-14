@@ -21,9 +21,9 @@ import io.reactivex.Observable;
 
 public interface RestApi {
 
-    Observable<DoctorEntity> loginDoctor(String email, String password);
+    Observable<DoctorEntity> loginDoctor(String email, String password, String fcm_token);
 
-    Observable<PetLoverEntity> loginPetLover(String email, String password);
+    Observable<PetLoverEntity> loginPetLover(String email, String password, String fcm_token);
 
     Observable<PetLoverEntity> updatePetLover(String apiToken, String email, String password, String firstName, String lastName, String dni, String address, String phone, String photo, String fcmToken, List<PetRegister> pets);
 
@@ -37,9 +37,9 @@ public interface RestApi {
 
     Observable<Void> forgotPassword(String email);
 
-    Observable<List<NewsEntity>> petLoverNews(String path);
+    Observable<List<NewsEntity>> petLoverNews(String path, String apiToken);
 
-    Observable<List<DoctorEntity>> searchDoctors(ArrayList<String> type, ArrayList<Integer> services, ArrayList<Integer> pets, String text);
+    Observable<List<DoctorEntity>> searchDoctors(ArrayList<String> type, ArrayList<Integer> services, ArrayList<Integer> pets, String text, String apiToken);
 
     Observable<Void> signUpPetLover(String email, String password, String firstName, String lastName, String dni, String address, String phone, String photo, String fcmToken, List<PetRegister> pets);
 

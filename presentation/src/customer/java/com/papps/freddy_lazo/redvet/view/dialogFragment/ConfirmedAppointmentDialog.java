@@ -1,5 +1,6 @@
 package com.papps.freddy_lazo.redvet.view.dialogFragment;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -55,12 +56,16 @@ public class ConfirmedAppointmentDialog extends BaseDialogFragment {
     private PetLoverRegisterModel pet;
     private PetLoverModel petLoverModel;
     private HomeActivity activity;
+    private RequestInterface listener;
+
+    private static final int CANCEL_REQUEST_CODE = 1;
 
 
-    public static ConfirmedAppointmentDialog newInstance(String data) {
+    public static ConfirmedAppointmentDialog newInstance(String data, RequestInterface listener) {
         Bundle args = new Bundle();
         args.putString("data", data);
         ConfirmedAppointmentDialog dialog = new ConfirmedAppointmentDialog();
+        dialog.listener = listener;
         dialog.setCancelable(false);
         dialog.setArguments(args);
         return dialog;
@@ -118,8 +123,7 @@ public class ConfirmedAppointmentDialog extends BaseDialogFragment {
 
     @OnClick(R.id.btn_cancel)
     public void btnCancelAppointment() {
-        navigator.navigateCancelAppointmentActivity(activity, model.getId());
-        dismiss();
+        navigator.navigateCancelAppointmentActivity(this, model.getId(),CANCEL_REQUEST_CODE);
     }
 
     @OnClick(R.id.img_dismiss)
@@ -147,7 +151,15 @@ public class ConfirmedAppointmentDialog extends BaseDialogFragment {
             }
         }
     }
-
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == CANCEL_REQUEST_CODE) {
+            if (resultCode == Activity.RESULT_OK) {
+                listener.successCancelRequest(model.getId());
+                dismiss();
+            }
+        }
+    }
     @OnClick(R.id.chat)
     public void chatClicked() {
         navigator.navigateToChatActivity(activity, model.getId());
@@ -155,5 +167,9 @@ public class ConfirmedAppointmentDialog extends BaseDialogFragment {
     @OnClick(R.id.phone)
     public void phoneClicked() {
         navigator.navigatePhoneCall(activity, model.getDoctor().getPhone());
+    }
+
+    public interface RequestInterface {
+        void successCancelRequest(int id);
     }
 }

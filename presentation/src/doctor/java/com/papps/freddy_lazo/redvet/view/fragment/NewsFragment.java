@@ -105,4 +105,9 @@ public class NewsFragment extends BaseFragment implements NewsFragmentView {
     public void listData(List<NewsModel> data) {
         adapter.bindList(data);
     }
+
+    @Override
+    public String getApiToken() {
+        return activity.getModel().getApi_token();
+    }
 }

@@ -207,6 +207,11 @@ public class MapFragment extends BaseFragment implements OnMapReadyCallback, Map
         setDoctorMarkers(data);
     }
 
+    @Override
+    public String getApiToken() {
+        return activity.getModel().getApi_token();
+    }
+
     private void setDoctorMarkers(List<DoctorModel> data) {
         for (DoctorModel doctorModel : data) {
             LatLng latLng = new LatLng(Double.valueOf(doctorModel.getLatitude()), Double.valueOf(doctorModel.getLongitude()));

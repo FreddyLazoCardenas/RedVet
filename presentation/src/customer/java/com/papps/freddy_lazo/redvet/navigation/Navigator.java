@@ -18,6 +18,7 @@ import com.papps.freddy_lazo.redvet.view.activity.ChatActivity;
 import com.papps.freddy_lazo.redvet.view.activity.HomeActivity;
 import com.papps.freddy_lazo.redvet.view.activity.LoginActivity;
 import com.papps.freddy_lazo.redvet.view.activity.RegisterActivity;
+import com.papps.freddy_lazo.redvet.view.dialogFragment.BaseDialogFragment;
 import com.papps.freddy_lazo.redvet.view.dialogFragment.CameraDialog;
 import com.papps.freddy_lazo.redvet.view.dialogFragment.CancelOtherReasonAppointmentDialog;
 import com.papps.freddy_lazo.redvet.view.dialogFragment.ConfirmedAppointmentDialog;
@@ -164,8 +165,8 @@ public class Navigator extends BaseNavigator {
         DoctorDialog.newInstance(doctor).show(fm, name);
     }
 
-    public void navigateSuccessAppointment(FragmentManager fm, String name){
-        SuccessAppointmentDialog.newInstance().show(fm, name);
+    public void navigateSuccessAppointment(BaseActivity activity ){
+        dialogTransaction(activity, SuccessAppointmentDialog.newInstance());
     }
 
     // Pickers
@@ -182,16 +183,16 @@ public class Navigator extends BaseNavigator {
         dialogTransaction(activity, PendingAppointmentDialog.newInstance(data));
     }
 
-    public void navigateConfirmedDialog(BaseActivity activity, String data) {
-        dialogTransaction(activity, ConfirmedAppointmentDialog.newInstance(data));
+    public void navigateConfirmedDialog(BaseActivity activity, String data,ConfirmedAppointmentDialog.RequestInterface listener) {
+        dialogTransaction(activity, ConfirmedAppointmentDialog.newInstance(data,listener));
     }
 
     public void navigateFinishedDialog(BaseActivity activity, String data) {
         dialogTransaction(activity, FinishedAppointmentDialog.newInstance(data));
     }
 
-    public void navigateCancelAppointmentActivity(HomeActivity activity, int id) {
-        activity.startActivity(CancelAppointmentActivity.getCallingIntent(activity, id));
+    public void navigateCancelAppointmentActivity(BaseDialogFragment fragment, int id, int requestCode) {
+        fragment.startActivityForResult(CancelAppointmentActivity.getCallingIntent(fragment, id),requestCode);
     }
 
     public void navigateOtherReasonCancelAppointment(BaseActivity activity, int id, CancelOtherReasonAppointmentDialog.SuccessRequest listener) {

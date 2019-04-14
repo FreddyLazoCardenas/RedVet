@@ -9,10 +9,13 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.papps.freddy_lazo.data.sharedPreferences.PreferencesManager;
+import com.papps.freddy_lazo.redvet.GlideApp;
 import com.papps.freddy_lazo.redvet.R;
 import com.papps.freddy_lazo.redvet.interfaces.AppointmentActivityView;
 import com.papps.freddy_lazo.redvet.internal.dagger.component.DaggerAppointmentComponent;
@@ -60,7 +63,8 @@ public class AppointmentActivity extends BaseActivity implements DatePickerDialo
     PreferencesManager preferencesManager;
     @Inject
     AppointmentActivityPresenter presenter;
-
+    @BindView(R.id.img_register)
+    ImageView ivDoctor;
 
     private DoctorModel doctorModel;
     private PetLoverModel petLoverModel;
@@ -109,6 +113,18 @@ public class AppointmentActivity extends BaseActivity implements DatePickerDialo
         data.add(new CreateAppointmentObjectModel("Consulta"));
         adapter.bindList(data);
         petsAdapter.bindList(petLoverModel.getPetList());
+        displayPhoto(true);
+    }
+
+    public void displayPhoto(boolean refresh) {
+        GlideApp.with(this)
+                .asBitmap()
+                .dontAnimate()
+                .diskCacheStrategy(refresh ? DiskCacheStrategy.NONE : DiskCacheStrategy.ALL)
+                .skipMemoryCache(refresh)
+                .placeholder(R.drawable.ic_placeholder)
+                .load(doctorModel.getPhoto_url())
+                .into(ivDoctor);
     }
 
     private void getDoctorData() {
@@ -166,8 +182,7 @@ public class AppointmentActivity extends BaseActivity implements DatePickerDialo
 
     @Override
     public void successResponse(CreateAppointmentModel data) {
-        navigator.navigateSuccessAppointment(getSupportFragmentManager(), this.getLocalClassName());
-        //finish();
+        navigator.navigateSuccessAppointment(this);
     }
 
     @Override

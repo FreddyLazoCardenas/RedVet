@@ -59,8 +59,8 @@ public class RestApiImpl implements RestApi {
     }
 
     @Override
-    public Observable<DoctorEntity> loginDoctor(String email, String password) {
-        return Observable.create(emitter -> restService.login(new BodyLogin(email, password, "asdd", "android")).enqueue(new DefaultCallback<ResponseEntity<LoginResponse>>(emitter) {
+    public Observable<DoctorEntity> loginDoctor(String email, String password, String fcm_token) {
+        return Observable.create(emitter -> restService.login(new BodyLogin(email, password, fcm_token, "android")).enqueue(new DefaultCallback<ResponseEntity<LoginResponse>>(emitter) {
             @Override
             public void onResponse(@NonNull Call<ResponseEntity<LoginResponse>> call, @NonNull Response<ResponseEntity<LoginResponse>> response) {
                 super.onResponse(call, response);
@@ -74,8 +74,8 @@ public class RestApiImpl implements RestApi {
     }
 
     @Override
-    public Observable<PetLoverEntity> loginPetLover(String email, String password) {
-        return Observable.create(emitter -> restService.login(new BodyLogin(email, password, "asdd", "android")).enqueue(new DefaultCallback<ResponseEntity<LoginResponse>>(emitter) {
+    public Observable<PetLoverEntity> loginPetLover(String email, String password , String fcm_token) {
+        return Observable.create(emitter -> restService.login(new BodyLogin(email, password, fcm_token, "android")).enqueue(new DefaultCallback<ResponseEntity<LoginResponse>>(emitter) {
             @Override
             public void onResponse(@NonNull Call<ResponseEntity<LoginResponse>> call, @NonNull Response<ResponseEntity<LoginResponse>> response) {
                 super.onResponse(call, response);
@@ -178,8 +178,8 @@ public class RestApiImpl implements RestApi {
     }
 
     @Override
-    public Observable<List<NewsEntity>> petLoverNews(String path) {
-        return Observable.create(emitter -> restService.petLoverNews("Bearer wuGnaJzXVEFFJkfo", path).enqueue(new DefaultCallback<ResponseEntity<NewsResponse>>(emitter) {
+    public Observable<List<NewsEntity>> petLoverNews(String path, String apiToken) {
+        return Observable.create(emitter -> restService.petLoverNews("Bearer " + apiToken, path).enqueue(new DefaultCallback<ResponseEntity<NewsResponse>>(emitter) {
             @Override
             public void onResponse(@NonNull Call<ResponseEntity<NewsResponse>> call, @NonNull Response<ResponseEntity<NewsResponse>> response) {
                 super.onResponse(call, response);
@@ -193,8 +193,8 @@ public class RestApiImpl implements RestApi {
     }
 
     @Override
-    public Observable<List<DoctorEntity>> searchDoctors(ArrayList<String> type, ArrayList<Integer> services, ArrayList<Integer> pets, String text) {
-        return Observable.create(emitter -> restService.petLoverSearch(new BodySearchDoctors(type, services, pets, text), "Bearer wuGnaJzXVEFFJkfo").enqueue(new DefaultCallback<ResponseEntity<DoctorSearchResponse>>(emitter) {
+    public Observable<List<DoctorEntity>> searchDoctors(ArrayList<String> type, ArrayList<Integer> services, ArrayList<Integer> pets, String text,String apiToken) {
+        return Observable.create(emitter -> restService.petLoverSearch(new BodySearchDoctors(type, services, pets, text), "Bearer " + apiToken).enqueue(new DefaultCallback<ResponseEntity<DoctorSearchResponse>>(emitter) {
             @Override
             public void onResponse(@NonNull Call<ResponseEntity<DoctorSearchResponse>> call, @NonNull Response<ResponseEntity<DoctorSearchResponse>> response) {
                 super.onResponse(call, response);
