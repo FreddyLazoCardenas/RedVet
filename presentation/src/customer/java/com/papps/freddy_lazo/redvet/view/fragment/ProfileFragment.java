@@ -32,9 +32,11 @@ import com.papps.freddy_lazo.redvet.R;
 import com.papps.freddy_lazo.redvet.internal.dagger.component.DaggerProfileFragmentComponent;
 import com.papps.freddy_lazo.redvet.model.PetLoverModel;
 import com.papps.freddy_lazo.redvet.model.PetLoverRegisterModel;
+import com.papps.freddy_lazo.redvet.model.PetRedVetModel;
 import com.papps.freddy_lazo.redvet.presenter.ProfileFragmentPresenter;
 import com.papps.freddy_lazo.redvet.presenter.RegisterFragmentPresenter;
 import com.papps.freddy_lazo.redvet.view.activity.HomeActivity;
+import com.papps.freddy_lazo.redvet.view.adapter.AddPetAdapter;
 import com.papps.freddy_lazo.redvet.view.adapter.PetProfileAdapter;
 import com.papps.freddy_lazo.redvet.view.dialogFragment.CameraDialog;
 import com.papps.freddy_lazo.redvet.interfaces.ProfileFragmentView;
@@ -53,7 +55,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class ProfileFragment extends BaseFragment implements CameraDialog.OnClickListener, ProfileFragmentView, PetProfileAdapter.onClickAdapter, PetListDialog.OnClickListener, PetEditDialog.PetEditInterface {
+public class ProfileFragment extends BaseFragment implements CameraDialog.OnClickListener, ProfileFragmentView, PetProfileAdapter.onClickAdapter, PetListDialog.OnClickListener, PetEditDialog.PetEditInterface  ,AddPetAdapter.onClickAdapter{
 
 
     private static final String PICTURE_FILE_NAME = "profileComplete.jpg";
@@ -68,6 +70,8 @@ public class ProfileFragment extends BaseFragment implements CameraDialog.OnClic
     ProfileFragmentPresenter presenter;
     @Inject
     PetProfileAdapter adapter;
+    @Inject
+    AddPetAdapter petAdapter;
 
     @BindView(R.id.et_name)
     EditText etName;
@@ -94,6 +98,8 @@ public class ProfileFragment extends BaseFragment implements CameraDialog.OnClic
     TextInputLayout tilLastName;
     @BindView(R.id.rv_pet)
     RecyclerView rvPets;
+    @BindView(R.id.rv_red_vet_pet)
+    RecyclerView rvRedVetPets;
 
 
     private HomeActivity activity;
@@ -116,7 +122,15 @@ public class ProfileFragment extends BaseFragment implements CameraDialog.OnClic
     @Override
     public void initUI() {
         presenter.setView(this);
+        initPetAdapter();
+        presenter.getPets();
         getUserData();
+    }
+
+    private void initPetAdapter() {
+        rvRedVetPets.setLayoutManager(new LinearLayoutManager(activity,LinearLayoutManager.HORIZONTAL,false));
+        rvRedVetPets.setAdapter(petAdapter);
+        petAdapter.setView(this);
     }
 
     private void getUserData() {
@@ -424,11 +438,16 @@ public class ProfileFragment extends BaseFragment implements CameraDialog.OnClic
     }
 
     @Override
+    public void successRequest(List<PetRedVetModel> data) {
+        petAdapter.bindList(data);
+    }
+
+    @Override
     public void savePetData() {
         // petLoverRegisterModel = new PetRegister(1, getPetName(), getPetBirthday(), getPetBreed(), getPetBase64Image());
     }
 
-  /*  @Override
+    @Override
     public String getPetBase64Image() {
         if (croppedPetFile != null) {
             Bitmap bm = BitmapFactory.decodeFile(croppedPetFile.getAbsolutePath());
@@ -437,8 +456,8 @@ public class ProfileFragment extends BaseFragment implements CameraDialog.OnClic
             byte[] b = baos.toByteArray();
             return Base64.encodeToString(b, Base64.DEFAULT);
         } else
-            return "";
-    }*/
+            return null;
+    }
 
     @Override
     public String getProfileBase64Image() {
@@ -543,5 +562,15 @@ public class ProfileFragment extends BaseFragment implements CameraDialog.OnClic
     @Override
     public void updatePet(PetLoverRegisterModel model) {
         adapter.updateData(model);
+    }
+
+    @Override
+    public void data(List<PetRedVetModel> data) {
+
+    }
+
+    @OnClick(R.id.btn_pet_save)
+    public void addPetData(){
+      presenter.addPetInfo();
     }
 }

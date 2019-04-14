@@ -158,6 +158,7 @@ public class PetEditDialog extends BaseDialogFragment implements CameraDialog.On
         model.setBirthday(getPetBirthday());
         model.setBreed(getPetBreed());
         model.setPhoto(getPetBase64Image());
+        model.setPhoto_url(croppedProfileFile != null ? croppedProfileFile.getAbsolutePath() : null);
     }
 
     private boolean validatePetBreed(String petName) {

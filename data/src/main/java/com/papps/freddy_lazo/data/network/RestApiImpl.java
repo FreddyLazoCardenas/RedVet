@@ -10,6 +10,7 @@ import com.papps.freddy_lazo.data.entity.CreateAppointmentEntity;
 import com.papps.freddy_lazo.data.entity.DoctorEntity;
 import com.papps.freddy_lazo.data.entity.NewsEntity;
 import com.papps.freddy_lazo.data.entity.PetLoverEntity;
+import com.papps.freddy_lazo.data.entity.PetRedVetEntity;
 import com.papps.freddy_lazo.data.entity.RedVetAppointmentEntity;
 import com.papps.freddy_lazo.data.entity.RedVetMessageEntity;
 import com.papps.freddy_lazo.data.entity.ResponseEntity;
@@ -34,6 +35,7 @@ import com.papps.freddy_lazo.data.network.response.CreateAppointmentResponse;
 import com.papps.freddy_lazo.data.network.response.DoctorSearchResponse;
 import com.papps.freddy_lazo.data.network.response.LoginResponse;
 import com.papps.freddy_lazo.data.network.response.NewsResponse;
+import com.papps.freddy_lazo.data.network.response.PetsRedVetResponse;
 import com.papps.freddy_lazo.data.network.response.ServicesResponse;
 import com.papps.freddy_lazo.domain.model.PetRegister;
 import com.papps.freddy_lazo.domain.model.ScheduleDoctorRegister;
@@ -74,7 +76,7 @@ public class RestApiImpl implements RestApi {
     }
 
     @Override
-    public Observable<PetLoverEntity> loginPetLover(String email, String password , String fcm_token) {
+    public Observable<PetLoverEntity> loginPetLover(String email, String password, String fcm_token) {
         return Observable.create(emitter -> restService.login(new BodyLogin(email, password, fcm_token, "android")).enqueue(new DefaultCallback<ResponseEntity<LoginResponse>>(emitter) {
             @Override
             public void onResponse(@NonNull Call<ResponseEntity<LoginResponse>> call, @NonNull Response<ResponseEntity<LoginResponse>> response) {
@@ -193,7 +195,7 @@ public class RestApiImpl implements RestApi {
     }
 
     @Override
-    public Observable<List<DoctorEntity>> searchDoctors(ArrayList<String> type, ArrayList<Integer> services, ArrayList<Integer> pets, String text,String apiToken) {
+    public Observable<List<DoctorEntity>> searchDoctors(ArrayList<String> type, ArrayList<Integer> services, ArrayList<Integer> pets, String text, String apiToken) {
         return Observable.create(emitter -> restService.petLoverSearch(new BodySearchDoctors(type, services, pets, text), "Bearer " + apiToken).enqueue(new DefaultCallback<ResponseEntity<DoctorSearchResponse>>(emitter) {
             @Override
             public void onResponse(@NonNull Call<ResponseEntity<DoctorSearchResponse>> call, @NonNull Response<ResponseEntity<DoctorSearchResponse>> response) {
@@ -393,6 +395,21 @@ public class RestApiImpl implements RestApi {
                 ResponseEntity<ChatRedVetResponse> body = response.body();
                 if (body != null && body.getMessage() == null) {
                     emitter.onNext(body.getData().getMessage());
+                    emitter.onComplete();
+                }
+            }
+        }));
+    }
+
+    @Override
+    public Observable<List<PetRedVetEntity>> getPets() {
+        return Observable.create(emitter -> restService.getPets().enqueue(new DefaultCallback<ResponseEntity<PetsRedVetResponse>>(emitter) {
+            @Override
+            public void onResponse(@NonNull Call<ResponseEntity<PetsRedVetResponse>> call, @NonNull Response<ResponseEntity<PetsRedVetResponse>> response) {
+                super.onResponse(call, response);
+                ResponseEntity<PetsRedVetResponse> body = response.body();
+                if (body != null && body.getMessage() == null) {
+                    emitter.onNext(body.getData().getPets());
                     emitter.onComplete();
                 }
             }

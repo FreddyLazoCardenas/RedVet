@@ -3,11 +3,13 @@ package com.papps.freddy_lazo.data.repository;
 import com.papps.freddy_lazo.data.entity.mapper.CreateAppointmentMapper;
 import com.papps.freddy_lazo.data.entity.mapper.DoctorLoginMapper;
 import com.papps.freddy_lazo.data.entity.mapper.PetLoverLoginMapper;
+import com.papps.freddy_lazo.data.entity.mapper.PetRedVetMapper;
 import com.papps.freddy_lazo.data.entity.mapper.SearchDoctorsMapper;
 import com.papps.freddy_lazo.data.network.RestApi;
 import com.papps.freddy_lazo.domain.model.CreateAppointment;
 import com.papps.freddy_lazo.domain.model.Doctor;
 import com.papps.freddy_lazo.domain.model.PetLover;
+import com.papps.freddy_lazo.domain.model.PetRedVet;
 import com.papps.freddy_lazo.domain.model.PetRegister;
 import com.papps.freddy_lazo.domain.model.ScheduleDoctorRegister;
 import com.papps.freddy_lazo.domain.model.ServicesDoctorRegister;
@@ -69,5 +71,10 @@ public class UserDataRepository implements UserRepository {
     @Override
     public Observable<CreateAppointment> createAppointment(String apiToken, int doctor_id, int pet_by_pet_lover_id, String date, String time, String type, String reason) {
         return mRestApi.createAppointment(apiToken, doctor_id, pet_by_pet_lover_id, date, time, type, reason).map(CreateAppointmentMapper::transform);
+    }
+
+    @Override
+    public Observable<List<PetRedVet>> getPets() {
+        return mRestApi.getPets().map(PetRedVetMapper::transform);
     }
 }

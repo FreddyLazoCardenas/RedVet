@@ -244,7 +244,7 @@
             app:layout_constraintStart_toStartOf="@id/start_guideline"
             app:layout_constraintTop_toBottomOf="@+id/txt_pet_title" />
 
-        <TextView
+      <!--  <TextView
             android:id="@+id/add_pet"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -266,7 +266,121 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/add_pet"
             app:layout_constraintTop_toTopOf="@+id/add_pet"
-            android:src="@drawable/ic_big_add" />
+            android:src="@drawable/ic_big_add" />-->
+
+
+        <TextView
+            android:id="@+id/txt_add_pet_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:drawableStart="@drawable/ic_pet_feet"
+            android:drawablePadding="20dp"
+            android:text="Agregar mascotas"
+            android:textColor="@color/colorPink"
+            android:textSize="20sp"
+            android:theme="@style/MyEditTextTheme"
+            app:layout_constraintEnd_toEndOf="@id/end_guideline"
+            app:layout_constraintStart_toStartOf="@id/start_guideline"
+            app:layout_constraintTop_toBottomOf="@+id/rv_pet" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_red_vet_pet"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            app:layout_constraintEnd_toEndOf="@id/end_guideline"
+            app:layout_constraintStart_toStartOf="@id/start_guideline"
+            app:layout_constraintTop_toBottomOf="@+id/txt_add_pet_title" />
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/card_add_pet"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            app:cardBackgroundColor="@color/colorLightGray"
+            app:cardCornerRadius="6dp"
+            app:cardElevation="8dp"
+            app:layout_constraintEnd_toEndOf="@id/end_guideline"
+            app:layout_constraintStart_toStartOf="@id/start_guideline"
+            app:layout_constraintTop_toBottomOf="@+id/rv_red_vet_pet">
+
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp">
+
+                <EditText
+                    android:id="@+id/pet_name"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:hint="Nombre"
+                    android:inputType="text"
+                    android:theme="@style/MyEditTextTheme"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/img_add"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <EditText
+                    android:id="@+id/pet_birthday"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/ic_birthday"
+                    android:drawablePadding="10dp"
+                    android:hint="Fecha de nacimiento"
+                    android:inputType="text"
+                    android:theme="@style/MyEditTextTheme"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@id/pet_name"
+                    app:layout_constraintTop_toBottomOf="@+id/pet_name" />
+
+                <EditText
+                    android:id="@+id/pet_breed"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:hint="Raza"
+                    android:inputType="text"
+                    android:theme="@style/MyEditTextTheme"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@id/pet_name"
+                    app:layout_constraintTop_toBottomOf="@+id/pet_birthday" />
+
+                <com.github.siyamed.shapeimageview.CircularImageView
+                    android:id="@+id/img_add"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_marginEnd="10dp"
+                    android:src="@drawable/ic_add_pet"
+                    app:layout_constraintBottom_toBottomOf="@id/pet_breed"
+                    app:layout_constraintEnd_toStartOf="@id/pet_name"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/pet_name" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_add"
+                    app:layout_constraintBottom_toBottomOf="@+id/img_add"
+                    app:layout_constraintEnd_toEndOf="@id/img_add"
+                    app:layout_constraintStart_toStartOf="@id/img_add"
+                    app:layout_constraintTop_toBottomOf="@+id/img_add" />
+
+
+                <Button
+                    android:id="@+id/btn_pet_save"
+                    style="@style/Widget.RetVet.ButtonSecondary"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="5dp"
+                    android:text="Guardar"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/pet_breed" />
+            </android.support.constraint.ConstraintLayout>
+
+
+        </android.support.v7.widget.CardView>
 
         <Button
             android:id="@+id/btn_update"
@@ -279,7 +393,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@id/end_guideline"
             app:layout_constraintStart_toStartOf="@id/start_guideline"
-            app:layout_constraintTop_toBottomOf="@+id/add_pet" />
+            app:layout_constraintTop_toBottomOf="@+id/card_add_pet" />
 
 
         <android.support.constraint.Guideline

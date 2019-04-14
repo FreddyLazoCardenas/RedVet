@@ -21,6 +21,7 @@ import com.papps.freddy_lazo.data.network.response.CreateAppointmentResponse;
 import com.papps.freddy_lazo.data.network.response.DoctorSearchResponse;
 import com.papps.freddy_lazo.data.network.response.LoginResponse;
 import com.papps.freddy_lazo.data.network.response.NewsResponse;
+import com.papps.freddy_lazo.data.network.response.PetsRedVetResponse;
 import com.papps.freddy_lazo.data.network.response.ServicesResponse;
 
 import java.util.List;
@@ -100,5 +101,7 @@ public interface RestService {
     @POST("doctor/appointments/chat/send")
     Call<ResponseEntity<ChatRedVetResponse>> sendDoctorMessage(@Header("Authorization") String auth, @Body BodyRedVetChat bodyRedVetChat);
 
+    @GET("pets")
+    Call<ResponseEntity<PetsRedVetResponse>> getPets();
 
 }

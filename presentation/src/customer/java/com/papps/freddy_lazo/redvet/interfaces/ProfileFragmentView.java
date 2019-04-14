@@ -1,8 +1,10 @@
 package com.papps.freddy_lazo.redvet.interfaces;
 
 import com.papps.freddy_lazo.domain.model.PetRegister;
+import com.papps.freddy_lazo.redvet.model.PetRedVetModel;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public interface ProfileFragmentView extends BaseView {
 
@@ -87,4 +89,8 @@ public interface ProfileFragmentView extends BaseView {
     String getToken();
 
     void updateView();
+
+    void successRequest(List<PetRedVetModel> transform);
+
+    String getPetBase64Image();
 }

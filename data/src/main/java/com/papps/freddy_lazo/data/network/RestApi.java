@@ -7,9 +7,12 @@ import com.papps.freddy_lazo.data.entity.CreateAppointmentEntity;
 import com.papps.freddy_lazo.data.entity.DoctorEntity;
 import com.papps.freddy_lazo.data.entity.NewsEntity;
 import com.papps.freddy_lazo.data.entity.PetLoverEntity;
+import com.papps.freddy_lazo.data.entity.PetRedVetEntity;
 import com.papps.freddy_lazo.data.entity.RedVetAppointmentEntity;
 import com.papps.freddy_lazo.data.entity.RedVetMessageEntity;
+import com.papps.freddy_lazo.data.entity.ResponseEntity;
 import com.papps.freddy_lazo.data.entity.ServicesEntity;
+import com.papps.freddy_lazo.data.network.response.PetsRedVetResponse;
 import com.papps.freddy_lazo.domain.model.PetRegister;
 import com.papps.freddy_lazo.domain.model.ScheduleDoctorRegister;
 import com.papps.freddy_lazo.domain.model.ServicesDoctorRegister;
@@ -18,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Observable;
+import retrofit2.Call;
 
 public interface RestApi {
 
@@ -66,4 +70,7 @@ public interface RestApi {
     Observable<RedVetMessageEntity> sendPetLoverMessage(String auth, int appointmentId, String message);
 
     Observable<RedVetMessageEntity> sendDoctorMessage(String auth, int appointmentId, String message);
+
+    Observable<List<PetRedVetEntity>> getPets();
+
 }

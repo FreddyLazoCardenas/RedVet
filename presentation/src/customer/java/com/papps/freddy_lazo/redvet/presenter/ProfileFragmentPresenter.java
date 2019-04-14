@@ -8,13 +8,20 @@ import android.text.TextUtils;
 import com.papps.freddy_lazo.data.sharedPreferences.PreferencesManager;
 import com.papps.freddy_lazo.domain.interactor.DefaultObserver;
 import com.papps.freddy_lazo.domain.interactor.PetLoverUpdate;
+import com.papps.freddy_lazo.domain.interactor.PetRedVetUseCase;
 import com.papps.freddy_lazo.domain.model.PetLover;
+import com.papps.freddy_lazo.domain.model.PetRedVet;
 import com.papps.freddy_lazo.redvet.R;
 import com.papps.freddy_lazo.redvet.interfaces.ProfileFragmentView;
 import com.papps.freddy_lazo.redvet.model.PetLoverModel;
 import com.papps.freddy_lazo.redvet.model.mapper.PetLoverModelMapper;
+import com.papps.freddy_lazo.redvet.model.mapper.PetRedVetModelMapper;
+
+import java.util.List;
 
 import javax.inject.Inject;
+
+import io.reactivex.Observer;
 
 public class ProfileFragmentPresenter implements Presenter<ProfileFragmentView> {
 
@@ -22,10 +29,12 @@ public class ProfileFragmentPresenter implements Presenter<ProfileFragmentView> 
     private static final int PERMISSION_REQUEST_GALLERY_CODE = 5;
     private final PetLoverUpdate petLoverUpdate;
     private final PreferencesManager preferencesManager;
+    private final PetRedVetUseCase petRedVetUseCase;
     private ProfileFragmentView view;
 
     @Inject
-    public ProfileFragmentPresenter(PreferencesManager preferencesManager  , PetLoverUpdate petLoverUpdate) {
+    public ProfileFragmentPresenter(PreferencesManager preferencesManager, PetLoverUpdate petLoverUpdate, PetRedVetUseCase petRedVetUseCase) {
+        this.petRedVetUseCase = petRedVetUseCase;
         this.petLoverUpdate = petLoverUpdate;
         this.preferencesManager = preferencesManager;
     }
@@ -40,9 +49,14 @@ public class ProfileFragmentPresenter implements Presenter<ProfileFragmentView> 
 
     }
 
+    public void getPets() {
+        petRedVetUseCase.execute(new PetsObservable());
+    }
+
     @Override
     public void destroy() {
         petLoverUpdate.unsubscribe();
+        petRedVetUseCase.unsubscribe();
     }
 
     @Override
@@ -249,6 +263,10 @@ public class ProfileFragmentPresenter implements Presenter<ProfileFragmentView> 
         return true;
     }
 
+    public void addPetInfo() {
+
+    }
+
     private class PetLoverUpdateObservable extends DefaultObserver<PetLover> {
         @Override
         protected void onStart() {
@@ -274,6 +292,31 @@ public class ProfileFragmentPresenter implements Presenter<ProfileFragmentView> 
         public void onError(Throwable e) {
             super.onError(e);
             view.showErrorMessage(e.getMessage());
+        }
+    }
+
+    private class PetsObservable extends DefaultObserver<List<PetRedVet>> {
+
+        @Override
+        protected void onStart() {
+            super.onStart();
+        }
+
+        @Override
+        public void onNext(List<PetRedVet> petRedVets) {
+            super.onNext(petRedVets);
+            view.successRequest(PetRedVetModelMapper.transform(petRedVets));
+        }
+
+        @Override
+        public void onError(Throwable e) {
+            super.onError(e);
+            view.showErrorMessage(e.getMessage());
+        }
+
+        @Override
+        public void onComplete() {
+            super.onComplete();
         }
     }
 }
