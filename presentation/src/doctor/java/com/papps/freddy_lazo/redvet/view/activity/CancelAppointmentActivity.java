@@ -11,6 +11,7 @@ import com.papps.freddy_lazo.redvet.interfaces.ConfirmedAppointmentDialogView;
 import com.papps.freddy_lazo.redvet.internal.dagger.component.DaggerCancelAppointmentComponent;
 import com.papps.freddy_lazo.redvet.model.DoctorModel;
 import com.papps.freddy_lazo.redvet.presenter.DoctorConfirmedAppointmentPresenter;
+import com.papps.freddy_lazo.redvet.view.dialogFragment.BaseDialogFragment;
 import com.papps.freddy_lazo.redvet.view.dialogFragment.CancelOtherReasonAppointmentDialog;
 
 import javax.inject.Inject;
@@ -34,8 +35,8 @@ public class CancelAppointmentActivity extends BaseActivity implements Confirmed
     private String reason;
     private int appointmentId;
 
-    public static Intent getCallingIntent(BaseActivity activity, int appointmentId) {
-        return new Intent(activity, CancelAppointmentActivity.class).putExtra("id", appointmentId);
+    public static Intent getCallingIntent(BaseDialogFragment fragment, int appointmentId) {
+        return new Intent(fragment.getContext(), CancelAppointmentActivity.class).putExtra("id", appointmentId);
     }
 
     @Override
@@ -113,6 +114,7 @@ public class CancelAppointmentActivity extends BaseActivity implements Confirmed
 
     @Override
     public void successRequest() {
+        setResult(RESULT_OK);
         finish();
     }
 

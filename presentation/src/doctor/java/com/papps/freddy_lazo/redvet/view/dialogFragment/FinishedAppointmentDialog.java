@@ -1,5 +1,6 @@
 package com.papps.freddy_lazo.redvet.view.dialogFragment;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -16,9 +17,11 @@ import com.papps.freddy_lazo.data.entity.mapper.AppointmentPhotoMapper;
 import com.papps.freddy_lazo.data.sharedPreferences.PreferencesManager;
 import com.papps.freddy_lazo.redvet.GlideApp;
 import com.papps.freddy_lazo.redvet.R;
+import com.papps.freddy_lazo.redvet.interfaces.DoctorFinishedFragmentView;
 import com.papps.freddy_lazo.redvet.internal.dagger.component.DaggerFinishedAppointmentDialogComponent;
 import com.papps.freddy_lazo.redvet.model.AppointmentPhotoModel;
 import com.papps.freddy_lazo.redvet.model.DoctorAppointmentModel;
+import com.papps.freddy_lazo.redvet.presenter.DoctorFinishedFragmentPresenter;
 import com.papps.freddy_lazo.redvet.view.activity.HomeActivity;
 import com.papps.freddy_lazo.redvet.view.adapter.AppointmentPhotoAdapter;
 
@@ -27,7 +30,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class FinishedAppointmentDialog extends BaseDialogFragment implements AppointmentPhotoAdapter.onClickAdapter, PhotoListDialog.OnClickListener {
+public class FinishedAppointmentDialog extends BaseDialogFragment implements AppointmentPhotoAdapter.onClickAdapter, PhotoListDialog.OnClickListener, DoctorFinishedFragmentView {
 
     @BindView(R.id.img_pet)
     ImageView imgPet;
@@ -55,10 +58,13 @@ public class FinishedAppointmentDialog extends BaseDialogFragment implements App
     PreferencesManager preferencesManager;
     @Inject
     AppointmentPhotoAdapter adapter;
+    @Inject
+    DoctorFinishedFragmentPresenter presenter;
 
     private DoctorAppointmentModel model;
     private HomeActivity activity;
     private RequestInterface listener;
+    private int photoId;
 
 
     public static FinishedAppointmentDialog newInstance(String data, RequestInterface listener) {
@@ -133,14 +139,31 @@ public class FinishedAppointmentDialog extends BaseDialogFragment implements App
         dismiss();
     }
 
-    private void initUI() {
+    @Override
+    public void initUI() {
         if (getArguments() != null) {
             activity = (HomeActivity) getActivity();
+            presenter.setView(this);
             String data = getArguments().getString("data");
             model = DoctorAppointmentModel.toModel(data);
             setUpRv();
             fillUi();
         }
+    }
+
+    @Override
+    public Context context() {
+        return activity;
+    }
+
+    @Override
+    public void showErrorMessage(String message) {
+        showMessage(activity, message);
+    }
+
+    @Override
+    public void showErrorNetworkMessage(String message) {
+
     }
 
     private void setUpRv() {
@@ -151,12 +174,13 @@ public class FinishedAppointmentDialog extends BaseDialogFragment implements App
 
     @Override
     public void itemClicked(AppointmentPhotoModel data) {
+        photoId = data.getId();
         navigator.showPhotoListDialog(activity, this);
     }
 
     @Override
     public void delete() {
-
+        presenter.deletePhoto();
     }
 
     @Override
@@ -172,6 +196,26 @@ public class FinishedAppointmentDialog extends BaseDialogFragment implements App
     @OnClick(R.id.phone)
     public void phoneClicked() {
         navigator.navigatePhoneCall(activity, model.getPetLover().getPhone());
+    }
+
+    @Override
+    public String getApiToken() {
+        return activity.getModel().getApi_token();
+    }
+
+    @Override
+    public int getAppointmentId() {
+        return model.getId();
+    }
+
+    @Override
+    public int getPhotoId() {
+        return photoId;
+    }
+
+    @Override
+    public void successRequest() {
+        adapter.itemDeleted(getPhotoId());
     }
 
     public interface RequestInterface {

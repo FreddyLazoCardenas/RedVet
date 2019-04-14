@@ -7,11 +7,14 @@ import android.text.TextUtils;
 
 import com.papps.freddy_lazo.domain.interactor.DefaultObserver;
 import com.papps.freddy_lazo.domain.interactor.DoctorAppointmentFinish;
+import com.papps.freddy_lazo.domain.interactor.DoctorDeleteAppointmentPhoto;
 import com.papps.freddy_lazo.domain.interactor.DoctorUploadAppointmentPhoto;
 import com.papps.freddy_lazo.domain.model.AppointmentPhoto;
 import com.papps.freddy_lazo.domain.model.RedVetAppointment;
 import com.papps.freddy_lazo.redvet.R;
 import com.papps.freddy_lazo.redvet.interfaces.DiagnoseAppointmentView;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -25,12 +28,14 @@ public class DiagnoseAppointmentPresenter implements Presenter<DiagnoseAppointme
     public static final int PERMISSION_REQUEST_GALLERY_CODE = 5;
     private final DoctorAppointmentFinish doctorAppointmentFinish;
     private final DoctorUploadAppointmentPhoto doctorUploadAppointmentPhoto;
+    private final DoctorDeleteAppointmentPhoto deleteAppointmentPhoto;
     private DiagnoseAppointmentView view;
 
     @Inject
-    public DiagnoseAppointmentPresenter(DoctorAppointmentFinish doctorAppointmentFinish, DoctorUploadAppointmentPhoto doctorUploadAppointmentPhoto) {
+    public DiagnoseAppointmentPresenter(DoctorAppointmentFinish doctorAppointmentFinish, DoctorUploadAppointmentPhoto doctorUploadAppointmentPhoto, DoctorDeleteAppointmentPhoto deleteAppointmentPhoto) {
         this.doctorAppointmentFinish = doctorAppointmentFinish;
         this.doctorUploadAppointmentPhoto = doctorUploadAppointmentPhoto;
+        this.deleteAppointmentPhoto = deleteAppointmentPhoto;
     }
 
     @Override
@@ -60,6 +65,11 @@ public class DiagnoseAppointmentPresenter implements Presenter<DiagnoseAppointme
     public void uploadPhoto(String photo) {
         doctorUploadAppointmentPhoto.bindParams(view.getApiToken(), view.getAppointmentId(), photo);
         doctorUploadAppointmentPhoto.execute(new UploadPhotoObservable());
+    }
+
+    public void deletePhoto(){
+        deleteAppointmentPhoto.bindParams(view.getApiToken(),view.getAppointmentId(),view.getAppointmentPhotoId());
+        deleteAppointmentPhoto.execute(new DeletePhotoObservable());
     }
 
     private void sendRequest() {
@@ -103,6 +113,7 @@ public class DiagnoseAppointmentPresenter implements Presenter<DiagnoseAppointme
     public void destroy() {
         doctorAppointmentFinish.unsubscribe();
         doctorUploadAppointmentPhoto.unsubscribe();
+        deleteAppointmentPhoto.unsubscribe();
     }
 
     @Override
@@ -154,6 +165,26 @@ public class DiagnoseAppointmentPresenter implements Presenter<DiagnoseAppointme
         @Override
         public void onNext(AppointmentPhoto appointmentPhoto) {
             super.onNext(appointmentPhoto);
+        }
+    }
+
+    private class DeletePhotoObservable extends DefaultObserver<List<Void>> {
+
+        @Override
+        protected void onStart() {
+            super.onStart();
+        }
+
+        @Override
+        public void onError(Throwable e) {
+            super.onError(e);
+            view.showErrorMessage(e.getMessage());
+        }
+
+        @Override
+        public void onComplete() {
+            super.onComplete();
+            view.successDelete();
         }
     }
 }

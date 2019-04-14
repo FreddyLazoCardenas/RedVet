@@ -182,16 +182,21 @@ public class AppointmentFragment extends BaseFragment implements AppointmentFrag
 
     @Override
     public void successPendingRequest(int id) {
-        adapter.removeAppointment(id);
+        adapter.doctorPendingAppointment(id);
     }
 
     @Override
     public void successFinishedRequest(int id) {
-        adapter.removeAppointment(id);
+
     }
 
     @Override
     public void successConfirmedRequest(int id) {
+        adapter.doctorConfirmAppointment(id);
+    }
+
+    @Override
+    public void successCancelRequest(int id) {
         adapter.removeAppointment(id);
     }
 }

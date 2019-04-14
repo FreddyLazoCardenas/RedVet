@@ -19,6 +19,7 @@ import com.papps.freddy_lazo.redvet.view.activity.HomeActivity;
 import com.papps.freddy_lazo.redvet.view.activity.LoginActivity;
 import com.papps.freddy_lazo.redvet.view.activity.MapActivity;
 import com.papps.freddy_lazo.redvet.view.activity.RegisterActivity;
+import com.papps.freddy_lazo.redvet.view.dialogFragment.BaseDialogFragment;
 import com.papps.freddy_lazo.redvet.view.dialogFragment.CameraDialog;
 import com.papps.freddy_lazo.redvet.view.dialogFragment.CancelOtherReasonAppointmentDialog;
 import com.papps.freddy_lazo.redvet.view.dialogFragment.ConfirmedAppointmentDialog;
@@ -67,12 +68,12 @@ public class Navigator extends BaseNavigator {
         fragment.startActivityForResult(MapActivity.getCallingIntent(fragment), requestCode);
     }
 
-    public void navigateCancelAppointmentActivity(BaseActivity activity, int id) {
-        activity.startActivity(CancelAppointmentActivity.getCallingIntent(activity, id));
+    public void navigateCancelAppointmentActivity(BaseDialogFragment fragment, int id, int requestCode) {
+        fragment.startActivityForResult(CancelAppointmentActivity.getCallingIntent(fragment, id),requestCode);
     }
 
-    public void navigateToDiagnoseAppointmentActivity(BaseActivity activity, String data) {
-        activity.startActivity(DiagnoseAppointmentActivity.getCallingIntent(activity, data));
+    public void navigateToDiagnoseAppointmentActivity(BaseDialogFragment fragment, String data,int requestCode) {
+        fragment.startActivityForResult(DiagnoseAppointmentActivity.getCallingIntent(fragment, data),requestCode);
     }
 
     //fragments

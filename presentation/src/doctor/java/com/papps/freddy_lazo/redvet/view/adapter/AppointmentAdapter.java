@@ -112,6 +112,32 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
         return 0;
     }
 
+    public void doctorPendingAppointment(int id) {
+        int index = getItemIndex(id);
+        DoctorAppointmentModel model = data.get(index);
+        model.setStatus("confirmed");
+        if (isFiltering) {
+            int filteringIndex = getFilterItemIndex(id);
+            filterData.remove(filteringIndex);
+            notifyItemRemoved(filteringIndex);
+        } else {
+            notifyItemChanged(index);
+        }
+    }
+
+    public void doctorConfirmAppointment(int id) {
+        int index = getItemIndex(id);
+        DoctorAppointmentModel model = data.get(index);
+        model.setStatus("finished");
+        if (isFiltering) {
+            int filteringIndex = getFilterItemIndex(id);
+            filterData.remove(filteringIndex);
+            notifyItemRemoved(filteringIndex);
+        } else {
+            notifyItemChanged(index);
+        }
+    }
+
     class AppointmentViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.txt_date)

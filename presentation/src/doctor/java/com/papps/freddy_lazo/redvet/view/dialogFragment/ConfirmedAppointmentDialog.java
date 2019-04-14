@@ -1,5 +1,6 @@
 package com.papps.freddy_lazo.redvet.view.dialogFragment;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -50,6 +51,8 @@ public class ConfirmedAppointmentDialog extends BaseDialogFragment {
     private DoctorAppointmentModel model;
     private HomeActivity activity;
     private RequestInterface listener;
+    private static final int CANCEL_REQUEST_CODE = 1;
+    private static final int FINISHED_REQUEST_CODE = 2;
 
 
     public static ConfirmedAppointmentDialog newInstance(String data, RequestInterface listener) {
@@ -113,20 +116,29 @@ public class ConfirmedAppointmentDialog extends BaseDialogFragment {
 
     @OnClick(R.id.btn_cancel)
     public void btnCancelAppointment() {
-        navigator.navigateCancelAppointmentActivity(activity, model.getId());
-       // dismiss();
+        navigator.navigateCancelAppointmentActivity(this, model.getId(), CANCEL_REQUEST_CODE);
+        // dismiss();
     }
 
     @OnClick(R.id.iv_appointment_diagnosis)
     public void btnDiagnosisAppointment() {
-        navigator.navigateToDiagnoseAppointmentActivity(activity, model.toString());
-        dismiss();
+        navigator.navigateToDiagnoseAppointmentActivity(this, model.toString(), FINISHED_REQUEST_CODE);
+        // dismiss();
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
+        if (requestCode == CANCEL_REQUEST_CODE) {
+            if (resultCode == Activity.RESULT_OK) {
+                listener.successCancelRequest(model.getId());
+                dismiss();
+            }
+        } else if (requestCode == FINISHED_REQUEST_CODE) {
+            if (resultCode == Activity.RESULT_OK) {
+                listener.successConfirmedRequest(model.getId());
+                dismiss();
+            }
+        }
     }
 
     @OnClick(R.id.img_dismiss)
@@ -155,5 +167,7 @@ public class ConfirmedAppointmentDialog extends BaseDialogFragment {
 
     public interface RequestInterface {
         void successConfirmedRequest(int id);
+
+        void successCancelRequest(int id);
     }
 }

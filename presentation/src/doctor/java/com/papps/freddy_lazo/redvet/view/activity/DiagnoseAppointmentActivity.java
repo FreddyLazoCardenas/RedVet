@@ -31,6 +31,7 @@ import com.papps.freddy_lazo.redvet.model.DoctorModel;
 import com.papps.freddy_lazo.redvet.presenter.DiagnoseAppointmentPresenter;
 import com.papps.freddy_lazo.redvet.presenter.RegisterFragmentPresenter;
 import com.papps.freddy_lazo.redvet.view.adapter.AppointmentPhotoAdapter;
+import com.papps.freddy_lazo.redvet.view.dialogFragment.BaseDialogFragment;
 import com.papps.freddy_lazo.redvet.view.dialogFragment.CameraDialog;
 import com.papps.freddy_lazo.redvet.view.dialogFragment.PhotoListDialog;
 import com.theartofdev.edmodo.cropper.CropImage;
@@ -44,7 +45,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class DiagnoseAppointmentActivity extends BaseActivity implements DiagnoseAppointmentView, CameraDialog.OnClickListener , AppointmentPhotoAdapter.onClickAdapter, PhotoListDialog.OnClickListener {
+public class DiagnoseAppointmentActivity extends BaseActivity implements DiagnoseAppointmentView, CameraDialog.OnClickListener, AppointmentPhotoAdapter.onClickAdapter, PhotoListDialog.OnClickListener {
 
     private static final String PICTURE_FILE_NAME = "profileComplete.jpg";
     private static final String PICTURE_CROPPED_FILE_NAME = "profile.jpg";
@@ -79,9 +80,10 @@ public class DiagnoseAppointmentActivity extends BaseActivity implements Diagnos
 
 
     private DoctorAppointmentModel model;
+    private int photoId;
 
-    public static Intent getCallingIntent(BaseActivity activity, String data) {
-        return new Intent(activity, DiagnoseAppointmentActivity.class).putExtra("data", data);
+    public static Intent getCallingIntent(BaseDialogFragment fragment, String data) {
+        return new Intent(fragment.getContext(), DiagnoseAppointmentActivity.class).putExtra("data", data);
     }
 
     @Override
@@ -113,7 +115,7 @@ public class DiagnoseAppointmentActivity extends BaseActivity implements Diagnos
     }
 
     private void setUpRv() {
-        rvAttach.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
+        rvAttach.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         rvAttach.setAdapter(adapter);
         adapter.setListener(this);
     }
@@ -155,6 +157,7 @@ public class DiagnoseAppointmentActivity extends BaseActivity implements Diagnos
 
     @Override
     public void successRequest() {
+        setResult(RESULT_OK);
         finish();
     }
 
@@ -168,6 +171,16 @@ public class DiagnoseAppointmentActivity extends BaseActivity implements Diagnos
     @Override
     public void requestGalleryPermission() {
         requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, RegisterFragmentPresenter.PERMISSION_REQUEST_GALLERY_CODE);
+    }
+
+    @Override
+    public int getAppointmentPhotoId() {
+        return photoId;
+    }
+
+    @Override
+    public void successDelete() {
+        adapter.itemDeleted(getAppointmentPhotoId());
     }
 
     @Override
@@ -205,7 +218,7 @@ public class DiagnoseAppointmentActivity extends BaseActivity implements Diagnos
     private void startCrop(Uri source) {
         croppedFile = new File(getFilesDir(), PICTURE_CROPPED_FILE_NAME);
         CropImage.activity(source)
-                .setCropShape(Build.VERSION.SDK_INT >= Build.VERSION_CODES.P ? CropImageView.CropShape.RECTANGLE : CropImageView.CropShape.OVAL)                .setFixAspectRatio(true)
+                .setCropShape(Build.VERSION.SDK_INT >= Build.VERSION_CODES.P ? CropImageView.CropShape.RECTANGLE : CropImageView.CropShape.OVAL).setFixAspectRatio(true)
                 .setBorderCornerThickness(0)
                 .setOutputCompressFormat(Bitmap.CompressFormat.JPEG)
                 .setOutputCompressQuality(50)
@@ -238,8 +251,8 @@ public class DiagnoseAppointmentActivity extends BaseActivity implements Diagnos
     }
 
     @OnClick(R.id.iv_attach)
-    public void ivAttach(){
-        navigator.showListDialog(this,this);
+    public void ivAttach() {
+        navigator.showListDialog(this, this);
     }
 
     @Override
@@ -260,18 +273,19 @@ public class DiagnoseAppointmentActivity extends BaseActivity implements Diagnos
     }
 
     @OnClick(R.id.img_header)
-    public void imgHeader(){
+    public void imgHeader() {
         finish();
     }
 
     @Override
     public void itemClicked(AppointmentPhotoModel data) {
+        photoId = data.getId();
         navigator.showPhotoListDialog(this, this);
     }
 
     @Override
     public void delete() {
-
+        presenter.deletePhoto();
     }
 
     @Override

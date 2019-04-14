@@ -103,6 +103,10 @@ public class DoctorAppointmentModel {
         return photos;
     }
 
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     @Override
     public String toString() {
         return new Gson().toJson(this, DoctorAppointmentModel.class);
