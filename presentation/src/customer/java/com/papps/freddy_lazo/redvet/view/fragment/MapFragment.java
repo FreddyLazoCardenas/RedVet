@@ -19,6 +19,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -40,6 +41,7 @@ import com.papps.freddy_lazo.redvet.presenter.MapFragmentPresenter;
 import com.papps.freddy_lazo.redvet.view.activity.HomeActivity;
 import com.papps.freddy_lazo.redvet.view.adapter.PetAdapter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -59,9 +61,9 @@ public class MapFragment extends BaseFragment implements OnMapReadyCallback, Map
     PetAdapter adapter;
     @Inject
     MapFragmentPresenter presenter;
-
     @BindView(R.id.rv_pet)
     RecyclerView recyclerView;
+    private LatLng position;
 
     public static Fragment newInstance() {
         return new MapFragment();
@@ -115,17 +117,10 @@ public class MapFragment extends BaseFragment implements OnMapReadyCallback, Map
                 .addOnSuccessListener(activity, location -> {
                     // Got last known location. In some rare situations this can be null.
                     if (location != null) {
-                        LatLng position = new LatLng(location.getLatitude(), location.getLongitude());
+                        position = new LatLng(location.getLatitude(), location.getLongitude());
                         googleMap.addMarker(new MarkerOptions().position(position)
                                 .icon(bitmapDescriptorFromVector(activity, R.drawable.ic_person_marker)));
-
-
-                        CameraPosition cameraPosition = new CameraPosition.Builder()
-                                .target(position)      // Sets the center of the map to Mountain View
-                                .zoom(17)           // Sets the zoom
-                                .build();                   // Creates a CameraPosition from the builder
-                        googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-
+                        btnLocation();
                         // Logic to handle location object
                     }
                 });
@@ -212,6 +207,26 @@ public class MapFragment extends BaseFragment implements OnMapReadyCallback, Map
         return activity.getModel().getApi_token();
     }
 
+    @Override
+    public ArrayList<String> getType() {
+        return new ArrayList<>();
+    }
+
+    @Override
+    public ArrayList<Integer> getServices() {
+        return new ArrayList<>();
+    }
+
+    @Override
+    public ArrayList<Integer> getPets() {
+        return new ArrayList<>();
+    }
+
+    @Override
+    public String getText() {
+        return "";
+    }
+
     private void setDoctorMarkers(List<DoctorModel> data) {
         for (DoctorModel doctorModel : data) {
             LatLng latLng = new LatLng(Double.valueOf(doctorModel.getLatitude()), Double.valueOf(doctorModel.getLongitude()));
@@ -231,5 +246,22 @@ public class MapFragment extends BaseFragment implements OnMapReadyCallback, Map
         if (marker.getTag() != null)
             navigator.navigateDoctorDetailFragment(getFragmentManager(), MapFragment.class.getSimpleName(), String.valueOf(marker.getTag()));
         return false;
+    }
+
+    @OnClick(R.id.btn_location)
+    public void btnLocation() {
+        if (position != null && googleMap != null) {
+            CameraPosition cameraPosition = new CameraPosition.Builder()
+                    .target(position)      // Sets the center of the map to Mountain View
+                    .zoom(17)           // Sets the zoom
+                    .build();                   // Creates a CameraPosition from the builder
+            googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        presenter.destroy();
     }
 }

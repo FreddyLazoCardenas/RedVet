@@ -18,7 +18,7 @@ public class MapFragmentPresenter implements Presenter<MapFragmentView> {
 
     @Inject
     MapFragmentPresenter(SearchDoctorLogin searchDoctorLogin) {
-        this.searchDoctorLogin =searchDoctorLogin;
+        this.searchDoctorLogin = searchDoctorLogin;
     }
 
     @Override
@@ -36,8 +36,8 @@ public class MapFragmentPresenter implements Presenter<MapFragmentView> {
         searchDoctorLogin.unsubscribe();
     }
 
-    public void getDoctors(){
-        searchDoctorLogin.bindParams(new ArrayList<>(), new ArrayList<>(),new ArrayList<>() , "",view.getApiToken());
+    public void getDoctors() {
+        searchDoctorLogin.bindParams(view.getType(), view.getServices(), view.getPets(), view.getText(), view.getApiToken());
         searchDoctorLogin.execute(new SearchDoctorObservable());
     }
 
@@ -56,7 +56,7 @@ public class MapFragmentPresenter implements Presenter<MapFragmentView> {
         @Override
         public void onNext(List<Doctor> doctors) {
             super.onNext(doctors);
-           view.getListData(DoctorModelMapper.transform(doctors));
+            view.getListData(DoctorModelMapper.transform(doctors));
         }
 
         @Override

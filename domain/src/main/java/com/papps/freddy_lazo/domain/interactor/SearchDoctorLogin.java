@@ -25,7 +25,7 @@ public class SearchDoctorLogin extends UseCase {
         this.repository = repository;
     }
 
-    public void bindParams(ArrayList<String> type, ArrayList<Integer> services, ArrayList<Integer> pets, String text, String apiToken) {
+    public void bindParams(ArrayList<String> type, ArrayList<Integer> services, ArrayList<Integer> pets, String text,String apiToken) {
         this.type = type;
         this.services = services;
         this.pets = pets;
