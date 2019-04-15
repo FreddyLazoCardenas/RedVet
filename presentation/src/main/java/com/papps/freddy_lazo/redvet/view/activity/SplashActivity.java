@@ -24,7 +24,8 @@ public class SplashActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-        Log.d("notificacion", "el token es " + FirebaseInstanceId.getInstance().getToken());
+        Log.d("SplashActivity", "el token es " + FirebaseInstanceId.getInstance().getToken());
+        Log.d("SplashActivity", "el paquete es " + getApplicationContext().getPackageName());
         injectView(this);
         buildInjection();
         setUpHandler();
@@ -32,22 +33,22 @@ public class SplashActivity extends BaseActivity {
 
     private void setUpHandler() {
         Handler ha = new Handler();
-        Runnable ru = () -> splashLogic();
-        ha.postDelayed(ru,1000);
+        Runnable ru = this::splashLogic;
+        ha.postDelayed(ru, 1000);
 
     }
 
     private void splashLogic() {
-        if(BuildConfig.FLAVOR.equals("doctor")){
-            if(preferencesManager.getDoctorCurrentUser()!= null && !preferencesManager.getDoctorCurrentUser().equals("")){
+        if (BuildConfig.FLAVOR.equals("doctor")) {
+            if (preferencesManager.getDoctorCurrentUser() != null && !preferencesManager.getDoctorCurrentUser().equals("")) {
                 navigator.navigateToHomeActivity(this);
-            }else{
+            } else {
                 navigator.navigateToLoginActivity(this);
             }
-        }else{
-            if(preferencesManager.getPetLoverCurrentUser()!= null && !preferencesManager.getPetLoverCurrentUser().equals("")){
+        } else {
+            if (preferencesManager.getPetLoverCurrentUser() != null && !preferencesManager.getPetLoverCurrentUser().equals("")) {
                 navigator.navigateToHomeActivity(this);
-            }else{
+            } else {
                 navigator.navigateToLoginActivity(this);
             }
         }

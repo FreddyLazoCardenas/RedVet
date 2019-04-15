@@ -1,42 +1,90 @@
 {
   "project_info": {
-    "project_number": "601528135410",
-    "firebase_url": "https://redvet-8ed3d.firebaseio.com",
-    "project_id": "redvet-8ed3d",
-    "storage_bucket": "redvet-8ed3d.appspot.com"
+    "project_number": "45430772423",
+    "firebase_url": "https://redvet-236419.firebaseio.com",
+    "project_id": "redvet-236419",
+    "storage_bucket": "redvet-236419.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:601528135410:android:b9c0de2e62dee97b",
+        "mobilesdk_app_id": "1:45430772423:android:292c25b8a786e132",
         "android_client_info": {
-          "package_name": "pe.com.papps.retVet.doctor"
+          "package_name": "pe.com.papps.retVet.customer"
         }
       },
       "oauth_client": [
         {
-          "client_id": "601528135410-2qip2vg3h7joear1q4ca1ngmrhhubjce.apps.googleusercontent.com",
+          "client_id": "45430772423-0oill9bim2c0qku18ii6bffa9cbsohse.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "pe.com.papps.retVet.doctor",
-            "certificate_hash": "f25355f0374eec0eecd02cc8d7fc7530f2bfee52"
+            "package_name": "pe.com.papps.retVet.customer",
+            "certificate_hash": "f70d1ab20a942f3c0177edbc7bb2bbefad939bcc"
           }
+        },
+        {
+          "client_id": "45430772423-siep2unj92p469u7essqu7orfdjuh3lp.apps.googleusercontent.com",
+          "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyA7lrsn4bgS_220e3qH0Nql5NgZ61kqtfo"
+          "current_key": "AIzaSyDJCxSBEZA6iaX6VGet2hfl_Ls3k2tJ-RI"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "601528135410-h48fjr4u1kf65iugik1uc9p3lmmapffr.apps.googleusercontent.com",
+              "client_id": "45430772423-siep2unj92p469u7essqu7orfdjuh3lp.apps.googleusercontent.com",
               "client_type": 3
             },
             {
-              "client_id": "601528135410-s14jh60fd826vknk4gf982i1samhujtq.apps.googleusercontent.com",
+              "client_id": "45430772423-g60kdlv35kbqc6qccuuqq47iuifa1j5r.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.redvet.RedVetApp"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:45430772423:android:b9c0de2e62dee97b",
+        "android_client_info": {
+          "package_name": "pe.com.papps.retVet.doctor"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "45430772423-erp4gbrcgmlrr6tu9gokkebq9cup0gl9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "pe.com.papps.retVet.doctor",
+            "certificate_hash": "f70d1ab20a942f3c0177edbc7bb2bbefad939bcc"
+          }
+        },
+        {
+          "client_id": "45430772423-siep2unj92p469u7essqu7orfdjuh3lp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDJCxSBEZA6iaX6VGet2hfl_Ls3k2tJ-RI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "45430772423-siep2unj92p469u7essqu7orfdjuh3lp.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "45430772423-g60kdlv35kbqc6qccuuqq47iuifa1j5r.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
                 "bundle_id": "com.redvet.RedVetApp"
