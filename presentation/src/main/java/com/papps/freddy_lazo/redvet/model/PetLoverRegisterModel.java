@@ -3,7 +3,7 @@ package com.papps.freddy_lazo.redvet.model;
 
 public class PetLoverRegisterModel {
 
-    private int id;
+    private Integer id;
     private int pet_id;
     private String doctor_id;
     private String name;
@@ -13,7 +13,7 @@ public class PetLoverRegisterModel {
     private String photo_url;
     private boolean isSelected;
 
-    public PetLoverRegisterModel(int id, int pet_id, String doctor_id, String name, String birthday, String breed, String photo,String photo_url) {
+    public PetLoverRegisterModel(Integer id, int pet_id, String doctor_id, String name, String birthday, String breed, String photo,String photo_url) {
         this.id = id;
         this.pet_id = pet_id;
         this.doctor_id = doctor_id;
@@ -24,7 +24,7 @@ public class PetLoverRegisterModel {
         this.photo_url = photo_url;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 

@@ -120,7 +120,7 @@ public class ProfileFragmentPresenter implements Presenter<ProfileFragmentView> 
     }
 
     private boolean validatePetModelData() {
-        if (view.getPetData() == null || view.getPetData().isEmpty()) {
+        if (view.getPetData() == null) {
             view.showErrorMessage(view.context().getString(R.string.add_pet_data));
             return false;
         }
@@ -227,6 +227,8 @@ public class ProfileFragmentPresenter implements Presenter<ProfileFragmentView> 
     }
 
     public void validatePetData() {
+        if(!isValidatePetId(view.getPetId()))
+            return;
         if (!isValidPetName(view.getPetName()))
             return;
         if (!isValidPetBirthday(view.getPetBirthday()))
@@ -234,6 +236,14 @@ public class ProfileFragmentPresenter implements Presenter<ProfileFragmentView> 
         if (!isValidPetBreed(view.getPetBreed()))
             return;
         view.savePetData();
+    }
+
+    private boolean isValidatePetId(int petId) {
+        if(petId == 0){
+            view.showErrorMessage(view.context().getString(R.string.add_type_pet));
+            return false;
+        }
+        return true;
     }
 
     private boolean isValidPetName(String name) {
@@ -261,10 +271,6 @@ public class ProfileFragmentPresenter implements Presenter<ProfileFragmentView> 
         }
         view.hidePetBreedError();
         return true;
-    }
-
-    public void addPetInfo() {
-
     }
 
     private class PetLoverUpdateObservable extends DefaultObserver<PetLover> {

@@ -55,11 +55,12 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class ProfileFragment extends BaseFragment implements CameraDialog.OnClickListener, ProfileFragmentView, PetProfileAdapter.onClickAdapter, PetListDialog.OnClickListener, PetEditDialog.PetEditInterface  ,AddPetAdapter.onClickAdapter{
+public class ProfileFragment extends BaseFragment implements CameraDialog.OnClickListener, ProfileFragmentView, PetProfileAdapter.onClickAdapter, PetListDialog.OnClickListener, PetEditDialog.PetEditInterface, AddPetAdapter.onClickAdapter {
 
 
     private static final String PICTURE_FILE_NAME = "profileComplete.jpg";
     private static final String PICTURE_CROPPED_FILE_NAME = "profile.jpg";
+    private static final String PICTURE_CROPPED_PET_FILE_NAME = "pet.jpg";
 
     private static final int SELECT_FILE = 1;
     private static final int REQUEST_CAMERA = 0;
@@ -75,6 +76,12 @@ public class ProfileFragment extends BaseFragment implements CameraDialog.OnClic
 
     @BindView(R.id.et_name)
     EditText etName;
+    @BindView(R.id.pet_name)
+    EditText etPetName;
+    @BindView(R.id.pet_birthday)
+    EditText etPetBirthday;
+    @BindView(R.id.pet_breed)
+    EditText etPetBreed;
     @BindView(R.id.et_last_name)
     EditText etLastName;
     @BindView(R.id.et_dni)
@@ -91,6 +98,8 @@ public class ProfileFragment extends BaseFragment implements CameraDialog.OnClic
     EditText etRepeatPassword;
     @BindView(R.id.img_profile)
     ImageView imgProfile;
+    @BindView(R.id.img_add)
+    ImageView imgPet;
 
     @BindView(R.id.til_name)
     TextInputLayout tilName;
@@ -105,9 +114,12 @@ public class ProfileFragment extends BaseFragment implements CameraDialog.OnClic
     private HomeActivity activity;
     private PetLoverModel petLoverModel;
     private PetLoverRegisterModel petLoverRegisterModel;
+    private List<PetLoverRegisterModel> listChangePet = new ArrayList<>();
     private File pictureFile;
     private File croppedProfileFile;
     private File croppedPetFile;
+    private boolean isPetImage;
+    private int petId;
 
     public static Fragment newInstance() {
         return new ProfileFragment();
@@ -128,7 +140,7 @@ public class ProfileFragment extends BaseFragment implements CameraDialog.OnClic
     }
 
     private void initPetAdapter() {
-        rvRedVetPets.setLayoutManager(new LinearLayoutManager(activity,LinearLayoutManager.HORIZONTAL,false));
+        rvRedVetPets.setLayoutManager(new LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false));
         rvRedVetPets.setAdapter(petAdapter);
         petAdapter.setView(this);
     }
@@ -172,17 +184,18 @@ public class ProfileFragment extends BaseFragment implements CameraDialog.OnClic
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == SELECT_FILE && resultCode == Activity.RESULT_OK) {
-            // selectGalleryButton();
-            startCrop(data.getData());
+            if (isPetImage) startPetCrop(data.getData());
+            else startCrop(data.getData());
         } else if (requestCode == REQUEST_CAMERA && resultCode == Activity.RESULT_OK) {
-            //selectSelfieButton();
-            startCrop(Uri.fromFile(pictureFile));
+            if (isPetImage) startPetCrop(Uri.fromFile(pictureFile));
+            else startCrop(Uri.fromFile(pictureFile));
         } else if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
             if (resultCode == Activity.RESULT_OK) {
-                displayPhoto(true, false);
+                if (isPetImage) displayPetPhoto();
+                else displayPhoto(true, false);
             } else {
                 croppedProfileFile = null;
-                // unSelectButtons();
+                croppedPetFile = null;
             }
         }
     }
@@ -203,6 +216,13 @@ public class ProfileFragment extends BaseFragment implements CameraDialog.OnClic
 
     @OnClick(R.id.img_profile)
     public void imgProfile() {
+        isPetImage = false;
+        navigator.showListDialog(activity, this);
+    }
+
+    @OnClick(R.id.img_add)
+    public void imgPet() {
+        isPetImage = true;
         navigator.showListDialog(activity, this);
     }
 
@@ -381,50 +401,52 @@ public class ProfileFragment extends BaseFragment implements CameraDialog.OnClic
 
     @Override
     public String getPetName() {
-        return null;
-        //return etPetName.getText().toString();
+        return etPetName.getText().toString();
+    }
+
+    @Override
+    public int getPetId() {
+        return petId;
     }
 
     @Override
     public String getPetBirthday() {
-        return null;
-        //return etPetBirthday.getText().toString();
+        return etPetBirthday.getText().toString();
     }
 
     @Override
     public String getPetBreed() {
-        return null;
-        // return etpetBreed.getText().toString();
+        return etPetBreed.getText().toString();
     }
 
     @Override
     public void showPetNameError(String message) {
-        // showEtError(etPetName, message);
+        showEtError(etPetName, message);
     }
 
     @Override
     public void hidePetNameError() {
-        // hideEtError(etPetName);
+        hideEtError(etPetName);
     }
 
     @Override
     public void showPetBirthdayError(String message) {
-        //showEtError(etPetBirthday, message);
+        showEtError(etPetBirthday, message);
     }
 
     @Override
     public void hidePetBirthdayError() {
-        // hideEtError(etPetBirthday);
+        hideEtError(etPetBirthday);
     }
 
     @Override
     public void showPetBreedError(String message) {
-        //  showEtError(etpetBreed, message);
+        showEtError(etPetBreed, message);
     }
 
     @Override
     public void hidePetBreedError() {
-        // hideEtError(etpetBreed);
+        hideEtError(etPetBreed);
     }
 
     @Override
@@ -444,7 +466,24 @@ public class ProfileFragment extends BaseFragment implements CameraDialog.OnClic
 
     @Override
     public void savePetData() {
-        // petLoverRegisterModel = new PetRegister(1, getPetName(), getPetBirthday(), getPetBreed(), getPetBase64Image());
+        PetLoverRegisterModel addPetData = new PetLoverRegisterModel(null, getPetId(), "-1", getPetName(), getPetBirthday(), getPetBreed(), getPetBase64Image(), getPetPhotoUrl());
+        adapter.addData(addPetData);
+        listChangePet.add(addPetData);
+    }
+
+    private String getPetPhotoUrl() {
+        if (croppedPetFile != null) {
+            return croppedPetFile.getAbsolutePath();
+        } else
+            return null;
+    }
+
+    private String getBase64FromUrl(String url) {
+        Bitmap bm = BitmapFactory.decodeFile(url);
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bm.compress(Bitmap.CompressFormat.JPEG, 100, baos); //bm is the bitmap object
+        byte[] b = baos.toByteArray();
+        return Base64.encodeToString(b, Base64.NO_WRAP);
     }
 
     @Override
@@ -454,7 +493,7 @@ public class ProfileFragment extends BaseFragment implements CameraDialog.OnClic
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             bm.compress(Bitmap.CompressFormat.JPEG, 100, baos); //bm is the bitmap object
             byte[] b = baos.toByteArray();
-            return Base64.encodeToString(b, Base64.DEFAULT);
+            return Base64.encodeToString(b, Base64.NO_WRAP);
         } else
             return null;
     }
@@ -481,13 +520,20 @@ public class ProfileFragment extends BaseFragment implements CameraDialog.OnClic
 
     @Override
     public ArrayList<PetRegister> getPetData() {
-        List<PetLoverRegisterModel> petData = petLoverModel.getPetList();
         ArrayList<PetRegister> petRegisters = new ArrayList<>();
-        for (PetLoverRegisterModel petLoverRegisterModel : petData) {
+        for (PetLoverRegisterModel petLoverRegisterModel : listChangePet) {
             String photo = petLoverRegisterModel.getPhoto();
-            petRegisters.add(new PetRegister(petLoverRegisterModel.getId(), petLoverRegisterModel.getPet_id(), petLoverRegisterModel.getName(), petLoverRegisterModel.getBirthday(), petLoverRegisterModel.getBreed(), (photo != null && petLoverRegisterModel.getPhoto().equals("")) ? null : petLoverRegisterModel.getPhoto()));
+            petRegisters.add(new PetRegister(petLoverRegisterModel.getId(), petLoverRegisterModel.getPet_id(), petLoverRegisterModel.getName(), petLoverRegisterModel.getBirthday(), petLoverRegisterModel.getBreed(), (photo != null && !photo.equals("")) ? photo : null/*(photo != null && !photo.equals("")) ?  getPetPhoto(petLoverRegisterModel.getPhoto(), petLoverRegisterModel.getPhoto_url()): null)*/));
         }
         return petRegisters;
+    }
+
+    private String getPetPhoto(String photo, String url) {
+        if (photo.endsWith("jpg")) {      // no es base64 se debe cambiar
+            return getBase64FromUrl(url);
+        } else {
+            return photo;
+        }
     }
 
 
@@ -503,6 +549,18 @@ public class ProfileFragment extends BaseFragment implements CameraDialog.OnClic
                 .start(getContext(), this);
     }
 
+    private void startPetCrop(Uri source) {
+        croppedPetFile = new File(getContext().getFilesDir(), PICTURE_CROPPED_PET_FILE_NAME);
+        CropImage.activity(source)
+                .setCropShape(Build.VERSION.SDK_INT >= Build.VERSION_CODES.P ? CropImageView.CropShape.RECTANGLE : CropImageView.CropShape.OVAL).setFixAspectRatio(true)
+                .setBorderCornerThickness(0)
+                .setOutputCompressFormat(Bitmap.CompressFormat.JPEG)
+                .setOutputCompressQuality(50)
+                .setMaxCropResultSize(1800, 1800)
+                .setOutputUri(Uri.fromFile(croppedPetFile))
+                .start(getContext(), this);
+    }
+
 
     public void displayPhoto(boolean refresh, boolean fromModel) {
         GlideApp.with(activity)
@@ -513,6 +571,17 @@ public class ProfileFragment extends BaseFragment implements CameraDialog.OnClic
                 .placeholder(R.drawable.ic_placeholder)
                 .load(fromModel ? petLoverModel.getPhoto_url() : croppedProfileFile.getAbsolutePath())
                 .into(imgProfile);
+    }
+
+    public void displayPetPhoto() {
+        GlideApp.with(activity)
+                .asBitmap()
+                .dontAnimate()
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .skipMemoryCache(true)
+                .placeholder(R.drawable.ic_add_pet)
+                .load(croppedPetFile.getAbsolutePath())
+                .into(imgPet);
     }
 
     @OnClick(R.id.btn_update)
@@ -556,21 +625,28 @@ public class ProfileFragment extends BaseFragment implements CameraDialog.OnClic
 
     @Override
     public void edit() {
-        navigator.navigateEditPet(activity,petLoverRegisterModel,this);
+        navigator.navigateEditPet(activity, petLoverRegisterModel, this);
     }
 
     @Override
     public void updatePet(PetLoverRegisterModel model) {
+        listChangePet.add(model);
         adapter.updateData(model);
     }
 
     @Override
     public void data(List<PetRedVetModel> data) {
-
+        petId = 0;
+        for (PetRedVetModel petRedVetModel : data) {
+            if (petRedVetModel.isSelected()) {
+                petId = petRedVetModel.getId();
+                break;
+            }
+        }
     }
 
     @OnClick(R.id.btn_pet_save)
-    public void addPetData(){
-      presenter.addPetInfo();
+    public void addPetData() {
+        presenter.validatePetData();
     }
 }

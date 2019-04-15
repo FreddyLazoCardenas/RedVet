@@ -60,7 +60,7 @@ public class PetEditDialog extends BaseDialogFragment implements CameraDialog.On
     private static final int SELECT_FILE = 1;
     private static final int REQUEST_CAMERA = 0;
     private static final String PICTURE_FILE_NAME = "profileComplete.jpg";
-    private static final String PICTURE_CROPPED_FILE_NAME = "profile.jpg";
+    private static final String PICTURE_CROPPED_PET_FILE_NAME = "pet.jpg";
     private PetEditInterface listener;
     private PetLoverRegisterModel model;
     private HomeActivity activity;
@@ -244,7 +244,7 @@ public class PetEditDialog extends BaseDialogFragment implements CameraDialog.On
     }
 
     private void startCrop(Uri source) {
-        croppedProfileFile = new File(getContext().getFilesDir(), PICTURE_CROPPED_FILE_NAME);
+        croppedProfileFile = new File(getContext().getFilesDir(), PICTURE_CROPPED_PET_FILE_NAME);
         CropImage.activity(source)
                 .setCropShape(Build.VERSION.SDK_INT >= Build.VERSION_CODES.P ? CropImageView.CropShape.RECTANGLE : CropImageView.CropShape.OVAL).setFixAspectRatio(true)
                 .setBorderCornerThickness(0)

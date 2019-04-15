@@ -93,4 +93,6 @@ public interface ProfileFragmentView extends BaseView {
     void successRequest(List<PetRedVetModel> transform);
 
     String getPetBase64Image();
+
+    int getPetId();
 }

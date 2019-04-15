@@ -17,6 +17,7 @@
     <string name="add_time_data">Agregar hora de cita</string>
     <string name="add_reason_data">Agregar razón de cita</string>
     <string name="add_type_data">Agregar tipo de cita</string>
+    <string name="add_type_pet">Agregar tipo de mascota</string>
     <string name="add_services_data">Agregar datos de servicios</string>
     <string name="add_diagnose_data">Agregar datos de diagnostico</string>
     <string name="add_schedules_data">Agregar datos de horario</string>

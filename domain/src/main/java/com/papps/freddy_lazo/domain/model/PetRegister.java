@@ -11,7 +11,7 @@ public class PetRegister {
     private String photo;
     private String photo_url;
 
-    public PetRegister(int id, int pet_id, String doctor_id, String name, String birthday, String breed, String photo) {
+    public PetRegister(Integer id, int pet_id, String doctor_id, String name, String birthday, String breed, String photo) {
         this.id = id;
         this.pet_id = pet_id;
         this.doctor_id = doctor_id;
@@ -21,7 +21,7 @@ public class PetRegister {
         this.photo = photo;
     }
 
-    public PetRegister(int id, int pet_id, String name, String birthday, String breed, String photo) {
+    public PetRegister(Integer id, int pet_id, String name, String birthday, String breed, String photo) {
         this.id = id;
         this.pet_id = pet_id;
         this.name = name;
@@ -30,7 +30,7 @@ public class PetRegister {
         this.photo = photo;
     }
 
-    public PetRegister(int pet_id, String petName, String petBirthday, String petBreed, String petBase64Image) {
+    public PetRegister(Integer pet_id, String petName, String petBirthday, String petBreed, String petBase64Image) {
         this.pet_id = pet_id;
         this.name = petName;
         this.birthday = petBirthday;
@@ -47,7 +47,7 @@ public class PetRegister {
         this.pet_id = pet_id;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 

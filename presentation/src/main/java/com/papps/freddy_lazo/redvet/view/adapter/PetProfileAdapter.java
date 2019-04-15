@@ -1,8 +1,11 @@
 package com.papps.freddy_lazo.redvet.view.adapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +20,7 @@ import com.papps.freddy_lazo.redvet.model.PetModel;
 import com.papps.freddy_lazo.redvet.view.fragment.BaseFragment;
 import com.papps.freddy_lazo.redvet.view.fragment.ProfileFragment;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -77,15 +81,23 @@ public class PetProfileAdapter extends RecyclerView.Adapter<PetProfileAdapter.Pe
         notifyItemChanged(index);
     }
 
-    private int getItemIndex(PetLoverRegisterModel model){
-        for (PetLoverRegisterModel petLoverRegisterModel : data){
-            if(petLoverRegisterModel.getId() == model.getId()){
+    public void addData(PetLoverRegisterModel model) {
+        data.add(model);
+        notifyItemInserted(data.indexOf(model));
+    }
+
+    private int getItemIndex(PetLoverRegisterModel model) {
+        for (PetLoverRegisterModel petLoverRegisterModel : data) {
+            if (petLoverRegisterModel.getId().equals(model.getId())) {
                 return data.indexOf(petLoverRegisterModel);
             }
         }
         return -1;
     }
 
+    public List<PetLoverRegisterModel> getData() {
+        return data;
+    }
 
     class PetViewHolder extends RecyclerView.ViewHolder {
 
@@ -119,6 +131,7 @@ public class PetProfileAdapter extends RecyclerView.Adapter<PetProfileAdapter.Pe
                     .load(photo != null ? photo : "")
                     .into(imgPet);
         }
+
 
         @OnClick
         void itemClick() {
