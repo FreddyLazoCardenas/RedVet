@@ -12,7 +12,7 @@ import com.papps.freddy_lazo.domain.repository.UserRepository;
 import com.papps.freddy_lazo.domain.repository.UtilsRepository;
 import com.papps.freddy_lazo.redvet.AndroidApplication;
 import com.papps.freddy_lazo.redvet.UIThread;
-import com.papps.freddy_lazo.redvet.internal.bus.event.RxBus;
+import com.papps.freddy_lazo.redvet.internal.bus.RxBus;
 
 import javax.inject.Singleton;
 

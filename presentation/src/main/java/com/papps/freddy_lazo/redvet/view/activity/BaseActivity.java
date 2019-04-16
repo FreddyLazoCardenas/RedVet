@@ -9,7 +9,7 @@ import android.widget.Toast;
 
 import com.papps.freddy_lazo.redvet.AndroidApplication;
 import com.papps.freddy_lazo.redvet.interfaces.BaseView;
-import com.papps.freddy_lazo.redvet.internal.bus.event.RxBus;
+import com.papps.freddy_lazo.redvet.internal.bus.RxBus;
 import com.papps.freddy_lazo.redvet.internal.dagger.component.ApplicationComponent;
 import com.papps.freddy_lazo.redvet.model.ServicesModel;
 import com.papps.freddy_lazo.redvet.navigation.Navigator;

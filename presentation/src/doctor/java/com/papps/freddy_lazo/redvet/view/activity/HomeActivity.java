@@ -5,16 +5,19 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
+import android.util.Log;
 import android.view.MenuItem;
 
 import com.papps.freddy_lazo.data.sharedPreferences.PreferencesManager;
 import com.papps.freddy_lazo.redvet.R;
+import com.papps.freddy_lazo.redvet.internal.bus.event.Event;
 import com.papps.freddy_lazo.redvet.internal.dagger.component.DaggerHomeComponent;
 import com.papps.freddy_lazo.redvet.model.DoctorModel;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
+import io.reactivex.functions.Consumer;
 
 public class HomeActivity extends BaseActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 
@@ -48,6 +51,28 @@ public class HomeActivity extends BaseActivity implements BottomNavigationView.O
         bottomNav.setSelectedItemId(R.id.action_quotes);
 
     }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        subscribeBus();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        unsubscribeBus();
+    }
+
+    @Override
+    protected Consumer<Object> getBusAction() {
+        return event -> {
+            if (event instanceof Event.NotificationEvent) {
+                Log.d("getBusAction", "llego a la actividad");
+            }
+        };
+    }
+
 
     public DoctorModel getModel(){
         return DoctorModel.toModel(preferencesManager.getDoctorCurrentUser());

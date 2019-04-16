@@ -10,6 +10,8 @@ import com.papps.freddy_lazo.domain.interactor.DefaultObserver;
 import com.papps.freddy_lazo.domain.interactor.SaveNotification;
 import com.papps.freddy_lazo.domain.model.Notification;
 import com.papps.freddy_lazo.redvet.AndroidApplication;
+import com.papps.freddy_lazo.redvet.internal.bus.RxBus;
+import com.papps.freddy_lazo.redvet.internal.bus.event.Event;
 import com.papps.freddy_lazo.redvet.view.util.NotificationUtil;
 
 import java.util.Map;
@@ -20,6 +22,7 @@ public class FirebaseMessageService extends FirebaseMessagingService {
 
     private AndroidApplication mApp;
     private SaveNotification saveNotification;
+    private RxBus rxBus;
 
     public FirebaseMessageService() {
     }
@@ -35,8 +38,12 @@ public class FirebaseMessageService extends FirebaseMessagingService {
         NotificationUtil.showNotification(this, data.get("type"), data.get("message"), pendingIntent);
         String timeStamp = String.valueOf(TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis()));
         saveNotification= mApp.getApplicationComponent().saveNotification();
+        rxBus= mApp.getApplicationComponent().rxBus();
         saveNotification.bindParams(new Notification(data.get("type"), data.get("appointment_id"), data.get("message"), timeStamp, true));
         saveNotification.execute(new SaveDataObservable());
+
+        rxBus.send(new Event.NotificationEvent());
+
     }
 
     private class SaveDataObservable extends DefaultObserver<Void> {

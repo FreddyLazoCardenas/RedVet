@@ -1,4 +1,4 @@
-package com.papps.freddy_lazo.redvet.internal.bus.event;
+package com.papps.freddy_lazo.redvet.internal.bus;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;

@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 
 import com.papps.freddy_lazo.redvet.R;
 import com.papps.freddy_lazo.redvet.interfaces.AppointmentFragmentView;
+import com.papps.freddy_lazo.redvet.internal.bus.event.Event;
 import com.papps.freddy_lazo.redvet.internal.dagger.component.DaggerAppointmentFragmentComponent;
 import com.papps.freddy_lazo.redvet.model.CreateAppointmentObjectModel;
 import com.papps.freddy_lazo.redvet.model.DoctorAppointmentModel;
@@ -32,6 +33,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import butterknife.BindView;
+import io.reactivex.functions.Consumer;
 
 public class AppointmentFragment extends BaseFragment implements AppointmentFragmentView, AppointmentHeaderAdapter.onClickAdapter, AppointmentAdapter.onClickAdapter,
         PendingAppointmentDialog.RequestInterface, FinishedAppointmentDialog.RequestInterface, ConfirmedAppointmentDialog.RequestInterface {
@@ -72,6 +74,27 @@ public class AppointmentFragment extends BaseFragment implements AppointmentFrag
         activity = (HomeActivity) getActivity();
         setUpRv();
         initUI();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        subscribeBus();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        unsubscribeBus();
+    }
+
+    @Override
+    protected Consumer<Object> getBusAction() {
+        return event -> {
+            if (event instanceof Event.NotificationEvent) {
+                Log.d("getBusAction", "llego el evento al fragment");
+            }
+        };
     }
 
     private void setUpRv() {
@@ -168,13 +191,13 @@ public class AppointmentFragment extends BaseFragment implements AppointmentFrag
         Log.d("itemClicked", data.getStatus());
         switch (data.getStatus()) {
             case "pending":
-                navigator.navigatePendingDialog(activity, data.toString() , this);
+                navigator.navigatePendingDialog(activity, data.toString(), this);
                 break;
             case "finished":
-                navigator.navigateFinishedDialog(activity, data.toString(),this);
+                navigator.navigateFinishedDialog(activity, data.toString(), this);
                 break;
             case "confirmed":
-                navigator.navigateConfirmedDialog(activity, data.toString(),this);
+                navigator.navigateConfirmedDialog(activity, data.toString(), this);
                 break;
 
         }
