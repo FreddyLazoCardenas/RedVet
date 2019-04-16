@@ -6,7 +6,6 @@ import android.util.Log;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
-import com.papps.freddy_lazo.data.sharedPreferences.PreferencesManager;
 import com.papps.freddy_lazo.domain.interactor.DefaultObserver;
 import com.papps.freddy_lazo.domain.interactor.SaveNotification;
 import com.papps.freddy_lazo.domain.model.Notification;
@@ -15,10 +14,6 @@ import com.papps.freddy_lazo.redvet.view.util.NotificationUtil;
 
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
-
-import javax.inject.Inject;
-
-import io.reactivex.Observer;
 
 public class FirebaseMessageService extends FirebaseMessagingService {
 
@@ -41,10 +36,10 @@ public class FirebaseMessageService extends FirebaseMessagingService {
         String timeStamp = String.valueOf(TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis()));
         saveNotification= mApp.getApplicationComponent().saveNotification();
         saveNotification.bindParams(new Notification(data.get("type"), data.get("appointment_id"), data.get("message"), timeStamp, false));
-        saveNotification.execute(new SaveDataobservable());
+        saveNotification.execute(new SaveDataObservable());
     }
 
-    private class SaveDataobservable extends DefaultObserver<Void> {
+    private class SaveDataObservable extends DefaultObserver<Void> {
         @Override
         protected void onStart() {
             super.onStart();
