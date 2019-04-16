@@ -37,6 +37,7 @@ public class HomeActivity extends BaseActivity implements BottomNavigationView.O
         setContentView(R.layout.activity_home);
         injectView(this);
         buildInjection();
+        Log.d("date" , System.currentTimeMillis() + "");
         initUI();
     }
 

@@ -9,4 +9,5 @@
     <color name="colorGreen">#34c1ba</color>
     <color name="colorGray">#7f7f7f</color>
     <color name="colorLightGray">#e7e5e5</color>
+    <color name="colorNotificationGray">#F7F6F6</color>
 </resources>
