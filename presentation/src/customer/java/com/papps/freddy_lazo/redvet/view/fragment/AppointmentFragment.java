@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 
 import com.papps.freddy_lazo.redvet.R;
 import com.papps.freddy_lazo.redvet.interfaces.AppointmentFragmentView;
+import com.papps.freddy_lazo.redvet.internal.bus.Event;
 import com.papps.freddy_lazo.redvet.internal.dagger.component.DaggerAppointmentFragmentComponent;
 import com.papps.freddy_lazo.redvet.model.CreateAppointmentObjectModel;
 import com.papps.freddy_lazo.redvet.model.PetLoverAppointmentModel;
@@ -72,11 +73,24 @@ public class AppointmentFragment extends BaseFragment implements AppointmentFrag
         initUI();
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        subscribeBus();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        unsubscribeBus();
+    }
 
     @Override
     protected Consumer<Object> getBusAction() {
         return event -> {
-          Log.d("getBusAction","dads");
+            if (event instanceof Event.NotificationEvent) {
+                Log.d("getBusAction", "llego el evento al fragment");
+            }
         };
     }
 

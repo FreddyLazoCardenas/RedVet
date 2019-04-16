@@ -20,10 +20,6 @@ import java.util.concurrent.TimeUnit;
 
 public class FirebaseMessageService extends FirebaseMessagingService {
 
-    private AndroidApplication mApp;
-    private SaveNotification saveNotification;
-    private RxBus rxBus;
-
     public FirebaseMessageService() {
     }
 
@@ -31,14 +27,14 @@ public class FirebaseMessageService extends FirebaseMessagingService {
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
         super.onMessageReceived(remoteMessage);
-        this.mApp = (AndroidApplication) getApplication();
+        AndroidApplication mApp = (AndroidApplication) getApplication();
         Map<String, String> data = remoteMessage.getData();
         Log.d("remoteMessage", remoteMessage.toString());
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, new Intent(), 0);
         NotificationUtil.showNotification(this, data.get("type"), data.get("message"), pendingIntent);
         String timeStamp = String.valueOf(TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis()));
-        saveNotification= mApp.getApplicationComponent().saveNotification();
-        rxBus= mApp.getApplicationComponent().rxBus();
+        SaveNotification saveNotification = mApp.getApplicationComponent().saveNotification();
+        RxBus rxBus = mApp.getApplicationComponent().rxBus();
         saveNotification.bindParams(new Notification(data.get("type"), data.get("appointment_id"), data.get("message"), timeStamp, true));
         saveNotification.execute(new SaveDataObservable());
 
