@@ -15,11 +15,9 @@ import com.papps.freddy_lazo.redvet.view.util.NotificationUtil;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
-import java.util.Map;
 
 public class FirebaseMessageService extends FirebaseMessagingService {
 
-    //private SaveNotification saveNotification;
     private AndroidApplication mApp;
     private SaveNotification saveNotification;
 
@@ -30,7 +28,6 @@ public class FirebaseMessageService extends FirebaseMessagingService {
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
         super.onMessageReceived(remoteMessage);
-<<<<<<< HEAD
         this.mApp = (AndroidApplication) getApplication();
         Map<String, String> data = remoteMessage.getData();
         Log.d("remoteMessage", remoteMessage.toString());
@@ -53,9 +50,5 @@ public class FirebaseMessageService extends FirebaseMessagingService {
             super.onComplete();
         }
 
-=======
-        Map<String, String> data = remoteMessage.getData();
-        Log.d("remoteMessage",remoteMessage.toString());
->>>>>>> 057eb87271ae0f817d700f2c43017bae9dee148a
     }
 }
