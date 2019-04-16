@@ -3,8 +3,10 @@ package com.papps.freddy_lazo.domain.repository;
 import com.papps.freddy_lazo.domain.model.CreateAppointment;
 import com.papps.freddy_lazo.domain.model.Doctor;
 import com.papps.freddy_lazo.domain.model.PetLover;
+import com.papps.freddy_lazo.domain.model.PetLoverAppointment;
 import com.papps.freddy_lazo.domain.model.PetRedVet;
 import com.papps.freddy_lazo.domain.model.PetRegister;
+import com.papps.freddy_lazo.domain.model.RedVetDetailAppointment;
 import com.papps.freddy_lazo.domain.model.ScheduleDoctorRegister;
 import com.papps.freddy_lazo.domain.model.ServicesDoctorRegister;
 
@@ -33,5 +35,7 @@ public interface UserRepository {
 
     Observable<List<PetRedVet>> getPets();
 
+    Observable<RedVetDetailAppointment> redVetAppointmentDetail(String auth, int appointmentId);
 
+    Observable<PetLoverAppointment> petLoverQualifyAppointment(String auth, int appointmentId, int qualification);
 }

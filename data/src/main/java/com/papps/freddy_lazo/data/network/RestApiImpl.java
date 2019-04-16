@@ -12,6 +12,7 @@ import com.papps.freddy_lazo.data.entity.NewsEntity;
 import com.papps.freddy_lazo.data.entity.PetLoverEntity;
 import com.papps.freddy_lazo.data.entity.PetRedVetEntity;
 import com.papps.freddy_lazo.data.entity.RedVetAppointmentEntity;
+import com.papps.freddy_lazo.data.entity.RedVetDetailAppointmentEntity;
 import com.papps.freddy_lazo.data.entity.RedVetMessageEntity;
 import com.papps.freddy_lazo.data.entity.ResponseEntity;
 import com.papps.freddy_lazo.data.entity.ServicesEntity;
@@ -23,6 +24,7 @@ import com.papps.freddy_lazo.data.network.body.BodyDoctorRegister;
 import com.papps.freddy_lazo.data.network.body.BodyFinishAppointment;
 import com.papps.freddy_lazo.data.network.body.BodyLogin;
 import com.papps.freddy_lazo.data.network.body.BodyPetLoverRegister;
+import com.papps.freddy_lazo.data.network.body.BodyQualifyAppointment;
 import com.papps.freddy_lazo.data.network.body.BodyRecoverPassword;
 import com.papps.freddy_lazo.data.network.body.BodyRedVetChat;
 import com.papps.freddy_lazo.data.network.body.BodySearchDoctors;
@@ -36,6 +38,8 @@ import com.papps.freddy_lazo.data.network.response.DoctorSearchResponse;
 import com.papps.freddy_lazo.data.network.response.LoginResponse;
 import com.papps.freddy_lazo.data.network.response.NewsResponse;
 import com.papps.freddy_lazo.data.network.response.PetsRedVetResponse;
+import com.papps.freddy_lazo.data.network.response.QualificationResponse;
+import com.papps.freddy_lazo.data.network.response.RedVetAppointmentResponse;
 import com.papps.freddy_lazo.data.network.response.ServicesResponse;
 import com.papps.freddy_lazo.domain.model.PetRegister;
 import com.papps.freddy_lazo.domain.model.ScheduleDoctorRegister;
@@ -410,6 +414,36 @@ public class RestApiImpl implements RestApi {
                 ResponseEntity<PetsRedVetResponse> body = response.body();
                 if (body != null && body.getMessage() == null) {
                     emitter.onNext(body.getData().getPets());
+                    emitter.onComplete();
+                }
+            }
+        }));
+    }
+
+    @Override
+    public Observable<RedVetDetailAppointmentEntity> redVetAppointmentDetail(String auth, int appointmentId) {
+        return Observable.create(emitter -> restService.redVetAppointmentDetail(auth, appointmentId).enqueue(new DefaultCallback<ResponseEntity<RedVetAppointmentResponse>>(emitter) {
+            @Override
+            public void onResponse(@NonNull Call<ResponseEntity<RedVetAppointmentResponse>> call, @NonNull Response<ResponseEntity<RedVetAppointmentResponse>> response) {
+                super.onResponse(call, response);
+                ResponseEntity<RedVetAppointmentResponse> body = response.body();
+                if (body != null && body.getMessage() == null) {
+                    emitter.onNext(body.getData().getAppointment());
+                    emitter.onComplete();
+                }
+            }
+        }));
+    }
+
+    @Override
+    public Observable<PetLoverAppointmentEntity> petLoverQualifyAppointment(String auth, int appointmentId, int qualification) {
+        return Observable.create(emitter -> restService.petLoverQualifyAppointment(auth, new BodyQualifyAppointment(appointmentId, qualification)).enqueue(new DefaultCallback<ResponseEntity<QualificationResponse>>(emitter) {
+            @Override
+            public void onResponse(@NonNull Call<ResponseEntity<QualificationResponse>> call, @NonNull Response<ResponseEntity<QualificationResponse>> response) {
+                super.onResponse(call, response);
+                ResponseEntity<QualificationResponse> body = response.body();
+                if (body != null && body.getMessage() == null) {
+                    emitter.onNext(body.getData().getAppointment());
                     emitter.onComplete();
                 }
             }

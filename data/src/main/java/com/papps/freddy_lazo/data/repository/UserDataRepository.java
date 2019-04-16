@@ -1,16 +1,20 @@
 package com.papps.freddy_lazo.data.repository;
 
+import com.papps.freddy_lazo.data.entity.mapper.AppointmentPetLoverMapper;
 import com.papps.freddy_lazo.data.entity.mapper.CreateAppointmentMapper;
 import com.papps.freddy_lazo.data.entity.mapper.DoctorLoginMapper;
 import com.papps.freddy_lazo.data.entity.mapper.PetLoverLoginMapper;
 import com.papps.freddy_lazo.data.entity.mapper.PetRedVetMapper;
+import com.papps.freddy_lazo.data.entity.mapper.RedVetAppointmentDetailMapper;
 import com.papps.freddy_lazo.data.entity.mapper.SearchDoctorsMapper;
 import com.papps.freddy_lazo.data.network.RestApi;
 import com.papps.freddy_lazo.domain.model.CreateAppointment;
 import com.papps.freddy_lazo.domain.model.Doctor;
 import com.papps.freddy_lazo.domain.model.PetLover;
+import com.papps.freddy_lazo.domain.model.PetLoverAppointment;
 import com.papps.freddy_lazo.domain.model.PetRedVet;
 import com.papps.freddy_lazo.domain.model.PetRegister;
+import com.papps.freddy_lazo.domain.model.RedVetDetailAppointment;
 import com.papps.freddy_lazo.domain.model.ScheduleDoctorRegister;
 import com.papps.freddy_lazo.domain.model.ServicesDoctorRegister;
 import com.papps.freddy_lazo.domain.repository.UserRepository;
@@ -35,12 +39,12 @@ public class UserDataRepository implements UserRepository {
 
     @Override
     public Observable<Doctor> loginDoctor(String email, String password, String fcm_token) {
-        return mRestApi.loginDoctor(email, password,fcm_token).map(DoctorLoginMapper::transform);
+        return mRestApi.loginDoctor(email, password, fcm_token).map(DoctorLoginMapper::transform);
     }
 
     @Override
     public Observable<PetLover> loginPetLover(String email, String password, String fcm_token) {
-        return mRestApi.loginPetLover(email, password,fcm_token).map(PetLoverLoginMapper::transform);
+        return mRestApi.loginPetLover(email, password, fcm_token).map(PetLoverLoginMapper::transform);
     }
 
     @Override
@@ -54,8 +58,8 @@ public class UserDataRepository implements UserRepository {
     }
 
     @Override
-    public Observable<List<Doctor>> searchDoctors(ArrayList<String> type, ArrayList<Integer> services, ArrayList<Integer> pets, String text,String apiToken) {
-        return mRestApi.searchDoctors(type, services, pets, text,apiToken).map(SearchDoctorsMapper::transform);
+    public Observable<List<Doctor>> searchDoctors(ArrayList<String> type, ArrayList<Integer> services, ArrayList<Integer> pets, String text, String apiToken) {
+        return mRestApi.searchDoctors(type, services, pets, text, apiToken).map(SearchDoctorsMapper::transform);
     }
 
     @Override
@@ -76,5 +80,15 @@ public class UserDataRepository implements UserRepository {
     @Override
     public Observable<List<PetRedVet>> getPets() {
         return mRestApi.getPets().map(PetRedVetMapper::transform);
+    }
+
+    @Override
+    public Observable<RedVetDetailAppointment> redVetAppointmentDetail(String auth, int appointmentId) {
+        return mRestApi.redVetAppointmentDetail(auth, appointmentId).map(RedVetAppointmentDetailMapper::transform);
+    }
+
+    @Override
+    public Observable<PetLoverAppointment> petLoverQualifyAppointment(String auth, int appointmentId, int qualification) {
+        return mRestApi.petLoverQualifyAppointment(auth, appointmentId, qualification).map(AppointmentPetLoverMapper::transform);
     }
 }

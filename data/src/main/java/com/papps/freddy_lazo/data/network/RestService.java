@@ -9,6 +9,7 @@ import com.papps.freddy_lazo.data.network.body.BodyDoctorRegister;
 import com.papps.freddy_lazo.data.network.body.BodyFinishAppointment;
 import com.papps.freddy_lazo.data.network.body.BodyLogin;
 import com.papps.freddy_lazo.data.network.body.BodyPetLoverRegister;
+import com.papps.freddy_lazo.data.network.body.BodyQualifyAppointment;
 import com.papps.freddy_lazo.data.network.body.BodyRecoverPassword;
 import com.papps.freddy_lazo.data.network.body.BodyRedVetChat;
 import com.papps.freddy_lazo.data.network.body.BodySearchDoctors;
@@ -22,6 +23,8 @@ import com.papps.freddy_lazo.data.network.response.DoctorSearchResponse;
 import com.papps.freddy_lazo.data.network.response.LoginResponse;
 import com.papps.freddy_lazo.data.network.response.NewsResponse;
 import com.papps.freddy_lazo.data.network.response.PetsRedVetResponse;
+import com.papps.freddy_lazo.data.network.response.QualificationResponse;
+import com.papps.freddy_lazo.data.network.response.RedVetAppointmentResponse;
 import com.papps.freddy_lazo.data.network.response.ServicesResponse;
 
 import java.util.List;
@@ -103,5 +106,11 @@ public interface RestService {
 
     @GET("pets")
     Call<ResponseEntity<PetsRedVetResponse>> getPets();
+
+    @GET("appointments/{appointment_id}")
+    Call<ResponseEntity<RedVetAppointmentResponse>> redVetAppointmentDetail(@Header("Authorization") String auth, @Path("appointment_id") int appointmentId);
+
+    @POST("pet-lover/appointments/qualify")
+    Call<ResponseEntity<QualificationResponse>> petLoverQualifyAppointment(@Header("Authorization") String auth, @Body BodyQualifyAppointment bodyQualifyAppointment);
 
 }
