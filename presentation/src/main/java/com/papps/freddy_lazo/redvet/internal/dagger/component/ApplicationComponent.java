@@ -6,6 +6,7 @@ import android.content.Context;
 import com.papps.freddy_lazo.data.sharedPreferences.PreferencesManager;
 import com.papps.freddy_lazo.domain.executor.PostExecutionThread;
 import com.papps.freddy_lazo.domain.executor.ThreadExecutor;
+import com.papps.freddy_lazo.domain.interactor.SaveNotification;
 import com.papps.freddy_lazo.domain.repository.UserRepository;
 import com.papps.freddy_lazo.domain.repository.UtilsRepository;
 import com.papps.freddy_lazo.redvet.internal.dagger.module.LocalDatabaseModule;
@@ -41,5 +42,7 @@ public interface ApplicationComponent {
     UtilsRepository utilsRepository();
 
     PreferencesManager preferenceManager();
+
+    SaveNotification saveNotification();
 
 }
