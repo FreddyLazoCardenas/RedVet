@@ -11,6 +11,7 @@ import android.support.v4.content.FileProvider;
 
 import com.papps.freddy_lazo.redvet.BuildConfig;
 import com.papps.freddy_lazo.redvet.R;
+import com.papps.freddy_lazo.redvet.model.NewsModel;
 import com.papps.freddy_lazo.redvet.model.PetLoverRegisterModel;
 import com.papps.freddy_lazo.redvet.view.activity.AppointmentActivity;
 import com.papps.freddy_lazo.redvet.view.activity.BaseActivity;
@@ -18,6 +19,7 @@ import com.papps.freddy_lazo.redvet.view.activity.CancelAppointmentActivity;
 import com.papps.freddy_lazo.redvet.view.activity.ChatActivity;
 import com.papps.freddy_lazo.redvet.view.activity.HomeActivity;
 import com.papps.freddy_lazo.redvet.view.activity.LoginActivity;
+import com.papps.freddy_lazo.redvet.view.activity.NewsDetailActivity;
 import com.papps.freddy_lazo.redvet.view.activity.RegisterActivity;
 import com.papps.freddy_lazo.redvet.view.dialogFragment.BaseDialogFragment;
 import com.papps.freddy_lazo.redvet.view.dialogFragment.CameraDialog;
@@ -78,6 +80,12 @@ public class Navigator extends BaseNavigator {
     public void navigateToChatActivity(BaseActivity activity, int appointmentId) {
         activity.startActivity(ChatActivity.getCallingIntent(activity, appointmentId));
     }
+
+    public void navigateToNewsDetailActivity(BaseActivity activity, NewsModel data) {
+        activity.startActivity(NewsDetailActivity.getCallingIntent(activity, data));
+    }
+
+
 
 
     //fragments

@@ -25,7 +25,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 
-public class NewsFragment extends BaseFragment implements NewsFragmentView {
+public class NewsFragment extends BaseFragment implements NewsFragmentView, NewsAdapter.OnClickAdapter {
 
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
@@ -77,6 +77,7 @@ public class NewsFragment extends BaseFragment implements NewsFragmentView {
     private void setUpRecycler() {
         recyclerView.setLayoutManager(new LinearLayoutManager(activity));
         recyclerView.setAdapter(adapter);
+        adapter.setView(this);
     }
 
     @Override
@@ -108,5 +109,10 @@ public class NewsFragment extends BaseFragment implements NewsFragmentView {
     @Override
     public String getApiToken() {
         return activity.getModel().getApi_token();
+    }
+
+    @Override
+    public void itemClicked(NewsModel model) {
+        navigator.navigateToNewsDetailActivity(activity, model);
     }
 }

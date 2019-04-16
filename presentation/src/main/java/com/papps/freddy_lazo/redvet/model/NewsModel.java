@@ -1,6 +1,9 @@
 package com.papps.freddy_lazo.redvet.model;
 
-public class NewsModel {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class NewsModel implements Parcelable {
 
     private int id;
     private String title;
@@ -65,4 +68,40 @@ public class NewsModel {
     public void setType(String type) {
         this.type = type;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(this.id);
+        dest.writeString(this.title);
+        dest.writeString(this.content);
+        dest.writeString(this.photo);
+        dest.writeString(this.photo_url);
+        dest.writeString(this.type);
+    }
+
+    protected NewsModel(Parcel in) {
+        this.id = in.readInt();
+        this.title = in.readString();
+        this.content = in.readString();
+        this.photo = in.readString();
+        this.photo_url = in.readString();
+        this.type = in.readString();
+    }
+
+    public static final Parcelable.Creator<NewsModel> CREATOR = new Parcelable.Creator<NewsModel>() {
+        @Override
+        public NewsModel createFromParcel(Parcel source) {
+            return new NewsModel(source);
+        }
+
+        @Override
+        public NewsModel[] newArray(int size) {
+            return new NewsModel[size];
+        }
+    };
 }

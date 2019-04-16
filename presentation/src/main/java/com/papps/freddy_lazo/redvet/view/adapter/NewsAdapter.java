@@ -13,6 +13,8 @@ import com.papps.freddy_lazo.redvet.GlideApp;
 import com.papps.freddy_lazo.redvet.R;
 import com.papps.freddy_lazo.redvet.model.NewsModel;
 import com.papps.freddy_lazo.redvet.model.ServicesModel;
+import com.papps.freddy_lazo.redvet.view.fragment.BaseFragment;
+import com.papps.freddy_lazo.redvet.view.fragment.NewsFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,11 +23,13 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder> {
 
     private List<NewsModel> data = new ArrayList<>();
     private Context context;
+    private OnClickAdapter listener;
 
 
     @Inject
@@ -57,6 +61,10 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
         return data.size();
     }
 
+    public void setView(BaseFragment fragment) {
+        listener = (OnClickAdapter) fragment;
+    }
+
 
     class NewsViewHolder extends RecyclerView.ViewHolder {
 
@@ -83,5 +91,14 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
                     .into(imgNews);
         }
 
+
+        @OnClick
+        public void itemClicked() {
+            listener.itemClicked(data.get(getAdapterPosition()));
+        }
+    }
+
+    public interface OnClickAdapter {
+        void itemClicked(NewsModel model);
     }
 }
