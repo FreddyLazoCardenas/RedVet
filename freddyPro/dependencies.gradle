@@ -38,6 +38,8 @@ ext {
     lottieVersion = '2.5.5'
     facebookVersion = '4.33.0'
     crashlyticsVersion = '2.9.3'
+    roomVersion = '1.1.1'
+
 
     rootbeerVersion = '0.0.7'
     securedPreferencesVersion = '0.7.3'
@@ -131,6 +133,8 @@ ext {
             firebaseStorage     : "com.google.firebase:firebase-storage:${firebaseVersion}",
             firebaseDatabase    : "com.google.firebase:firebase-database:${firebaseVersion}",
             firebaseRemoteConfig: "com.google.firebase:firebase-config:${firebaseVersion}",
+            room                : "android.arch.persistence.room:runtime:${roomVersion}",
+            roomCompiler        : "android.arch.persistence.room:compiler:${roomVersion}",
             securedPreferences  : "online.devliving:securedpreferencestore:${securedPreferencesVersion}",
             crashlytics         : "com.crashlytics.sdk.android:crashlytics:${crashlyticsVersion}@aar"
     ]

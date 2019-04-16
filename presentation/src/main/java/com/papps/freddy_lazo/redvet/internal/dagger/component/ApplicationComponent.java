@@ -8,6 +8,7 @@ import com.papps.freddy_lazo.domain.executor.PostExecutionThread;
 import com.papps.freddy_lazo.domain.executor.ThreadExecutor;
 import com.papps.freddy_lazo.domain.repository.UserRepository;
 import com.papps.freddy_lazo.domain.repository.UtilsRepository;
+import com.papps.freddy_lazo.redvet.internal.dagger.module.LocalDatabaseModule;
 import com.papps.freddy_lazo.redvet.internal.dagger.module.NetworkModule;
 import com.papps.freddy_lazo.redvet.navigation.Navigator;
 import com.papps.freddy_lazo.redvet.view.activity.BaseActivity;
@@ -22,7 +23,7 @@ import dagger.Component;
  * A component whose lifetime is the life of the application.
  */
 @Singleton
-@Component(modules = {ApplicationModule.class, NetworkModule.class})
+@Component(modules = {ApplicationModule.class, LocalDatabaseModule.class, NetworkModule.class})
 public interface ApplicationComponent {
 
     void inject(BaseActivity activity);

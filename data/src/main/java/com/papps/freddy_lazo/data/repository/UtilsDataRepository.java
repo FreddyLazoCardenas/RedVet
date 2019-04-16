@@ -5,12 +5,16 @@ import com.papps.freddy_lazo.data.entity.mapper.AppointmentDoctorMapper;
 import com.papps.freddy_lazo.data.entity.mapper.AppointmentPetLoverMapper;
 import com.papps.freddy_lazo.data.entity.mapper.AppointmentPhotoMapper;
 import com.papps.freddy_lazo.data.entity.mapper.NewsMapper;
+import com.papps.freddy_lazo.data.entity.mapper.NotificationEntityDataMapper;
+import com.papps.freddy_lazo.data.entity.mapper.NotificationTableDataMapper;
 import com.papps.freddy_lazo.data.entity.mapper.RedVetAppointmentMapper;
 import com.papps.freddy_lazo.data.entity.mapper.RedVetMessageMapper;
 import com.papps.freddy_lazo.data.entity.mapper.ServicesMapper;
+import com.papps.freddy_lazo.data.local.database.Database;
 import com.papps.freddy_lazo.data.network.RestApi;
 import com.papps.freddy_lazo.domain.model.AppointmentPhoto;
 import com.papps.freddy_lazo.domain.model.DoctorAppointment;
+import com.papps.freddy_lazo.domain.model.Notification;
 import com.papps.freddy_lazo.domain.model.PetLoverAppointment;
 import com.papps.freddy_lazo.domain.model.News;
 import com.papps.freddy_lazo.domain.model.RedVetAppointment;
@@ -29,10 +33,13 @@ import io.reactivex.Observable;
 public class UtilsDataRepository implements UtilsRepository {
 
     private final RestApi mRestApi;
+    private final Database database;
+
 
     @Inject
-    UtilsDataRepository(RestApi mRestApi) {
+    UtilsDataRepository(RestApi mRestApi , Database database) {
         this.mRestApi = mRestApi;
+        this.database = database;
     }
 
     @Override
@@ -108,6 +115,16 @@ public class UtilsDataRepository implements UtilsRepository {
     @Override
     public Observable<RedVetMessage> sendDoctorMessage(String auth, int appointmentId, String message) {
         return mRestApi.sendDoctorMessage(auth, appointmentId, message).map(RedVetMessageMapper::transform);
+    }
+
+    @Override
+    public Observable<List<Notification>> listNotifications() {
+        return database.getNotifications().map(NotificationEntityDataMapper::transformList);
+    }
+
+    @Override
+    public Observable<Void> saveNotification(Notification notification) {
+        return database.saveNotification(NotificationEntityDataMapper.transform(notification));
     }
 
 

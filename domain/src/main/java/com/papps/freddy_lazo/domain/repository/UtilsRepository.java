@@ -2,6 +2,7 @@ package com.papps.freddy_lazo.domain.repository;
 
 import com.papps.freddy_lazo.domain.model.AppointmentPhoto;
 import com.papps.freddy_lazo.domain.model.DoctorAppointment;
+import com.papps.freddy_lazo.domain.model.Notification;
 import com.papps.freddy_lazo.domain.model.PetLoverAppointment;
 import com.papps.freddy_lazo.domain.model.News;
 import com.papps.freddy_lazo.domain.model.RedVetAppointment;
@@ -43,5 +44,11 @@ public interface UtilsRepository {
     Observable<RedVetMessage> sendPetLoverMessage(String auth, int appointmentId, String message);
 
     Observable<RedVetMessage> sendDoctorMessage(String auth, int appointmentId, String message);
+
+    Observable<List<Notification>> listNotifications();
+
+    Observable<Void> saveNotification(Notification notification);
+
+
 
 }

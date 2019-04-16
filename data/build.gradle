@@ -42,5 +42,7 @@ dependencies {
     api dataDependencies.rxAndroid
     api dataDependencies.javaxInject
     api dataDependencies.loggingInterceptor
+    api dataDependencies.room
+    annotationProcessor dataDependencies.roomCompiler
 
 }
