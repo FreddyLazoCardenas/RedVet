@@ -12,6 +12,7 @@ import com.papps.freddy_lazo.domain.repository.UserRepository;
 import com.papps.freddy_lazo.domain.repository.UtilsRepository;
 import com.papps.freddy_lazo.redvet.AndroidApplication;
 import com.papps.freddy_lazo.redvet.UIThread;
+import com.papps.freddy_lazo.redvet.internal.bus.event.RxBus;
 
 import javax.inject.Singleton;
 
@@ -58,6 +59,14 @@ public class ApplicationModule {
     UtilsRepository provideUserUtilsRepository(UtilsDataRepository utilsDataRepository) {
         return utilsDataRepository;
     }
+
+
+    @Provides
+    @Singleton
+    RxBus provideRxBus() {
+        return new RxBus();
+    }
+
 
     @Provides
     @Singleton

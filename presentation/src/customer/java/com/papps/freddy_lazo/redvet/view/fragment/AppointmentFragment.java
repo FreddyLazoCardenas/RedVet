@@ -29,6 +29,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import butterknife.BindView;
+import io.reactivex.functions.Consumer;
 
 public class AppointmentFragment extends BaseFragment implements AppointmentFragmentView, AppointmentHeaderAdapter.onClickAdapter, AppointmentAdapter.onClickAdapter, ConfirmedAppointmentDialog.RequestInterface {
 
@@ -66,8 +67,17 @@ public class AppointmentFragment extends BaseFragment implements AppointmentFrag
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         activity = (HomeActivity) getActivity();
+        subscribeBus();
         setUpRv();
         initUI();
+    }
+
+
+    @Override
+    protected Consumer<Object> getBusAction() {
+        return event -> {
+          Log.d("getBusAction","dads");
+        };
     }
 
     private void setUpRv() {
@@ -90,6 +100,12 @@ public class AppointmentFragment extends BaseFragment implements AppointmentFrag
                 .build().inject(this);
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        presenter.destroy();
+        unsubscribeBus();
+    }
 
     @Override
     public void initUI() {

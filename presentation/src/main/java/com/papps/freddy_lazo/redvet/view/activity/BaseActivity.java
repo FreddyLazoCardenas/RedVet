@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import com.papps.freddy_lazo.redvet.AndroidApplication;
 import com.papps.freddy_lazo.redvet.interfaces.BaseView;
+import com.papps.freddy_lazo.redvet.internal.bus.event.RxBus;
 import com.papps.freddy_lazo.redvet.internal.dagger.component.ApplicationComponent;
 import com.papps.freddy_lazo.redvet.model.ServicesModel;
 import com.papps.freddy_lazo.redvet.navigation.Navigator;
@@ -19,11 +20,16 @@ import java.util.List;
 import javax.inject.Inject;
 
 import butterknife.ButterKnife;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.functions.Consumer;
 
 public class BaseActivity extends AppCompatActivity implements BaseView {
 
     @Inject
     protected Navigator navigator;
+
+    @Inject
+    RxBus rxBus;
 
     /*    @Nullable
         @BindView(R.id.v_progress)
@@ -34,6 +40,7 @@ public class BaseActivity extends AppCompatActivity implements BaseView {
         Toolbar toolbar;
         */
     protected boolean isStopped;
+    private CompositeDisposable mDisposable;
     private List<ServicesModel> data = new ArrayList<>();
 
 
@@ -107,5 +114,25 @@ public class BaseActivity extends AppCompatActivity implements BaseView {
 
     public Navigator getNavigator() {
         return navigator;
+    }
+
+    void subscribeBus() {
+        Consumer<Object> action = getBusAction();
+        if (action != null) {
+            if (mDisposable == null) {
+                mDisposable = new CompositeDisposable();
+            }
+            mDisposable.add(rxBus.toObservable().subscribe(action));
+        } else {
+            throw new NullPointerException("Action must not be null. Override getBusAction method to provide an action to the bus.");
+        }
+    }
+
+    void unsubscribeBus() {
+        mDisposable.clear();
+    }
+
+    Consumer<Object> getBusAction() {
+        return null;
     }
 }

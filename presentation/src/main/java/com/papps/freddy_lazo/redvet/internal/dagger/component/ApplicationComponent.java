@@ -9,6 +9,7 @@ import com.papps.freddy_lazo.domain.executor.ThreadExecutor;
 import com.papps.freddy_lazo.domain.interactor.SaveNotification;
 import com.papps.freddy_lazo.domain.repository.UserRepository;
 import com.papps.freddy_lazo.domain.repository.UtilsRepository;
+import com.papps.freddy_lazo.redvet.internal.bus.event.RxBus;
 import com.papps.freddy_lazo.redvet.internal.dagger.module.LocalDatabaseModule;
 import com.papps.freddy_lazo.redvet.internal.dagger.module.NetworkModule;
 import com.papps.freddy_lazo.redvet.navigation.Navigator;
@@ -38,6 +39,8 @@ public interface ApplicationComponent {
     Navigator navigator();
 
     UserRepository userRepository();
+
+    RxBus rxBus();
 
     UtilsRepository utilsRepository();
 
