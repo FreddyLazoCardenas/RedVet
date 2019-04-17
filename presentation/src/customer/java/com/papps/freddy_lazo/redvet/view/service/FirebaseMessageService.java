@@ -15,6 +15,7 @@ import com.papps.freddy_lazo.redvet.internal.bus.RxBus;
 import com.papps.freddy_lazo.redvet.view.util.NotificationUtil;
 
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 public class FirebaseMessageService extends FirebaseMessagingService {
@@ -37,7 +38,7 @@ public class FirebaseMessageService extends FirebaseMessagingService {
         saveNotification.bindParams(new Notification(data.get("type"), data.get("appointment_id"), data.get("message"), timeStamp, false));
         saveNotification.execute(new SaveDataObservable());
 
-        rxBus.send(new Event.NotificationEvent());
+        rxBus.send(new Event.NotificationEvent(Integer.valueOf(Objects.requireNonNull(data.get("appointment_id")))));
     }
 
     private class SaveDataObservable extends DefaultObserver<Void> {

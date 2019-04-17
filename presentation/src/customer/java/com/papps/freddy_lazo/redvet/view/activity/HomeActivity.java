@@ -10,9 +10,11 @@ import android.view.MenuItem;
 
 import com.papps.freddy_lazo.data.sharedPreferences.PreferencesManager;
 import com.papps.freddy_lazo.redvet.R;
+import com.papps.freddy_lazo.redvet.interfaces.HomeActivityView;
 import com.papps.freddy_lazo.redvet.internal.bus.Event;
 import com.papps.freddy_lazo.redvet.internal.dagger.component.DaggerHomeComponent;
 import com.papps.freddy_lazo.redvet.model.PetLoverModel;
+import com.papps.freddy_lazo.redvet.presenter.HomeActivityPresenter;
 
 
 import javax.inject.Inject;
@@ -20,12 +22,14 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import io.reactivex.functions.Consumer;
 
-public class HomeActivity extends BaseActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
+public class HomeActivity extends BaseActivity implements BottomNavigationView.OnNavigationItemSelectedListener, HomeActivityView {
 
     @BindView(R.id.bottom_navigation)
     BottomNavigationView bottomNav;
     @Inject
     PreferencesManager preferencesManager;
+    @Inject
+    HomeActivityPresenter presenter;
 
     public static Intent getCallingIntent(BaseActivity activity) {
         return new Intent(activity, HomeActivity.class)
@@ -47,6 +51,7 @@ public class HomeActivity extends BaseActivity implements BottomNavigationView.O
 
     @Override
     public void initUI() {
+        presenter.setView(this);
         bottomNav.setOnNavigationItemSelectedListener(this);
         bottomNav.setSelectedItemId(R.id.action_map);
     }
@@ -67,13 +72,15 @@ public class HomeActivity extends BaseActivity implements BottomNavigationView.O
     protected Consumer<Object> getBusAction() {
         return event -> {
             if (event instanceof Event.NotificationEvent) {
+                Event.NotificationEvent response = (Event.NotificationEvent) event;
+                presenter.sendRequest(getApiToken(),response.getAppointmentId());
                 Log.d("getBusAction", "llego a la actividad");
             }
         };
     }
 
 
-    public PetLoverModel getModel(){
+    public PetLoverModel getModel() {
         return PetLoverModel.toModel(preferencesManager.getPetLoverCurrentUser());
     }
 
@@ -98,5 +105,10 @@ public class HomeActivity extends BaseActivity implements BottomNavigationView.O
             default:
                 return false;
         }
+    }
+
+    @Override
+    public String getApiToken() {
+        return getModel().getApi_token();
     }
 }
