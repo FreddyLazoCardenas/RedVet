@@ -2,6 +2,7 @@ package com.papps.freddy_lazo.redvet.view.fragment;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -20,6 +21,7 @@ import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -32,8 +34,10 @@ import com.papps.freddy_lazo.redvet.GlideApp;
 import com.papps.freddy_lazo.redvet.R;
 import com.papps.freddy_lazo.redvet.interfaces.RegisterFragmentView;
 import com.papps.freddy_lazo.redvet.internal.dagger.component.DaggerRegisterFragmentComponent;
+import com.papps.freddy_lazo.redvet.model.PetRedVetModel;
 import com.papps.freddy_lazo.redvet.presenter.RegisterFragmentPresenter;
 import com.papps.freddy_lazo.redvet.view.activity.RegisterActivity;
+import com.papps.freddy_lazo.redvet.view.adapter.AddPetAdapter;
 import com.papps.freddy_lazo.redvet.view.adapter.PetAdapter;
 import com.papps.freddy_lazo.redvet.view.dialogFragment.CameraDialog;
 import com.theartofdev.edmodo.cropper.CropImage;
@@ -42,13 +46,15 @@ import com.theartofdev.edmodo.cropper.CropImageView;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class RegisterFragment extends BaseFragment implements RegisterFragmentView, CameraDialog.OnClickListener {
+public class RegisterFragment extends BaseFragment implements RegisterFragmentView, CameraDialog.OnClickListener ,
+        DatePickerDialog.OnDateSetListener,AddPetAdapter.onClickAdapter{
 
 
     private static final String PICTURE_FILE_NAME = "profileComplete.jpg";
@@ -58,7 +64,7 @@ public class RegisterFragment extends BaseFragment implements RegisterFragmentVi
     private static final int REQUEST_CAMERA = 0;
 
     @Inject
-    PetAdapter adapter;
+    AddPetAdapter adapter;
     @Inject
     RegisterFragmentPresenter presenter;
 
@@ -138,19 +144,19 @@ public class RegisterFragment extends BaseFragment implements RegisterFragmentVi
     public void initUI() {
         presenter.setView(this);
         setUpPetRv();
+        presenter.getPets();
     }
 
     private void setUpPetRv() {
         recyclerView.setLayoutManager(new LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false));
         recyclerView.setAdapter(adapter);
-        adapter.bindList(false);
+        adapter.setView(this);
     }
 
 
     @OnClick(R.id.btn_register)
     public void btnRegister() {
         presenter.validateData();
-        //navigator.navigateToHomeActivity(activity);
     }
 
     @Override
@@ -373,6 +379,11 @@ public class RegisterFragment extends BaseFragment implements RegisterFragmentVi
     }
 
     @Override
+    public void successRequest(List<PetRedVetModel> data) {
+        adapter.bindList(data);
+    }
+
+    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == SELECT_FILE && resultCode == Activity.RESULT_OK) {
@@ -505,8 +516,29 @@ public class RegisterFragment extends BaseFragment implements RegisterFragmentVi
             return null;
     }
 
+    @OnClick(R.id.pet_birthday)
+    public void petBirthday(){
+        navigator.navigateToDatePicker(this);
+    }
+
     @Override
     public String getDeviceId() {
         return FirebaseInstanceId.getInstance().getToken();
+    }
+
+    @Override
+    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+        etPetBirthday.setText(String.format("%d-%d-%d", year, month + 1, dayOfMonth));
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        presenter.destroy();
+    }
+
+    @Override
+    public void data(List<PetRedVetModel> data) {
+
     }
 }

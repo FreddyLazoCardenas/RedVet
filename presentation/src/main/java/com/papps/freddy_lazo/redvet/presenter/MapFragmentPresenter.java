@@ -1,10 +1,13 @@
 package com.papps.freddy_lazo.redvet.presenter;
 
 import com.papps.freddy_lazo.domain.interactor.DefaultObserver;
+import com.papps.freddy_lazo.domain.interactor.PetRedVetUseCase;
 import com.papps.freddy_lazo.domain.interactor.SearchDoctorLogin;
 import com.papps.freddy_lazo.domain.model.Doctor;
+import com.papps.freddy_lazo.domain.model.PetRedVet;
 import com.papps.freddy_lazo.redvet.interfaces.MapFragmentView;
 import com.papps.freddy_lazo.redvet.model.mapper.DoctorModelMapper;
+import com.papps.freddy_lazo.redvet.model.mapper.PetRedVetModelMapper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,11 +17,13 @@ import javax.inject.Inject;
 public class MapFragmentPresenter implements Presenter<MapFragmentView> {
 
     private final SearchDoctorLogin searchDoctorLogin;
+    private final PetRedVetUseCase petRedVetUseCase;
     private MapFragmentView view;
 
     @Inject
-    MapFragmentPresenter(SearchDoctorLogin searchDoctorLogin) {
+    MapFragmentPresenter(SearchDoctorLogin searchDoctorLogin, PetRedVetUseCase petRedVetUseCase) {
         this.searchDoctorLogin = searchDoctorLogin;
+        this.petRedVetUseCase = petRedVetUseCase;
     }
 
     @Override
@@ -34,11 +39,41 @@ public class MapFragmentPresenter implements Presenter<MapFragmentView> {
     @Override
     public void destroy() {
         searchDoctorLogin.unsubscribe();
+        petRedVetUseCase.unsubscribe();
     }
 
     public void getDoctors() {
         searchDoctorLogin.bindParams(view.getType(), view.getServices(), view.getPets(), view.getText(), view.getApiToken());
         searchDoctorLogin.execute(new SearchDoctorObservable());
+    }
+
+    public void getPets(){
+        petRedVetUseCase.execute(new PetsObservable());
+    }
+
+    private class PetsObservable extends DefaultObserver<List<PetRedVet>> {
+
+        @Override
+        protected void onStart() {
+            super.onStart();
+        }
+
+        @Override
+        public void onNext(List<PetRedVet> petRedVets) {
+            super.onNext(petRedVets);
+            view.successRequest(PetRedVetModelMapper.transform(petRedVets));
+        }
+
+        @Override
+        public void onError(Throwable e) {
+            super.onError(e);
+            view.showErrorMessage(e.getMessage());
+        }
+
+        @Override
+        public void onComplete() {
+            super.onComplete();
+        }
     }
 
     @Override

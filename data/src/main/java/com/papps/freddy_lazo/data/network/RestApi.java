@@ -44,7 +44,7 @@ public interface RestApi {
 
     Observable<List<NewsEntity>> petLoverNews(String path, String apiToken);
 
-    Observable<List<DoctorEntity>> searchDoctors(ArrayList<String> type, ArrayList<Integer> services, ArrayList<Integer> pets, String text, String apiToken);
+    Observable<List<DoctorEntity>> searchDoctors(List<String> type, List<Integer> services, List<Integer> pets, String text, String apiToken);
 
     Observable<Void> signUpPetLover(String email, String password, String firstName, String lastName, String dni, String address, String phone, String photo, String fcmToken, List<PetRegister> pets);
 

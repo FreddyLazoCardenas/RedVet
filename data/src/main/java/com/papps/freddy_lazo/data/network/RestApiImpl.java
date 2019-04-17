@@ -199,7 +199,7 @@ public class RestApiImpl implements RestApi {
     }
 
     @Override
-    public Observable<List<DoctorEntity>> searchDoctors(ArrayList<String> type, ArrayList<Integer> services, ArrayList<Integer> pets, String text, String apiToken) {
+    public Observable<List<DoctorEntity>> searchDoctors(List<String> type, List<Integer> services, List<Integer> pets, String text, String apiToken) {
         return Observable.create(emitter -> restService.petLoverSearch(new BodySearchDoctors(type, services, pets, text), "Bearer " + apiToken).enqueue(new DefaultCallback<ResponseEntity<DoctorSearchResponse>>(emitter) {
             @Override
             public void onResponse(@NonNull Call<ResponseEntity<DoctorSearchResponse>> call, @NonNull Response<ResponseEntity<DoctorSearchResponse>> response) {

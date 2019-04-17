@@ -9,15 +9,15 @@ import java.util.List;
 public class BodySearchDoctors {
 
     @SerializedName("type")
-    private ArrayList<String> type;
+    private List<String> type;
     @SerializedName("services")
-    private ArrayList<Integer> services;
+    private List<Integer> services;
     @SerializedName("pets")
-    private ArrayList<Integer> pets;
+    private List<Integer> pets;
     @SerializedName("text")
     private String text;
 
-    public BodySearchDoctors(ArrayList<String> type, ArrayList<Integer> services, ArrayList<Integer> pets, String text) {
+    public BodySearchDoctors(List<String> type, List<Integer> services, List<Integer> pets, String text) {
         this.type = type;
         this.services = services;
         this.pets = pets;

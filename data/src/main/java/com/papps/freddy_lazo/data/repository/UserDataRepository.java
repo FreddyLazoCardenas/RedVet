@@ -58,7 +58,7 @@ public class UserDataRepository implements UserRepository {
     }
 
     @Override
-    public Observable<List<Doctor>> searchDoctors(ArrayList<String> type, ArrayList<Integer> services, ArrayList<Integer> pets, String text, String apiToken) {
+    public Observable<List<Doctor>> searchDoctors(List<String> type, List<Integer> services, List<Integer> pets, String text, String apiToken) {
         return mRestApi.searchDoctors(type, services, pets, text, apiToken).map(SearchDoctorsMapper::transform);
     }
 

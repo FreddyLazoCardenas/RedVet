@@ -19,7 +19,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -37,6 +36,7 @@ import com.papps.freddy_lazo.redvet.R;
 import com.papps.freddy_lazo.redvet.interfaces.MapFragmentView;
 import com.papps.freddy_lazo.redvet.internal.dagger.component.DaggerMapFragmentComponent;
 import com.papps.freddy_lazo.redvet.model.DoctorModel;
+import com.papps.freddy_lazo.redvet.model.PetRedVetModel;
 import com.papps.freddy_lazo.redvet.presenter.MapFragmentPresenter;
 import com.papps.freddy_lazo.redvet.view.activity.HomeActivity;
 import com.papps.freddy_lazo.redvet.view.adapter.PetAdapter;
@@ -49,7 +49,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class MapFragment extends BaseFragment implements OnMapReadyCallback, MapFragmentView, GoogleMap.OnMarkerClickListener {
+public class MapFragment extends BaseFragment implements OnMapReadyCallback, MapFragmentView, GoogleMap.OnMarkerClickListener, PetAdapter.onClickAdapter {
 
     private static final int REQUEST_LOCATION = 2;
     private HomeActivity activity;
@@ -64,6 +64,7 @@ public class MapFragment extends BaseFragment implements OnMapReadyCallback, Map
     @BindView(R.id.rv_pet)
     RecyclerView recyclerView;
     private LatLng position;
+    private List<Integer> petsIdArray = new ArrayList<>();
 
     public static Fragment newInstance() {
         return new MapFragment();
@@ -160,12 +161,13 @@ public class MapFragment extends BaseFragment implements OnMapReadyCallback, Map
     public void initUI() {
         presenter.setView(this);
         setUpPetRv();
+        presenter.getPets();
     }
 
     private void setUpPetRv() {
         recyclerView.setLayoutManager(new LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false));
         recyclerView.setAdapter(adapter);
-        adapter.bindList(true);
+        adapter.setView(this);
     }
 
     @Override
@@ -208,23 +210,28 @@ public class MapFragment extends BaseFragment implements OnMapReadyCallback, Map
     }
 
     @Override
-    public ArrayList<String> getType() {
+    public List<String> getType() {
         return new ArrayList<>();
     }
 
     @Override
-    public ArrayList<Integer> getServices() {
+    public List<Integer> getServices() {
         return new ArrayList<>();
     }
 
     @Override
-    public ArrayList<Integer> getPets() {
-        return new ArrayList<>();
+    public List<Integer> getPets() {
+        return petsIdArray;
     }
 
     @Override
     public String getText() {
         return "";
+    }
+
+    @Override
+    public void successRequest(List<PetRedVetModel> data) {
+        adapter.bindList(data);
     }
 
     private void setDoctorMarkers(List<DoctorModel> data) {
@@ -252,8 +259,8 @@ public class MapFragment extends BaseFragment implements OnMapReadyCallback, Map
     public void btnLocation() {
         if (position != null && googleMap != null) {
             CameraPosition cameraPosition = new CameraPosition.Builder()
-                    .target(position)      // Sets the center of the map to Mountain View
-                    .zoom(17)           // Sets the zoom
+                    .target(position)            // Sets the center of the map to Mountain View
+                    .zoom(17)                    // Sets the zoom
                     .build();                   // Creates a CameraPosition from the builder
             googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
         }
@@ -263,5 +270,15 @@ public class MapFragment extends BaseFragment implements OnMapReadyCallback, Map
     public void onDestroy() {
         super.onDestroy();
         presenter.destroy();
+    }
+
+    @Override
+    public void data(List<PetRedVetModel> data) {
+        petsIdArray.clear();
+        for (PetRedVetModel petData : data) {
+            if (petData.isSelected()) {
+                petsIdArray.add(petData.getId());
+            }
+        }
     }
 }

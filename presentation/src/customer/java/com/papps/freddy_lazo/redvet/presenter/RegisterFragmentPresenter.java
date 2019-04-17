@@ -8,8 +8,13 @@ import android.text.TextUtils;
 import com.papps.freddy_lazo.data.exception.RedVetException;
 import com.papps.freddy_lazo.domain.interactor.DefaultObserver;
 import com.papps.freddy_lazo.domain.interactor.PetLoverSignUp;
+import com.papps.freddy_lazo.domain.interactor.PetRedVetUseCase;
+import com.papps.freddy_lazo.domain.model.PetRedVet;
 import com.papps.freddy_lazo.redvet.R;
 import com.papps.freddy_lazo.redvet.interfaces.RegisterFragmentView;
+import com.papps.freddy_lazo.redvet.model.mapper.PetRedVetModelMapper;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -21,12 +26,14 @@ public class RegisterFragmentPresenter implements Presenter<RegisterFragmentView
     public static final int PERMISSION_REQUEST_CAMERA_CODE = 4;
     public static final int PERMISSION_REQUEST_GALLERY_CODE = 5;
     private final PetLoverSignUp petLoverSignUp;
+    private final PetRedVetUseCase petRedVetUseCase;
 
     private RegisterFragmentView view;
 
     @Inject
-    public RegisterFragmentPresenter(PetLoverSignUp petLoverSignUp) {
+    public RegisterFragmentPresenter(PetLoverSignUp petLoverSignUp, PetRedVetUseCase petRedVetUseCase) {
         this.petLoverSignUp = petLoverSignUp;
+        this.petRedVetUseCase = petRedVetUseCase;
     }
 
     @Override
@@ -41,7 +48,8 @@ public class RegisterFragmentPresenter implements Presenter<RegisterFragmentView
 
     @Override
     public void destroy() {
-
+        petLoverSignUp.unsubscribe();
+        petRedVetUseCase.unsubscribe();
     }
 
     @Override
@@ -104,6 +112,36 @@ public class RegisterFragmentPresenter implements Presenter<RegisterFragmentView
         petLoverSignUp.bindParams(view.getEmail(),view.getPassword(),view.getName(),view.getLastName(),view.getDni(),view.getAddress(),view.getPhone(),view.getProfileBase64Image(), view.getDeviceId(),view.getPetData());
         petLoverSignUp.execute(new PetLoverSignUpObservable());
     }
+
+    public void getPets(){
+        petRedVetUseCase.execute(new PetsObservable());
+    }
+
+    private class PetsObservable extends DefaultObserver<List<PetRedVet>> {
+
+        @Override
+        protected void onStart() {
+            super.onStart();
+        }
+
+        @Override
+        public void onNext(List<PetRedVet> petRedVets) {
+            super.onNext(petRedVets);
+            view.successRequest(PetRedVetModelMapper.transform(petRedVets));
+        }
+
+        @Override
+        public void onError(Throwable e) {
+            super.onError(e);
+            view.showErrorMessage(e.getMessage());
+        }
+
+        @Override
+        public void onComplete() {
+            super.onComplete();
+        }
+    }
+
 
     private boolean validatePetModelData() {
         if (view.getPetData() == null) {

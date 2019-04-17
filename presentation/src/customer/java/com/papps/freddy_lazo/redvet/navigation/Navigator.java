@@ -33,6 +33,7 @@ import com.papps.freddy_lazo.redvet.view.dialogFragment.PetListDialog;
 import com.papps.freddy_lazo.redvet.view.dialogFragment.PhotoListDialog;
 import com.papps.freddy_lazo.redvet.view.dialogFragment.SuccessAppointmentDialog;
 import com.papps.freddy_lazo.redvet.view.fragment.AppointmentFragment;
+import com.papps.freddy_lazo.redvet.view.fragment.BaseFragment;
 import com.papps.freddy_lazo.redvet.view.fragment.MapFragment;
 import com.papps.freddy_lazo.redvet.view.fragment.NewsFragment;
 import com.papps.freddy_lazo.redvet.view.fragment.NotificationsFragment;
@@ -188,6 +189,10 @@ public class Navigator extends BaseNavigator {
 
     public void navigateToDatePicker(BaseActivity activity) {
         DatePickerFragment.newInstance(activity).show(activity.getSupportFragmentManager(), "datePicker");
+    }
+
+    public void navigateToDatePicker(BaseFragment fragment) {
+        DatePickerFragment.newInstance(fragment).show(Objects.requireNonNull(fragment.getFragmentManager()), "datePicker");
     }
 
     public void navigateToTimePicker(BaseActivity activity) {

@@ -1,6 +1,7 @@
 package com.papps.freddy_lazo.redvet.interfaces;
 
 import com.papps.freddy_lazo.redvet.model.DoctorModel;
+import com.papps.freddy_lazo.redvet.model.PetRedVetModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,11 +12,13 @@ public interface MapFragmentView extends BaseView {
 
     String getApiToken();
 
-    ArrayList<String> getType();
+    List<String> getType();
 
-    ArrayList<Integer>  getServices();
+    List<Integer>  getServices();
 
-    ArrayList<Integer> getPets();
+    List<Integer> getPets();
 
     String getText();
+
+    void successRequest(List<PetRedVetModel> data);
 }
