@@ -32,13 +32,17 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.papps.freddy_lazo.domain.model.ServicesDoctorRegister;
 import com.papps.freddy_lazo.redvet.R;
 import com.papps.freddy_lazo.redvet.interfaces.MapFragmentView;
 import com.papps.freddy_lazo.redvet.internal.dagger.component.DaggerMapFragmentComponent;
+import com.papps.freddy_lazo.redvet.model.CreateAppointmentObjectModel;
 import com.papps.freddy_lazo.redvet.model.DoctorModel;
 import com.papps.freddy_lazo.redvet.model.PetRedVetModel;
+import com.papps.freddy_lazo.redvet.model.ServicesModel;
 import com.papps.freddy_lazo.redvet.presenter.MapFragmentPresenter;
 import com.papps.freddy_lazo.redvet.view.activity.HomeActivity;
+import com.papps.freddy_lazo.redvet.view.adapter.AppointmentHeaderAdapter;
 import com.papps.freddy_lazo.redvet.view.adapter.PetAdapter;
 
 import java.util.ArrayList;
@@ -49,7 +53,8 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class MapFragment extends BaseFragment implements OnMapReadyCallback, MapFragmentView, GoogleMap.OnMarkerClickListener, PetAdapter.onClickAdapter {
+public class MapFragment extends BaseFragment implements OnMapReadyCallback, MapFragmentView, GoogleMap.OnMarkerClickListener,
+        PetAdapter.onClickAdapter, AppointmentHeaderAdapter.onClickAdapter {
 
     private static final int REQUEST_LOCATION = 2;
     private HomeActivity activity;
@@ -63,8 +68,16 @@ public class MapFragment extends BaseFragment implements OnMapReadyCallback, Map
     MapFragmentPresenter presenter;
     @BindView(R.id.rv_pet)
     RecyclerView recyclerView;
+    @BindView(R.id.rv_types)
+    RecyclerView rvTypes;
+    @Inject
+    AppointmentHeaderAdapter typeAdapter;
+
     private LatLng position;
     private List<Integer> petsIdArray = new ArrayList<>();
+    private List<String> typeArray = new ArrayList<>();
+    private List<Integer> servicesArray = new ArrayList<>();
+    private boolean fromServices;
 
     public static Fragment newInstance() {
         return new MapFragment();
@@ -164,10 +177,41 @@ public class MapFragment extends BaseFragment implements OnMapReadyCallback, Map
         presenter.getPets();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (fromServices) {
+            fromServices = false;
+            servicesArray.clear();
+            List<ServicesModel> servicesModelList = activity.getData();
+            if (!servicesModelList.isEmpty()) {
+                for (ServicesModel servicesModel : servicesModelList) {
+                    if (servicesModel.getState()) {
+                        servicesArray.add(servicesModel.getId());
+                    }
+                }
+            }
+        }
+        presenter.getDoctors();
+    }
+
     private void setUpPetRv() {
         recyclerView.setLayoutManager(new LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false));
         recyclerView.setAdapter(adapter);
         adapter.setView(this);
+
+        rvTypes.setLayoutManager(new LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false));
+        rvTypes.setAdapter(typeAdapter);
+        typeAdapter.setView(this);
+        initHeaderAdapter();
+    }
+
+    private void initHeaderAdapter() {
+        List<CreateAppointmentObjectModel> data = new ArrayList<>();
+        data.add(new CreateAppointmentObjectModel("Clinicas","clinic"));
+        data.add(new CreateAppointmentObjectModel("Veterinarios","vet"));
+        data.add(new CreateAppointmentObjectModel("Otros","other"));
+        typeAdapter.bindList(data);
     }
 
     @Override
@@ -190,18 +234,19 @@ public class MapFragment extends BaseFragment implements OnMapReadyCallback, Map
         this.googleMap = googleMap;
         googleMap.setOnMarkerClickListener(this);
         Log.d("onMapReady", "cargo el mapa");
-        requestLastPosition();
         presenter.getDoctors();
     }
 
     @OnClick(R.id.txt_services)
     public void servicesClick() {
+        fromServices=true;
         navigator.navigateToServicesFragment(activity);
     }
 
     @Override
     public void getListData(List<DoctorModel> data) {
         setDoctorMarkers(data);
+        requestLastPosition();
     }
 
     @Override
@@ -211,12 +256,12 @@ public class MapFragment extends BaseFragment implements OnMapReadyCallback, Map
 
     @Override
     public List<String> getType() {
-        return new ArrayList<>();
+        return typeArray;
     }
 
     @Override
     public List<Integer> getServices() {
-        return new ArrayList<>();
+        return servicesArray;
     }
 
     @Override
@@ -235,6 +280,7 @@ public class MapFragment extends BaseFragment implements OnMapReadyCallback, Map
     }
 
     private void setDoctorMarkers(List<DoctorModel> data) {
+        googleMap.clear();
         for (DoctorModel doctorModel : data) {
             LatLng latLng = new LatLng(Double.valueOf(doctorModel.getLatitude()), Double.valueOf(doctorModel.getLongitude()));
             addDoctorMarker(latLng, doctorModel);
@@ -280,5 +326,17 @@ public class MapFragment extends BaseFragment implements OnMapReadyCallback, Map
                 petsIdArray.add(petData.getId());
             }
         }
+        presenter.getDoctors();
+    }
+
+    @Override
+    public void dataAdapter(List<CreateAppointmentObjectModel> data) {
+        typeArray.clear();
+        for (CreateAppointmentObjectModel model : data){
+            if(model.isSelected()){
+                typeArray.add(model.getSearchName());
+            }
+        }
+        presenter.getDoctors();
     }
 }

@@ -43,6 +43,7 @@ public class MapFragmentPresenter implements Presenter<MapFragmentView> {
     }
 
     public void getDoctors() {
+        searchDoctorLogin.unsubscribe();
         searchDoctorLogin.bindParams(view.getType(), view.getServices(), view.getPets(), view.getText(), view.getApiToken());
         searchDoctorLogin.execute(new SearchDoctorObservable());
     }
@@ -86,6 +87,11 @@ public class MapFragmentPresenter implements Presenter<MapFragmentView> {
         @Override
         protected void onStart() {
             super.onStart();
+        }
+
+        @Override
+        public void onError(Throwable e) {
+            super.onError(e);
         }
 
         @Override

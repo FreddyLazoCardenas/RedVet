@@ -8,13 +8,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.papps.freddy_lazo.redvet.R;
 import com.papps.freddy_lazo.redvet.model.CreateAppointmentObjectModel;
-import com.papps.freddy_lazo.redvet.model.PetLoverRegisterModel;
-import com.papps.freddy_lazo.redvet.view.fragment.AppointmentFragment;
 import com.papps.freddy_lazo.redvet.view.fragment.BaseFragment;
 
 import java.util.ArrayList;
@@ -93,7 +90,7 @@ public class AppointmentHeaderAdapter extends RecyclerView.Adapter<AppointmentHe
         void itemClick() {
             itemSelected(getAdapterPosition());
             bindList(data);
-            listener.data(data);
+            listener.dataAdapter(data);
         }
 
         private void itemSelected(int adapterPosition) {
@@ -109,7 +106,7 @@ public class AppointmentHeaderAdapter extends RecyclerView.Adapter<AppointmentHe
     }
 
     public interface onClickAdapter {
-        void data(List<CreateAppointmentObjectModel> data);
+        void dataAdapter(List<CreateAppointmentObjectModel> data);
     }
 }
 

@@ -64,60 +64,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/header_view" />
 
-
-    <TextView
-        android:id="@+id/txt_clinics"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_types"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/quote_bg_selected"
-        android:paddingStart="20dp"
-        android:paddingTop="10dp"
-        android:paddingEnd="20dp"
-        android:paddingBottom="10dp"
-        android:text="Clinicas"
-        android:textColor="@color/colorWhite"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/header_shadow" />
-
-    <TextView
-        android:id="@+id/txt_veterinaries"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/quote_bg"
-        android:paddingStart="20dp"
-        android:paddingTop="10dp"
-        android:paddingEnd="20dp"
-        android:paddingBottom="10dp"
-        android:text="Veterinarias"
-        android:textColor="@color/colorWhite"
-        app:layout_constraintEnd_toStartOf="@id/txt_others"
-        app:layout_constraintStart_toEndOf="@id/txt_clinics"
-        app:layout_constraintTop_toTopOf="@+id/txt_clinics" />
-
-    <TextView
-        android:id="@+id/txt_others"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="20dp"
-        android:background="@drawable/quote_bg"
-        android:padding="10dp"
-        android:paddingStart="20dp"
-        android:paddingTop="10dp"
-        android:paddingEnd="20dp"
-        android:paddingBottom="10dp"
-        android:text="Otros"
-        android:textColor="@color/colorWhite"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/txt_clinics" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/header_view" />
 
     <TextView
         android:id="@+id/txt_services"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="10dp"
         android:layout_marginEnd="20dp"
         android:background="@drawable/quote_bg"
         android:drawableEnd="@drawable/ic_arrow"
@@ -129,7 +88,7 @@
         android:textColor="@color/colorWhite"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_clinics" />
+        app:layout_constraintTop_toBottomOf="@+id/rv_types" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_pet"
