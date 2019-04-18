@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <style name="Theme.RetVet.AlertDialog" parent="Theme.AppCompat.Light.Dialog.Alert"/>
 
@@ -51,6 +51,15 @@
         <item name="colorControlHighlight">@color/colorGray</item>
     </style>
 
+    <style name="Widget.MyApp.Toolbar.Solid" parent="Widget.AppCompat.ActionBar">
+        <item name="android:background">@color/colorWhite</item>
+        <item name="android:elevation" tools:ignore="NewApi">4dp</item>
+    </style>
+
+    <style name="ThemeOverlay.MyApp.ActionBar" parent="ThemeOverlay.AppCompat.ActionBar">
+        <!-- Parent theme sets colorControlNormal to textColorPrimary. -->
+        <item name="android:textColorPrimary">@color/colorPink</item>
+    </style>
 
     <style name="error_appearance" parent="@android:style/TextAppearance">
         <item name="android:textColor">@color/colorPink</item>

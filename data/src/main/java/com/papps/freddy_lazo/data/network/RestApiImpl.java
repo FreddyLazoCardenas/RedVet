@@ -422,7 +422,7 @@ public class RestApiImpl implements RestApi {
 
     @Override
     public Observable<RedVetDetailAppointmentEntity> redVetAppointmentDetail(String auth, int appointmentId) {
-        return Observable.create(emitter -> restService.redVetAppointmentDetail(auth, appointmentId).enqueue(new DefaultCallback<ResponseEntity<RedVetAppointmentResponse>>(emitter) {
+        return Observable.create(emitter -> restService.redVetAppointmentDetail("Bearer " + auth, appointmentId).enqueue(new DefaultCallback<ResponseEntity<RedVetAppointmentResponse>>(emitter) {
             @Override
             public void onResponse(@NonNull Call<ResponseEntity<RedVetAppointmentResponse>> call, @NonNull Response<ResponseEntity<RedVetAppointmentResponse>> response) {
                 super.onResponse(call, response);
@@ -437,7 +437,7 @@ public class RestApiImpl implements RestApi {
 
     @Override
     public Observable<PetLoverAppointmentEntity> petLoverQualifyAppointment(String auth, int appointmentId, int qualification) {
-        return Observable.create(emitter -> restService.petLoverQualifyAppointment(auth, new BodyQualifyAppointment(appointmentId, qualification)).enqueue(new DefaultCallback<ResponseEntity<QualificationResponse>>(emitter) {
+        return Observable.create(emitter -> restService.petLoverQualifyAppointment("Bearer " + auth, new BodyQualifyAppointment(appointmentId, qualification)).enqueue(new DefaultCallback<ResponseEntity<QualificationResponse>>(emitter) {
             @Override
             public void onResponse(@NonNull Call<ResponseEntity<QualificationResponse>> call, @NonNull Response<ResponseEntity<QualificationResponse>> response) {
                 super.onResponse(call, response);

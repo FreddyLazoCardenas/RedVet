@@ -14,6 +14,7 @@ import com.papps.freddy_lazo.redvet.interfaces.HomeActivityView;
 import com.papps.freddy_lazo.redvet.internal.bus.Event;
 import com.papps.freddy_lazo.redvet.internal.dagger.component.DaggerHomeComponent;
 import com.papps.freddy_lazo.redvet.model.PetLoverModel;
+import com.papps.freddy_lazo.redvet.model.RedVetDetailAppointmentModel;
 import com.papps.freddy_lazo.redvet.presenter.HomeActivityPresenter;
 
 
@@ -73,7 +74,7 @@ public class HomeActivity extends BaseActivity implements BottomNavigationView.O
         return event -> {
             if (event instanceof Event.NotificationEvent) {
                 Event.NotificationEvent response = (Event.NotificationEvent) event;
-                presenter.sendRequest(getApiToken(),response.getAppointmentId());
+                presenter.sendRequest(getApiToken(), response.getAppointmentId());
                 Log.d("getBusAction", "llego a la actividad");
             }
         };
@@ -110,5 +111,18 @@ public class HomeActivity extends BaseActivity implements BottomNavigationView.O
     @Override
     public String getApiToken() {
         return getModel().getApi_token();
+    }
+
+    @Override
+    public void successRequest(RedVetDetailAppointmentModel data) {
+        switch (data.getStatus()) {
+            case "confirmed":
+                navigator
+                break;
+            case "finished":
+                break;
+            default:
+                break;
+        }
     }
 }

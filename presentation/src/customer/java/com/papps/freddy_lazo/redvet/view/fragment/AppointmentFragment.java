@@ -90,6 +90,7 @@ public class AppointmentFragment extends BaseFragment implements AppointmentFrag
         return event -> {
             if (event instanceof Event.NotificationEvent) {
                 Log.d("getBusAction", "llego el evento al fragment");
+                presenter.sendRequest();
             }
         };
     }

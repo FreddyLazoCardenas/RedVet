@@ -13,12 +13,18 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SearchView;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -47,6 +53,7 @@ import com.papps.freddy_lazo.redvet.view.adapter.PetAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import javax.inject.Inject;
 
@@ -54,7 +61,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 public class MapFragment extends BaseFragment implements OnMapReadyCallback, MapFragmentView, GoogleMap.OnMarkerClickListener,
-        PetAdapter.onClickAdapter, AppointmentHeaderAdapter.onClickAdapter {
+        PetAdapter.onClickAdapter, AppointmentHeaderAdapter.onClickAdapter, SearchView.OnQueryTextListener {
 
     private static final int REQUEST_LOCATION = 2;
     private HomeActivity activity;
@@ -70,6 +77,8 @@ public class MapFragment extends BaseFragment implements OnMapReadyCallback, Map
     RecyclerView recyclerView;
     @BindView(R.id.rv_types)
     RecyclerView rvTypes;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
     @Inject
     AppointmentHeaderAdapter typeAdapter;
 
@@ -78,6 +87,7 @@ public class MapFragment extends BaseFragment implements OnMapReadyCallback, Map
     private List<String> typeArray = new ArrayList<>();
     private List<Integer> servicesArray = new ArrayList<>();
     private boolean fromServices;
+    private String query;
 
     public static Fragment newInstance() {
         return new MapFragment();
@@ -92,6 +102,7 @@ public class MapFragment extends BaseFragment implements OnMapReadyCallback, Map
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
         buildInjection();
     }
 
@@ -99,6 +110,8 @@ public class MapFragment extends BaseFragment implements OnMapReadyCallback, Map
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         activity = (HomeActivity) getActivity();
+        Objects.requireNonNull(activity).setSupportActionBar(toolbar);
+        activity.setTitle("Filtrar");
         checkPermission();
         initUI();
 
@@ -110,6 +123,17 @@ public class MapFragment extends BaseFragment implements OnMapReadyCallback, Map
         if (mapFragment != null) {
             mapFragment.getMapAsync(this);
         }
+    }
+
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.map_menu, menu);
+        MenuItem searchItem = menu.findItem(R.id.search);
+        SearchView searchView = (SearchView) searchItem.getActionView();
+
+        searchView.setOnQueryTextListener(this);
+        super.onCreateOptionsMenu(menu, inflater);
     }
 
     private void checkPermission() {
@@ -142,7 +166,7 @@ public class MapFragment extends BaseFragment implements OnMapReadyCallback, Map
 
     private BitmapDescriptor bitmapDescriptorFromVector(Context context, int vectorResId) {
         Drawable vectorDrawable = ContextCompat.getDrawable(context, vectorResId);
-        vectorDrawable.setBounds(0, 0, vectorDrawable.getIntrinsicWidth(), vectorDrawable.getIntrinsicHeight());
+        vectorDrawable.setBounds(0, 0, Objects.requireNonNull(vectorDrawable).getIntrinsicWidth(), vectorDrawable.getIntrinsicHeight());
         Bitmap bitmap = Bitmap.createBitmap(vectorDrawable.getIntrinsicWidth(), vectorDrawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bitmap);
         vectorDrawable.draw(canvas);
@@ -191,8 +215,8 @@ public class MapFragment extends BaseFragment implements OnMapReadyCallback, Map
                     }
                 }
             }
+            presenter.getDoctors();
         }
-        presenter.getDoctors();
     }
 
     private void setUpPetRv() {
@@ -208,9 +232,9 @@ public class MapFragment extends BaseFragment implements OnMapReadyCallback, Map
 
     private void initHeaderAdapter() {
         List<CreateAppointmentObjectModel> data = new ArrayList<>();
-        data.add(new CreateAppointmentObjectModel("Clinicas","clinic"));
-        data.add(new CreateAppointmentObjectModel("Veterinarios","vet"));
-        data.add(new CreateAppointmentObjectModel("Otros","other"));
+        data.add(new CreateAppointmentObjectModel("Clinicas", "clinic"));
+        data.add(new CreateAppointmentObjectModel("Veterinarios", "vet"));
+        data.add(new CreateAppointmentObjectModel("Otros", "other"));
         typeAdapter.bindList(data);
     }
 
@@ -239,7 +263,7 @@ public class MapFragment extends BaseFragment implements OnMapReadyCallback, Map
 
     @OnClick(R.id.txt_services)
     public void servicesClick() {
-        fromServices=true;
+        fromServices = true;
         navigator.navigateToServicesFragment(activity);
     }
 
@@ -271,7 +295,7 @@ public class MapFragment extends BaseFragment implements OnMapReadyCallback, Map
 
     @Override
     public String getText() {
-        return "";
+        return query;
     }
 
     @Override
@@ -332,11 +356,24 @@ public class MapFragment extends BaseFragment implements OnMapReadyCallback, Map
     @Override
     public void dataAdapter(List<CreateAppointmentObjectModel> data) {
         typeArray.clear();
-        for (CreateAppointmentObjectModel model : data){
-            if(model.isSelected()){
+        for (CreateAppointmentObjectModel model : data) {
+            if (model.isSelected()) {
                 typeArray.add(model.getSearchName());
             }
         }
         presenter.getDoctors();
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String s) {
+        query = s;
+        presenter.getDoctors();
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String s) {
+        query = s;
+        return false;
     }
 }

@@ -4,6 +4,7 @@ import com.papps.freddy_lazo.domain.interactor.DefaultObserver;
 import com.papps.freddy_lazo.domain.interactor.RedVetAppointmentUseCase;
 import com.papps.freddy_lazo.domain.model.RedVetDetailAppointment;
 import com.papps.freddy_lazo.redvet.interfaces.HomeActivityView;
+import com.papps.freddy_lazo.redvet.model.mapper.RedVetDetailAppointmentModelMapper;
 
 import javax.inject.Inject;
 
@@ -52,7 +53,7 @@ public class HomeActivityPresenter implements Presenter<HomeActivityView> {
         @Override
         public void onNext(RedVetDetailAppointment redVetDetailAppointment) {
             super.onNext(redVetDetailAppointment);
-            view.showErrorMessage("exitoooo");
+            view.successRequest(RedVetDetailAppointmentModelMapper.transform(redVetDetailAppointment));
         }
 
         @Override

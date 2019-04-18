@@ -26,6 +26,7 @@ import com.papps.freddy_lazo.redvet.view.dialogFragment.CameraDialog;
 import com.papps.freddy_lazo.redvet.view.dialogFragment.CancelOtherReasonAppointmentDialog;
 import com.papps.freddy_lazo.redvet.view.dialogFragment.ConfirmedAppointmentDialog;
 import com.papps.freddy_lazo.redvet.view.dialogFragment.DoctorDialog;
+import com.papps.freddy_lazo.redvet.view.dialogFragment.DoctorNotificationConfirmedDialog;
 import com.papps.freddy_lazo.redvet.view.dialogFragment.FinishedAppointmentDialog;
 import com.papps.freddy_lazo.redvet.view.dialogFragment.PendingAppointmentDialog;
 import com.papps.freddy_lazo.redvet.view.dialogFragment.PetEditDialog;
@@ -179,6 +180,10 @@ public class Navigator extends BaseNavigator {
 
     public void navigateDoctorDetailFragment(FragmentManager fm, String name, String doctor) {
         DoctorDialog.newInstance(doctor).show(fm, name);
+    }
+
+    public void navigateDoctorConfirmedAppointmentFragment(BaseActivity activity,String notification) {
+        dialogTransaction(activity, DoctorNotificationConfirmedDialog.newInstance(notification));
     }
 
     public void navigateSuccessAppointment(BaseActivity activity) {
