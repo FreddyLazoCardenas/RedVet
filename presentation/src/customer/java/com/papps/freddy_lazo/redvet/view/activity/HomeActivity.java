@@ -117,9 +117,10 @@ public class HomeActivity extends BaseActivity implements BottomNavigationView.O
     public void successRequest(RedVetDetailAppointmentModel data) {
         switch (data.getStatus()) {
             case "confirmed":
-                navigator
+                navigator.navigateDoctorConfirmedAppointmentFragment(this, data.toString());
                 break;
             case "finished":
+                navigator.navigateDoctorFinishedAppointmentFragment(this, data.toString());
                 break;
             default:
                 break;

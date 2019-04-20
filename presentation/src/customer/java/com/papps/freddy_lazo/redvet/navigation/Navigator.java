@@ -8,6 +8,7 @@ import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.FileProvider;
+import android.widget.Toast;
 
 import com.papps.freddy_lazo.redvet.BuildConfig;
 import com.papps.freddy_lazo.redvet.R;
@@ -27,6 +28,7 @@ import com.papps.freddy_lazo.redvet.view.dialogFragment.CancelOtherReasonAppoint
 import com.papps.freddy_lazo.redvet.view.dialogFragment.ConfirmedAppointmentDialog;
 import com.papps.freddy_lazo.redvet.view.dialogFragment.DoctorDialog;
 import com.papps.freddy_lazo.redvet.view.dialogFragment.DoctorNotificationConfirmedDialog;
+import com.papps.freddy_lazo.redvet.view.dialogFragment.DoctorNotificationFinishedDialog;
 import com.papps.freddy_lazo.redvet.view.dialogFragment.FinishedAppointmentDialog;
 import com.papps.freddy_lazo.redvet.view.dialogFragment.PendingAppointmentDialog;
 import com.papps.freddy_lazo.redvet.view.dialogFragment.PetEditDialog;
@@ -86,8 +88,6 @@ public class Navigator extends BaseNavigator {
     public void navigateToNewsDetailActivity(BaseActivity activity, NewsModel data) {
         activity.startActivity(NewsDetailActivity.getCallingIntent(activity, data));
     }
-
-
 
 
     //fragments
@@ -182,8 +182,12 @@ public class Navigator extends BaseNavigator {
         DoctorDialog.newInstance(doctor).show(fm, name);
     }
 
-    public void navigateDoctorConfirmedAppointmentFragment(BaseActivity activity,String notification) {
+    public void navigateDoctorConfirmedAppointmentFragment(BaseActivity activity, String notification) {
         dialogTransaction(activity, DoctorNotificationConfirmedDialog.newInstance(notification));
+    }
+
+    public void navigateDoctorFinishedAppointmentFragment(BaseActivity activity, String notification) {
+        dialogTransaction(activity, DoctorNotificationFinishedDialog.newInstance(notification));
     }
 
     public void navigateSuccessAppointment(BaseActivity activity) {
@@ -230,6 +234,16 @@ public class Navigator extends BaseNavigator {
 
     public void navigatePhoneCall(BaseActivity activity, String phone) {
         activity.startActivity(new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", phone, null)));
+    }
+
+    public void navigateWhatsApp(BaseActivity activity, String phone) {
+        Intent sendIntent = new Intent(Intent.ACTION_VIEW);
+        sendIntent.setData(Uri.parse("http://api.whatsapp.com/send?phone=" + "51" + phone+ "&text=" + "Hola "));
+        if (sendIntent.resolveActivity(activity.getPackageManager()) == null) {
+            Toast.makeText(activity, "Instalar whatsApp por favor", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        activity.startActivity(sendIntent);
     }
 
     public void navigateEditPet(BaseActivity activity, PetLoverRegisterModel model, PetEditDialog.PetEditInterface listener) {

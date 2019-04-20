@@ -78,94 +78,51 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:gravity="center"
-                    android:text="Ha confirmado la cita solicitada"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/txt_job" />
+                    app:layout_constraintTop_toBottomOf="@+id/txt_job"
+                    tools:text="Ha confirmado la cita solicitada" />
+
 
                 <TextView
-                    android:id="@+id/tv_appointment"
+                    android:id="@+id/tv_rating"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:text="Cita"
-                    android:textColor="@color/colorGreen"
-                    android:textSize="18sp"
+                    android:layout_marginTop="5dp"
                     android:textStyle="bold"
+                    android:textSize="20sp"
+                    android:textColor="@color/colorPink"
+                    android:text="Califica tu servicio"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/txt_attendance" />
 
-                <TextView
-                    android:id="@+id/tv_appointment_date"
+                <android.support.v7.widget.AppCompatRatingBar
+                    android:id="@+id/rating"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textStyle="bold"
-                    android:textSize="22sp"
-                    tools:text="12FEB"
-                    android:textColor="@color/colorGray"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_appointment" />
-
-                <TextView
-                    android:id="@+id/tv_appointment_time"
-                    app:layout_constraintBottom_toBottomOf="@+id/tv_appointment_date"
+                    android:layout_marginTop="10dp"
+                    android:rating="5"
+                    android:stepSize="1"
+                    android:theme="@style/RatingBar"
                     app:layout_constraintEnd_toEndOf="parent"
-                    android:gravity="center"
-                    tools:text="3:30 a 4:30"
-                    android:drawablePadding="10dp"
-                    android:drawableStart="@drawable/ic_time"
-                    android:drawableTint="@color/colorPink"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    tools:targetApi="m" />
-
-                <Button
-                    android:id="@+id/btn_call"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginEnd="40dp"
-                    android:background="@android:color/transparent"
-                    android:drawableStart="@drawable/ic_doctor_phone"
-                    android:drawablePadding="10dp"
-                    android:text="Llamar"
-                    android:textAllCaps="false"
-                    android:textColor="@color/colorGray"
-                    app:layout_constraintEnd_toStartOf="@+id/btn_whatsapp"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintHorizontal_chainStyle="packed"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_appointment_date" />
+                    app:layout_constraintTop_toBottomOf="@+id/tv_rating" />
 
                 <Button
-                    android:id="@+id/btn_whatsapp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@android:color/transparent"
-                    android:drawableStart="@drawable/ic_whatsapp"
-                    android:drawablePadding="10dp"
-                    android:text="Whatsapp"
-                    android:textAllCaps="false"
-                    android:textColor="@color/colorGray"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toEndOf="@+id/btn_call"
-                    app:layout_constraintTop_toTopOf="@+id/btn_call" />
-
-                <Button
-                    android:id="@+id/btn_ok"
+                    android:id="@+id/btn_send"
                     style="@style/Widget.RetVet.ButtonSecondary"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="30dp"
                     android:layout_marginBottom="10dp"
-                    android:text="Ok"
+                    android:text="Enviar"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/btn_call" />
+                    app:layout_constraintTop_toBottomOf="@+id/rating" />
 
 
             </android.support.constraint.ConstraintLayout>

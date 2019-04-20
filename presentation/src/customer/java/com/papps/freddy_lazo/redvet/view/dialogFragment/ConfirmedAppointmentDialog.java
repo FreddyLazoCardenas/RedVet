@@ -145,7 +145,7 @@ public class ConfirmedAppointmentDialog extends BaseDialogFragment {
 
     private void getPetData(String petId) {
         for (PetLoverRegisterModel petLoverRegisterModel : petLoverModel.getPetList()) {
-            if (petLoverRegisterModel.getId() == Integer.valueOf(petId)) {
+            if (petLoverRegisterModel.getId().equals(Integer.valueOf(petId))) {
                 pet = petLoverRegisterModel;
                 break;
             }

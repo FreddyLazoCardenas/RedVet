@@ -116,13 +116,7 @@ public class DoctorDialog extends BaseDialogFragment {
 
     @OnClick(R.id.btn_whatsapp)
     public void whatsAppDoctor() {
-        Intent sendIntent = new Intent(Intent.ACTION_VIEW);
-        sendIntent.setData(Uri.parse("http://api.whatsapp.com/send?phone=" + "51" + doctorModel.getPhone() + "&text=" + "Hola "));
-        if (sendIntent.resolveActivity(activity.getPackageManager()) == null) {
-            Toast.makeText(getContext(), "Instalar whatsApp por favor", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        startActivity(sendIntent);
+        navigator.navigateWhatsApp(activity,doctorModel.getPhone());
     }
 
     @OnClick(R.id.btn_appointment)
