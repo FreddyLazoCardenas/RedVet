@@ -170,12 +170,12 @@ public class RestApiImpl implements RestApi {
     }
 
     @Override
-    public Observable<Void> forgotPassword(String email) {
-        return Observable.create(emitter -> restService.forgotPassword(new BodyRecoverPassword(email)).enqueue(new DefaultCallback<ResponseEntity<Void>>(emitter) {
+    public Observable<List<Void>> forgotPassword(String email) {
+        return Observable.create(emitter -> restService.forgotPassword(new BodyRecoverPassword(email)).enqueue(new DefaultCallback<ResponseEntity<List<Void>>>(emitter) {
             @Override
-            public void onResponse(@NonNull Call<ResponseEntity<Void>> call, @NonNull Response<ResponseEntity<Void>> response) {
+            public void onResponse(@NonNull Call<ResponseEntity<List<Void>>> call, @NonNull Response<ResponseEntity<List<Void>>> response) {
                 super.onResponse(call, response);
-                ResponseEntity<Void> body = response.body();
+                ResponseEntity<List<Void>> body = response.body();
                 if (body != null && body.getMessage() == null) {
                     emitter.onComplete();
                 }
@@ -214,12 +214,12 @@ public class RestApiImpl implements RestApi {
     }
 
     @Override
-    public Observable<Void> signUpPetLover(String email, String password, String firstName, String lastName, String dni, String address, String phone, String photo, String fcmToken, List<PetRegister> pets) {
-        return Observable.create(emitter -> restService.petLoverRegister(new BodyPetLoverRegister(email, password, firstName, lastName, dni, address, phone, photo, fcmToken, "android", pets)).enqueue(new DefaultCallback<ResponseEntity<Void>>(emitter) {
+    public Observable<List<Void>> signUpPetLover(String email, String password, String firstName, String lastName, String dni, String address, String phone, String photo, String fcmToken, List<PetRegister> pets) {
+        return Observable.create(emitter -> restService.petLoverRegister(new BodyPetLoverRegister(email, password, firstName, lastName, dni, address, phone, photo, fcmToken, "android", pets)).enqueue(new DefaultCallback<ResponseEntity<List<Void>>>(emitter) {
             @Override
-            public void onResponse(@NonNull Call<ResponseEntity<Void>> call, @NonNull Response<ResponseEntity<Void>> response) {
+            public void onResponse(@NonNull Call<ResponseEntity<List<Void>>> call, @NonNull Response<ResponseEntity<List<Void>>> response) {
                 super.onResponse(call, response);
-                ResponseEntity<Void> body = response.body();
+                ResponseEntity<List<Void>> body = response.body();
                 if (body != null && body.getMessage() == null) {
                     emitter.onComplete();
                 }
@@ -228,12 +228,12 @@ public class RestApiImpl implements RestApi {
     }
 
     @Override
-    public Observable<Void> doctorRegister(String email, String password, String firstName, String lastName, String typeDocument, String numberDocument, String business_name, String address, String latitude, String longitude, String consultationPrice, String consultationTime, String shower_price, String shower_time, String tuition_number, String description, String phone, String photo, String type, String attention, String fcmToken, String device, List<PetRegister> pets, List<ScheduleDoctorRegister> schedules, List<ServicesDoctorRegister> services) {
-        return Observable.create(emitter -> restService.doctorRegister(new BodyDoctorRegister(email, password, firstName, lastName, typeDocument, numberDocument, business_name, address, latitude, longitude, consultationPrice, consultationTime, shower_price, shower_time, tuition_number, description, phone, photo, type, attention, fcmToken, device, pets, schedules, services)).enqueue(new DefaultCallback<ResponseEntity<Void>>(emitter) {
+    public Observable<List<Void>> doctorRegister(String email, String password, String firstName, String lastName, String typeDocument, String numberDocument, String business_name, String address, String latitude, String longitude, String consultationPrice, String consultationTime, String shower_price, String shower_time, String tuition_number, String description, String phone, String photo, String type, String attention, String fcmToken, String device, List<PetRegister> pets, List<ScheduleDoctorRegister> schedules, List<ServicesDoctorRegister> services) {
+        return Observable.create(emitter -> restService.doctorRegister(new BodyDoctorRegister(email, password, firstName, lastName, typeDocument, numberDocument, business_name, address, latitude, longitude, consultationPrice, consultationTime, shower_price, shower_time, tuition_number, description, phone, photo, type, attention, fcmToken, device, pets, schedules, services)).enqueue(new DefaultCallback<ResponseEntity<List<Void>>>(emitter) {
             @Override
-            public void onResponse(@NonNull Call<ResponseEntity<Void>> call, @NonNull Response<ResponseEntity<Void>> response) {
+            public void onResponse(@NonNull Call<ResponseEntity<List<Void>>> call, @NonNull Response<ResponseEntity<List<Void>>> response) {
                 super.onResponse(call, response);
-                ResponseEntity<Void> body = response.body();
+                ResponseEntity<List<Void>> body = response.body();
                 if (body != null && body.getMessage() == null) {
                     emitter.onComplete();
                 }

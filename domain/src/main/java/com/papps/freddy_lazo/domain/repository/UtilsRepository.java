@@ -21,7 +21,7 @@ public interface UtilsRepository {
 
     Observable<List<DoctorAppointment>> doctorAppointments(String apiToken);
 
-    Observable<Void> forgotPassword(String email);
+    Observable<List<Void>> forgotPassword(String email);
 
     Observable<List<News>> petLoverNews(String query, String apiToken);
 

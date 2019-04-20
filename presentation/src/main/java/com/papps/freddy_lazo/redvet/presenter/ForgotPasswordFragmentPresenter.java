@@ -8,6 +8,8 @@ import com.papps.freddy_lazo.domain.interactor.ForgotPassword;
 import com.papps.freddy_lazo.redvet.R;
 import com.papps.freddy_lazo.redvet.interfaces.ForgotPasswordFragmentView;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 
@@ -66,7 +68,7 @@ public class ForgotPasswordFragmentPresenter implements Presenter<ForgotPassword
         return true;
     }
 
-    private class ForgotPasswordObservable extends DefaultObserver<Void> {
+    private class ForgotPasswordObservable extends DefaultObserver<List<Void>> {
 
         @Override
         protected void onStart() {

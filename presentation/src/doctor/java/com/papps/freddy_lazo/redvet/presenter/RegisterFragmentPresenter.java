@@ -251,7 +251,7 @@ public class RegisterFragmentPresenter implements Presenter<RegisterFragmentView
         return true;
     }
 
-    private class DoctorSignUpObservable extends DefaultObserver<Void> {
+    private class DoctorSignUpObservable extends DefaultObserver<List<Void>> {
 
         @Override
         protected void onStart() {

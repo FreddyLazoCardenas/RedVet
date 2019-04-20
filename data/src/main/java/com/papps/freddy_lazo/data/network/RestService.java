@@ -42,10 +42,10 @@ public interface RestService {
     Call<ResponseEntity<LoginResponse>> login(@Body BodyLogin bodyLogin);
 
     @POST("pet-lover/sign-up")
-    Call<ResponseEntity<Void>> petLoverRegister(@Body BodyPetLoverRegister bodyPetLoverRegister);
+    Call<ResponseEntity<List<Void>>> petLoverRegister(@Body BodyPetLoverRegister bodyPetLoverRegister);
 
     @POST("doctor/sign-up")
-    Call<ResponseEntity<Void>> doctorRegister(@Body BodyDoctorRegister bodyDoctorRegister);
+    Call<ResponseEntity<List<Void>>> doctorRegister(@Body BodyDoctorRegister bodyDoctorRegister);
 
     @POST("pet-lover/search")
     Call<ResponseEntity<DoctorSearchResponse>> petLoverSearch(@Body BodySearchDoctors bodySearch, @Header("Authorization") String auth);
@@ -63,7 +63,7 @@ public interface RestService {
     Call<ResponseEntity<DoctorAppointmentResponse>> doctorAppointment(@Header("Authorization") String auth);
 
     @POST("forgot-password")
-    Call<ResponseEntity<Void>> forgotPassword(@Body BodyRecoverPassword bodyRecoverPassword);
+    Call<ResponseEntity<List<Void>>> forgotPassword(@Body BodyRecoverPassword bodyRecoverPassword);
 
     @POST("pet-lover/update")
     Call<ResponseEntity<LoginResponse>> updatePetLover(@Header("Authorization") String auth, @Body BodyPetLoverRegister bodyUpdatePetLover);

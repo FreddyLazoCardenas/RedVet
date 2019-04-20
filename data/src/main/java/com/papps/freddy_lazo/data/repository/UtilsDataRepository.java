@@ -63,7 +63,7 @@ public class UtilsDataRepository implements UtilsRepository {
     }
 
     @Override
-    public Observable<Void> forgotPassword(String email) {
+    public Observable<List<Void>> forgotPassword(String email) {
         return mRestApi.forgotPassword(email);
     }
 

@@ -90,4 +90,8 @@ public interface RegisterFragmentView extends BaseView {
     ArrayList<PetRegister> getPetData();
 
     void successRequest(List<PetRedVetModel> data);
+
+    void successRegisterRequest();
+
+    int getPetId();
 }

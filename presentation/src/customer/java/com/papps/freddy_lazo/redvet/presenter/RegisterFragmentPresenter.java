@@ -109,11 +109,11 @@ public class RegisterFragmentPresenter implements Presenter<RegisterFragmentView
         if (!validatePetModelData())
             return;
         view.showErrorMessage("Mandando servicio");
-        petLoverSignUp.bindParams(view.getEmail(),view.getPassword(),view.getName(),view.getLastName(),view.getDni(),view.getAddress(),view.getPhone(),view.getProfileBase64Image(), view.getDeviceId(),view.getPetData());
+        petLoverSignUp.bindParams(view.getEmail(), view.getPassword(), view.getName(), view.getLastName(), view.getDni(), view.getAddress(), view.getPhone(), view.getProfileBase64Image(), view.getDeviceId(), view.getPetData());
         petLoverSignUp.execute(new PetLoverSignUpObservable());
     }
 
-    public void getPets(){
+    public void getPets() {
         petRedVetUseCase.execute(new PetsObservable());
     }
 
@@ -144,7 +144,7 @@ public class RegisterFragmentPresenter implements Presenter<RegisterFragmentView
 
 
     private boolean validatePetModelData() {
-        if (view.getPetData() == null) {
+        if (view.getPetData() == null || view.getPetData().isEmpty()) {
             view.showErrorMessage(view.context().getString(R.string.add_pet_data));
             return false;
         }
@@ -251,6 +251,8 @@ public class RegisterFragmentPresenter implements Presenter<RegisterFragmentView
     }
 
     public void validatePetData() {
+        if(!isValidPetId(view.getPetId()))
+            return;
         if (!isValidPetName(view.getPetName()))
             return;
         if (!isValidPetBirthday(view.getPetBirthday()))
@@ -258,6 +260,14 @@ public class RegisterFragmentPresenter implements Presenter<RegisterFragmentView
         if (!isValidPetBreed(view.getPetBreed()))
             return;
         view.savePetData();
+    }
+
+    private boolean isValidPetId(int petId) {
+        if(petId == 0){
+            view.showErrorMessage(view.context().getString(R.string.add_type_pet));
+            return false;
+        }
+        return true;
     }
 
     private boolean isValidPetName(String name) {
@@ -287,7 +297,7 @@ public class RegisterFragmentPresenter implements Presenter<RegisterFragmentView
         return true;
     }
 
-    private class PetLoverSignUpObservable extends DefaultObserver<Void> {
+    private class PetLoverSignUpObservable extends DefaultObserver<List<Void>> {
 
         @Override
         protected void onStart() {
@@ -303,6 +313,9 @@ public class RegisterFragmentPresenter implements Presenter<RegisterFragmentView
         public void onError(Throwable e) {
             super.onError(e);
             RedVetException exception = (RedVetException) e;
+            if (e.getMessage().contains("enviado"))
+                view.successRegisterRequest();
+            else
             view.showErrorMessage(exception.getMessage());
         }
     }

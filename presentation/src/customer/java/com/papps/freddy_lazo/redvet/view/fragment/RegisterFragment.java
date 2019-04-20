@@ -53,8 +53,8 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class RegisterFragment extends BaseFragment implements RegisterFragmentView, CameraDialog.OnClickListener ,
-        DatePickerDialog.OnDateSetListener,AddPetAdapter.onClickAdapter{
+public class RegisterFragment extends BaseFragment implements RegisterFragmentView, CameraDialog.OnClickListener,
+        DatePickerDialog.OnDateSetListener, AddPetAdapter.onClickAdapter {
 
 
     private static final String PICTURE_FILE_NAME = "profileComplete.jpg";
@@ -109,6 +109,7 @@ public class RegisterFragment extends BaseFragment implements RegisterFragmentVi
     private File croppedPetFile;
     private boolean isPetImage;
     private PetRegister petLoverModel;
+    private int petId;
 
     public static Fragment newInstance() {
         return new RegisterFragment();
@@ -368,19 +369,32 @@ public class RegisterFragment extends BaseFragment implements RegisterFragmentVi
 
     @Override
     public void savePetData() {
-        petLoverModel = new PetRegister(1, getPetName(), getPetBirthday(), getPetBreed(), getPetBase64Image());
+        petLoverModel = new PetRegister(getPetId(), getPetName(), getPetBirthday(), getPetBreed(), getPetBase64Image());
     }
 
     @Override
     public ArrayList<PetRegister> getPetData() {
         ArrayList<PetRegister> petRegisters = new ArrayList<>();
-        petRegisters.add(0,petLoverModel);
+        if (petLoverModel == null) {
+            return petRegisters;
+        }
+        petRegisters.add(0, petLoverModel);
         return petRegisters;
     }
 
     @Override
     public void successRequest(List<PetRedVetModel> data) {
         adapter.bindList(data);
+    }
+
+    @Override
+    public void successRegisterRequest() {
+        activity.finish();
+    }
+
+    @Override
+    public int getPetId() {
+        return petId;
     }
 
     @Override
@@ -422,7 +436,7 @@ public class RegisterFragment extends BaseFragment implements RegisterFragmentVi
         if (isPetImage) {
             croppedPetFile = new File(getContext().getFilesDir(), PICTURE_CROPPED_FILE_NAME);
             CropImage.activity(source)
-                    .setCropShape(Build.VERSION.SDK_INT >= Build.VERSION_CODES.P ? CropImageView.CropShape.RECTANGLE : CropImageView.CropShape.OVAL)                    .setFixAspectRatio(true)
+                    .setCropShape(Build.VERSION.SDK_INT >= Build.VERSION_CODES.P ? CropImageView.CropShape.RECTANGLE : CropImageView.CropShape.OVAL).setFixAspectRatio(true)
                     .setBorderCornerThickness(0)
                     .setOutputCompressFormat(Bitmap.CompressFormat.JPEG)
                     .setOutputCompressQuality(50)
@@ -432,7 +446,7 @@ public class RegisterFragment extends BaseFragment implements RegisterFragmentVi
         } else {
             croppedProfileFile = new File(getContext().getFilesDir(), PICTURE_CROPPED_FILE_NAME);
             CropImage.activity(source)
-                    .setCropShape(Build.VERSION.SDK_INT >= Build.VERSION_CODES.P ? CropImageView.CropShape.RECTANGLE : CropImageView.CropShape.OVAL)                    .setFixAspectRatio(true)
+                    .setCropShape(Build.VERSION.SDK_INT >= Build.VERSION_CODES.P ? CropImageView.CropShape.RECTANGLE : CropImageView.CropShape.OVAL).setFixAspectRatio(true)
                     .setBorderCornerThickness(0)
                     .setOutputCompressFormat(Bitmap.CompressFormat.JPEG)
                     .setOutputCompressQuality(50)
@@ -517,7 +531,7 @@ public class RegisterFragment extends BaseFragment implements RegisterFragmentVi
     }
 
     @OnClick(R.id.pet_birthday)
-    public void petBirthday(){
+    public void petBirthday() {
         navigator.navigateToDatePicker(this);
     }
 
@@ -539,6 +553,10 @@ public class RegisterFragment extends BaseFragment implements RegisterFragmentVi
 
     @Override
     public void data(List<PetRedVetModel> data) {
-
+        for (PetRedVetModel petRedVetModel : data) {
+            if (petRedVetModel.isSelected()) {
+                petId = petRedVetModel.getId();
+            }
+        }
     }
 }
