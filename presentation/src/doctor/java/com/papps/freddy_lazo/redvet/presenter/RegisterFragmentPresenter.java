@@ -9,11 +9,14 @@ import android.view.View;
 import com.papps.freddy_lazo.data.exception.RedVetException;
 import com.papps.freddy_lazo.domain.interactor.DefaultObserver;
 import com.papps.freddy_lazo.domain.interactor.DoctorSignUp;
+import com.papps.freddy_lazo.domain.interactor.PetRedVetUseCase;
+import com.papps.freddy_lazo.domain.model.PetRedVet;
 import com.papps.freddy_lazo.domain.model.PetRegister;
 import com.papps.freddy_lazo.domain.model.ScheduleDoctorRegister;
 import com.papps.freddy_lazo.domain.model.ServicesDoctorRegister;
 import com.papps.freddy_lazo.redvet.R;
 import com.papps.freddy_lazo.redvet.interfaces.RegisterFragmentView;
+import com.papps.freddy_lazo.redvet.model.mapper.PetRedVetModelMapper;
 
 import java.util.List;
 
@@ -25,12 +28,15 @@ public class RegisterFragmentPresenter implements Presenter<RegisterFragmentView
     public static final int PERMISSION_REQUEST_CAMERA_CODE = 4;
     public static final int PERMISSION_REQUEST_GALLERY_CODE = 5;
     private final DoctorSignUp doctorSignUp;
+    private final PetRedVetUseCase petRedVetUseCase;
+
 
     private RegisterFragmentView view;
 
     @Inject
-    public RegisterFragmentPresenter(DoctorSignUp doctorSignUp) {
+    public RegisterFragmentPresenter(DoctorSignUp doctorSignUp, PetRedVetUseCase petRedVetUseCase) {
         this.doctorSignUp = doctorSignUp;
+        this.petRedVetUseCase = petRedVetUseCase;
     }
 
     @Override
@@ -46,6 +52,36 @@ public class RegisterFragmentPresenter implements Presenter<RegisterFragmentView
     @Override
     public void destroy() {
         doctorSignUp.unsubscribe();
+        petRedVetUseCase.unsubscribe();
+    }
+
+    public void getPets() {
+        petRedVetUseCase.execute(new PetsObservable());
+    }
+
+    private class PetsObservable extends DefaultObserver<List<PetRedVet>> {
+
+        @Override
+        protected void onStart() {
+            super.onStart();
+        }
+
+        @Override
+        public void onNext(List<PetRedVet> petRedVets) {
+            super.onNext(petRedVets);
+            view.successRequest(PetRedVetModelMapper.transform(petRedVets));
+        }
+
+        @Override
+        public void onError(Throwable e) {
+            super.onError(e);
+            view.showErrorMessage(e.getMessage());
+        }
+
+        @Override
+        public void onComplete() {
+            super.onComplete();
+        }
     }
 
     @Override

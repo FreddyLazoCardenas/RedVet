@@ -5,6 +5,7 @@ import com.papps.freddy_lazo.domain.model.PetRegister;
 import com.papps.freddy_lazo.domain.model.ScheduleDoctorRegister;
 import com.papps.freddy_lazo.domain.model.ServicesDoctorRegister;
 import com.papps.freddy_lazo.redvet.model.NewsModel;
+import com.papps.freddy_lazo.redvet.model.PetRedVetModel;
 
 import java.util.List;
 
@@ -101,4 +102,6 @@ public interface RegisterFragmentView extends BaseView {
     void showShowerPriceError(String string);
 
     void hideShowerPriceError();
+
+    void successRequest(List<PetRedVetModel> transform);
 }

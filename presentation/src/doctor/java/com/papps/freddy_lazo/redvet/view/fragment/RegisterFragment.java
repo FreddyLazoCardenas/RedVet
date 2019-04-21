@@ -2,6 +2,7 @@ package com.papps.freddy_lazo.redvet.view.fragment;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -10,6 +11,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
@@ -26,6 +28,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -37,10 +41,13 @@ import com.papps.freddy_lazo.redvet.GlideApp;
 import com.papps.freddy_lazo.redvet.R;
 import com.papps.freddy_lazo.redvet.interfaces.RegisterFragmentView;
 import com.papps.freddy_lazo.redvet.internal.dagger.component.DaggerRegisterFragmentComponent;
+import com.papps.freddy_lazo.redvet.model.PetRedVetModel;
+import com.papps.freddy_lazo.redvet.model.ScheduleRegisterModel;
 import com.papps.freddy_lazo.redvet.model.ServicesModel;
 import com.papps.freddy_lazo.redvet.presenter.RegisterFragmentPresenter;
 import com.papps.freddy_lazo.redvet.view.activity.RegisterActivity;
 import com.papps.freddy_lazo.redvet.view.adapter.PetAdapter;
+import com.papps.freddy_lazo.redvet.view.adapter.SchedulesAdapter;
 import com.papps.freddy_lazo.redvet.view.dialogFragment.CameraDialog;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
@@ -56,7 +63,8 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class RegisterFragment extends BaseFragment implements RegisterFragmentView, CameraDialog.OnClickListener {
+public class RegisterFragment extends BaseFragment implements RegisterFragmentView, CameraDialog.OnClickListener,
+        PetAdapter.onClickAdapter, TimePickerDialog.OnTimeSetListener, SchedulesAdapter.onClickAdapter {
 
     private static final String PICTURE_FILE_NAME = "profileComplete.jpg";
     private static final String PICTURE_CROPPED_FILE_NAME = "profile.jpg";
@@ -64,8 +72,10 @@ public class RegisterFragment extends BaseFragment implements RegisterFragmentVi
     private static final int SELECT_FILE = 1;
     private static final int REQUEST_CAMERA = 0;
     private static final int MAP_REQUEST_CODE = 2;
+    private static final int SERVICES_REQUEST_CODE = 3;
 
     private RegisterActivity activity;
+    private ScheduleRegisterModel currentSchedule;
     private File pictureFile;
     private File croppedFile;
 
@@ -73,7 +83,8 @@ public class RegisterFragment extends BaseFragment implements RegisterFragmentVi
     RegisterFragmentPresenter presenter;
     @Inject
     PetAdapter adapter;
-
+    @Inject
+    SchedulesAdapter schedulesAdapter;
     @BindView(R.id.rv_pet)
     RecyclerView recyclerView;
     @BindView(R.id.img_register)
@@ -87,7 +98,8 @@ public class RegisterFragment extends BaseFragment implements RegisterFragmentVi
     TextInputLayout tilName;
     @BindView(R.id.til_last_name)
     TextInputLayout tilLastName;
-
+    @BindView(R.id.rv_schedules)
+    RecyclerView rvSchedules;
     @BindView(R.id.et_number)
     EditText etNumber;
     @BindView(R.id.edt_rs)
@@ -122,11 +134,24 @@ public class RegisterFragment extends BaseFragment implements RegisterFragmentVi
     EditText etShowerPrice;
     @BindView(R.id.et_description)
     TextInputEditText etDescription;
+    @BindView(R.id.iv_schedule_check)
+    ImageView ivScheduleCheck;
+    @BindView(R.id.start_hour)
+    TextView startHour;
+    @BindView(R.id.start_minute)
+    TextView startMinute;
+    @BindView(R.id.end_hour)
+    TextView endHour;
+    @BindView(R.id.end_minute)
+    TextView endMinute;
 
-    private boolean fromServices;
     private Double latitude;
     private Double longitude;
     private List<ServicesDoctorRegister> servicesDoctorRegisterList = new ArrayList<>();
+    private List<PetRegister> petRegisterList = new ArrayList<>();
+    private List<ScheduleDoctorRegister> scheduleDoctorRegisters = new ArrayList<>();
+
+    private boolean fromStart;
 
 
     public static Fragment newInstance() {
@@ -152,8 +177,8 @@ public class RegisterFragment extends BaseFragment implements RegisterFragmentVi
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         activity = (RegisterActivity) getActivity();
         initUI();
     }
@@ -162,8 +187,22 @@ public class RegisterFragment extends BaseFragment implements RegisterFragmentVi
     public void initUI() {
         presenter.setView(this);
         setUpPetRv();
+        initSchedulesData();
         setUpSpinner();
         setUpTypeSpinner();
+        presenter.getPets();
+    }
+
+    private void initSchedulesData() {
+        List<ScheduleRegisterModel> data = new ArrayList<>();
+        data.add(new ScheduleRegisterModel(0, "Dom", "07:30:00", "15:00:00"));
+        data.add(new ScheduleRegisterModel(1, "Lun", "07:30:00", "15:00:00"));
+        data.add(new ScheduleRegisterModel(2, "Mar", "07:30:00", "15:00:00"));
+        data.add(new ScheduleRegisterModel(3, "Mie", "07:30:00", "15:00:00"));
+        data.add(new ScheduleRegisterModel(4, "Jue", "07:30:00", "15:00:00"));
+        data.add(new ScheduleRegisterModel(5, "Vie", "07:30:00", "15:00:00"));
+        data.add(new ScheduleRegisterModel(6, "Sab", "07:30:00", "15:00:00"));
+        schedulesAdapter.bindList(data);
     }
 
     private void setUpTypeSpinner() {
@@ -195,7 +234,11 @@ public class RegisterFragment extends BaseFragment implements RegisterFragmentVi
     private void setUpPetRv() {
         recyclerView.setLayoutManager(new LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false));
         recyclerView.setAdapter(adapter);
-        adapter.bindList(false);
+        adapter.setView(this);
+
+        rvSchedules.setLayoutManager(new LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false));
+        rvSchedules.setAdapter(schedulesAdapter);
+        schedulesAdapter.setView(this);
     }
 
     @Override
@@ -215,7 +258,6 @@ public class RegisterFragment extends BaseFragment implements RegisterFragmentVi
 
     @OnClick(R.id.btn_register)
     public void btnRegister() {
-        // navigator.navigateToHomeActivity(activity);
         presenter.validateData();
     }
 
@@ -231,37 +273,11 @@ public class RegisterFragment extends BaseFragment implements RegisterFragmentVi
 
     @OnClick(R.id.img_add_services)
     public void services() {
-        fromServices = true;
         gShower.setVisibility(View.INVISIBLE);
         gConsultation.setVisibility(View.INVISIBLE);
-        navigator.navigateToServicesFragment(activity);
+        navigator.navigateToServicesActivity(this,"D",SERVICES_REQUEST_CODE);
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        if (fromServices) {
-            servicesDoctorRegisterList.clear();
-            fromServices = false;
-            List<ServicesModel> servicesModelList = activity.getData();
-            if (!servicesModelList.isEmpty()) {
-                for (ServicesModel servicesModel : servicesModelList) {
-                    if (servicesModel.getState()) {
-                        ServicesDoctorRegister data = new ServicesDoctorRegister(servicesModel.getId());
-                        servicesDoctorRegisterList.add(data);
-                    }
-                    if (servicesModel.getState() && servicesModel.getName().toLowerCase().contains("consultas")) {
-                        gConsultation.setVisibility(View.VISIBLE);
-                    }
-                    if (servicesModel.getState() && servicesModel.getName().toLowerCase().contains("baños")) {
-                        gShower.setVisibility(View.VISIBLE);
-                    }
-                }
-            } else {
-                servicesDoctorRegisterList.clear();
-            }
-        }
-    }
 
     @Override
     public void requestCameraPermission() {
@@ -442,6 +458,11 @@ public class RegisterFragment extends BaseFragment implements RegisterFragmentVi
     }
 
     @Override
+    public void successRequest(List<PetRedVetModel> data) {
+        adapter.bindList(data);
+    }
+
+    @Override
     public String getConsultationTime() {
         return getConsultationPriceVisibility() == View.VISIBLE ? "30" : null;
     }
@@ -496,15 +517,18 @@ public class RegisterFragment extends BaseFragment implements RegisterFragmentVi
 
     @Override
     public List<PetRegister> getPets() {
-        List<PetRegister> petRegisterList = new ArrayList<>();
-        petRegisterList.add(new PetRegister(1));
         return petRegisterList;
     }
 
     @Override
     public List<ScheduleDoctorRegister> getSchedules() {
-        List<ScheduleDoctorRegister> scheduleDoctorRegisters = new ArrayList<>();
-        scheduleDoctorRegisters.add(new ScheduleDoctorRegister(1, "09:00:00", "16:00:00"));
+        scheduleDoctorRegisters.clear();
+        List<ScheduleRegisterModel> tempSchedule = schedulesAdapter.getData();
+        for(ScheduleRegisterModel model : tempSchedule){
+            if(model.isCheck()){
+                scheduleDoctorRegisters.add(new ScheduleDoctorRegister(model.getDay(),model.getStartHour(),model.getEndHour()));
+            }
+        }
         return scheduleDoctorRegisters;
     }
 
@@ -532,6 +556,29 @@ public class RegisterFragment extends BaseFragment implements RegisterFragmentVi
         } else if (requestCode == MAP_REQUEST_CODE) {
             if (resultCode == Activity.RESULT_OK) {
                 getData(data);
+            }
+        }else if(requestCode == SERVICES_REQUEST_CODE){
+            if(resultCode == Activity.RESULT_OK){
+                getServicesData(data);
+            }
+        }
+    }
+
+    private void getServicesData(Intent listData) {
+        List<ServicesModel> servicesData = listData.getParcelableArrayListExtra("data");
+        servicesDoctorRegisterList.clear();
+        if (!servicesData.isEmpty()) {
+            for (ServicesModel servicesModel : servicesData) {
+                if (servicesModel.getState()) {
+                    ServicesDoctorRegister data = new ServicesDoctorRegister(servicesModel.getId());
+                    servicesDoctorRegisterList.add(data);
+                }
+                if (servicesModel.getState() && servicesModel.getName().toLowerCase().contains("consultas")) {
+                    gConsultation.setVisibility(View.VISIBLE);
+                }
+                if (servicesModel.getState() && servicesModel.getName().toLowerCase().contains("baños")) {
+                    gShower.setVisibility(View.VISIBLE);
+                }
             }
         }
     }
@@ -563,7 +610,7 @@ public class RegisterFragment extends BaseFragment implements RegisterFragmentVi
     private void startCrop(Uri source) {
         croppedFile = new File(getContext().getFilesDir(), PICTURE_CROPPED_FILE_NAME);
         CropImage.activity(source)
-                .setCropShape(Build.VERSION.SDK_INT >= Build.VERSION_CODES.P ? CropImageView.CropShape.RECTANGLE : CropImageView.CropShape.OVAL)                .setFixAspectRatio(true)
+                .setCropShape(Build.VERSION.SDK_INT >= Build.VERSION_CODES.P ? CropImageView.CropShape.RECTANGLE : CropImageView.CropShape.OVAL).setFixAspectRatio(true)
                 .setBorderCornerThickness(0)
                 .setOutputCompressFormat(Bitmap.CompressFormat.JPEG)
                 .setOutputCompressQuality(50)
@@ -640,6 +687,70 @@ public class RegisterFragment extends BaseFragment implements RegisterFragmentVi
 
     private void hideEtError(EditText editText) {
         editText.setError(null);
+    }
+
+    @Override
+    public void data(List<PetRedVetModel> data) {
+        petRegisterList.clear();
+        for (PetRedVetModel model : data) {
+            if (model.isSelected()) {
+                petRegisterList.add(new PetRegister(model.getId()));
+            }
+        }
+    }
+
+    @OnClick(R.id.start_group)
+    public void startHourClicked() {
+        if (currentSchedule != null) {
+            fromStart = true;
+            navigator.navigateToTimePicker(this);
+        }
+    }
+
+    @OnClick(R.id.end_group)
+    public void endHourClicked() {
+        if (currentSchedule != null) {
+            fromStart = false;
+            navigator.navigateToTimePicker(this);
+        }
+    }
+
+    @Override
+    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+        if (fromStart) {
+            startHour.setText(String.valueOf(hourOfDay));
+            startMinute.setText(String.valueOf(minute));
+            currentSchedule.setStartHour(hourOfDay + ":" + minute + ":" + "00");
+        } else {
+            endHour.setText(String.valueOf(hourOfDay));
+            endMinute.setText(String.valueOf(minute));
+            currentSchedule.setEndHour(hourOfDay + ":" + minute + ":" + "00");
+        }
+    }
+
+    @Override
+    public void itemClicked(ScheduleRegisterModel data) {
+        currentSchedule = data;
+        ivScheduleCheck.setImageResource(data.isCheck() ? R.drawable.ic_check_pink : R.drawable.ic_check_gray);
+        if(data.getStartHour() !=null){
+            String[] text = data.getStartHour().split(":");
+            startHour.setText(text[0]);
+            startMinute.setText(text[1]);
+        }
+        if(data.getEndHour() !=null){
+            String[] text = data.getEndHour().split(":");
+            endHour.setText(text[0]);
+            endMinute.setText(text[1]);
+        }
+    }
+
+    @OnClick(R.id.iv_schedule_check)
+    public void scheduleCheck() {
+        if (currentSchedule != null) {
+            currentSchedule.setCheck(!currentSchedule.isCheck());
+            ivScheduleCheck.setImageResource(currentSchedule.isCheck() ? R.drawable.ic_check_pink : R.drawable.ic_check_gray);
+            schedulesAdapter.updateData(currentSchedule);
+        }
     }
 
 }

@@ -45,7 +45,7 @@ public class MainMenuFragment extends BaseFragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        activity = (LoginActivity) getActivity();
+       // activity = (LoginActivity) getActivity();
     }
 
     @Override

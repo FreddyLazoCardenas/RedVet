@@ -2,19 +2,19 @@ package com.papps.freddy_lazo.redvet.model;
 
 public class ScheduleModel {
 
-    private int id;
+    private Integer id;
     private int day;
     private String start_time;
     private String end_time;
 
-    public ScheduleModel(int id, int day, String start_time, String end_time) {
+    public ScheduleModel(Integer id, int day, String start_time, String end_time) {
         this.id = id;
         this.day = day;
         this.start_time = start_time;
         this.end_time = end_time;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 

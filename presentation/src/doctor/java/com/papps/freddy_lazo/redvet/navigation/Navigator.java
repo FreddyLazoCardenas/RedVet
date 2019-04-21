@@ -19,6 +19,7 @@ import com.papps.freddy_lazo.redvet.view.activity.HomeActivity;
 import com.papps.freddy_lazo.redvet.view.activity.LoginActivity;
 import com.papps.freddy_lazo.redvet.view.activity.MapActivity;
 import com.papps.freddy_lazo.redvet.view.activity.RegisterActivity;
+import com.papps.freddy_lazo.redvet.view.activity.ServicesActivity;
 import com.papps.freddy_lazo.redvet.view.dialogFragment.BaseDialogFragment;
 import com.papps.freddy_lazo.redvet.view.dialogFragment.CameraDialog;
 import com.papps.freddy_lazo.redvet.view.dialogFragment.CancelOtherReasonAppointmentDialog;
@@ -27,6 +28,7 @@ import com.papps.freddy_lazo.redvet.view.dialogFragment.FinishedAppointmentDialo
 import com.papps.freddy_lazo.redvet.view.dialogFragment.PendingAppointmentDialog;
 import com.papps.freddy_lazo.redvet.view.dialogFragment.PhotoListDialog;
 import com.papps.freddy_lazo.redvet.view.fragment.AppointmentFragment;
+import com.papps.freddy_lazo.redvet.view.fragment.BaseFragment;
 import com.papps.freddy_lazo.redvet.view.fragment.NewsFragment;
 import com.papps.freddy_lazo.redvet.view.fragment.NotificationsFragment;
 import com.papps.freddy_lazo.redvet.view.fragment.ProfileFragment;
@@ -35,6 +37,7 @@ import com.papps.freddy_lazo.redvet.view.fragment.ForgotPasswordFragment;
 import com.papps.freddy_lazo.redvet.view.fragment.LoginFragment;
 import com.papps.freddy_lazo.redvet.view.fragment.MainMenuFragment;
 import com.papps.freddy_lazo.redvet.view.fragment.ServicesFragment;
+import com.papps.freddy_lazo.redvet.view.pickers.TimePickerFragment;
 
 import java.io.File;
 import java.util.Objects;
@@ -76,6 +79,10 @@ public class Navigator extends BaseNavigator {
         fragment.startActivityForResult(DiagnoseAppointmentActivity.getCallingIntent(fragment, data),requestCode);
     }
 
+    public void navigateToServicesActivity(BaseFragment fragment, String data,int requestCode) {
+        fragment.startActivityForResult(ServicesActivity.getCallingIntent(fragment, data),requestCode);
+    }
+
     //fragments
 
     public void navigateToLoginFragment(BaseActivity activity) {
@@ -97,6 +104,7 @@ public class Navigator extends BaseNavigator {
     public void navigateToServicesFragment(BaseActivity activity) {
         fragmentTransaction(activity, ServicesFragment.newInstance(), true);
     }
+
 
     public void navigateFromMenu(int itemId, BaseActivity activity) {
         activity.getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
@@ -213,5 +221,13 @@ public class Navigator extends BaseNavigator {
 
     public void navigatePhoneCall(BaseActivity activity, String phone){
         activity.startActivity(new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", phone, null)));
+    }
+
+    public void navigateToTimePicker(BaseActivity activity) {
+        TimePickerFragment.newInstance(activity).show(activity.getSupportFragmentManager(), "timePicker");
+    }
+
+    public void navigateToTimePicker(BaseFragment fragment) {
+        TimePickerFragment.newInstance(fragment).show(Objects.requireNonNull(fragment.getFragmentManager()), "datePicker");
     }
 }

@@ -149,15 +149,6 @@ public class AppointmentFragment extends BaseFragment implements AppointmentFrag
         adapter.bindList(data);
     }
 
-    @Override
-    public void data(List<CreateAppointmentObjectModel> data) {
-        adapter.setFiltering(isDataFiltering(data));
-        if (adapter.isFiltering())
-            adapter.bindFilterList(getAppointmentStatus(data));
-        else
-            adapter.bindList(null);
-    }
-
     private boolean isDataFiltering(List<CreateAppointmentObjectModel> data) {
         for (CreateAppointmentObjectModel model : data) {
             if (model.isSelected()) {
@@ -221,5 +212,14 @@ public class AppointmentFragment extends BaseFragment implements AppointmentFrag
     @Override
     public void successCancelRequest(int id) {
         adapter.removeAppointment(id);
+    }
+
+    @Override
+    public void dataAdapter(List<CreateAppointmentObjectModel> data) {
+        adapter.setFiltering(isDataFiltering(data));
+        if (adapter.isFiltering())
+            adapter.bindFilterList(getAppointmentStatus(data));
+        else
+            adapter.bindList(null);
     }
 }

@@ -38,8 +38,8 @@ public class PetRegister {
         this.photo = petBase64Image;
     }
 
-    public PetRegister(int id) {
-        this.id = id;
+    public PetRegister(Integer id) {
+        this.pet_id = id;
     }
 
     public PetRegister(int id, int pet_id) {
