@@ -42,7 +42,7 @@ public class PetRegister {
         this.pet_id = id;
     }
 
-    public PetRegister(int id, int pet_id) {
+    public PetRegister(Integer id, Integer pet_id) {
         this.id = id;
         this.pet_id = pet_id;
     }
@@ -51,7 +51,7 @@ public class PetRegister {
         return id;
     }
 
-    public int getPet_id() {
+    public Integer getPet_id() {
         return pet_id;
     }
 

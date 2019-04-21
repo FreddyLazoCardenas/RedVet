@@ -2,6 +2,7 @@ package com.papps.freddy_lazo.redvet.view.fragment;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -16,6 +17,8 @@ import android.support.constraint.Group;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -26,6 +29,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.TimePicker;
 
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.firebase.iid.FirebaseInstanceId;
@@ -39,11 +44,15 @@ import com.papps.freddy_lazo.redvet.interfaces.ProfileFragmentView;
 import com.papps.freddy_lazo.redvet.internal.dagger.component.DaggerProfileFragmentComponent;
 import com.papps.freddy_lazo.redvet.model.DoctorModel;
 import com.papps.freddy_lazo.redvet.model.PetLoverRegisterModel;
+import com.papps.freddy_lazo.redvet.model.PetRedVetModel;
 import com.papps.freddy_lazo.redvet.model.ScheduleModel;
+import com.papps.freddy_lazo.redvet.model.ScheduleRegisterModel;
 import com.papps.freddy_lazo.redvet.model.ServiceDoctorModel;
 import com.papps.freddy_lazo.redvet.model.ServicesModel;
 import com.papps.freddy_lazo.redvet.presenter.ProfileFragmentPresenter;
 import com.papps.freddy_lazo.redvet.view.activity.HomeActivity;
+import com.papps.freddy_lazo.redvet.view.adapter.PetAdapter;
+import com.papps.freddy_lazo.redvet.view.adapter.SchedulesAdapter;
 import com.papps.freddy_lazo.redvet.view.dialogFragment.CameraDialog;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
@@ -59,11 +68,12 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class ProfileFragment extends BaseFragment implements CameraDialog.OnClickListener, ProfileFragmentView {
-
+public class ProfileFragment extends BaseFragment implements CameraDialog.OnClickListener, ProfileFragmentView, SchedulesAdapter.onClickAdapter
+        , PetAdapter.onClickAdapter, TimePickerDialog.OnTimeSetListener {
     public static final int PERMISSION_REQUEST_CAMERA_CODE = 4;
     public static final int PERMISSION_REQUEST_GALLERY_CODE = 5;
     private static final int MAP_REQUEST_CODE = 2;
+    private static final int SERVICES_REQUEST_CODE = 3;
 
 
     private static final String PICTURE_FILE_NAME = "profileComplete.jpg";
@@ -76,6 +86,10 @@ public class ProfileFragment extends BaseFragment implements CameraDialog.OnClic
     PreferencesManager preferencesManager;
     @Inject
     ProfileFragmentPresenter presenter;
+    @Inject
+    SchedulesAdapter schedulesAdapter;
+    @Inject
+    PetAdapter adapter;
 
     @BindView(R.id.et_name)
     EditText etName;
@@ -114,9 +128,25 @@ public class ProfileFragment extends BaseFragment implements CameraDialog.OnClic
     @BindView(R.id.et_description)
     TextInputEditText etDescription;
     @BindView(R.id.group_shower)
-    Group gShower;
+    android.support.constraint.Group gShower;
     @BindView(R.id.group_consultation)
-    Group gConsultation;
+    android.support.constraint.Group gConsultation;
+
+    @BindView(R.id.iv_schedule_check)
+    ImageView ivScheduleCheck;
+    @BindView(R.id.start_hour)
+    TextView startHour;
+    @BindView(R.id.start_minute)
+    TextView startMinute;
+    @BindView(R.id.end_hour)
+    TextView endHour;
+    @BindView(R.id.end_minute)
+    TextView endMinute;
+
+    @BindView(R.id.rv_schedules)
+    RecyclerView rvSchedules;
+    @BindView(R.id.rv_pet)
+    RecyclerView recyclerView;
 
     private File pictureFile;
     private HomeActivity activity;
@@ -124,8 +154,11 @@ public class ProfileFragment extends BaseFragment implements CameraDialog.OnClic
     private File croppedProfileFile;
     private Double latitude;
     private Double longitude;
-    private boolean fromServices;
     private List<ServicesDoctorRegister> servicesDoctorRegisterList = new ArrayList<>();
+    private List<PetRegister> petRegisterList = new ArrayList<>();
+    private List<ScheduleDoctorRegister> list = new ArrayList<>();
+    private ScheduleRegisterModel currentSchedule;
+    private boolean fromStart;
 
 
     public static Fragment newInstance() {
@@ -144,11 +177,38 @@ public class ProfileFragment extends BaseFragment implements CameraDialog.OnClic
         getUserData();
         setUpSpinner();
         setUpTypeSpinner();
+        setUpPetRv();
+        initSchedulesData();
+        presenter.getPets();
     }
 
     private void getUserData() {
         doctorModel = DoctorModel.toModel(preferencesManager.getDoctorCurrentUser());
         fillUi();
+    }
+
+    private void initSchedulesData() {
+        List<ScheduleModel> drData = doctorModel.getScheduleList();
+        List<ScheduleRegisterModel> data = new ArrayList<>();
+        data.add(new ScheduleRegisterModel(0, "Dom", "07:30:00", "15:00:00"));
+        data.add(new ScheduleRegisterModel(1, "Lun", "07:30:00", "15:00:00"));
+        data.add(new ScheduleRegisterModel(2, "Mar", "07:30:00", "15:00:00"));
+        data.add(new ScheduleRegisterModel(3, "Mie", "07:30:00", "15:00:00"));
+        data.add(new ScheduleRegisterModel(4, "Jue", "07:30:00", "15:00:00"));
+        data.add(new ScheduleRegisterModel(5, "Vie", "07:30:00", "15:00:00"));
+        data.add(new ScheduleRegisterModel(6, "Sab", "07:30:00", "15:00:00"));
+
+        for (ScheduleModel model : drData) {
+            for (ScheduleRegisterModel tmpModel : data) {
+                if (model.getDay() == tmpModel.getDay()) {
+                    tmpModel.setCheck(true);
+                    tmpModel.setStartHour(model.getStart_time());
+                    tmpModel.setEndHour(model.getEnd_time());
+                    tmpModel.setModelId(model.getId());
+                }
+            }
+        }
+        schedulesAdapter.bindList(data);
     }
 
     private void setUpTypeSpinner() {
@@ -214,6 +274,16 @@ public class ProfileFragment extends BaseFragment implements CameraDialog.OnClic
         }
     }
 
+    private void setUpPetRv() {
+        recyclerView.setLayoutManager(new LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false));
+        recyclerView.setAdapter(adapter);
+        adapter.setView(this);
+
+        rvSchedules.setLayoutManager(new LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false));
+        rvSchedules.setAdapter(schedulesAdapter);
+        schedulesAdapter.setView(this);
+    }
+
     private void fillUi() {
         latitude = Double.valueOf(doctorModel.getLatitude());
         longitude = Double.valueOf(doctorModel.getLongitude());
@@ -240,7 +310,6 @@ public class ProfileFragment extends BaseFragment implements CameraDialog.OnClic
         } else {
             gShower.setVisibility(View.INVISIBLE);
         }
-        gShower.requestLayout();
     }
 
     private void consultationLogic() {
@@ -278,38 +347,16 @@ public class ProfileFragment extends BaseFragment implements CameraDialog.OnClic
 
     @OnClick(R.id.img_add_services)
     public void services() {
-        fromServices = true;
-        gShower.setVisibility(View.INVISIBLE);
-        gConsultation.setVisibility(View.INVISIBLE);
-        gShower.requestLayout();
-        gConsultation.requestLayout();
-        navigator.navigateToServicesFragment(activity);
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        if (fromServices) {
-            fromServices = false;
-            servicesDoctorRegisterList.clear();
-            List<ServicesModel> servicesModelList = activity.getData();
-            if (!servicesModelList.isEmpty()) {
-                for (ServicesModel servicesModel : servicesModelList) {
-                    if (servicesModel.getState()) {
-                        ServicesDoctorRegister data = new ServicesDoctorRegister(servicesModel.getId());
-                        servicesDoctorRegisterList.add(data);
-                    }
-                    if (servicesModel.getState() && servicesModel.getName().toLowerCase().contains("consultas")) {
-                        gConsultation.setVisibility(View.VISIBLE);
-                    }
-                    if (servicesModel.getState() && servicesModel.getName().toLowerCase().contains("baños")) {
-                        gShower.setVisibility(View.VISIBLE);
-                    }
-                }
-            } else {
-                servicesDoctorRegisterList.clear();
+        List<ServiceDoctorModel> data = doctorModel.getServiceList();
+        if(!servicesDoctorRegisterList.isEmpty()){
+            data.clear();
+            for(ServicesDoctorRegister tmpData : servicesDoctorRegisterList){
+                data.add(new ServiceDoctorModel(tmpData.getId(),tmpData.getService_id()));
             }
         }
+        gShower.setVisibility(View.INVISIBLE);
+        gConsultation.setVisibility(View.INVISIBLE);
+        navigator.navigateToServicesActivity(this, data, SERVICES_REQUEST_CODE);
     }
 
     @Override
@@ -338,6 +385,29 @@ public class ProfileFragment extends BaseFragment implements CameraDialog.OnClic
         } else if (requestCode == MAP_REQUEST_CODE) {
             if (resultCode == Activity.RESULT_OK) {
                 getData(data);
+            }
+        } else if (requestCode == SERVICES_REQUEST_CODE) {
+            if (resultCode == Activity.RESULT_OK) {
+                getServicesData(data);
+            }
+        }
+    }
+
+    private void getServicesData(Intent listData) {
+        List<ServicesModel> servicesData = listData.getParcelableArrayListExtra("data");
+        servicesDoctorRegisterList.clear();
+        if (!servicesData.isEmpty()) {
+            for (ServicesModel servicesModel : servicesData) {
+                if (servicesModel.getState()) {
+                    ServicesDoctorRegister data = new ServicesDoctorRegister(servicesModel.getResponseId(), servicesModel.getId());
+                    servicesDoctorRegisterList.add(data);
+                }
+                if (servicesModel.getState() && servicesModel.getName().toLowerCase().contains("consultas")) {
+                    gConsultation.setVisibility(View.VISIBLE);
+                }
+                if (servicesModel.getState() && servicesModel.getName().toLowerCase().contains("baños")) {
+                    gShower.setVisibility(View.VISIBLE);
+                }
             }
         }
     }
@@ -392,6 +462,20 @@ public class ProfileFragment extends BaseFragment implements CameraDialog.OnClic
     @Override
     public void updateView() {
         getUserData();
+    }
+
+    @Override
+    public void successRequest(List<PetRedVetModel> data) {
+        List<PetLoverRegisterModel> pets = doctorModel.getPetList();
+        for (PetLoverRegisterModel tmpPets : pets) {
+            for (PetRedVetModel tmpModel : data) {
+                if (tmpPets.getPet_id() == tmpModel.getId()) {
+                    tmpModel.setSelected(true);
+                    tmpModel.setRequestId(tmpPets.getId());
+                }
+            }
+        }
+        adapter.bindList(data);
     }
 
     @Override
@@ -553,12 +637,13 @@ public class ProfileFragment extends BaseFragment implements CameraDialog.OnClic
     }
 
     @Override
-    public ArrayList<PetRegister> getPetData() {
-        ArrayList<PetRegister> data = new ArrayList<>();
+    public List<PetRegister> getPetData() {
+        /*ArrayList<PetRegister> data = new ArrayList<>();
         for (PetLoverRegisterModel pet : doctorModel.getPetList()) {
             data.add(new PetRegister(pet.getId(), pet.getPet_id()));
         }
-        return data;
+        return data;*/
+        return petRegisterList;
     }
 
     @Override
@@ -658,20 +743,17 @@ public class ProfileFragment extends BaseFragment implements CameraDialog.OnClic
 
     @Override
     public List<ScheduleDoctorRegister> getSchedules() {
-        List<ScheduleDoctorRegister> list = new ArrayList<>();
-        for (ScheduleModel scheduleModel : doctorModel.getScheduleList()) {
-            list.add(new ScheduleDoctorRegister(scheduleModel.getId(), scheduleModel.getDay(), scheduleModel.getStart_time(), scheduleModel.getEnd_time()));
+        list.clear();
+        List<ScheduleRegisterModel> scheduleData = schedulesAdapter.getData();
+        for (ScheduleRegisterModel scheduleModel : scheduleData) {
+            list.add(new ScheduleDoctorRegister(scheduleModel.getModelId(), scheduleModel.getDay(), scheduleModel.getStartHour(), scheduleModel.getEndHour()));
         }
         return list;
     }
 
     @Override
     public List<ServicesDoctorRegister> getServices() {
-        List<ServicesDoctorRegister> list = new ArrayList<>();
-        for (ServiceDoctorModel serviceDoctorModel : doctorModel.getServiceList()) {
-            list.add(new ServicesDoctorRegister(serviceDoctorModel.getId(), serviceDoctorModel.getService_id()));
-        }
-        return list;
+        return servicesDoctorRegisterList;
     }
 
     @Override
@@ -766,5 +848,69 @@ public class ProfileFragment extends BaseFragment implements CameraDialog.OnClic
 
     private void hideEtError(EditText editText) {
         editText.setError(null);
+    }
+
+    @Override
+    public void data(List<PetRedVetModel> data) {
+        petRegisterList.clear();
+        for (PetRedVetModel model : data) {
+            if (model.isSelected()) {
+                petRegisterList.add(new PetRegister(model.getRequestId(), model.getId()));
+            }
+        }
+    }
+
+    @OnClick(R.id.start_group)
+    public void startHourClicked() {
+        if (currentSchedule != null) {
+            fromStart = true;
+            navigator.navigateToTimePicker(this);
+        }
+    }
+
+    @OnClick(R.id.end_group)
+    public void endHourClicked() {
+        if (currentSchedule != null) {
+            fromStart = false;
+            navigator.navigateToTimePicker(this);
+        }
+    }
+
+    @Override
+    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+        if (fromStart) {
+            startHour.setText(String.valueOf(hourOfDay));
+            startMinute.setText(String.valueOf(minute));
+            currentSchedule.setStartHour(hourOfDay + ":" + minute + ":" + "00");
+        } else {
+            endHour.setText(String.valueOf(hourOfDay));
+            endMinute.setText(String.valueOf(minute));
+            currentSchedule.setEndHour(hourOfDay + ":" + minute + ":" + "00");
+        }
+    }
+
+    @Override
+    public void itemClicked(ScheduleRegisterModel data) {
+        currentSchedule = data;
+        ivScheduleCheck.setImageResource(data.isCheck() ? R.drawable.ic_check_pink : R.drawable.ic_check_gray);
+        if (data.getStartHour() != null) {
+            String[] text = data.getStartHour().split(":");
+            startHour.setText(text[0]);
+            startMinute.setText(text[1]);
+        }
+        if (data.getEndHour() != null) {
+            String[] text = data.getEndHour().split(":");
+            endHour.setText(text[0]);
+            endMinute.setText(text[1]);
+        }
+    }
+
+    @OnClick(R.id.iv_schedule_check)
+    public void scheduleCheck() {
+        if (currentSchedule != null) {
+            currentSchedule.setCheck(!currentSchedule.isCheck());
+            ivScheduleCheck.setImageResource(currentSchedule.isCheck() ? R.drawable.ic_check_pink : R.drawable.ic_check_gray);
+            schedulesAdapter.updateData(currentSchedule);
+        }
     }
 }

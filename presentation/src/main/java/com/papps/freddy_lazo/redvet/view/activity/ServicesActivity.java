@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import com.papps.freddy_lazo.redvet.R;
 import com.papps.freddy_lazo.redvet.interfaces.ServicesFragmentView;
 import com.papps.freddy_lazo.redvet.internal.dagger.component.DaggerServicesActivityComponent;
+import com.papps.freddy_lazo.redvet.model.ServiceDoctorModel;
 import com.papps.freddy_lazo.redvet.model.ServicesModel;
 import com.papps.freddy_lazo.redvet.presenter.ServicesFragmentPresenter;
 import com.papps.freddy_lazo.redvet.view.adapter.ServicesAdapter;
@@ -31,9 +32,10 @@ public class ServicesActivity extends BaseActivity implements ServicesFragmentVi
     ServicesAdapter adapter;
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
+    private List<ServiceDoctorModel> servicesData;
 
-    public static Intent getCallingIntent(BaseFragment fragment, String data) {
-        return new Intent(fragment.getContext(), ServicesActivity.class).putExtra("data", data);
+    public static Intent getCallingIntent(BaseFragment fragment, List<ServiceDoctorModel> data) {
+        return new Intent(fragment.getContext(), ServicesActivity.class).putParcelableArrayListExtra("data", (ArrayList<? extends Parcelable>) data);
     }
 
     @Override
@@ -52,8 +54,13 @@ public class ServicesActivity extends BaseActivity implements ServicesFragmentVi
     @Override
     public void initUI() {
         presenter.setView(this);
-        presenter.getServices();
+        getServicesData();
         setUpRv();
+        presenter.getServices();
+    }
+
+    private void getServicesData() {
+        servicesData = getIntent().getParcelableArrayListExtra("data");
     }
 
     private void setUpRv() {
@@ -63,6 +70,14 @@ public class ServicesActivity extends BaseActivity implements ServicesFragmentVi
 
     @Override
     public void listData(List<ServicesModel> data) {
+        for (ServiceDoctorModel model : servicesData) {
+            for (ServicesModel bindData : data) {
+                if (model.getService_id() == bindData.getId()) {
+                    bindData.setState(true);
+                    bindData.setResponseId(model.getId());
+                }
+            }
+        }
         adapter.bindList(data);
     }
 
@@ -71,12 +86,12 @@ public class ServicesActivity extends BaseActivity implements ServicesFragmentVi
     public void finish() {
         Intent data = new Intent();
         data.putParcelableArrayListExtra("data", (ArrayList<? extends Parcelable>) adapter.getData());
-        setResult(RESULT_OK,data);
+        setResult(RESULT_OK, data);
         super.finish();
     }
 
     @OnClick(R.id.img_header)
-    public void imageClicked(){
+    public void imageClicked() {
         finish();
     }
 }

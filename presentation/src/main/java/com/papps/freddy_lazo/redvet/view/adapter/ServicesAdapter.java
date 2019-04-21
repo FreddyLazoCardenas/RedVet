@@ -73,19 +73,27 @@ public class ServicesAdapter extends RecyclerView.Adapter<ServicesAdapter.Servic
 
         void bind(int position) {
             txtServices.setText(data.get(position).getName());
+            if(data.get(position).getState()){
+                imgCheck.setImageResource(R.drawable.ic_check_green);
+            }else{
+                imgCheck.setImageResource(R.drawable.ic_check_gray);
+            }
+        }
+
+        private void itemSelected(int adapterPosition) {
+            for (int i = 0; i < data.size(); i++) {
+                if (i != adapterPosition) {
+                    // data.get(i).setSelected(false);
+                } else {
+                    data.get(i).setState(!data.get(i).getState());
+                }
+            }
         }
 
         @OnClick
         void serviceClicked() {
-            if(imgCheck.getTag().equals("false")){
-                imgCheck.setTag("true");
-                imgCheck.setImageResource(R.drawable.ic_check_green);
-            }else{
-                imgCheck.setTag("false");
-                imgCheck.setImageResource(R.drawable.ic_check_gray);
-            }
-            data.get(getAdapterPosition()).setState(Boolean.valueOf(String.valueOf(imgCheck.getTag())));
-            Log.d("serviceClicked", "posicion es " + getAdapterPosition());
+            itemSelected(getAdapterPosition());
+            bindList(data);
         }
     }
 

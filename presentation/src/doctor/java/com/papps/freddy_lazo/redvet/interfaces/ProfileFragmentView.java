@@ -4,6 +4,7 @@ import com.papps.freddy_lazo.domain.model.PetRegister;
 import com.papps.freddy_lazo.domain.model.ScheduleDoctorRegister;
 import com.papps.freddy_lazo.domain.model.ServicesDoctorRegister;
 import com.papps.freddy_lazo.redvet.interfaces.BaseView;
+import com.papps.freddy_lazo.redvet.model.PetRedVetModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +43,7 @@ public interface ProfileFragmentView extends BaseView {
 
     String getLongitude();
 
-    ArrayList<PetRegister> getPetData();
+    List<PetRegister> getPetData();
 
     void showLastNameError(String string);
 
@@ -125,4 +126,6 @@ public interface ProfileFragmentView extends BaseView {
     String getDescription();
 
     void updateView();
+
+    void successRequest(List<PetRedVetModel> data);
 }

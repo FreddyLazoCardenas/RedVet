@@ -1,6 +1,5 @@
 package com.papps.freddy_lazo.redvet.model.mapper;
 
-import com.papps.freddy_lazo.data.entity.ScheduleEntity;
 import com.papps.freddy_lazo.domain.model.Schedule;
 import com.papps.freddy_lazo.redvet.model.ScheduleModel;
 

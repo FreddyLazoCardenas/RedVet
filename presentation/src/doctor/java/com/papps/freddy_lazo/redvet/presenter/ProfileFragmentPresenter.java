@@ -8,11 +8,16 @@ import android.text.TextUtils;
 import com.papps.freddy_lazo.data.sharedPreferences.PreferencesManager;
 import com.papps.freddy_lazo.domain.interactor.DefaultObserver;
 import com.papps.freddy_lazo.domain.interactor.DoctorUpdate;
+import com.papps.freddy_lazo.domain.interactor.PetRedVetUseCase;
 import com.papps.freddy_lazo.domain.model.Doctor;
+import com.papps.freddy_lazo.domain.model.PetRedVet;
 import com.papps.freddy_lazo.redvet.R;
 import com.papps.freddy_lazo.redvet.interfaces.ProfileFragmentView;
 import com.papps.freddy_lazo.redvet.model.DoctorModel;
 import com.papps.freddy_lazo.redvet.model.mapper.DoctorModelMapper;
+import com.papps.freddy_lazo.redvet.model.mapper.PetRedVetModelMapper;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -23,11 +28,13 @@ public class ProfileFragmentPresenter implements Presenter<ProfileFragmentView> 
     private static final int PERMISSION_REQUEST_GALLERY_CODE = 5;
     private final DoctorUpdate doctorUpdate;
     private final PreferencesManager preferencesManager;
+    private final PetRedVetUseCase petRedVetUseCase;
     private ProfileFragmentView view;
 
     @Inject
-    public ProfileFragmentPresenter(PreferencesManager preferencesManager , DoctorUpdate doctorUpdate) {
+    public ProfileFragmentPresenter(PreferencesManager preferencesManager , DoctorUpdate doctorUpdate, PetRedVetUseCase petRedVetUseCase) {
         this.doctorUpdate = doctorUpdate;
+        this.petRedVetUseCase = petRedVetUseCase;
         this.preferencesManager = preferencesManager;
     }
 
@@ -46,10 +53,40 @@ public class ProfileFragmentPresenter implements Presenter<ProfileFragmentView> 
         doctorUpdate.unsubscribe();
     }
 
+    public void getPets() {
+        petRedVetUseCase.execute(new PetsObservable());
+    }
+
     @Override
     public void setView(ProfileFragmentView view) {
         this.view = view;
     }
+
+    private class PetsObservable extends DefaultObserver<List<PetRedVet>> {
+
+        @Override
+        protected void onStart() {
+            super.onStart();
+        }
+
+        @Override
+        public void onNext(List<PetRedVet> petRedVets) {
+            super.onNext(petRedVets);
+            view.successRequest(PetRedVetModelMapper.transform(petRedVets));
+        }
+
+        @Override
+        public void onError(Throwable e) {
+            super.onError(e);
+            view.showErrorMessage(e.getMessage());
+        }
+
+        @Override
+        public void onComplete() {
+            super.onComplete();
+        }
+    }
+
 
     public boolean checkCameraHardware() {
         return view.context().getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA);

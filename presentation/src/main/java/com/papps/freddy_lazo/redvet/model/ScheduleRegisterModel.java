@@ -8,6 +8,7 @@ public class ScheduleRegisterModel {
     private String endHour;
     private boolean isCheck;
     private boolean isSelected;
+    private Integer modelId;
 
     public ScheduleRegisterModel(int day, String dayName, String startHour, String endHour) {
         this.day = day;
@@ -62,5 +63,13 @@ public class ScheduleRegisterModel {
 
     public void setSelected(boolean selected) {
         isSelected = selected;
+    }
+
+    public Integer getModelId() {
+        return modelId;
+    }
+
+    public void setModelId(Integer modelId) {
+        this.modelId = modelId;
     }
 }

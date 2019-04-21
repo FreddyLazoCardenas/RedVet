@@ -9,12 +9,37 @@ public class ServicesModel implements Parcelable {
     private String name;
     private String available;
     private boolean state;
+    private Integer responseId;
 
     public ServicesModel(int id, String name, String available) {
         this.id = id;
         this.name = name;
         this.available = available;
     }
+
+    protected ServicesModel(Parcel in) {
+        id = in.readInt();
+        name = in.readString();
+        available = in.readString();
+        state = in.readByte() != 0;
+        if (in.readByte() == 0) {
+            responseId = null;
+        } else {
+            responseId = in.readInt();
+        }
+    }
+
+    public static final Creator<ServicesModel> CREATOR = new Creator<ServicesModel>() {
+        @Override
+        public ServicesModel createFromParcel(Parcel in) {
+            return new ServicesModel(in);
+        }
+
+        @Override
+        public ServicesModel[] newArray(int size) {
+            return new ServicesModel[size];
+        }
+    };
 
     public int getId() {
         return id;
@@ -48,6 +73,15 @@ public class ServicesModel implements Parcelable {
         this.state = state;
     }
 
+    public Integer getResponseId() {
+        return responseId;
+    }
+
+    public void setResponseId(Integer responseId) {
+        this.responseId = responseId;
+    }
+
+
     @Override
     public int describeContents() {
         return 0;
@@ -55,28 +89,15 @@ public class ServicesModel implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(this.id);
-        dest.writeString(this.name);
-        dest.writeString(this.available);
-        dest.writeByte(this.state ? (byte) 1 : (byte) 0);
-    }
-
-    protected ServicesModel(Parcel in) {
-        this.id = in.readInt();
-        this.name = in.readString();
-        this.available = in.readString();
-        this.state = in.readByte() != 0;
-    }
-
-    public static final Parcelable.Creator<ServicesModel> CREATOR = new Parcelable.Creator<ServicesModel>() {
-        @Override
-        public ServicesModel createFromParcel(Parcel source) {
-            return new ServicesModel(source);
+        dest.writeInt(id);
+        dest.writeString(name);
+        dest.writeString(available);
+        dest.writeByte((byte) (state ? 1 : 0));
+        if (responseId == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(responseId);
         }
-
-        @Override
-        public ServicesModel[] newArray(int size) {
-            return new ServicesModel[size];
-        }
-    };
+    }
 }

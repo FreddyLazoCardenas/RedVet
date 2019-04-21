@@ -43,6 +43,7 @@ import com.papps.freddy_lazo.redvet.interfaces.RegisterFragmentView;
 import com.papps.freddy_lazo.redvet.internal.dagger.component.DaggerRegisterFragmentComponent;
 import com.papps.freddy_lazo.redvet.model.PetRedVetModel;
 import com.papps.freddy_lazo.redvet.model.ScheduleRegisterModel;
+import com.papps.freddy_lazo.redvet.model.ServiceDoctorModel;
 import com.papps.freddy_lazo.redvet.model.ServicesModel;
 import com.papps.freddy_lazo.redvet.presenter.RegisterFragmentPresenter;
 import com.papps.freddy_lazo.redvet.view.activity.RegisterActivity;
@@ -273,9 +274,10 @@ public class RegisterFragment extends BaseFragment implements RegisterFragmentVi
 
     @OnClick(R.id.img_add_services)
     public void services() {
+        List<ServiceDoctorModel> data = new ArrayList<>();
         gShower.setVisibility(View.INVISIBLE);
         gConsultation.setVisibility(View.INVISIBLE);
-        navigator.navigateToServicesActivity(this,"D",SERVICES_REQUEST_CODE);
+        navigator.navigateToServicesActivity(this, data, SERVICES_REQUEST_CODE);
     }
 
 
@@ -524,9 +526,9 @@ public class RegisterFragment extends BaseFragment implements RegisterFragmentVi
     public List<ScheduleDoctorRegister> getSchedules() {
         scheduleDoctorRegisters.clear();
         List<ScheduleRegisterModel> tempSchedule = schedulesAdapter.getData();
-        for(ScheduleRegisterModel model : tempSchedule){
-            if(model.isCheck()){
-                scheduleDoctorRegisters.add(new ScheduleDoctorRegister(model.getDay(),model.getStartHour(),model.getEndHour()));
+        for (ScheduleRegisterModel model : tempSchedule) {
+            if (model.isCheck()) {
+                scheduleDoctorRegisters.add(new ScheduleDoctorRegister(model.getDay(), model.getStartHour(), model.getEndHour()));
             }
         }
         return scheduleDoctorRegisters;
@@ -557,8 +559,8 @@ public class RegisterFragment extends BaseFragment implements RegisterFragmentVi
             if (resultCode == Activity.RESULT_OK) {
                 getData(data);
             }
-        }else if(requestCode == SERVICES_REQUEST_CODE){
-            if(resultCode == Activity.RESULT_OK){
+        } else if (requestCode == SERVICES_REQUEST_CODE) {
+            if (resultCode == Activity.RESULT_OK) {
                 getServicesData(data);
             }
         }
@@ -732,12 +734,12 @@ public class RegisterFragment extends BaseFragment implements RegisterFragmentVi
     public void itemClicked(ScheduleRegisterModel data) {
         currentSchedule = data;
         ivScheduleCheck.setImageResource(data.isCheck() ? R.drawable.ic_check_pink : R.drawable.ic_check_gray);
-        if(data.getStartHour() !=null){
+        if (data.getStartHour() != null) {
             String[] text = data.getStartHour().split(":");
             startHour.setText(text[0]);
             startMinute.setText(text[1]);
         }
-        if(data.getEndHour() !=null){
+        if (data.getEndHour() != null) {
             String[] text = data.getEndHour().split(":");
             endHour.setText(text[0]);
             endMinute.setText(text[1]);

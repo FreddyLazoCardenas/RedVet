@@ -7,6 +7,7 @@ public class PetRedVetModel {
     private String photo_url;
     private String available;
     private boolean isSelected;
+    private Integer requestId;
 
     public PetRedVetModel(int id, String name, String photo_url, String available) {
         this.id = id;
@@ -17,6 +18,15 @@ public class PetRedVetModel {
 
     public int getId() {
         return id;
+    }
+
+
+    public Integer getRequestId() {
+        return requestId;
+    }
+
+    public void setRequestId(Integer requestId) {
+        this.requestId = requestId;
     }
 
     public String getName() {

@@ -11,6 +11,8 @@ import android.support.v4.content.FileProvider;
 
 import com.papps.freddy_lazo.redvet.BuildConfig;
 import com.papps.freddy_lazo.redvet.R;
+import com.papps.freddy_lazo.redvet.model.NewsModel;
+import com.papps.freddy_lazo.redvet.model.ServiceDoctorModel;
 import com.papps.freddy_lazo.redvet.view.activity.BaseActivity;
 import com.papps.freddy_lazo.redvet.view.activity.CancelAppointmentActivity;
 import com.papps.freddy_lazo.redvet.view.activity.ChatActivity;
@@ -18,6 +20,7 @@ import com.papps.freddy_lazo.redvet.view.activity.DiagnoseAppointmentActivity;
 import com.papps.freddy_lazo.redvet.view.activity.HomeActivity;
 import com.papps.freddy_lazo.redvet.view.activity.LoginActivity;
 import com.papps.freddy_lazo.redvet.view.activity.MapActivity;
+import com.papps.freddy_lazo.redvet.view.activity.NewsDetailActivity;
 import com.papps.freddy_lazo.redvet.view.activity.RegisterActivity;
 import com.papps.freddy_lazo.redvet.view.activity.ServicesActivity;
 import com.papps.freddy_lazo.redvet.view.dialogFragment.BaseDialogFragment;
@@ -40,6 +43,7 @@ import com.papps.freddy_lazo.redvet.view.fragment.ServicesFragment;
 import com.papps.freddy_lazo.redvet.view.pickers.TimePickerFragment;
 
 import java.io.File;
+import java.util.List;
 import java.util.Objects;
 
 import javax.inject.Inject;
@@ -72,16 +76,21 @@ public class Navigator extends BaseNavigator {
     }
 
     public void navigateCancelAppointmentActivity(BaseDialogFragment fragment, int id, int requestCode) {
-        fragment.startActivityForResult(CancelAppointmentActivity.getCallingIntent(fragment, id),requestCode);
+        fragment.startActivityForResult(CancelAppointmentActivity.getCallingIntent(fragment, id), requestCode);
     }
 
-    public void navigateToDiagnoseAppointmentActivity(BaseDialogFragment fragment, String data,int requestCode) {
-        fragment.startActivityForResult(DiagnoseAppointmentActivity.getCallingIntent(fragment, data),requestCode);
+    public void navigateToDiagnoseAppointmentActivity(BaseDialogFragment fragment, String data, int requestCode) {
+        fragment.startActivityForResult(DiagnoseAppointmentActivity.getCallingIntent(fragment, data), requestCode);
     }
 
-    public void navigateToServicesActivity(BaseFragment fragment, String data,int requestCode) {
-        fragment.startActivityForResult(ServicesActivity.getCallingIntent(fragment, data),requestCode);
+    public void navigateToServicesActivity(BaseFragment fragment, List<ServiceDoctorModel> data, int requestCode) {
+        fragment.startActivityForResult(ServicesActivity.getCallingIntent(fragment, data), requestCode);
     }
+
+    public void navigateToNewsDetailActivity(BaseActivity activity, NewsModel data) {
+        activity.startActivity(NewsDetailActivity.getCallingIntent(activity, data));
+    }
+
 
     //fragments
 
@@ -199,12 +208,12 @@ public class Navigator extends BaseNavigator {
         dialogTransaction(activity, PhotoListDialog.newInstance(listener));
     }
 
-    public void navigatePendingDialog(BaseActivity activity, String data , PendingAppointmentDialog.RequestInterface listener) {
-        dialogTransaction(activity, PendingAppointmentDialog.newInstance(data , listener));
+    public void navigatePendingDialog(BaseActivity activity, String data, PendingAppointmentDialog.RequestInterface listener) {
+        dialogTransaction(activity, PendingAppointmentDialog.newInstance(data, listener));
     }
 
     public void navigateConfirmedDialog(BaseActivity activity, String data, ConfirmedAppointmentDialog.RequestInterface listener) {
-        dialogTransaction(activity, ConfirmedAppointmentDialog.newInstance(data,listener));
+        dialogTransaction(activity, ConfirmedAppointmentDialog.newInstance(data, listener));
     }
 
     public void navigateFinishedDialog(BaseActivity activity, String data, FinishedAppointmentDialog.RequestInterface listener) {
@@ -215,11 +224,11 @@ public class Navigator extends BaseNavigator {
         dialogTransaction(activity, CancelOtherReasonAppointmentDialog.newInstance(id, listener));
     }
 
-    public void navigateToChatActivity(BaseActivity activity , int appointmentId){
-        activity.startActivity(ChatActivity.getCallingIntent(activity ,appointmentId));
+    public void navigateToChatActivity(BaseActivity activity, int appointmentId) {
+        activity.startActivity(ChatActivity.getCallingIntent(activity, appointmentId));
     }
 
-    public void navigatePhoneCall(BaseActivity activity, String phone){
+    public void navigatePhoneCall(BaseActivity activity, String phone) {
         activity.startActivity(new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", phone, null)));
     }
 
