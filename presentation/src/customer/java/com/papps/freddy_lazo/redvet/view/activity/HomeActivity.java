@@ -43,6 +43,7 @@ public class HomeActivity extends BaseActivity implements BottomNavigationView.O
         setContentView(R.layout.activity_home);
         injectView(this);
         buildInjection();
+        subscribeBus();
         initUI();
     }
 
@@ -57,7 +58,7 @@ public class HomeActivity extends BaseActivity implements BottomNavigationView.O
         bottomNav.setSelectedItemId(R.id.action_map);
     }
 
-    @Override
+/*    @Override
     public void onStart() {
         super.onStart();
         subscribeBus();
@@ -66,6 +67,11 @@ public class HomeActivity extends BaseActivity implements BottomNavigationView.O
     @Override
     public void onStop() {
         super.onStop();
+    }*/
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
         unsubscribeBus();
     }
 
