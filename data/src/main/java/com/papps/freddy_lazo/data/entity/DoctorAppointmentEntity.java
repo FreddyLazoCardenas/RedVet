@@ -28,7 +28,7 @@ public class DoctorAppointmentEntity {
     @SerializedName("status_reason")
     private String status_reason;
     @SerializedName("qualification")
-    private double qualification;
+    private Integer qualification;
     @SerializedName("diagnosis")
     private String diagnosis;
     @SerializedName("pet_lover")
@@ -78,7 +78,7 @@ public class DoctorAppointmentEntity {
         return status_reason;
     }
 
-    public double getQualification() {
+    public Integer getQualification() {
         return qualification;
     }
 

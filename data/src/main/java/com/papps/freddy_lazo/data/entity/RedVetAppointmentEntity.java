@@ -25,7 +25,7 @@ public class RedVetAppointmentEntity {
     @SerializedName("status_reason")
     private String status_reason;
     @SerializedName("qualification")
-    private double qualification;
+    private Integer qualification;
     @SerializedName("diagnosis")
     private String diagnosis;
 
@@ -69,7 +69,7 @@ public class RedVetAppointmentEntity {
         return status_reason;
     }
 
-    public double getQualification() {
+    public Integer getQualification() {
         return qualification;
     }
 

@@ -2,7 +2,9 @@ package com.papps.freddy_lazo.redvet.view.fragment;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -45,6 +47,7 @@ import com.papps.freddy_lazo.redvet.internal.dagger.component.DaggerMapFragmentC
 import com.papps.freddy_lazo.redvet.model.CreateAppointmentObjectModel;
 import com.papps.freddy_lazo.redvet.model.DoctorModel;
 import com.papps.freddy_lazo.redvet.model.PetRedVetModel;
+import com.papps.freddy_lazo.redvet.model.ServiceDoctorModel;
 import com.papps.freddy_lazo.redvet.model.ServicesModel;
 import com.papps.freddy_lazo.redvet.presenter.MapFragmentPresenter;
 import com.papps.freddy_lazo.redvet.view.activity.HomeActivity;
@@ -64,6 +67,7 @@ public class MapFragment extends BaseFragment implements OnMapReadyCallback, Map
         PetAdapter.onClickAdapter, AppointmentHeaderAdapter.onClickAdapter, SearchView.OnQueryTextListener {
 
     private static final int REQUEST_LOCATION = 2;
+    private static final int SERVICES_REQUEST_CODE = 3;
     private HomeActivity activity;
     private FusedLocationProviderClient fusedLocationClient;
     private GoogleMap googleMap;
@@ -85,8 +89,8 @@ public class MapFragment extends BaseFragment implements OnMapReadyCallback, Map
     private LatLng position;
     private List<Integer> petsIdArray = new ArrayList<>();
     private List<String> typeArray = new ArrayList<>();
+    private List<ServicesDoctorRegister> servicesDoctorRegisterList = new ArrayList<>();
     private List<Integer> servicesArray = new ArrayList<>();
-    private boolean fromServices;
     private String query;
 
     public static Fragment newInstance() {
@@ -195,28 +199,42 @@ public class MapFragment extends BaseFragment implements OnMapReadyCallback, Map
     }
 
     @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == SERVICES_REQUEST_CODE) {
+            if (resultCode == Activity.RESULT_OK) {
+                getServicesData(data);
+            }
+        }
+    }
+
+    private void getServicesData(Intent listData) {
+        List<ServicesModel> servicesData = listData.getParcelableArrayListExtra("data");
+        servicesDoctorRegisterList.clear();
+        if (!servicesData.isEmpty()) {
+            for (ServicesModel servicesModel : servicesData) {
+                if (servicesModel.getState()) {
+                    ServicesDoctorRegister data = new ServicesDoctorRegister(servicesModel.getResponseId(), servicesModel.getId());
+                    servicesDoctorRegisterList.add(data);
+                }
+            }
+        }
+        sendRequest();
+    }
+
+    private void sendRequest() {
+        servicesArray.clear();
+        for (ServicesDoctorRegister model : servicesDoctorRegisterList) {
+            servicesArray.add(model.getService_id());
+        }
+        presenter.getDoctors();
+    }
+
+    @Override
     public void initUI() {
         presenter.setView(this);
         setUpPetRv();
         presenter.getPets();
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        if (fromServices) {
-            fromServices = false;
-            servicesArray.clear();
-            List<ServicesModel> servicesModelList = activity.getData();
-            if (!servicesModelList.isEmpty()) {
-                for (ServicesModel servicesModel : servicesModelList) {
-                    if (servicesModel.getState()) {
-                        servicesArray.add(servicesModel.getId());
-                    }
-                }
-            }
-            presenter.getDoctors();
-        }
     }
 
     private void setUpPetRv() {
@@ -263,8 +281,13 @@ public class MapFragment extends BaseFragment implements OnMapReadyCallback, Map
 
     @OnClick(R.id.txt_services)
     public void servicesClick() {
-        fromServices = true;
-        navigator.navigateToServicesFragment(activity);
+        List<ServiceDoctorModel> data = new ArrayList<>();
+        if (!servicesDoctorRegisterList.isEmpty()) {
+            for (ServicesDoctorRegister tmpData : servicesDoctorRegisterList) {
+                data.add(new ServiceDoctorModel(tmpData.getId(), tmpData.getService_id()));
+            }
+        }
+        navigator.navigateToServicesActivity(this, data, SERVICES_REQUEST_CODE);
     }
 
     @Override

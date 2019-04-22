@@ -184,7 +184,15 @@ public class ProfileFragment extends BaseFragment implements CameraDialog.OnClic
 
     private void getUserData() {
         doctorModel = DoctorModel.toModel(preferencesManager.getDoctorCurrentUser());
+        fillServiceData();
         fillUi();
+    }
+
+    private void fillServiceData() {
+        for (ServiceDoctorModel model : doctorModel.getServiceList()) {
+            ServicesDoctorRegister data = new ServicesDoctorRegister(model.getId(), model.getService_id());
+            servicesDoctorRegisterList.add(data);
+        }
     }
 
     private void initSchedulesData() {
@@ -347,11 +355,11 @@ public class ProfileFragment extends BaseFragment implements CameraDialog.OnClic
 
     @OnClick(R.id.img_add_services)
     public void services() {
-        List<ServiceDoctorModel> data = doctorModel.getServiceList();
-        if(!servicesDoctorRegisterList.isEmpty()){
+        List<ServiceDoctorModel> data = new ArrayList<>();
+        if (!servicesDoctorRegisterList.isEmpty()) {
             data.clear();
-            for(ServicesDoctorRegister tmpData : servicesDoctorRegisterList){
-                data.add(new ServiceDoctorModel(tmpData.getId(),tmpData.getService_id()));
+            for (ServicesDoctorRegister tmpData : servicesDoctorRegisterList) {
+                data.add(new ServiceDoctorModel(tmpData.getId(), tmpData.getService_id()));
             }
         }
         gShower.setVisibility(View.INVISIBLE);
@@ -638,11 +646,13 @@ public class ProfileFragment extends BaseFragment implements CameraDialog.OnClic
 
     @Override
     public List<PetRegister> getPetData() {
-        /*ArrayList<PetRegister> data = new ArrayList<>();
-        for (PetLoverRegisterModel pet : doctorModel.getPetList()) {
-            data.add(new PetRegister(pet.getId(), pet.getPet_id()));
+        List<PetRedVetModel> data = adapter.getData();
+        petRegisterList.clear();
+        for (PetRedVetModel model : data) {
+            if (model.isSelected()) {
+                petRegisterList.add(new PetRegister(model.getRequestId(), model.getId()));
+            }
         }
-        return data;*/
         return petRegisterList;
     }
 
@@ -852,12 +862,12 @@ public class ProfileFragment extends BaseFragment implements CameraDialog.OnClic
 
     @Override
     public void data(List<PetRedVetModel> data) {
-        petRegisterList.clear();
+       /* petRegisterList.clear();
         for (PetRedVetModel model : data) {
             if (model.isSelected()) {
                 petRegisterList.add(new PetRegister(model.getRequestId(), model.getId()));
             }
-        }
+        }*/
     }
 
     @OnClick(R.id.start_group)

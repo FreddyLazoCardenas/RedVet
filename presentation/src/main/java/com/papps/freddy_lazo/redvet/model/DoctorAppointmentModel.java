@@ -18,14 +18,14 @@ public class DoctorAppointmentModel {
     private String reason;
     private String status;
     private String status_reason;
-    private double qualification;
+    private Integer qualification;
     private String diagnosis;
     private PetLoverModel petLover;
     private PetLoverRegisterModel pet;
     private List<AppointmentPhotoModel> photos;
 
     public DoctorAppointmentModel(int id, String doctor_id, String pet_lover_id, String pet_by_pet_lover_id, String date, String time, String type, String reason, String status, String status_reason
-            , double qualification, String diagnosis, PetLoverModel petLover ,PetLoverRegisterModel pet,List<AppointmentPhotoModel> photos ) {
+            , Integer qualification, String diagnosis, PetLoverModel petLover ,PetLoverRegisterModel pet,List<AppointmentPhotoModel> photos ) {
         this.id = id;
         this.doctor_id = doctor_id;
         this.pet_lover_id = pet_lover_id;
@@ -83,7 +83,7 @@ public class DoctorAppointmentModel {
         return status_reason;
     }
 
-    public double getQualification() {
+    public Integer getQualification() {
         return qualification;
     }
 

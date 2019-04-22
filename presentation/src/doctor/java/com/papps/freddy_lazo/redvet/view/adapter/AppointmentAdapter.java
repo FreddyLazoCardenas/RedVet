@@ -8,15 +8,22 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.papps.freddy_lazo.data.sharedPreferences.PreferencesManager;
 import com.papps.freddy_lazo.redvet.R;
 import com.papps.freddy_lazo.redvet.model.CreateAppointmentObjectModel;
 import com.papps.freddy_lazo.redvet.model.DoctorAppointmentModel;
+import com.papps.freddy_lazo.redvet.model.DoctorModel;
 import com.papps.freddy_lazo.redvet.model.PetLoverAppointmentModel;
 import com.papps.freddy_lazo.redvet.view.fragment.BaseFragment;
 
+import java.text.DateFormatSymbols;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.BitSet;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 import javax.inject.Inject;
 
@@ -26,6 +33,7 @@ import butterknife.OnClick;
 
 public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.AppointmentViewHolder> {
 
+    private final String type;
     private List<DoctorAppointmentModel> data = new ArrayList<>();
     private List<DoctorAppointmentModel> filterData = new ArrayList<>();
     private Context context;
@@ -33,7 +41,8 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
     private boolean isFiltering;
 
     @Inject
-    public AppointmentAdapter() {
+    public AppointmentAdapter(PreferencesManager preferencesManager) {
+        type = DoctorModel.toModel(preferencesManager.getDoctorCurrentUser()).getType();
     }
 
     @NonNull
@@ -94,6 +103,16 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
         }
     }
 
+    private String getMonthForInt(int num) {
+        String month = "wrong";
+        DateFormatSymbols dfs = new DateFormatSymbols();
+        String[] months = dfs.getMonths();
+        if (num >= 0 && num <= 11) {
+            month = months[num];
+        }
+        return month;
+    }
+
     private int getFilterItemIndex(int id) {
         for (DoctorAppointmentModel model : filterData) {
             if (model.getId() == id) {
@@ -144,6 +163,10 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
         TextView tvDate;
         @BindView(R.id.txt_time)
         TextView tvTime;
+        @BindView(R.id.txt_pet_name)
+        TextView tvPetName;
+        @BindView(R.id.txt_place)
+        TextView tvType;
 
         AppointmentViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -152,8 +175,22 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
 
         public void bind(int position) {
             DoctorAppointmentModel bindData = isFiltering ? filterData.get(position) : data.get(position);
-            tvDate.setText(bindData.getDate());
+            Calendar calendar = convertToDate(bindData.getDate());
+            tvDate.setText(calendar.get(Calendar.DAY_OF_MONTH) + " \n" + getMonthForInt(calendar.get(Calendar.MONTH)));
             tvTime.setText(bindData.getTime());
+            tvPetName.setText(bindData.getPet().getName());
+            tvType.setText(type);
+        }
+
+        private Calendar convertToDate(String txt) {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+            try {
+                sdf.parse(txt);
+                return sdf.getCalendar();
+            } catch (ParseException e) {
+                e.printStackTrace();
+                return null;
+            }
         }
 
         @OnClick

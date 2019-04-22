@@ -59,6 +59,10 @@ public class PetAdapter extends RecyclerView.Adapter<PetAdapter.PetViewHolder> {
         }
     }
 
+    public List<PetRedVetModel> getData() {
+        return data;
+    }
+
     public void setView(BaseFragment fragment) {
         listener = (onClickAdapter) fragment;
     }

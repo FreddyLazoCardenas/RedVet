@@ -14,6 +14,7 @@ import com.papps.freddy_lazo.redvet.BuildConfig;
 import com.papps.freddy_lazo.redvet.R;
 import com.papps.freddy_lazo.redvet.model.NewsModel;
 import com.papps.freddy_lazo.redvet.model.PetLoverRegisterModel;
+import com.papps.freddy_lazo.redvet.model.ServiceDoctorModel;
 import com.papps.freddy_lazo.redvet.view.activity.AppointmentActivity;
 import com.papps.freddy_lazo.redvet.view.activity.BaseActivity;
 import com.papps.freddy_lazo.redvet.view.activity.CancelAppointmentActivity;
@@ -22,6 +23,7 @@ import com.papps.freddy_lazo.redvet.view.activity.HomeActivity;
 import com.papps.freddy_lazo.redvet.view.activity.LoginActivity;
 import com.papps.freddy_lazo.redvet.view.activity.NewsDetailActivity;
 import com.papps.freddy_lazo.redvet.view.activity.RegisterActivity;
+import com.papps.freddy_lazo.redvet.view.activity.ServicesActivity;
 import com.papps.freddy_lazo.redvet.view.dialogFragment.BaseDialogFragment;
 import com.papps.freddy_lazo.redvet.view.dialogFragment.CameraDialog;
 import com.papps.freddy_lazo.redvet.view.dialogFragment.CancelOtherReasonAppointmentDialog;
@@ -50,6 +52,7 @@ import com.papps.freddy_lazo.redvet.view.pickers.DatePickerFragment;
 import com.papps.freddy_lazo.redvet.view.pickers.TimePickerFragment;
 
 import java.io.File;
+import java.util.List;
 import java.util.Objects;
 
 import javax.inject.Inject;
@@ -89,6 +92,9 @@ public class Navigator extends BaseNavigator {
         activity.startActivity(NewsDetailActivity.getCallingIntent(activity, data));
     }
 
+    public void navigateToServicesActivity(BaseFragment fragment, List<ServiceDoctorModel> data, int requestCode) {
+        fragment.startActivityForResult(ServicesActivity.getCallingIntent(fragment, data), requestCode);
+    }
 
     //fragments
 
