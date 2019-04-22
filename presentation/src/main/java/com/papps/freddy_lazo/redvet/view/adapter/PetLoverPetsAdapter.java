@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.papps.freddy_lazo.redvet.GlideApp;
 import com.papps.freddy_lazo.redvet.R;
 import com.papps.freddy_lazo.redvet.model.PetLoverRegisterModel;
 
@@ -66,6 +67,8 @@ public class PetLoverPetsAdapter extends RecyclerView.Adapter<PetLoverPetsAdapte
         TextView tvPetName;
         @BindView(R.id.img_check)
         ImageView imgCheck;
+        @BindView(R.id.img_pet)
+        ImageView ivPet;
 
         PetLoverPetsViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -74,11 +77,21 @@ public class PetLoverPetsAdapter extends RecyclerView.Adapter<PetLoverPetsAdapte
 
         void bindData(int position) {
             tvPetName.setText(data.get(position).getName());
+            loadImage(data.get(position).getPhoto_url());
             if (data.get(position).isSelected()) {
                 imgCheck.setImageResource(R.drawable.ic_check_green);
             } else {
                 imgCheck.setImageResource(R.drawable.ic_check_gray);
             }
+        }
+
+        private void loadImage(String photo) {
+            GlideApp.with(context)
+                    .asBitmap()
+                    .dontAnimate()
+                    .placeholder(R.drawable.ic_placeholder)
+                    .load(photo != null ? photo : "")
+                    .into(ivPet);
         }
 
         @OnClick
