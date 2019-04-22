@@ -76,6 +76,8 @@ public class HomeActivity extends BaseActivity implements BottomNavigationView.O
                 Event.NotificationEvent response = (Event.NotificationEvent) event;
                 presenter.sendRequest(getApiToken(), response.getAppointmentId());
                 Log.d("getBusAction", "llego a la actividad");
+            } else if (event instanceof Event.SuccessAppointment) {
+                navigator.navigateSuccessAppointment(this);
             }
         };
     }

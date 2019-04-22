@@ -19,4 +19,10 @@ public class Event extends BaseEvent {
             return appointmentId;
         }
     }
+
+    public static class SuccessAppointment{
+
+        public SuccessAppointment() {
+        }
+    }
 }

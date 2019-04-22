@@ -18,6 +18,8 @@ import com.papps.freddy_lazo.data.sharedPreferences.PreferencesManager;
 import com.papps.freddy_lazo.redvet.GlideApp;
 import com.papps.freddy_lazo.redvet.R;
 import com.papps.freddy_lazo.redvet.interfaces.AppointmentActivityView;
+import com.papps.freddy_lazo.redvet.internal.bus.Event;
+import com.papps.freddy_lazo.redvet.internal.bus.RxBus;
 import com.papps.freddy_lazo.redvet.internal.dagger.component.DaggerAppointmentComponent;
 import com.papps.freddy_lazo.redvet.model.CreateAppointmentModel;
 import com.papps.freddy_lazo.redvet.model.CreateAppointmentObjectModel;
@@ -63,6 +65,8 @@ public class AppointmentActivity extends BaseActivity implements DatePickerDialo
     PreferencesManager preferencesManager;
     @Inject
     AppointmentActivityPresenter presenter;
+    @Inject
+    RxBus rxBus;
     @BindView(R.id.img_register)
     ImageView ivDoctor;
 
@@ -182,7 +186,8 @@ public class AppointmentActivity extends BaseActivity implements DatePickerDialo
 
     @Override
     public void successResponse(CreateAppointmentModel data) {
-        navigator.navigateSuccessAppointment(this);
+        rxBus.send(new Event.SuccessAppointment());
+        finish();
     }
 
     @Override

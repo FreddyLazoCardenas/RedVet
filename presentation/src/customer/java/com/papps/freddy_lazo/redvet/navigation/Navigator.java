@@ -184,8 +184,8 @@ public class Navigator extends BaseNavigator {
         dialogTransaction(activity, PetListDialog.newInstance(listener));
     }
 
-    public void navigateDoctorDetailFragment(FragmentManager fm, String name, String doctor) {
-        DoctorDialog.newInstance(doctor).show(fm, name);
+    public void navigateDoctorDetailFragment(BaseActivity activity,String doctor) {
+        dialogTransaction(activity, DoctorDialog.newInstance(doctor));
     }
 
     public void navigateDoctorConfirmedAppointmentFragment(BaseActivity activity, String notification) {
