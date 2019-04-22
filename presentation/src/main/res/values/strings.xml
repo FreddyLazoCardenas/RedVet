@@ -24,4 +24,5 @@
     <string name="add_diagnose_data">Agregar datos de diagnostico</string>
     <string name="add_schedules_data">Agregar datos de horario</string>
     <string name="success_recover_password">Ingresa a tu correo para reestablecer tu contraseña</string>
+    <string name="notification_time">Hace %1$d %2$s</string>
 </resources>

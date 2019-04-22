@@ -1,5 +1,6 @@
 package com.papps.freddy_lazo.redvet.view.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
@@ -73,22 +74,19 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
             ButterKnife.bind(this, itemView);
         }
 
+        @SuppressLint("StringFormatMatches")
         public void bind(int position) {
             itemView.setBackgroundColor(ContextCompat.getColor(context, position % 2 == 0 ? R.color.colorWhite : R.color.colorNotificationGray));
             tvTitle.setText(data.get(position).getType());
             tvContent.setText(data.get(position).getMessage());
-            tvTime.setText(data.get(position).getTime());
-
-
             Long tsLong = System.currentTimeMillis() / 1000;
             Long notTime = Long.valueOf(data.get(position).getTime());
-
-            Long test = (tsLong - notTime) / 3600;
-            Calendar cal = Calendar.getInstance(Locale.getDefault());
-            cal.setTimeInMillis(Long.valueOf(data.get(position).getTime()) * 1000);
-            String date = DateFormat.format("dd-MM-yyyy", cal).toString();
-           // Log.d("bind", date);
-            Log.d("bind", tsLong+"");
+            long test = (tsLong - notTime) / 3600;
+            if (test < 24) {
+                tvTime.setText(context.getString(R.string.notification_time,test,"horas"));
+            }else{
+                tvTime.setText(context.getString(R.string.notification_time,test/24,"dias"));
+            }
         }
     }
 }
