@@ -2,7 +2,7 @@ package com.papps.freddy_lazo.redvet.interfaces;
 
 import com.papps.freddy_lazo.redvet.model.DoctorModel;
 
-public interface LoginFragmentView extends BaseView {
+public interface LoginFragmentView extends LoadingView {
 
     String getEmail();
 

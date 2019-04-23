@@ -5,9 +5,11 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.Toast;
 
 import com.papps.freddy_lazo.redvet.AndroidApplication;
+import com.papps.freddy_lazo.redvet.R;
 import com.papps.freddy_lazo.redvet.interfaces.BaseView;
 import com.papps.freddy_lazo.redvet.internal.bus.RxBus;
 import com.papps.freddy_lazo.redvet.internal.dagger.component.ApplicationComponent;
@@ -19,6 +21,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.functions.Consumer;
@@ -31,14 +34,14 @@ public class BaseActivity extends AppCompatActivity implements BaseView {
     @Inject
     RxBus rxBus;
 
-    /*    @Nullable
-        @BindView(R.id.v_progress)
-        View vProgress;
+    @Nullable
+    @BindView(R.id.v_progress)
+    View vProgress;
 
-        @Nullable
-        @BindView(R.id.toolbar)
-        Toolbar toolbar;
-        */
+    /* @Nullable
+     @BindView(R.id.toolbar)
+     Toolbar toolbar;
+     */
     protected boolean isStopped;
     private CompositeDisposable mDisposable;
     private List<ServicesModel> data = new ArrayList<>();
@@ -78,6 +81,18 @@ public class BaseActivity extends AppCompatActivity implements BaseView {
     protected void onStop() {
         super.onStop();
         isStopped = true;
+    }
+
+    public void showLoading() {
+        if (vProgress != null) vProgress.setVisibility(View.VISIBLE);
+    }
+
+    public boolean isLoading() {
+        return vProgress != null && vProgress.getVisibility() == View.VISIBLE;
+    }
+
+    public void hideLoading() {
+        if (vProgress != null) vProgress.setVisibility(View.GONE);
     }
 
     @Override

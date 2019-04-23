@@ -58,17 +58,6 @@ public class HomeActivity extends BaseActivity implements BottomNavigationView.O
         bottomNav.setSelectedItemId(R.id.action_map);
     }
 
-/*    @Override
-    public void onStart() {
-        super.onStart();
-        subscribeBus();
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-    }*/
-
     @Override
     protected void onDestroy() {
         super.onDestroy();

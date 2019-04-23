@@ -51,6 +51,7 @@ public class AppointmentFragmentPresenter implements Presenter<AppointmentFragme
         @Override
         protected void onStart() {
             super.onStart();
+            view.showLoading();
         }
 
 
@@ -65,11 +66,13 @@ public class AppointmentFragmentPresenter implements Presenter<AppointmentFragme
         public void onError(Throwable e) {
             super.onError(e);
             view.showErrorMessage(e.getMessage());
+            view.hideLoading();
         }
 
         @Override
         public void onComplete() {
             super.onComplete();
+            view.hideLoading();
         }
     }
 }

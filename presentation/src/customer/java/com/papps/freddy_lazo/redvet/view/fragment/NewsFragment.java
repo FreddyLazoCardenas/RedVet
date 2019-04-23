@@ -115,4 +115,14 @@ public class NewsFragment extends BaseFragment implements NewsFragmentView, News
     public void itemClicked(NewsModel model) {
         navigator.navigateToNewsDetailActivity(activity, model);
     }
+
+    @Override
+    public void showLoading() {
+        activity.showLoading();
+    }
+
+    @Override
+    public void hideLoading() {
+        activity.hideLoading();
+    }
 }

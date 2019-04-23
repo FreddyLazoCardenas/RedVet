@@ -103,9 +103,9 @@ public class AppointmentFragment extends BaseFragment implements AppointmentFrag
         rvHeader.setAdapter(headerAdapter);
         headerAdapter.setView(this);
         List<CreateAppointmentObjectModel> data = new ArrayList<>();
-        data.add(new CreateAppointmentObjectModel("Pendientes","pending"));
-        data.add(new CreateAppointmentObjectModel("Confirmadas","confirmed"));
-        data.add(new CreateAppointmentObjectModel("Finalizadas","finished"));
+        data.add(new CreateAppointmentObjectModel("Pendientes", "pending"));
+        data.add(new CreateAppointmentObjectModel("Confirmadas", "confirmed"));
+        data.add(new CreateAppointmentObjectModel("Finalizadas", "finished"));
         headerAdapter.bindList(data);
     }
 
@@ -201,5 +201,15 @@ public class AppointmentFragment extends BaseFragment implements AppointmentFrag
     @Override
     public void successCancelRequest(int id) {
         adapter.removeAppointment(id);
+    }
+
+    @Override
+    public void showLoading() {
+        activity.showLoading();
+    }
+
+    @Override
+    public void hideLoading() {
+        activity.hideLoading();
     }
 }

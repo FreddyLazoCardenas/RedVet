@@ -50,6 +50,7 @@ public class NewsFragmentPresenter implements Presenter<NewsFragmentView> {
         @Override
         protected void onStart() {
             super.onStart();
+            view.showLoading();
         }
 
         @Override
@@ -61,6 +62,7 @@ public class NewsFragmentPresenter implements Presenter<NewsFragmentView> {
         @Override
         public void onComplete() {
             super.onComplete();
+            view.hideLoading();
         }
     }
 }

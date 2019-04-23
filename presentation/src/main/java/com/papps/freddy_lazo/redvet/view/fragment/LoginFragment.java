@@ -167,4 +167,14 @@ public class LoginFragment extends BaseFragment implements LoginFragmentView {
         editText.setError(message);
         editText.requestFocus();
     }
+
+    @Override
+    public void showLoading() {
+        activity.showLoading();
+    }
+
+    @Override
+    public void hideLoading() {
+        activity.hideLoading();
+    }
 }

@@ -222,4 +222,14 @@ public class AppointmentFragment extends BaseFragment implements AppointmentFrag
         else
             adapter.bindList(null);
     }
+
+    @Override
+    public void showLoading() {
+        activity.showLoading();
+    }
+
+    @Override
+    public void hideLoading() {
+        activity.hideLoading();
+    }
 }

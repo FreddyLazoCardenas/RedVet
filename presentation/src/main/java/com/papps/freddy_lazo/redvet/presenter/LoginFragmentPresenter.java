@@ -97,6 +97,7 @@ public class LoginFragmentPresenter implements Presenter<LoginFragmentView> {
         @Override
         protected void onStart() {
             super.onStart();
+            view.showLoading();
         }
 
         @Override
@@ -115,11 +116,13 @@ public class LoginFragmentPresenter implements Presenter<LoginFragmentView> {
                 return;
             }
             view.showErrorMessage(e.getMessage());
+            view.hideLoading();
         }
 
         @Override
         public void onComplete() {
             super.onComplete();
+            view.hideLoading();
             view.successLogin();
         }
     }
@@ -128,6 +131,7 @@ public class LoginFragmentPresenter implements Presenter<LoginFragmentView> {
         @Override
         protected void onStart() {
             super.onStart();
+            view.showLoading();
         }
 
         @Override
@@ -146,11 +150,13 @@ public class LoginFragmentPresenter implements Presenter<LoginFragmentView> {
                 return;
             }
             view.showErrorMessage(e.getMessage());
+            view.hideLoading();
         }
 
         @Override
         public void onComplete() {
             super.onComplete();
+            view.hideLoading();
             view.successLogin();
         }
 
