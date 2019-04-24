@@ -148,6 +148,7 @@ public class MapFragment extends BaseFragment implements OnMapReadyCallback, Map
                             Manifest.permission.ACCESS_FINE_LOCATION},
                     REQUEST_LOCATION);
         } else {
+            typeArray.add("clinic");
             initMap();
         }
     }
@@ -250,7 +251,7 @@ public class MapFragment extends BaseFragment implements OnMapReadyCallback, Map
 
     private void initHeaderAdapter() {
         List<CreateAppointmentObjectModel> data = new ArrayList<>();
-        data.add(new CreateAppointmentObjectModel("Clinicas", "clinic"));
+        data.add(new CreateAppointmentObjectModel("Clinicas", "clinic", true));
         data.add(new CreateAppointmentObjectModel("Veterinarios", "vet"));
         data.add(new CreateAppointmentObjectModel("Otros", "other"));
         typeAdapter.bindList(data);

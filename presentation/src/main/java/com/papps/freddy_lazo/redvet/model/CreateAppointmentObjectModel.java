@@ -15,6 +15,12 @@ public class CreateAppointmentObjectModel {
         this.searchName = searchName;
     }
 
+    public CreateAppointmentObjectModel(String name, String searchName, boolean selected) {
+        this.name = name;
+        this.searchName = searchName;
+        this.selected = selected;
+    }
+
     public String getName() {
         return name;
     }
