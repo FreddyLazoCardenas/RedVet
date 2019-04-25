@@ -17,6 +17,8 @@ import com.papps.freddy_lazo.redvet.internal.dagger.component.DaggerDoctorDialog
 import com.papps.freddy_lazo.redvet.model.DoctorModel;
 import com.papps.freddy_lazo.redvet.view.activity.HomeActivity;
 
+import java.text.MessageFormat;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -86,9 +88,9 @@ public class DoctorDialog extends BaseDialogFragment {
     }
 
     private void fillUi() {
-        name.setText(doctorModel.getFirst_name());
+        name.setText(MessageFormat.format("{0} {1}", doctorModel.getFirst_name(), doctorModel.getLast_name()));
         job.setText(setJobText());
-       // ratingBar.setRating(doctorModel.get);
+        // ratingBar.setRating(doctorModel.get);
         displayPhoto(true);
     }
 
@@ -116,7 +118,7 @@ public class DoctorDialog extends BaseDialogFragment {
 
     @OnClick(R.id.btn_whatsapp)
     public void whatsAppDoctor() {
-        navigator.navigateWhatsApp(activity,doctorModel.getPhone());
+        navigator.navigateWhatsApp(activity, doctorModel.getPhone());
     }
 
     @OnClick(R.id.btn_appointment)

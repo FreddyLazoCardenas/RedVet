@@ -92,7 +92,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/rating"
-            tools:text="450 atendidos" />
+            android:text="450 atendidos" />
 
         <TextView
             android:id="@+id/txt_content"
@@ -100,7 +100,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:gravity="start"
-            android:text="Contamos con diferentes servicios para asi poder satisfacer las necesidades de tu mascota, cumplir con todas las expectativas"
+            android:text="Contamos con diferentes servicios para asi poder satisfacer las necesidades de tu mascota, cumplir con todas las expectativas y brindar servicios de salud y bienestar integral para tu mascota"
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="@id/end_guideline"
             app:layout_constraintStart_toStartOf="@id/start_guideline"
@@ -167,6 +167,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
+            android:textColorHint="@color/colorPink"
             android:clickable="false"
             android:focusable="false"
             android:hint="Dia de cita"
@@ -196,6 +197,7 @@
             android:layout_marginTop="20dp"
             android:clickable="false"
             android:focusable="false"
+            android:textColorHint="@color/colorPink"
             android:hint="Hora de cita"
             android:theme="@style/MyEditTextTheme"
             app:layout_constraintEnd_toEndOf="@id/end_guideline"

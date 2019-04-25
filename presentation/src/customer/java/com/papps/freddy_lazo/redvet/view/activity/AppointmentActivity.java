@@ -31,6 +31,7 @@ import com.papps.freddy_lazo.redvet.view.adapter.AppointmentTypeAdapter;
 import com.papps.freddy_lazo.redvet.view.adapter.PetLoverPetsAdapter;
 
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -106,7 +107,7 @@ public class AppointmentActivity extends BaseActivity implements DatePickerDialo
     @Override
     public void initUI() {
         presenter.setView(this);
-        tvName.setText(doctorModel.getFirst_name());
+        tvName.setText(MessageFormat.format("{0} {1}", doctorModel.getFirst_name(), doctorModel.getLast_name()));
         initRv();
     }
 
@@ -134,7 +135,7 @@ public class AppointmentActivity extends BaseActivity implements DatePickerDialo
     private void getDoctorData() {
         doctorModel = DoctorModel.toModel(getIntent().getStringExtra("doctor"));
         tvJob.setText(setJobText());
-        tvConsultationPrice.setText(doctorModel.getConsultation_price());
+        tvConsultationPrice.setText(getString(R.string.consultation_price,doctorModel.getConsultation_price()));
     }
 
     private int setJobText() {
