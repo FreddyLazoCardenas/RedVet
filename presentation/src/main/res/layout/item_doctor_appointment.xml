@@ -12,7 +12,7 @@
         android:id="@+id/img_owner"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:layout_marginStart="15dp"
+        android:layout_marginStart="10dp"
         android:layout_marginEnd="24dp"
         android:src="@drawable/ic_placeholder"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -21,17 +21,21 @@
 
     <TextView
         android:id="@+id/tv_doctor_name"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
         android:textColor="@color/colorPink"
         android:textSize="20sp"
         android:textStyle="bold"
+        android:maxLines="2"
+        android:ellipsize="end"
         app:layout_constraintBottom_toTopOf="@+id/tv_doctor_job"
         app:layout_constraintStart_toEndOf="@id/img_owner"
         app:layout_constraintTop_toTopOf="@id/img_owner"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintVertical_chainStyle="packed"
-        tools:text="Freddy Lazo" />
+        tools:text="Freddy Lazo Carndeas Raul " />
 
     <TextView
         android:id="@+id/tv_doctor_job"
@@ -64,7 +68,7 @@
         android:id="@+id/phone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:layout_margin="8dp"
         android:src="@drawable/ic_doctor_phone"
         android:tint="@color/colorPink"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -74,10 +78,16 @@
         android:id="@+id/chat"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:layout_margin="8dp"
         android:src="@drawable/ic_chat"
         android:tint="@color/colorPink"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
+
+    <android.support.constraint.Group
+        android:id="@+id/group_buttons"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="chat,phone" />
 
 </android.support.constraint.ConstraintLayout>

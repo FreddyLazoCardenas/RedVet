@@ -17,6 +17,7 @@ import com.papps.freddy_lazo.redvet.model.PetLoverRegisterModel;
 import com.papps.freddy_lazo.redvet.view.fragment.BaseFragment;
 
 import java.text.DateFormatSymbols;
+import java.text.MessageFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -84,8 +85,8 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
 
     public void bindFilterList(String appointmentStatus) {
         filterData.clear();
-        for(PetLoverAppointmentModel model : data){
-            if(model.getStatus().equals(appointmentStatus)){
+        for (PetLoverAppointmentModel model : data) {
+            if (model.getStatus().equals(appointmentStatus)) {
                 filterData.add(model);
             }
         }
@@ -141,10 +142,23 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
         public void bind(int position) {
             PetLoverAppointmentModel bindData = isFiltering ? filterData.get(position) : data.get(position);
             Calendar calendar = convertToDate(bindData.getDate());
-            tvDate.setText(calendar.get(Calendar.DAY_OF_MONTH) + " \n" + getMonthForInt(calendar.get(Calendar.MONTH)));
+            tvDate.setText(MessageFormat.format("{0} \n{1}", calendar.get(Calendar.DAY_OF_MONTH), getMonthForInt(calendar.get(Calendar.MONTH)).substring(0, 3)));
             tvTime.setText(bindData.getTime());
             tvPetName.setText(getPetName(bindData.getPet_by_pet_lover_id()));
-            tvType.setText(bindData.getDoctor().getType());
+            tvType.setText(setJobText(bindData.getDoctor().getType()));
+        }
+
+        private int setJobText(String type) {
+            switch (type) {
+                case "clinic":
+                    return R.string.doctor_clinic_type;
+                case "vet":
+                    return R.string.doctor_vet_type;
+                case "other":
+                    return R.string.doctor_other_type;
+                default:
+                    return R.string.doctor_clinic_type;
+            }
         }
 
         private Calendar convertToDate(String txt) {

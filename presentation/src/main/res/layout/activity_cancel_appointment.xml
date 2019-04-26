@@ -8,7 +8,7 @@
     <android.support.constraint.ConstraintLayout
         android:id="@+id/header_view"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="70dp"
         android:background="@color/colorWhite"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -70,7 +70,7 @@
         android:drawableStart="@drawable/ic_check_gray"
         android:drawablePadding="10dp"
         android:gravity="start"
-        android:text="No llegue a un acuerdo con el prestador de servicios"
+        android:text="No llegué a un acuerdo con el prestador de servicios"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/iv_sad_face" />
@@ -98,7 +98,7 @@
         android:drawableStart="@drawable/ic_check_gray"
         android:drawablePadding="10dp"
         android:gravity="start"
-        android:text="No logre contactar con el prestador de servicios"
+        android:text="No logré contactar con el prestador de servicios"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/div_1" />
@@ -125,7 +125,7 @@
         android:drawableStart="@drawable/ic_check_gray"
         android:drawablePadding="10dp"
         android:gravity="start"
-        android:text="Tuve un inconveniente de fuerza mayor, ya contacte al prestador de servicios para informar"
+        android:text="Tuve un inconveniente de fuerza mayor, ya contacté al prestador de servicios para informar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/div_2" />
@@ -156,5 +156,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/div_3" />
+
+    <Button
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:text="Enviar"
+        android:layout_marginBottom="30dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        style="@style/Widget.RetVet.ButtonSecondary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
 </android.support.constraint.ConstraintLayout>
