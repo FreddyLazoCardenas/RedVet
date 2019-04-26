@@ -86,13 +86,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
+            android:text="450 atendidos"
             android:textColor="@color/colorPink"
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/rating"
-            android:text="450 atendidos" />
+            app:layout_constraintTop_toBottomOf="@+id/rating" />
 
         <TextView
             android:id="@+id/txt_content"
@@ -167,10 +167,10 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:textColorHint="@color/colorPink"
             android:clickable="false"
             android:focusable="false"
             android:hint="Dia de cita"
+            android:textColorHint="@color/colorPink"
             android:theme="@style/MyEditTextTheme"
             app:layout_constraintEnd_toEndOf="@id/end_guideline"
             app:layout_constraintStart_toStartOf="@id/start_guideline"
@@ -189,33 +189,104 @@
 
         </android.support.design.widget.TextInputLayout>
 
-
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/tilTimePicker"
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/schedule_view"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="100dp"
             android:layout_marginTop="20dp"
-            android:clickable="false"
-            android:focusable="false"
-            android:textColorHint="@color/colorPink"
-            android:hint="Hora de cita"
-            android:theme="@style/MyEditTextTheme"
+            android:background="@drawable/schedule_bg"
             app:layout_constraintEnd_toEndOf="@id/end_guideline"
             app:layout_constraintStart_toStartOf="@id/start_guideline"
             app:layout_constraintTop_toBottomOf="@+id/tilDatePicker">
 
-            <EditText
-                android:id="@+id/etTimePicker"
-                android:layout_width="match_parent"
+            <android.support.constraint.Guideline
+                android:id="@+id/center_guideline"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:clickable="false"
-                android:cursorVisible="false"
-                android:focusable="false"
-                android:focusableInTouchMode="false"
-                android:inputType="date"
-                tools:text="04:20 am" />
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.25" />
 
-        </android.support.design.widget.TextInputLayout>
+            <TextView
+                android:id="@+id/start_group"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_time"
+                android:drawablePadding="10dp"
+                android:drawableTint="@color/colorPink"
+                android:gravity="center"
+                android:text="Hora"
+                android:textColor="@color/colorPink"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/center_guideline"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:targetApi="m" />
+
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/end_group"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/iv_check"
+                app:layout_constraintStart_toEndOf="@id/center_guideline"
+                app:layout_constraintTop_toTopOf="parent">
+
+
+                <TextView
+                    android:id="@+id/hour"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/schedule_item_bg"
+                    android:gravity="center"
+                    android:text="15"
+                    android:textSize="30sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:text=":"
+                    android:textColor="@color/colorPink"
+                    android:textSize="40sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/minute"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="20dp"
+                    android:background="@drawable/schedule_item_bg"
+                    android:gravity="center"
+                    android:text="00"
+                    android:textSize="30sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/hour"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </android.support.constraint.ConstraintLayout>
+
+            <ImageView
+                android:id="@+id/iv_check"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginEnd="20dp"
+                android:src="@drawable/ic_check_gray"
+                android:tag="false"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </android.support.constraint.ConstraintLayout>
+
 
         <TextView
             android:id="@+id/appointment_type"
@@ -228,7 +299,7 @@
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="@id/end_guideline"
             app:layout_constraintStart_toStartOf="@id/start_guideline"
-            app:layout_constraintTop_toBottomOf="@+id/tilTimePicker" />
+            app:layout_constraintTop_toBottomOf="@+id/schedule_view" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_appointment"
@@ -292,12 +363,24 @@
             app:layout_constraintTop_toBottomOf="@+id/til_description" />
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/rv_pet_lover"
+            android:id="@+id/rv_doctor_pets"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="@id/end_guideline"
             app:layout_constraintStart_toStartOf="@id/start_guideline"
-            app:layout_constraintTop_toBottomOf="@+id/petList" />
+            app:layout_constraintTop_toBottomOf="@+id/petList">
+
+
+        </android.support.v7.widget.RecyclerView>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_pet_lover"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            app:layout_constraintEnd_toEndOf="@id/end_guideline"
+            app:layout_constraintStart_toStartOf="@id/start_guideline"
+            app:layout_constraintTop_toBottomOf="@+id/rv_doctor_pets" />
 
         <Button
             android:id="@+id/btn_book_consultation"
