@@ -1,6 +1,7 @@
 package com.papps.freddy_lazo.redvet.view.adapter;
 
 import android.content.Context;
+import android.graphics.Paint;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -74,6 +75,8 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
         TextView tvTitle;
         @BindView(R.id.txt_content)
         TextView tvContent;
+        @BindView(R.id.tv_full_news)
+        TextView tvFullNews;
 
         NewsViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -81,6 +84,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
         }
 
         void bind(int position) {
+            tvFullNews.setPaintFlags(tvFullNews.getPaintFlags() |   Paint.UNDERLINE_TEXT_FLAG);
             tvTitle.setText(data.get(position).getTitle());
             tvContent.setText(data.get(position).getContent());
 

@@ -54,6 +54,7 @@
             app:layout_constraintTop_toBottomOf="@+id/txt_title" />
 
         <TextView
+            android:id="@+id/tv_full_news"
             android:layout_margin="10dp"
             android:text="Ver Noticia"
             android:textColor="@color/colorPink"

@@ -23,8 +23,12 @@ import com.papps.freddy_lazo.redvet.model.PetLoverAppointmentModel;
 import com.papps.freddy_lazo.redvet.model.PetLoverModel;
 import com.papps.freddy_lazo.redvet.model.PetLoverRegisterModel;
 import com.papps.freddy_lazo.redvet.presenter.PetLoverFinishedAppointmentPresenter;
+import com.papps.freddy_lazo.redvet.util.DateHelper;
 import com.papps.freddy_lazo.redvet.view.activity.HomeActivity;
 import com.papps.freddy_lazo.redvet.view.adapter.AppointmentPhotoAdapter;
+
+import java.text.MessageFormat;
+import java.util.Calendar;
 
 import javax.inject.Inject;
 
@@ -111,16 +115,32 @@ public class FinishedAppointmentDialog extends BaseDialogFragment implements App
         displayPhoto(pet.getPhoto_url(), imgPet);
         displayPhoto(model.getDoctor().getPhoto_url(), imgOwner);
         tvPet.setText(pet.getName());
-        tvPetBirthday.setText(pet.getBirthday());
-        date.setText(model.getDate());
+        String[] split = model.getDate().split("-");
+        date.setText(getString(R.string.doctor_date, split[2], split[1], split[0].substring(2)));
         time.setText(model.getTime());
+        Calendar calendar = DateHelper.convertToDate(pet.getBirthday());
+        tvPetBirthday.setText(MessageFormat.format("{0} {1} {2}", calendar.get(Calendar.DAY_OF_MONTH), DateHelper.getMonthForInt(calendar.get(Calendar.MONTH)).substring(0, 3), calendar.get(Calendar.YEAR)));
         address.setText(model.getDoctor().getAddress());
-        tvDoctorName.setText(model.getDoctor().getFirst_name());
+        tvDoctorName.setText(MessageFormat.format("{0} {1}", model.getDoctor().getFirst_name(), model.getDoctor().getLast_name()));
         tvDni.setText(model.getDoctor().getNumber_document());
-        tvDoctorJob.setText(model.getDoctor().getType());
+        tvDoctorJob.setText(setJobText(model.getDoctor().getType()));
         diagnoseContent.setText(model.getDiagnosis());
         adapter.bindList(model.getPhotos());
     }
+
+    private int setJobText(String type) {
+        switch (type) {
+            case "clinic":
+                return R.string.doctor_clinic_type;
+            case "vet":
+                return R.string.doctor_vet_type;
+            case "other":
+                return R.string.doctor_other_type;
+            default:
+                return R.string.doctor_clinic_type;
+        }
+    }
+
 
     public void displayPhoto(String photoUrl, ImageView img) {
         GlideApp.with(activity)

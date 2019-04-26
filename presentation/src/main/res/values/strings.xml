@@ -21,7 +21,7 @@
     <string name="add_type_data">Agregar tipo de cita</string>
     <string name="add_type_pet">Agregar tipo de mascota</string>
     <string name="add_services_data">Agregar datos de servicios</string>
-    <string name="add_diagnose_data">Agregar datos de diagnostico</string>
+    <string name="add_diagnose_data">Agregar datos de diagnóstico</string>
     <string name="add_schedules_data">Agregar datos de horario</string>
     <string name="success_recover_password">Ingresa a tu correo para reestablecer tu contraseña</string>
     <string name="notification_time">Hace %1$d %2$s</string>
@@ -31,4 +31,13 @@
     <string name="cancel_reason_1">No llegué a un acuerdo con el prestador de servicios</string>
     <string name="cancel_reason_2">No logré contactar con el prestador de servicios</string>
     <string name="cancel_reason_3">Tuve un inconveniente de fuerza mayor, ya contacté al prestador de servicios para informar</string>
+    <string name="pet_lover_appointment_confirmed">Tu cita ha sido confirmada</string>
+    <string name="pet_lover_appointment_canceled">Tu cita ha sido cancelada</string>
+    <string name="pet_lover_appointment_finished">Tu cita finalizó satisfactoriamente</string>
+    <string name="red_vet_new_message">Tienes un nuevo mensaje</string>
+    <string name="doctor_appointment_qualified">Cita calificada</string>
+    <string name="doctor_new_appointment">Nueva cita</string>
+    <string name="doctor_unavailable">Doctor desactivado</string>
+    <string name="doctor_available">Doctor activado</string>
+    <string name="red_vet_email_verified">Email verificado</string>
 </resources>

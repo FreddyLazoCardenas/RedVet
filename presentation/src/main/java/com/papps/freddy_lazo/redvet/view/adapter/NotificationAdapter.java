@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.papps.freddy_lazo.redvet.R;
@@ -68,6 +69,8 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         TextView tvContent;
         @BindView(R.id.txt_time)
         TextView tvTime;
+        @BindView(R.id.img_news)
+        ImageView ivIcon;
 
         NotificationHolder(@NonNull View itemView) {
             super(itemView);
@@ -77,16 +80,62 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         @SuppressLint("StringFormatMatches")
         public void bind(int position) {
             itemView.setBackgroundColor(ContextCompat.getColor(context, position % 2 == 0 ? R.color.colorWhite : R.color.colorNotificationGray));
-            tvTitle.setText(data.get(position).getType());
+            tvTitle.setText(getTitleFromType(data.get(position).getType()));
             tvContent.setText(data.get(position).getMessage());
             Long tsLong = System.currentTimeMillis() / 1000;
             Long notTime = Long.valueOf(data.get(position).getTime());
             long test = (tsLong - notTime) / 3600;
             if (test < 24) {
-                tvTime.setText(context.getString(R.string.notification_time,test,"horas"));
-            }else{
-                tvTime.setText(context.getString(R.string.notification_time,test/24,"dias"));
+                tvTime.setText(context.getString(R.string.notification_time, test, test > 1 ? "horas" : "hora"));
+            } else {
+                tvTime.setText(context.getString(R.string.notification_time, test / 24, (test / 24) > 1 ? "dias" : "dia"));
             }
+            //ivIcon.setImageResource(getImageFromTitle(data.get(position).getType()));
+        }
+
+        private String getTitleFromType(String type) {
+            switch (type) {
+                case "PET_LOVER_APPOINTMENT_CONFIRMED":
+                    return context.getString(R.string.pet_lover_appointment_confirmed);
+                case "PET_LOVER_APPOINTMENT_CANCELED":
+                    return context.getString(R.string.pet_lover_appointment_canceled);
+                case "PET_LOVER_APPOINTMENT_FINISHED":
+                    return context.getString(R.string.pet_lover_appointment_finished);
+                case "PET_LOVER_NEW_MESSAGE":
+                    return context.getString(R.string.red_vet_new_message);
+                case "DOCTOR_NEW_MESSAGE":
+                    return context.getString(R.string.red_vet_new_message);
+                case "DOCTOR_APPOINTMENT_QUALIFIED":
+                    return context.getString(R.string.doctor_appointment_qualified);
+                case "DOCTOR_APPOINTMENT_CANCELED":
+                    return context.getString(R.string.pet_lover_appointment_canceled);
+                case "DOCTOR_NEW_APPOINTMENT":
+                    return context.getString(R.string.doctor_new_appointment);
+                case "DOCTOR_UNAVAILABLE":
+                    return context.getString(R.string.doctor_unavailable);
+                case "DOCTOR_AVAILABLE":
+                    return context.getString(R.string.doctor_available);
+                case "EMAIL_VERIFIED":
+                    return context.getString(R.string.red_vet_email_verified);
+                default:
+                    return type;
+            }
+        }
+
+        private int getImageFromTitle(String type) {
+            switch (type) {
+                case "PET_LOVER_APPOINTMENT_CONFIRMED":
+                    break;
+                case "PET_LOVER_APPOINTMENT_CANCELED":
+                    break;
+                case "PET_LOVER_APPOINTMENT_FINISHED":
+                    break;
+                case "PET_LOVER_NEW_MESSAGE":
+                    break;
+                default:
+                    break;
+            }
+            return -1;
         }
     }
 }
