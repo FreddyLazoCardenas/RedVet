@@ -19,15 +19,16 @@ import com.papps.freddy_lazo.redvet.GlideApp;
 import com.papps.freddy_lazo.redvet.R;
 import com.papps.freddy_lazo.redvet.interfaces.AppointmentActivityView;
 import com.papps.freddy_lazo.redvet.internal.bus.Event;
-import com.papps.freddy_lazo.redvet.internal.bus.RxBus;
 import com.papps.freddy_lazo.redvet.internal.dagger.component.DaggerAppointmentComponent;
 import com.papps.freddy_lazo.redvet.model.CreateAppointmentModel;
 import com.papps.freddy_lazo.redvet.model.CreateAppointmentObjectModel;
 import com.papps.freddy_lazo.redvet.model.DoctorModel;
 import com.papps.freddy_lazo.redvet.model.PetLoverModel;
 import com.papps.freddy_lazo.redvet.model.PetLoverRegisterModel;
+import com.papps.freddy_lazo.redvet.model.PetRedVetModel;
 import com.papps.freddy_lazo.redvet.presenter.AppointmentActivityPresenter;
 import com.papps.freddy_lazo.redvet.view.adapter.AppointmentTypeAdapter;
+import com.papps.freddy_lazo.redvet.view.adapter.PetAdapter;
 import com.papps.freddy_lazo.redvet.view.adapter.PetLoverPetsAdapter;
 
 
@@ -44,8 +45,10 @@ public class AppointmentActivity extends BaseActivity implements DatePickerDialo
 
     @BindView(R.id.etDatePicker)
     EditText datePicker;
-    @BindView(R.id.etTimePicker)
-    EditText timePicker;
+    @BindView(R.id.hour)
+    TextView hour;
+    @BindView(R.id.minute)
+    TextView minute;
     @BindView(R.id.et_description)
     EditText etDescription;
     @BindView(R.id.txt_name)
@@ -58,21 +61,26 @@ public class AppointmentActivity extends BaseActivity implements DatePickerDialo
     RecyclerView rvAppointment;
     @BindView(R.id.rv_pet_lover)
     RecyclerView rvPetLover;
+    @BindView(R.id.rv_doctor_pets)
+    RecyclerView rvDoctorPets;
     @Inject
     AppointmentTypeAdapter adapter;
     @Inject
     PetLoverPetsAdapter petsAdapter;
     @Inject
+    PetAdapter doctorPetAdapter;
+    @Inject
     PreferencesManager preferencesManager;
     @Inject
     AppointmentActivityPresenter presenter;
-    @Inject
-    RxBus rxBus;
     @BindView(R.id.img_register)
     ImageView ivDoctor;
+    @BindView(R.id.iv_check)
+    ImageView ivCheck;
 
     private DoctorModel doctorModel;
     private PetLoverModel petLoverModel;
+    private String timeData;
 
 
     public static Intent getCallingIntent(BaseActivity activity, String doctorModel) {
@@ -99,14 +107,17 @@ public class AppointmentActivity extends BaseActivity implements DatePickerDialo
 
     private void setUpRv() {
         rvAppointment.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        rvDoctorPets.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         rvPetLover.setLayoutManager(new LinearLayoutManager(this));
         rvAppointment.setAdapter(adapter);
         rvPetLover.setAdapter(petsAdapter);
+        rvDoctorPets.setAdapter(doctorPetAdapter);
     }
 
     @Override
     public void initUI() {
         presenter.setView(this);
+        timeData = "15:00:00";
         tvName.setText(MessageFormat.format("{0} {1}", doctorModel.getFirst_name(), doctorModel.getLast_name()));
         initRv();
     }
@@ -116,8 +127,17 @@ public class AppointmentActivity extends BaseActivity implements DatePickerDialo
         data.add(new CreateAppointmentObjectModel("Emergencia"));
         data.add(new CreateAppointmentObjectModel("Urgencia"));
         data.add(new CreateAppointmentObjectModel("Consulta"));
+        data.add(new CreateAppointmentObjectModel("Baño"));
+        data.add(new CreateAppointmentObjectModel("Otros"));
         adapter.bindList(data);
         petsAdapter.bindList(petLoverModel.getPetList());
+
+
+        List<PetRedVetModel> petData = new ArrayList<>();
+        for(PetLoverRegisterModel pet : doctorModel.getPetList()){
+            petData.add(new PetRedVetModel(pet.getPet_id(),pet.getName(),pet.getPhoto_url(),"1"));
+        }
+        doctorPetAdapter.bindList(petData);
         displayPhoto(true);
     }
 
@@ -135,7 +155,7 @@ public class AppointmentActivity extends BaseActivity implements DatePickerDialo
     private void getDoctorData() {
         doctorModel = DoctorModel.toModel(getIntent().getStringExtra("doctor"));
         tvJob.setText(setJobText());
-        tvConsultationPrice.setText(getString(R.string.consultation_price,doctorModel.getConsultation_price()));
+        tvConsultationPrice.setText(getString(R.string.consultation_price, doctorModel.getConsultation_price()));
     }
 
     private int setJobText() {
@@ -160,7 +180,7 @@ public class AppointmentActivity extends BaseActivity implements DatePickerDialo
         navigator.navigateToDatePicker(this);
     }
 
-    @OnClick({R.id.tilTimePicker, R.id.etTimePicker})
+    @OnClick(R.id.end_group)
     public void timePicker() {
         navigator.navigateToTimePicker(this);
     }
@@ -172,7 +192,9 @@ public class AppointmentActivity extends BaseActivity implements DatePickerDialo
 
     @Override
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-        timePicker.setText(String.format("%d:%d:%d", hourOfDay, minute, 00));
+        hour.setText(String.valueOf(hourOfDay));
+        this.minute.setText(String.valueOf(minute));
+        timeData = String.format("%d:%d:%d", hourOfDay, minute, 00);
     }
 
     @OnClick(R.id.img_dismiss)
@@ -219,7 +241,7 @@ public class AppointmentActivity extends BaseActivity implements DatePickerDialo
 
     @Override
     public String getTime() {
-        return timePicker.getText().toString();
+        return ivCheck.getTag().equals("true") ? timeData : "";
     }
 
     @Override
@@ -230,7 +252,7 @@ public class AppointmentActivity extends BaseActivity implements DatePickerDialo
                 return createAppointmentObjectModel.getName();
             }
         }
-        return null;
+        return "";
     }
 
     @Override
@@ -242,5 +264,16 @@ public class AppointmentActivity extends BaseActivity implements DatePickerDialo
     protected void onDestroy() {
         super.onDestroy();
         presenter.destroy();
+    }
+
+    @OnClick(R.id.iv_check)
+    public void checkClicked() {
+        if (ivCheck.getTag().equals("false")) {
+            ivCheck.setTag("true");
+            ivCheck.setImageResource(R.drawable.ic_check_pink);
+        } else {
+            ivCheck.setTag("false");
+            ivCheck.setImageResource(R.drawable.ic_check_gray);
+        }
     }
 }
