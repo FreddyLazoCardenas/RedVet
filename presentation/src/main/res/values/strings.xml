@@ -40,4 +40,5 @@
     <string name="doctor_unavailable">Doctor desactivado</string>
     <string name="doctor_available">Doctor activado</string>
     <string name="red_vet_email_verified">Email verificado</string>
+    <string name="pet_breed">Raza : %s</string>
 </resources>

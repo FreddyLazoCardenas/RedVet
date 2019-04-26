@@ -17,11 +17,14 @@ import com.papps.freddy_lazo.redvet.R;
 import com.papps.freddy_lazo.redvet.model.AppointmentPhotoModel;
 import com.papps.freddy_lazo.redvet.model.PetLoverRegisterModel;
 import com.papps.freddy_lazo.redvet.model.PetModel;
+import com.papps.freddy_lazo.redvet.util.DateHelper;
 import com.papps.freddy_lazo.redvet.view.fragment.BaseFragment;
 import com.papps.freddy_lazo.redvet.view.fragment.ProfileFragment;
 
 import java.io.ByteArrayOutputStream;
+import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -118,8 +121,9 @@ public class PetProfileAdapter extends RecyclerView.Adapter<PetProfileAdapter.Pe
 
         void bind(int position) {
             tvPetName.setText(data.get(position).getName());
-            tvPetBirthday.setText(data.get(position).getBirthday());
-            tvBreed.setText(data.get(position).getBreed());
+            Calendar calendar = DateHelper.convertToDate(data.get(position).getBirthday());
+            tvPetBirthday.setText(MessageFormat.format("{0} {1} {2}", calendar.get(Calendar.DAY_OF_MONTH), DateHelper.getMonthForInt(calendar.get(Calendar.MONTH)).substring(0, 3), calendar.get(Calendar.YEAR)));
+            tvBreed.setText(context.getString(R.string.pet_breed, data.get(position).getBreed()));
             loadImage(data.get(position).getPhoto_url());
         }
 
