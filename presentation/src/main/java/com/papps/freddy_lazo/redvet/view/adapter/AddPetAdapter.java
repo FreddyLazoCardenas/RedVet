@@ -10,7 +10,6 @@ import android.widget.ImageView;
 
 import com.papps.freddy_lazo.redvet.GlideApp;
 import com.papps.freddy_lazo.redvet.R;
-import com.papps.freddy_lazo.redvet.model.CreateAppointmentObjectModel;
 import com.papps.freddy_lazo.redvet.model.PetRedVetModel;
 import com.papps.freddy_lazo.redvet.view.fragment.BaseFragment;
 

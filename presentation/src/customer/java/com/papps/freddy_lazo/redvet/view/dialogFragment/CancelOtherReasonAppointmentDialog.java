@@ -43,7 +43,7 @@ public class CancelOtherReasonAppointmentDialog extends BaseDialogFragment imple
 
     public static CancelOtherReasonAppointmentDialog newInstance(int id, SuccessRequest listener) {
         CancelOtherReasonAppointmentDialog dialog = new CancelOtherReasonAppointmentDialog();
-        dialog.listener =  listener;
+        dialog.listener = listener;
         Bundle args = new Bundle();
         args.putInt(APPOINTMENT_ID, id);
         dialog.setArguments(args);
@@ -85,7 +85,7 @@ public class CancelOtherReasonAppointmentDialog extends BaseDialogFragment imple
 
     @Override
     public String getApiToken() {
-        return DoctorModel.toModel(preferencesManager.getDoctorCurrentUser()).getApi_token();
+        return DoctorModel.toModel(preferencesManager.getPetLoverCurrentUser()).getApi_token();
     }
 
     @Override

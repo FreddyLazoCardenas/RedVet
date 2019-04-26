@@ -27,5 +27,8 @@
     <string name="notification_time">Hace %1$d %2$s</string>
     <string name="consultation_price">S/. %s</string>
     <string name="doctor_finished_date">Ha finalizado la consulta del %1$s/%2$s/%3$s </string>
-    <string name="doctor_date">%1$s/%2$s/%3$s </string>
+    <string name="doctor_date">%1$s/%2$s/%3$s</string>
+    <string name="cancel_reason_1">No llegué a un acuerdo con el prestador de servicios</string>
+    <string name="cancel_reason_2">No logré contactar con el prestador de servicios</string>
+    <string name="cancel_reason_3">Tuve un inconveniente de fuerza mayor, ya contacté al prestador de servicios para informar</string>
 </resources>
