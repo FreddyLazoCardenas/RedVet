@@ -4,10 +4,15 @@ import android.text.TextUtils;
 
 import com.papps.freddy_lazo.domain.interactor.CreateAppointmentUseCase;
 import com.papps.freddy_lazo.domain.interactor.DefaultObserver;
+import com.papps.freddy_lazo.domain.interactor.PetRedVetUseCase;
 import com.papps.freddy_lazo.domain.model.CreateAppointment;
+import com.papps.freddy_lazo.domain.model.PetRedVet;
 import com.papps.freddy_lazo.redvet.R;
 import com.papps.freddy_lazo.redvet.interfaces.AppointmentActivityView;
 import com.papps.freddy_lazo.redvet.model.mapper.CreateAppointmentModelMapper;
+import com.papps.freddy_lazo.redvet.model.mapper.PetRedVetModelMapper;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -15,11 +20,13 @@ import javax.inject.Inject;
 public class AppointmentActivityPresenter implements Presenter<AppointmentActivityView> {
 
     private final CreateAppointmentUseCase createAppointmentUseCase;
+    private final PetRedVetUseCase petRedVetUseCase;
     private AppointmentActivityView view;
 
     @Inject
-    AppointmentActivityPresenter(CreateAppointmentUseCase createAppointmentUseCase) {
+    AppointmentActivityPresenter(CreateAppointmentUseCase createAppointmentUseCase, PetRedVetUseCase petRedVetUseCase) {
         this.createAppointmentUseCase = createAppointmentUseCase;
+        this.petRedVetUseCase = petRedVetUseCase;
     }
 
     @Override
@@ -35,6 +42,11 @@ public class AppointmentActivityPresenter implements Presenter<AppointmentActivi
     @Override
     public void destroy() {
         createAppointmentUseCase.unsubscribe();
+        petRedVetUseCase.unsubscribe();
+    }
+
+    public void getPets(){
+        petRedVetUseCase.execute(new PetsObservable());
     }
 
     public void validateData() {
@@ -111,6 +123,31 @@ public class AppointmentActivityPresenter implements Presenter<AppointmentActivi
         public void onNext(CreateAppointment appointment) {
             super.onNext(appointment);
             view.successResponse(CreateAppointmentModelMapper.transform(appointment));
+        }
+
+        @Override
+        public void onError(Throwable e) {
+            super.onError(e);
+            view.showErrorMessage(e.getMessage());
+        }
+
+        @Override
+        public void onComplete() {
+            super.onComplete();
+        }
+    }
+
+    private class PetsObservable extends DefaultObserver<List<PetRedVet>> {
+
+        @Override
+        protected void onStart() {
+            super.onStart();
+        }
+
+        @Override
+        public void onNext(List<PetRedVet> petRedVets) {
+            super.onNext(petRedVets);
+            view.successRequest(PetRedVetModelMapper.transform(petRedVets));
         }
 
         @Override

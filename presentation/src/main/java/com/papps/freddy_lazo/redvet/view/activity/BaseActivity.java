@@ -115,10 +115,6 @@ public class BaseActivity extends AppCompatActivity implements BaseView {
         showMessage(this, message);
     }
 
-    public void data(List<ServicesModel> data) {
-        this.data = data;
-    }
-
     public List<ServicesModel> getData() {
         return data;
     }

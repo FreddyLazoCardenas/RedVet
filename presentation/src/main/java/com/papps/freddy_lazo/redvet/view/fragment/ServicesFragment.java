@@ -100,7 +100,7 @@ public class ServicesFragment extends BaseFragment implements ServicesFragmentVi
 
     @OnClick(R.id.img_header)
     public void imgClicked() {
-        activity.data(adapter.getData());
+       // activity.data(adapter.getData());
         activity.onBackPressed();
     }
 

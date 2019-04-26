@@ -1,6 +1,9 @@
 package com.papps.freddy_lazo.redvet.interfaces;
 
 import com.papps.freddy_lazo.redvet.model.CreateAppointmentModel;
+import com.papps.freddy_lazo.redvet.model.PetRedVetModel;
+
+import java.util.List;
 
 public interface AppointmentActivityView extends BaseView {
 
@@ -19,4 +22,6 @@ public interface AppointmentActivityView extends BaseView {
     String getType();
 
     String getReason();
+
+    void successRequest(List<PetRedVetModel> transform);
 }

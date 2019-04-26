@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.papps.freddy_lazo.redvet.GlideApp;
 import com.papps.freddy_lazo.redvet.R;
 import com.papps.freddy_lazo.redvet.model.PetLoverRegisterModel;
+import com.papps.freddy_lazo.redvet.model.PetRedVetModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +26,9 @@ import butterknife.OnClick;
 public class PetLoverPetsAdapter extends RecyclerView.Adapter<PetLoverPetsAdapter.PetLoverPetsViewHolder> {
 
     private List<PetLoverRegisterModel> data = new ArrayList<>();
+    private List<PetLoverRegisterModel> filterData = new ArrayList<>();
     private Context context;
+    private boolean isFiltering;
 
     @Inject
     PetLoverPetsAdapter() {
@@ -47,7 +50,11 @@ public class PetLoverPetsAdapter extends RecyclerView.Adapter<PetLoverPetsAdapte
 
     public void bindList(List<PetLoverRegisterModel> data) {
         if (data != null) {
-            this.data = data;
+            if (isFiltering) {
+                this.filterData = data;
+            } else {
+                this.data = data;
+            }
             notifyDataSetChanged();
         }
     }
@@ -58,7 +65,37 @@ public class PetLoverPetsAdapter extends RecyclerView.Adapter<PetLoverPetsAdapte
 
     @Override
     public int getItemCount() {
-        return data.size();
+        return isFiltering ? filterData.size() : data.size();
+    }
+
+    public void filteringPets(List<PetRedVetModel> data) {
+        List<Integer> ids = getIds(data);
+        isFiltering = !ids.isEmpty();
+        if (isFiltering) {
+            fillFilterArray(ids);
+        }
+        notifyDataSetChanged();
+    }
+
+    private void fillFilterArray(List<Integer> ids) {
+        filterData.clear();
+        for (Integer id : ids) {
+            for (PetLoverRegisterModel model : data) {
+                if (model.getPet_id() == id) {
+                    filterData.add(model);
+                }
+            }
+        }
+    }
+
+    private List<Integer> getIds(List<PetRedVetModel> data) {
+        List<Integer> ids = new ArrayList<>();
+        for (PetRedVetModel model : data) {
+            if (model.isSelected()) {
+                ids.add(model.getId());
+            }
+        }
+        return ids;
     }
 
     class PetLoverPetsViewHolder extends RecyclerView.ViewHolder {
@@ -76,9 +113,10 @@ public class PetLoverPetsAdapter extends RecyclerView.Adapter<PetLoverPetsAdapte
         }
 
         void bindData(int position) {
-            tvPetName.setText(data.get(position).getName());
-            loadImage(data.get(position).getPhoto_url());
-            if (data.get(position).isSelected()) {
+            PetLoverRegisterModel bindData = isFiltering ? filterData.get(position) : data.get(position);
+            tvPetName.setText(bindData.getName());
+            loadImage(bindData.getPhoto_url());
+            if (bindData.isSelected()) {
                 imgCheck.setImageResource(R.drawable.ic_check_green);
             } else {
                 imgCheck.setImageResource(R.drawable.ic_check_gray);
@@ -97,15 +135,19 @@ public class PetLoverPetsAdapter extends RecyclerView.Adapter<PetLoverPetsAdapte
         @OnClick
         void itemClick() {
             itemSelected(getAdapterPosition());
-            bindList(data);
+            bindList(isFiltering ? filterData : data);
         }
 
         private void itemSelected(int adapterPosition) {
-            for (int i = 0; i < data.size(); i++) {
+            List<PetLoverRegisterModel> modelSel = isFiltering ? filterData : data;
+            for (PetLoverRegisterModel model : data) {
+                model.setSelected(false);
+            }
+            for (int i = 0; i < modelSel.size(); i++) {
                 if (i != adapterPosition) {
-                    data.get(i).setSelected(false);
+                    modelSel.get(i).setSelected(false);
                 } else {
-                    data.get(i).setSelected(true);
+                    modelSel.get(i).setSelected(true);
                 }
             }
         }

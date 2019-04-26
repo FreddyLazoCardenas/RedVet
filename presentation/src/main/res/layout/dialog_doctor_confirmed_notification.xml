@@ -50,9 +50,12 @@
 
                 <TextView
                     android:id="@+id/txt_name"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
+                    android:ellipsize="end"
+                    android:gravity="center"
+                    android:maxLines="2"
                     android:textColor="@color/colorPink"
                     android:textSize="24sp"
                     android:textStyle="bold"
@@ -101,25 +104,26 @@
                     android:id="@+id/tv_appointment_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textStyle="bold"
-                    android:textSize="22sp"
-                    tools:text="12FEB"
+                    android:gravity="center"
                     android:textColor="@color/colorGray"
+                    android:textSize="22sp"
+                    android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_appointment" />
+                    app:layout_constraintTop_toBottomOf="@+id/tv_appointment"
+                    tools:text="12FEB" />
 
                 <TextView
                     android:id="@+id/tv_appointment_time"
-                    app:layout_constraintBottom_toBottomOf="@+id/tv_appointment_date"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    android:gravity="center"
-                    tools:text="3:30 a 4:30"
-                    android:drawablePadding="10dp"
-                    android:drawableStart="@drawable/ic_time"
-                    android:drawableTint="@color/colorPink"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    tools:targetApi="m" />
+                    android:drawableStart="@drawable/ic_time"
+                    android:drawablePadding="10dp"
+                    android:drawableTint="@color/colorPink"
+                    android:gravity="center"
+                    app:layout_constraintBottom_toBottomOf="@+id/tv_appointment_date"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    tools:targetApi="m"
+                    tools:text="3:30 a 4:30" />
 
                 <Button
                     android:id="@+id/btn_call"
@@ -162,6 +166,7 @@
                     android:layout_marginTop="30dp"
                     android:layout_marginBottom="10dp"
                     android:text="Ok"
+                    android:textAllCaps="true"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"

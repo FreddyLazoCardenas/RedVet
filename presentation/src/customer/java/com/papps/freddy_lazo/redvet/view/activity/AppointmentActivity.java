@@ -41,7 +41,8 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class AppointmentActivity extends BaseActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener, AppointmentActivityView {
+public class AppointmentActivity extends BaseActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener
+        , AppointmentActivityView, PetAdapter.onClickAdapter {
 
     @BindView(R.id.etDatePicker)
     EditText datePicker;
@@ -77,6 +78,8 @@ public class AppointmentActivity extends BaseActivity implements DatePickerDialo
     ImageView ivDoctor;
     @BindView(R.id.iv_check)
     ImageView ivCheck;
+    @BindView(R.id.iv_check_footer)
+    ImageView ivCheckFooter;
 
     private DoctorModel doctorModel;
     private PetLoverModel petLoverModel;
@@ -112,6 +115,7 @@ public class AppointmentActivity extends BaseActivity implements DatePickerDialo
         rvAppointment.setAdapter(adapter);
         rvPetLover.setAdapter(petsAdapter);
         rvDoctorPets.setAdapter(doctorPetAdapter);
+        doctorPetAdapter.setView(this);
     }
 
     @Override
@@ -120,6 +124,7 @@ public class AppointmentActivity extends BaseActivity implements DatePickerDialo
         timeData = "15:00:00";
         tvName.setText(MessageFormat.format("{0} {1}", doctorModel.getFirst_name(), doctorModel.getLast_name()));
         initRv();
+        presenter.getPets();
     }
 
     private void initRv() {
@@ -131,13 +136,6 @@ public class AppointmentActivity extends BaseActivity implements DatePickerDialo
         data.add(new CreateAppointmentObjectModel("Otros"));
         adapter.bindList(data);
         petsAdapter.bindList(petLoverModel.getPetList());
-
-
-        List<PetRedVetModel> petData = new ArrayList<>();
-        for(PetLoverRegisterModel pet : doctorModel.getPetList()){
-            petData.add(new PetRedVetModel(pet.getPet_id(),pet.getName(),pet.getPhoto_url(),"1"));
-        }
-        doctorPetAdapter.bindList(petData);
         displayPhoto(true);
     }
 
@@ -261,6 +259,20 @@ public class AppointmentActivity extends BaseActivity implements DatePickerDialo
     }
 
     @Override
+    public void successRequest(List<PetRedVetModel> transform) {
+        List<PetRedVetModel> data = new ArrayList<>();
+        for (PetLoverRegisterModel model : doctorModel.getPetList()) {
+            for (PetRedVetModel dataModel : transform) {
+                if (dataModel.getId() == model.getPet_id()) {
+                    data.add(dataModel);
+                    break;
+                }
+            }
+        }
+        doctorPetAdapter.bindList(data);
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
         presenter.destroy();
@@ -274,6 +286,22 @@ public class AppointmentActivity extends BaseActivity implements DatePickerDialo
         } else {
             ivCheck.setTag("false");
             ivCheck.setImageResource(R.drawable.ic_check_gray);
+        }
+    }
+
+    @Override
+    public void data(List<PetRedVetModel> data) {
+        petsAdapter.filteringPets(data);
+    }
+
+    @OnClick({R.id.tv_content, R.id.iv_check_footer})
+    public void checkFooterClicked() {
+        if (ivCheckFooter.getTag().equals("false")) {
+            ivCheckFooter.setTag("true");
+            ivCheckFooter.setImageResource(R.drawable.ic_check_green);
+        } else {
+            ivCheckFooter.setTag("false");
+            ivCheckFooter.setImageResource(R.drawable.ic_check_gray);
         }
     }
 }

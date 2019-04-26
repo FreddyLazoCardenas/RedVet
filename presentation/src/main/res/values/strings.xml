@@ -26,4 +26,5 @@
     <string name="success_recover_password">Ingresa a tu correo para reestablecer tu contraseña</string>
     <string name="notification_time">Hace %1$d %2$s</string>
     <string name="consultation_price">S/. %s</string>
+    <string name="doctor_finished_date">Ha finalizado la consulta del %1$s/%2$s/%3$s </string>
 </resources>

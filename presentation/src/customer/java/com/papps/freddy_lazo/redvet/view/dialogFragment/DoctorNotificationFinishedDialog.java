@@ -20,6 +20,7 @@ import com.papps.freddy_lazo.redvet.model.RedVetDetailAppointmentModel;
 import com.papps.freddy_lazo.redvet.presenter.DoctorNotificationFinishedPresenter;
 import com.papps.freddy_lazo.redvet.view.activity.HomeActivity;
 
+import java.text.MessageFormat;
 import java.util.Objects;
 
 import javax.inject.Inject;
@@ -34,6 +35,8 @@ public class DoctorNotificationFinishedDialog extends BaseDialogFragment impleme
     TextView doctorName;
     @BindView(R.id.txt_job)
     TextView doctorJob;
+    @BindView(R.id.txt_attendance)
+    TextView tvAttendance;
     @BindView(R.id.iv_notification)
     ImageView ivDoctor;
     @BindView(R.id.rating)
@@ -94,7 +97,9 @@ public class DoctorNotificationFinishedDialog extends BaseDialogFragment impleme
     }
 
     private void fillUi() {
-        doctorName.setText(model.getDoctor().getFirst_name());
+        String[] split = model.getDate().split("-");
+        tvAttendance.setText(getString(R.string.doctor_finished_date, split[2], split[1], split[0].substring(2)));
+        doctorName.setText(MessageFormat.format("{0} {1}", model.getDoctor().getFirst_name(), model.getDoctor().getLast_name()));
         doctorJob.setText(setJobText());
         loadImage(model.getDoctor().getPhoto_url());
     }

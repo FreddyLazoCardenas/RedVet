@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import com.papps.freddy_lazo.redvet.GlideApp;
 import com.papps.freddy_lazo.redvet.R;
 import com.papps.freddy_lazo.redvet.model.PetRedVetModel;
+import com.papps.freddy_lazo.redvet.view.activity.BaseActivity;
 import com.papps.freddy_lazo.redvet.view.fragment.BaseFragment;
 
 import java.util.ArrayList;
@@ -65,6 +66,10 @@ public class PetAdapter extends RecyclerView.Adapter<PetAdapter.PetViewHolder> {
 
     public void setView(BaseFragment fragment) {
         listener = (onClickAdapter) fragment;
+    }
+
+    public void setView(BaseActivity activity) {
+        listener = (onClickAdapter) activity;
     }
 
     class PetViewHolder extends RecyclerView.ViewHolder {

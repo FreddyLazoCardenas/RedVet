@@ -15,6 +15,14 @@ import com.papps.freddy_lazo.redvet.R;
 import com.papps.freddy_lazo.redvet.model.RedVetDetailAppointmentModel;
 import com.papps.freddy_lazo.redvet.view.activity.HomeActivity;
 
+import java.text.DateFormatSymbols;
+import java.text.MessageFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
+import java.util.Objects;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -75,11 +83,33 @@ public class DoctorNotificationConfirmedDialog extends BaseDialogFragment {
     }
 
     private void fillUi() {
-        doctorName.setText(model.getDoctor().getFirst_name());
+        doctorName.setText(MessageFormat.format("{0} {1}", model.getDoctor().getFirst_name(), model.getDoctor().getLast_name()));
         doctorJob.setText(setJobText());
-        appointmentDate.setText(model.getDate());
+        Calendar calendar = convertToDate(model.getDate());
+        appointmentDate.setText(MessageFormat.format("{0} {1}", Objects.requireNonNull(calendar).get(Calendar.DAY_OF_MONTH), getMonthForInt(calendar.get(Calendar.MONTH))));
         appointmentTime.setText(model.getTime());
         loadImage(model.getDoctor().getPhoto_url());
+    }
+
+    private Calendar convertToDate(String txt) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        try {
+            sdf.parse(txt);
+            return sdf.getCalendar();
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    private String getMonthForInt(int num) {
+        String month = "wrong";
+        DateFormatSymbols dfs = new DateFormatSymbols();
+        String[] months = dfs.getMonths();
+        if (num >= 0 && num <= 11) {
+            month = months[num];
+        }
+        return month;
     }
 
     private RedVetDetailAppointmentModel getModel(String data) {
@@ -106,7 +136,7 @@ public class DoctorNotificationConfirmedDialog extends BaseDialogFragment {
     }
 
     @OnClick(R.id.btn_ok)
-    public void btnOk(){
+    public void btnOk() {
         dismiss();
     }
 }

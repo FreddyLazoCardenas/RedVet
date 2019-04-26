@@ -47,6 +47,7 @@ public class AppointmentFragment extends BaseFragment implements AppointmentFrag
     AppointmentHeaderAdapter headerAdapter;
 
     private HomeActivity activity;
+    private List<CreateAppointmentObjectModel> data;
 
     public static Fragment newInstance() {
         return new AppointmentFragment();
@@ -102,8 +103,8 @@ public class AppointmentFragment extends BaseFragment implements AppointmentFrag
         rvHeader.setLayoutManager(new LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false));
         rvHeader.setAdapter(headerAdapter);
         headerAdapter.setView(this);
-        List<CreateAppointmentObjectModel> data = new ArrayList<>();
-        data.add(new CreateAppointmentObjectModel("Pendientes", "pending"));
+        data = new ArrayList<>();
+        data.add(new CreateAppointmentObjectModel("Pendientes", "pending", true));
         data.add(new CreateAppointmentObjectModel("Confirmadas", "confirmed"));
         data.add(new CreateAppointmentObjectModel("Finalizadas", "finished"));
         headerAdapter.bindList(data);
@@ -151,6 +152,7 @@ public class AppointmentFragment extends BaseFragment implements AppointmentFrag
     @Override
     public void successRequest(List<PetLoverAppointmentModel> data) {
         adapter.bindList(data);
+        dataAdapter(this.data);
     }
 
     @Override
