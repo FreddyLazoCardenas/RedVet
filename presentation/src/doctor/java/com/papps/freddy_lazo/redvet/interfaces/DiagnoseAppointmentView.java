@@ -1,5 +1,7 @@
 package com.papps.freddy_lazo.redvet.interfaces;
 
+import com.papps.freddy_lazo.redvet.model.AppointmentPhotoModel;
+
 public interface DiagnoseAppointmentView extends BaseView {
     String getDiagnose();
 
@@ -16,4 +18,6 @@ public interface DiagnoseAppointmentView extends BaseView {
     int getAppointmentPhotoId();
 
     void successDelete();
+
+    void successPhotoUpload(AppointmentPhotoModel data);
 }

@@ -17,6 +17,7 @@ import com.papps.freddy_lazo.redvet.model.PetLoverAppointmentModel;
 import com.papps.freddy_lazo.redvet.view.fragment.BaseFragment;
 
 import java.text.DateFormatSymbols;
+import java.text.MessageFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -176,10 +177,23 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
         public void bind(int position) {
             DoctorAppointmentModel bindData = isFiltering ? filterData.get(position) : data.get(position);
             Calendar calendar = convertToDate(bindData.getDate());
-            tvDate.setText(calendar.get(Calendar.DAY_OF_MONTH) + " \n" + getMonthForInt(calendar.get(Calendar.MONTH)));
+            tvDate.setText(MessageFormat.format("{0}\n{1}", calendar.get(Calendar.DAY_OF_MONTH), getMonthForInt(calendar.get(Calendar.MONTH)).substring(0, 3)));
             tvTime.setText(bindData.getTime());
             tvPetName.setText(bindData.getPet().getName());
-            tvType.setText(type);
+            tvType.setText(setJobText(type));
+        }
+
+        private int setJobText(String type) {
+            switch (type) {
+                case "clinic":
+                    return R.string.doctor_clinic_type;
+                case "vet":
+                    return R.string.doctor_vet_type;
+                case "other":
+                    return R.string.doctor_other_type;
+                default:
+                    return R.string.doctor_clinic_type;
+            }
         }
 
         private Calendar convertToDate(String txt) {
@@ -192,6 +206,17 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
                 return null;
             }
         }
+
+        private String getMonthForInt(int num) {
+            String month = "wrong";
+            DateFormatSymbols dfs = new DateFormatSymbols();
+            String[] months = dfs.getMonths();
+            if (num >= 0 && num <= 11) {
+                month = months[num];
+            }
+            return month;
+        }
+
 
         @OnClick
         void itemClicked() {

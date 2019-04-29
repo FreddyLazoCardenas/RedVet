@@ -8,7 +8,7 @@
     <android.support.constraint.ConstraintLayout
         android:id="@+id/header_view"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="70dp"
         android:background="@color/colorWhite"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -29,7 +29,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
             android:gravity="center"
-            android:text="Diagnostico"
+            android:text="Diagnóstico"
             android:textColor="@color/colorPink"
             android:textSize="28sp"
             android:textStyle="bold"
@@ -85,7 +85,7 @@
         android:drawableStart="@drawable/ic_quotes"
         android:drawablePadding="10dp"
         android:gravity="center"
-        android:textSize="18sp"
+        android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/tv_time"
         app:layout_constraintStart_toStartOf="@id/tv_pet_name"
         app:layout_constraintTop_toBottomOf="@+id/tv_pet_birthday"
@@ -142,7 +142,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
-        android:text="Adjunta imagenes y documentos complementarios"
+        android:text="Adjunta imágenes y documentos complementarios"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_attach" />
@@ -162,8 +162,8 @@
         android:id="@+id/rv_attach"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="10dp"
+        android:layout_marginTop="35dp"
+        android:layout_marginEnd="20dp"
         app:layout_constraintEnd_toStartOf="@id/iv_attach"
         app:layout_constraintStart_toStartOf="@id/tv_attach"
         app:layout_constraintTop_toBottomOf="@+id/tv_content" />
@@ -172,10 +172,9 @@
         android:id="@+id/iv_diagnose"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:layout_marginTop="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/iv_attach" />
+        app:layout_constraintTop_toBottomOf="@+id/rv_attach" />
 
     <Button
         android:id="@+id/btn_finish_appointment"
@@ -183,6 +182,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
+        app:layout_constraintTop_toBottomOf="@+id/iv_diagnose"
         android:text="Guardar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

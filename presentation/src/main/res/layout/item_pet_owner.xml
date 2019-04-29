@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="10dp"
-    android:background="@color/colorLightGray">
+    android:background="@color/colorLightGray"
+    android:padding="10dp">
 
 
     <com.github.siyamed.shapeimageview.CircularImageView
@@ -14,36 +14,40 @@
         android:layout_height="100dp"
         android:layout_marginStart="15dp"
         android:layout_marginEnd="24dp"
+        android:src="@drawable/ic_placeholder"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:src="@drawable/ic_placeholder" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tv_owner"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:ellipsize="end"
+        android:maxLines="1"
         android:textColor="@color/colorGreen"
         android:textSize="20sp"
         android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/txt_pet_relationship"
         app:layout_constraintStart_toEndOf="@id/img_owner"
         app:layout_constraintTop_toTopOf="@id/img_owner"
         app:layout_constraintVertical_chainStyle="packed"
-        tools:text="Freddy Lazo" />
+        tools:text="Freddy Lazo Cardenas con appellido largo" />
 
     <TextView
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp"
         android:id="@+id/txt_pet_relationship"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:text="Dueño"
         android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/txt_dni"
         app:layout_constraintStart_toStartOf="@id/tv_owner"
-        app:layout_constraintTop_toBottomOf="@+id/tv_owner"
-        android:text="Dueño" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_owner" />
 
     <TextView
         android:id="@+id/txt_dni"
@@ -60,13 +64,13 @@
 
     <ImageView
         android:id="@+id/phone"
-        android:tint="@color/colorPink"
-        android:src="@drawable/ic_doctor_phone"
-        android:layout_margin="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/chat"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:src="@drawable/ic_doctor_phone"
+        android:tint="@color/colorPink"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/chat" />
 
     <ImageView
         android:id="@+id/chat"
@@ -77,5 +81,11 @@
         android:tint="@color/colorPink"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
+
+    <android.support.constraint.Group
+        android:id="@+id/group_buttons"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="chat,phone" />
 
 </android.support.constraint.ConstraintLayout>

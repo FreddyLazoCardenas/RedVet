@@ -51,6 +51,8 @@ public class AppointmentFragment extends BaseFragment implements AppointmentFrag
     AppointmentHeaderAdapter headerAdapter;
 
     private HomeActivity activity;
+    private List<CreateAppointmentObjectModel> data;
+
 
     public static Fragment newInstance() {
         return new AppointmentFragment();
@@ -93,6 +95,7 @@ public class AppointmentFragment extends BaseFragment implements AppointmentFrag
         return event -> {
             if (event instanceof Event.NotificationEvent) {
                 Log.d("getBusAction", "llego el evento al fragment");
+                presenter.sendRequest();
             }
         };
     }
@@ -104,10 +107,10 @@ public class AppointmentFragment extends BaseFragment implements AppointmentFrag
         rvHeader.setAdapter(headerAdapter);
         headerAdapter.setView(this);
         adapter.setView(this);
-        List<CreateAppointmentObjectModel> data = new ArrayList<>();
-        data.add(new CreateAppointmentObjectModel("Pendientes"));
-        data.add(new CreateAppointmentObjectModel("Confirmadas"));
-        data.add(new CreateAppointmentObjectModel("Finalizadas"));
+        data = new ArrayList<>();
+        data.add(new CreateAppointmentObjectModel("Pendientes", "pending", true));
+        data.add(new CreateAppointmentObjectModel("Confirmadas", "confirmed"));
+        data.add(new CreateAppointmentObjectModel("Finalizadas", "finished"));
         headerAdapter.bindList(data);
     }
 
@@ -147,6 +150,7 @@ public class AppointmentFragment extends BaseFragment implements AppointmentFrag
     @Override
     public void successRequest(List<DoctorAppointmentModel> data) {
         adapter.bindList(data);
+        dataAdapter(this.data);
     }
 
     private boolean isDataFiltering(List<CreateAppointmentObjectModel> data) {
@@ -162,19 +166,10 @@ public class AppointmentFragment extends BaseFragment implements AppointmentFrag
         String appointmentName = "";
         for (CreateAppointmentObjectModel model : data) {
             if (model.isSelected()) {
-                appointmentName = model.getName();
+                appointmentName = model.getSearchName();
             }
         }
-        switch (appointmentName) {
-            case "Pendientes":
-                return "pending";
-            case "Confirmadas":
-                return "confirmed";
-            case "Finalizadas":
-                return "finished";
-            default:
-                return "pending";
-        }
+        return appointmentName;
     }
 
     @Override

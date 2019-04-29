@@ -13,6 +13,8 @@ import com.papps.freddy_lazo.domain.model.AppointmentPhoto;
 import com.papps.freddy_lazo.domain.model.RedVetAppointment;
 import com.papps.freddy_lazo.redvet.R;
 import com.papps.freddy_lazo.redvet.interfaces.DiagnoseAppointmentView;
+import com.papps.freddy_lazo.redvet.model.AppointmentPhotoModel;
+import com.papps.freddy_lazo.redvet.model.mapper.AppointmentPhotoModelMapper;
 
 import java.util.List;
 
@@ -165,6 +167,8 @@ public class DiagnoseAppointmentPresenter implements Presenter<DiagnoseAppointme
         @Override
         public void onNext(AppointmentPhoto appointmentPhoto) {
             super.onNext(appointmentPhoto);
+            AppointmentPhotoModel data = AppointmentPhotoModelMapper.transform(appointmentPhoto);
+            view.successPhotoUpload(data);
         }
     }
 

@@ -53,7 +53,7 @@
         android:layout_marginStart="20dp"
         android:text="Motivo"
         android:textColor="@color/colorGreen"
-        android:textSize="25dp"
+        android:textSize="25sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/iv_sad_face"
         app:layout_constraintStart_toEndOf="@id/iv_sad_face" />

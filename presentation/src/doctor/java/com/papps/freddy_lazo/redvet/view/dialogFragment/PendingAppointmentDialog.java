@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.constraint.Group;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +21,11 @@ import com.papps.freddy_lazo.redvet.internal.dagger.component.DaggerPendingAppoi
 import com.papps.freddy_lazo.redvet.model.DoctorAppointmentModel;
 import com.papps.freddy_lazo.redvet.model.DoctorModel;
 import com.papps.freddy_lazo.redvet.presenter.DoctorPendingAppointmentPresenter;
+import com.papps.freddy_lazo.redvet.util.DateHelper;
 import com.papps.freddy_lazo.redvet.view.activity.HomeActivity;
+
+import java.text.MessageFormat;
+import java.util.Calendar;
 
 import javax.inject.Inject;
 
@@ -47,6 +52,8 @@ public class PendingAppointmentDialog extends BaseDialogFragment implements Pend
     TextView tvPetLoverName;
     @BindView(R.id.txt_dni)
     TextView tvDni;
+    @BindView(R.id.group_buttons)
+    android.support.constraint.Group gButtons;
 
     @Inject
     DoctorPendingAppointmentPresenter presenter;
@@ -58,7 +65,7 @@ public class PendingAppointmentDialog extends BaseDialogFragment implements Pend
     private HomeActivity activity;
     private RequestInterface listener;
 
-    public static PendingAppointmentDialog newInstance(String data , RequestInterface listener) {
+    public static PendingAppointmentDialog newInstance(String data, RequestInterface listener) {
         Bundle args = new Bundle();
         args.putString("data", data);
         PendingAppointmentDialog dialog = new PendingAppointmentDialog();
@@ -94,14 +101,17 @@ public class PendingAppointmentDialog extends BaseDialogFragment implements Pend
     }
 
     private void fillUi() {
+        gButtons.setVisibility(View.GONE);
         displayPhoto(model.getPet().getPhoto_url(), imgPet);
         displayPhoto(model.getPetLover().getPhoto_url(), imgOwner);
         tvPet.setText(model.getPet().getName());
-        tvPetBirthday.setText(model.getPet().getBirthday());
-        date.setText(model.getDate());
+        Calendar calendar = DateHelper.convertToDate(model.getPet().getBirthday());
+        tvPetBirthday.setText(MessageFormat.format("{0} {1} {2}", calendar.get(Calendar.DAY_OF_MONTH), DateHelper.getMonthForInt(calendar.get(Calendar.MONTH)).substring(0, 3), calendar.get(Calendar.YEAR)));
+        String[] split = model.getDate().split("-");
+        date.setText(getString(R.string.doctor_date, split[2], split[1], split[0].substring(2)));
         time.setText(model.getTime());
         address.setText(model.getPetLover().getAddress());
-        tvPetLoverName.setText(model.getPetLover().getFirst_name());
+        tvPetLoverName.setText(MessageFormat.format("{0} {1}", model.getPetLover().getFirst_name(), model.getPetLover().getLast_name()));
         tvDni.setText(model.getPetLover().getDni());
     }
 
@@ -178,7 +188,7 @@ public class PendingAppointmentDialog extends BaseDialogFragment implements Pend
         navigator.navigatePhoneCall(activity, model.getPetLover().getPhone());
     }
 
-    public interface RequestInterface{
+    public interface RequestInterface {
 
         void successPendingRequest(int id);
     }

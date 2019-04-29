@@ -103,7 +103,7 @@
                     android:id="@+id/start_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="50dp"
+                    android:layout_marginStart="30dp"
                     android:drawableStart="@drawable/ic_tmp_date"
                     android:drawablePadding="10dp"
                     android:gravity="center"
@@ -140,7 +140,7 @@
                     android:drawableStart="@drawable/ic_address"
                     android:drawableEnd="@drawable/ic_tmp_directions"
                     android:drawablePadding="10dp"
-                    android:gravity="center"
+                    android:gravity="start"
                     android:textSize="18sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -174,7 +174,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
-                    android:text="Diagnosticar"
+                    android:text="Observar"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="@+id/tv_diagnosis"
@@ -199,6 +199,7 @@
                     android:layout_marginStart="40dp"
                     android:layout_marginTop="20dp"
                     android:scaleType="fitXY"
+                    android:visibility="gone"
                     android:src="@drawable/ic_attach"
                     android:tint="@color/colorPink"
                     app:layout_constraintStart_toStartOf="parent"
@@ -211,6 +212,7 @@
                     android:text="Adjuntar"
                     android:textSize="18sp"
                     android:textStyle="bold"
+                    android:visibility="gone"
                     app:layout_constraintBottom_toBottomOf="@+id/tv_attach"
                     app:layout_constraintStart_toEndOf="@id/tv_attach"
                     app:layout_constraintTop_toTopOf="@+id/tv_attach" />
@@ -222,6 +224,7 @@
                     android:src="@drawable/ic_big_add"
                     app:layout_constraintBottom_toBottomOf="@+id/tv_attach"
                     app:layout_constraintEnd_toEndOf="parent"
+                    android:visibility="gone"
                     app:layout_constraintTop_toTopOf="@+id/tv_attach" />
 
                 <View

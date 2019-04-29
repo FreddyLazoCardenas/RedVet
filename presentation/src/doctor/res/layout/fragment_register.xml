@@ -16,6 +16,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Registro"
+            android:textAllCaps="true"
             android:textColor="@color/colorPink"
             android:textSize="24sp"
             android:textStyle="bold"
@@ -94,7 +95,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:hint="Numero"
+            android:hint="Número"
             android:theme="@style/MyEditTextTheme"
             app:layout_constraintEnd_toEndOf="@id/end_guideline"
             app:layout_constraintStart_toStartOf="@id/start_guideline"
@@ -114,7 +115,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:hint="Razon Social"
+            android:hint="Razón Social"
             android:theme="@style/MyEditTextTheme"
             app:layout_constraintEnd_toEndOf="@id/end_guideline"
             app:layout_constraintStart_toStartOf="@id/start_guideline"
@@ -179,7 +180,7 @@
             android:drawableStart="@drawable/ic_address"
             android:drawablePadding="10dp"
             android:focusable="false"
-            android:hint="Direccion"
+            android:hint="Dirección"
             android:inputType="text"
             android:theme="@style/MyEditTextTheme"
             app:layout_constraintEnd_toEndOf="@id/end_guideline"
@@ -253,8 +254,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:drawableStart="@drawable/ic_tuition"
-            android:drawablePadding="10dp"
-            android:hint="Nro de colegiatura"
+            android:drawablePadding="5dp"
+            android:hint="Nro de Colegiatura"
             android:inputType="number"
             android:theme="@style/MyEditTextTheme"
             app:layout_constraintEnd_toEndOf="@id/end_guideline"
@@ -318,7 +319,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="10dp"
-                    android:text="Selecciona los servicios que ofreceras"
+                    android:text="Selecciona los servicios que ofrecerás"
                     app:layout_constraintEnd_toStartOf="@id/img_add_services"
                     app:layout_constraintStart_toStartOf="@id/title"
                     app:layout_constraintTop_toBottomOf="@+id/title" />
@@ -350,11 +351,11 @@
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_schedules"
-            app:layout_constraintStart_toStartOf="@id/start_guideline"
-            app:layout_constraintEnd_toEndOf="@id/end_guideline"
-            app:layout_constraintTop_toBottomOf="@+id/txt_schedule"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="@id/end_guideline"
+            app:layout_constraintStart_toStartOf="@id/start_guideline"
+            app:layout_constraintTop_toBottomOf="@+id/txt_schedule">
 
         </android.support.v7.widget.RecyclerView>
 
@@ -375,17 +376,17 @@
                 app:layout_constraintGuide_percent="0.4" />
 
             <TextView
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@id/start_group"
-                app:layout_constraintEnd_toStartOf="@id/end_group"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="A"
                 android:textColor="@color/colorGreen"
                 android:textSize="10sp"
                 android:textStyle="bold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/end_group"
+                app:layout_constraintStart_toEndOf="@id/start_group"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <android.support.constraint.ConstraintLayout
                 android:id="@+id/start_group"
@@ -504,7 +505,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginTop="20dp"
-            android:drawableStart="@drawable/ic_pen"
+            android:drawableStart="@drawable/ic_edit_pink_24dp"
             android:drawablePadding="10dp"
             android:text="Descripción"
             android:textColor="@color/colorPink"

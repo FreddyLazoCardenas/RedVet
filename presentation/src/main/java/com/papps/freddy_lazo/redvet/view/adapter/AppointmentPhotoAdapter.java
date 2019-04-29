@@ -77,6 +77,11 @@ public class AppointmentPhotoAdapter extends RecyclerView.Adapter<AppointmentPho
         notifyItemRemoved(index);
     }
 
+    public void itemAdded(AppointmentPhotoModel model){
+        data.add(model);
+        notifyItemInserted(data.size() - 1);
+    }
+
     private int getItemIndex(int photoId) {
         for (AppointmentPhotoModel appointmentPhotoModel : data) {
             if (appointmentPhotoModel.getId() == photoId) {

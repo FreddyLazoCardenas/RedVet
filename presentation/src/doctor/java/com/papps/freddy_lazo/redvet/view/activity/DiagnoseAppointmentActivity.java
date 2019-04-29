@@ -30,6 +30,7 @@ import com.papps.freddy_lazo.redvet.model.DoctorAppointmentModel;
 import com.papps.freddy_lazo.redvet.model.DoctorModel;
 import com.papps.freddy_lazo.redvet.presenter.DiagnoseAppointmentPresenter;
 import com.papps.freddy_lazo.redvet.presenter.RegisterFragmentPresenter;
+import com.papps.freddy_lazo.redvet.util.DateHelper;
 import com.papps.freddy_lazo.redvet.view.adapter.AppointmentPhotoAdapter;
 import com.papps.freddy_lazo.redvet.view.dialogFragment.BaseDialogFragment;
 import com.papps.freddy_lazo.redvet.view.dialogFragment.CameraDialog;
@@ -39,6 +40,8 @@ import com.theartofdev.edmodo.cropper.CropImageView;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.text.MessageFormat;
+import java.util.Calendar;
 
 import javax.inject.Inject;
 
@@ -121,10 +124,12 @@ public class DiagnoseAppointmentActivity extends BaseActivity implements Diagnos
     }
 
     private void fillUi() {
-        displayPhoto(model.getPetLover().getPhoto_url(), false);
+        displayPhoto(model.getPet().getPhoto_url(), false);
         petName.setText(model.getPet().getName());
-        petBirthday.setText(model.getPet().getBirthday());
-        appointmentDate.setText(model.getDate());
+        Calendar calendar = DateHelper.convertToDate(model.getPet().getBirthday());
+        petBirthday.setText(MessageFormat.format("{0} {1} {2}", calendar.get(Calendar.DAY_OF_MONTH), DateHelper.getMonthForInt(calendar.get(Calendar.MONTH)).substring(0, 3), calendar.get(Calendar.YEAR)));
+        Calendar calendar1 = DateHelper.convertToDate(model.getDate());
+        appointmentDate.setText(MessageFormat.format("{0} {1}", calendar1.get(Calendar.DAY_OF_MONTH), DateHelper.getMonthForInt(calendar1.get(Calendar.MONTH)).substring(0, 3)));
         appointmentTime.setText(model.getTime());
         adapter.bindList(model.getPhotos());
     }
@@ -181,6 +186,11 @@ public class DiagnoseAppointmentActivity extends BaseActivity implements Diagnos
     @Override
     public void successDelete() {
         adapter.itemDeleted(getAppointmentPhotoId());
+    }
+
+    @Override
+    public void successPhotoUpload(AppointmentPhotoModel data) {
+        adapter.itemAdded(data);
     }
 
     @Override
