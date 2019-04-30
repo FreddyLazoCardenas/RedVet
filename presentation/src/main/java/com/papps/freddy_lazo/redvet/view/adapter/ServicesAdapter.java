@@ -24,6 +24,7 @@ import butterknife.OnClick;
 public class ServicesAdapter extends RecyclerView.Adapter<ServicesAdapter.ServicesViewHolder> {
 
     private List<ServicesModel> data = new ArrayList<>();
+    private boolean canClick = true;
 
     @Inject
     ServicesAdapter() {
@@ -54,6 +55,11 @@ public class ServicesAdapter extends RecyclerView.Adapter<ServicesAdapter.Servic
         }
     }
 
+
+    public void setCanClick(boolean canClick) {
+        this.canClick = canClick;
+    }
+
     public List<ServicesModel> getData() {
         return data;
     }
@@ -73,9 +79,9 @@ public class ServicesAdapter extends RecyclerView.Adapter<ServicesAdapter.Servic
 
         void bind(int position) {
             txtServices.setText(data.get(position).getName());
-            if(data.get(position).getState()){
+            if (data.get(position).getState()) {
                 imgCheck.setImageResource(R.drawable.ic_check_green);
-            }else{
+            } else {
                 imgCheck.setImageResource(R.drawable.ic_check_gray);
             }
         }
@@ -92,8 +98,10 @@ public class ServicesAdapter extends RecyclerView.Adapter<ServicesAdapter.Servic
 
         @OnClick
         void serviceClicked() {
-            itemSelected(getAdapterPosition());
-            bindList(data);
+            if (canClick) {
+                itemSelected(getAdapterPosition());
+                bindList(data);
+            }
         }
     }
 

@@ -26,6 +26,7 @@ import com.papps.freddy_lazo.redvet.model.DoctorModel;
 import com.papps.freddy_lazo.redvet.model.PetLoverModel;
 import com.papps.freddy_lazo.redvet.model.PetLoverRegisterModel;
 import com.papps.freddy_lazo.redvet.model.PetRedVetModel;
+import com.papps.freddy_lazo.redvet.model.ServiceDoctorModel;
 import com.papps.freddy_lazo.redvet.presenter.AppointmentActivityPresenter;
 import com.papps.freddy_lazo.redvet.view.adapter.AppointmentTypeAdapter;
 import com.papps.freddy_lazo.redvet.view.adapter.PetAdapter;
@@ -303,5 +304,13 @@ public class AppointmentActivity extends BaseActivity implements DatePickerDialo
             ivCheckFooter.setTag("false");
             ivCheckFooter.setImageResource(R.drawable.ic_check_gray);
         }
+    }
+
+    @OnClick(R.id.tv_services)
+    public void services() {
+        List<ServiceDoctorModel> data = new ArrayList<>();
+        if (doctorModel.getServiceList() != null)
+            data = doctorModel.getServiceList();
+        navigator.navigateToServicesActivity(this, data, -1);
     }
 }

@@ -257,8 +257,8 @@ public class RegisterFragmentPresenter implements Presenter<RegisterFragmentView
             return;
         if (!isValidPetBirthday(view.getPetBirthday()))
             return;
-        if (!isValidPetBreed(view.getPetBreed()))
-            return;
+        /*if (!isValidPetBreed(view.getPetBreed()))
+            return;*/
         view.savePetData();
     }
 

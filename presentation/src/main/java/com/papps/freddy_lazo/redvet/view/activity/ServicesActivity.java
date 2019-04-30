@@ -38,6 +38,10 @@ public class ServicesActivity extends BaseActivity implements ServicesFragmentVi
         return new Intent(fragment.getContext(), ServicesActivity.class).putParcelableArrayListExtra("data", (ArrayList<? extends Parcelable>) data);
     }
 
+    public static Intent getCallingIntent(BaseActivity activity, List<ServiceDoctorModel> data) {
+        return new Intent(activity, ServicesActivity.class).putParcelableArrayListExtra("data", (ArrayList<? extends Parcelable>) data).putExtra("canClick", false);
+    }
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,8 +59,13 @@ public class ServicesActivity extends BaseActivity implements ServicesFragmentVi
     public void initUI() {
         presenter.setView(this);
         getServicesData();
+        getCanClick();
         setUpRv();
         presenter.getServices();
+    }
+
+    private void getCanClick() {
+        adapter.setCanClick(getIntent().getBooleanExtra("canClick", true));
     }
 
     private void getServicesData() {

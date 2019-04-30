@@ -1,6 +1,8 @@
 package com.papps.freddy_lazo.redvet.view.dialogFragment;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -207,6 +209,11 @@ public class PendingAppointmentDialog extends BaseDialogFragment implements Pend
     @OnClick(R.id.phone)
     public void phoneClicked() {
         navigator.navigatePhoneCall(activity, model.getDoctor().getPhone());
+    }
+
+    @OnClick(R.id.txt_address)
+    public void goToAppointment() {
+        navigator.navigateToNavigation(activity, model.getDoctor().getLatitude(), model.getDoctor().getLongitude());
     }
 
 }

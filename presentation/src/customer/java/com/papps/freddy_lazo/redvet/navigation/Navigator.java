@@ -96,6 +96,10 @@ public class Navigator extends BaseNavigator {
         fragment.startActivityForResult(ServicesActivity.getCallingIntent(fragment, data), requestCode);
     }
 
+    public void navigateToServicesActivity(BaseActivity activity, List<ServiceDoctorModel> data, int requestCode) {
+        activity.startActivityForResult(ServicesActivity.getCallingIntent(activity, data), requestCode);
+    }
+
     //fragments
 
     public void navigateToLoginFragment(BaseActivity activity) {
@@ -184,7 +188,7 @@ public class Navigator extends BaseNavigator {
         dialogTransaction(activity, PetListDialog.newInstance(listener));
     }
 
-    public void navigateDoctorDetailFragment(BaseActivity activity,String doctor) {
+    public void navigateDoctorDetailFragment(BaseActivity activity, String doctor) {
         dialogTransaction(activity, DoctorDialog.newInstance(doctor));
     }
 
@@ -244,7 +248,7 @@ public class Navigator extends BaseNavigator {
 
     public void navigateWhatsApp(BaseActivity activity, String phone) {
         Intent sendIntent = new Intent(Intent.ACTION_VIEW);
-        sendIntent.setData(Uri.parse("http://api.whatsapp.com/send?phone=" + "51" + phone+ "&text=" + "Hola "));
+        sendIntent.setData(Uri.parse("http://api.whatsapp.com/send?phone=" + "51" + phone + "&text=" + "Hola "));
         if (sendIntent.resolveActivity(activity.getPackageManager()) == null) {
             Toast.makeText(activity, "Instalar whatsApp por favor", Toast.LENGTH_SHORT).show();
             return;
@@ -254,5 +258,23 @@ public class Navigator extends BaseNavigator {
 
     public void navigateEditPet(BaseActivity activity, PetLoverRegisterModel model, PetEditDialog.PetEditInterface listener) {
         dialogTransaction(activity, PetEditDialog.newInstance(model, listener));
+    }
+
+    public void navigateToNavigation(BaseActivity activity, String latitude, String longitude) {
+
+        String url = "waze://?ll=" + latitude + ", " + longitude + "&navigate=yes";
+        Intent intentWaze = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+        intentWaze.setPackage("com.waze");
+
+        String uriGoogle = "google.navigation:q=" + latitude + "," + longitude;
+        Intent intentGoogleNav = new Intent(Intent.ACTION_VIEW, Uri.parse(uriGoogle));
+        intentGoogleNav.setPackage("com.google.android.apps.maps");
+
+        String title = "Elige un app para llegar a tu destino";
+        Intent chooserIntent = Intent.createChooser(intentGoogleNav, title);
+        Intent[] arr = new Intent[1];
+        arr[0] = intentWaze;
+        chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, arr);
+        activity.startActivity(chooserIntent);
     }
 }
