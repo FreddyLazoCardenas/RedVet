@@ -90,7 +90,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
             } else {
                 tvTime.setText(context.getString(R.string.notification_time, test / 24, (test / 24) > 1 ? "dias" : "dia"));
             }
-            //ivIcon.setImageResource(getImageFromTitle(data.get(position).getType()));
+            ivIcon.setImageResource(getImageFromTitle(data.get(position).getType()));
         }
 
         private String getTitleFromType(String type) {
@@ -125,17 +125,30 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         private int getImageFromTitle(String type) {
             switch (type) {
                 case "PET_LOVER_APPOINTMENT_CONFIRMED":
-                    break;
+                    return R.drawable.ic_check_not;
                 case "PET_LOVER_APPOINTMENT_CANCELED":
-                    break;
+                    return R.drawable.ic_exclamation_mark;
                 case "PET_LOVER_APPOINTMENT_FINISHED":
-                    break;
+                    return R.drawable.ic_check_not;
                 case "PET_LOVER_NEW_MESSAGE":
-                    break;
+                    return R.drawable.ic_love_not;
+                case "DOCTOR_NEW_MESSAGE":
+                    return R.drawable.ic_love_not;
+                case "DOCTOR_APPOINTMENT_QUALIFIED":
+                    return R.drawable.ic_love_not;
+                case "DOCTOR_APPOINTMENT_CANCELED":
+                    return R.drawable.ic_exclamation_mark;
+                case "DOCTOR_NEW_APPOINTMENT":
+                    return R.drawable.ic_love_not;
+                case "DOCTOR_UNAVAILABLE":
+                    return R.drawable.ic_exclamation_mark;
+                case "DOCTOR_AVAILABLE":
+                    return R.drawable.ic_check_not;
+                case "EMAIL_VERIFIED":
+                    return R.drawable.ic_love_not;
                 default:
-                    break;
+                    return R.drawable.ic_check_not;
             }
-            return -1;
         }
     }
 }

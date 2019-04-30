@@ -64,6 +64,8 @@ public class FinishedAppointmentDialog extends BaseDialogFragment implements App
     AppointmentPhotoAdapter adapter;
     @Inject
     DoctorFinishedFragmentPresenter presenter;
+    @BindView(R.id.group_buttons)
+    android.support.constraint.Group gButtons;
 
     private DoctorAppointmentModel model;
     private HomeActivity activity;
@@ -108,6 +110,7 @@ public class FinishedAppointmentDialog extends BaseDialogFragment implements App
 
 
     private void fillUi() {
+        gButtons.setVisibility(View.GONE);
         displayPhoto(model.getPet().getPhoto_url(), imgPet);
         displayPhoto(model.getPetLover().getPhoto_url(), imgOwner);
         tvPet.setText(model.getPet().getName());

@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:minWidth="100dp"
-        app:cardBackgroundColor="@color/colorLightGray"
+        app:cardBackgroundColor="@color/colorPink"
         app:cardCornerRadius="8dp"
         app:cardElevation="5dp"
         app:layout_constraintBottom_toBottomOf="parent"

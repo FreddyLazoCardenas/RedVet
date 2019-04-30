@@ -10,10 +10,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
+        android:src="@drawable/ic_quotes"
         app:layout_constraintBottom_toBottomOf="@id/txt_content"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/txt_title"
-        android:src="@drawable/ic_quotes" />
+        app:layout_constraintTop_toTopOf="@id/txt_title" />
 
     <TextView
         android:id="@+id/txt_title"
@@ -25,13 +25,13 @@
         android:ellipsize="end"
         android:gravity="start"
         android:lines="1"
-        android:textColor="@color/colorBlack"
+        android:text="Servicio confirmado"
+        android:textColor="@color/colorGray"
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/img_news"
-        app:layout_constraintTop_toTopOf="parent"
-        android:text="Servicio confirmado" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/txt_content"
@@ -41,21 +41,21 @@
         android:layout_marginEnd="10dp"
         android:ellipsize="end"
         android:maxLines="3"
+        android:text="Tu cita ha sido confirmada"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@id/txt_title"
-        app:layout_constraintTop_toBottomOf="@+id/txt_title"
-        android:text="Tu cita ha sido confirmada" />
+        app:layout_constraintTop_toBottomOf="@+id/txt_title" />
 
     <TextView
         android:id="@+id/txt_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
+        android:text="Hace 2 horas"
         android:textColor="@color/colorGreen"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_content"
-        android:text="Hace 2 horas" />
+        app:layout_constraintTop_toBottomOf="@+id/txt_content" />
 
 
 </android.support.constraint.ConstraintLayout>

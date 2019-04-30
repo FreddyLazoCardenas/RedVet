@@ -919,7 +919,7 @@ public class ProfileFragment extends BaseFragment implements CameraDialog.OnClic
     public void scheduleCheck() {
         if (currentSchedule != null) {
             currentSchedule.setCheck(!currentSchedule.isCheck());
-            ivScheduleCheck.setImageResource(currentSchedule.isCheck() ? R.drawable.ic_check_pink : R.drawable.ic_check_gray);
+            ivScheduleCheck.setImageResource(currentSchedule.isCheck() ? R.drawable.ic_check_green : R.drawable.ic_check_gray);
             schedulesAdapter.updateData(currentSchedule);
         }
     }
