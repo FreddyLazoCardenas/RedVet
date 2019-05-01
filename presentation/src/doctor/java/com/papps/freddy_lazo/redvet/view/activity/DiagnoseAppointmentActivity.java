@@ -262,7 +262,10 @@ public class DiagnoseAppointmentActivity extends BaseActivity implements Diagnos
 
     @OnClick(R.id.iv_attach)
     public void ivAttach() {
-        navigator.showListDialog(this, this);
+        if (adapter.getItemCount() < 5)
+            navigator.showListDialog(this, this);
+        else
+            showErrorMessage("Máximop número de fotos alcanzado");
     }
 
     @Override

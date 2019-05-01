@@ -12,6 +12,8 @@ import com.papps.freddy_lazo.domain.model.Notification;
 import com.papps.freddy_lazo.redvet.AndroidApplication;
 import com.papps.freddy_lazo.redvet.internal.bus.Event;
 import com.papps.freddy_lazo.redvet.internal.bus.RxBus;
+import com.papps.freddy_lazo.redvet.view.activity.HomeActivity;
+import com.papps.freddy_lazo.redvet.view.activity.SplashActivity;
 import com.papps.freddy_lazo.redvet.view.util.NotificationUtil;
 
 import java.util.Map;
