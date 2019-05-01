@@ -279,7 +279,7 @@ public class RegisterFragmentPresenter implements Presenter<RegisterFragmentView
     }
 
     private boolean isValidNumber(String number) {
-        if (TextUtils.isEmpty(number)) {
+        if (TextUtils.isEmpty(number) && view.getTypeDocument().equals("dni")) {
             view.showDocumentNumberError(view.context().getString(R.string.text_required_field));
             return false;
         }
@@ -299,7 +299,10 @@ public class RegisterFragmentPresenter implements Presenter<RegisterFragmentView
             super.onError(e);
             super.onError(e);
             RedVetException exception = (RedVetException) e;
-            view.showErrorMessage(exception.getMessage());
+            if (e.getMessage().contains("enviado"))
+                view.successRegisterRequest();
+            else
+                view.showErrorMessage(exception.getMessage());
         }
 
         @Override

@@ -1,25 +1,33 @@
 package com.papps.freddy_lazo.redvet;
 
+import android.app.Activity;
 import android.app.Application;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.os.Build;
+import android.os.Bundle;
 
 import com.papps.freddy_lazo.redvet.internal.dagger.component.ApplicationComponent;
 import com.papps.freddy_lazo.redvet.internal.dagger.component.DaggerApplicationComponent;
 import com.papps.freddy_lazo.redvet.internal.dagger.module.ApplicationModule;
+import com.papps.freddy_lazo.redvet.view.activity.HomeActivity;
+import com.papps.freddy_lazo.redvet.view.util.NotificationUtil;
 
 import static com.papps.freddy_lazo.redvet.view.util.NotificationUtil.CHANNEL_ID;
 
-public class AndroidApplication extends Application {
+public class AndroidApplication extends Application implements Application.ActivityLifecycleCallbacks {
 
     private ApplicationComponent mApplicationComponent;
+    private boolean isAlive;
+    private int startCount;
+    private int stopCount;
 
 
     @Override
     public void onCreate() {
         super.onCreate();
         initializeInjector();
+        registerActivityLifecycleCallbacks(this);
         createNotificationChannel();
     }
 
@@ -51,4 +59,52 @@ public class AndroidApplication extends Application {
         return this.mApplicationComponent;
     }
 
+    @Override
+    public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
+
+    }
+
+    @Override
+    public void onActivityStarted(Activity activity) {
+        ++startCount;
+    }
+
+    @Override
+    public void onActivityResumed(Activity activity) {
+        if (activity instanceof HomeActivity) {
+            NotificationUtil.dismissNotification(this);
+            isAlive = true;
+        }
+    }
+
+    @Override
+    public void onActivityPaused(Activity activity) {
+
+    }
+
+    @Override
+    public void onActivityStopped(Activity activity) {
+        ++stopCount;
+    }
+
+    @Override
+    public void onActivitySaveInstanceState(Activity activity, Bundle outState) {
+
+    }
+
+    @Override
+    public void onActivityDestroyed(Activity activity) {
+        if (activity instanceof HomeActivity) {
+            NotificationUtil.dismissNotification(this);
+            isAlive = false;
+        }
+    }
+
+    public boolean isAlive() {
+        return isAlive;
+    }
+
+    public boolean isBackground() {
+        return startCount == stopCount;
+    }
 }

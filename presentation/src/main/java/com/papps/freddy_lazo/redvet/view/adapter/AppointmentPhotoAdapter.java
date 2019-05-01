@@ -11,10 +11,8 @@ import android.widget.ImageView;
 import com.papps.freddy_lazo.redvet.GlideApp;
 import com.papps.freddy_lazo.redvet.R;
 import com.papps.freddy_lazo.redvet.model.AppointmentPhotoModel;
-import com.papps.freddy_lazo.redvet.model.DoctorAppointmentModel;
 import com.papps.freddy_lazo.redvet.view.activity.BaseActivity;
 import com.papps.freddy_lazo.redvet.view.dialogFragment.BaseDialogFragment;
-import com.papps.freddy_lazo.redvet.view.fragment.BaseFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +28,7 @@ public class AppointmentPhotoAdapter extends RecyclerView.Adapter<AppointmentPho
     private List<AppointmentPhotoModel> data = new ArrayList<>();
     private Context context;
     private AppointmentPhotoAdapter.onClickAdapter listener;
+    private boolean canClick = true;
 
 
     @Inject
@@ -49,6 +48,10 @@ public class AppointmentPhotoAdapter extends RecyclerView.Adapter<AppointmentPho
     public void onBindViewHolder(@NonNull AppointmentPhotoAdapter.PhotoAppointmentHolder photoAppointmentHolder, int i) {
         photoAppointmentHolder.bind(i);
 
+    }
+
+    public void setCanClick(boolean canClick) {
+        this.canClick = canClick;
     }
 
     public void bindList(List<AppointmentPhotoModel> data) {
@@ -77,7 +80,7 @@ public class AppointmentPhotoAdapter extends RecyclerView.Adapter<AppointmentPho
         notifyItemRemoved(index);
     }
 
-    public void itemAdded(AppointmentPhotoModel model){
+    public void itemAdded(AppointmentPhotoModel model) {
         data.add(model);
         notifyItemInserted(data.size() - 1);
     }
@@ -116,7 +119,8 @@ public class AppointmentPhotoAdapter extends RecyclerView.Adapter<AppointmentPho
 
         @OnClick
         void itemClicked() {
-            listener.itemClicked(data.get(getAdapterPosition()));
+            if (canClick)
+                listener.itemClicked(data.get(getAdapterPosition()));
         }
     }
 

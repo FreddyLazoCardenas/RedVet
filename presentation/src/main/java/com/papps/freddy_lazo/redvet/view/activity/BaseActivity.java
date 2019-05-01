@@ -84,7 +84,9 @@ public class BaseActivity extends AppCompatActivity implements BaseView {
     }
 
     public void showLoading() {
-        if (vProgress != null) vProgress.setVisibility(View.VISIBLE);
+        runOnUiThread(() -> {
+            if (vProgress != null) vProgress.setVisibility(View.VISIBLE);
+        });
     }
 
     public boolean isLoading() {

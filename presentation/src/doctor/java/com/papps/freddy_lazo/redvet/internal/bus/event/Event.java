@@ -7,9 +7,14 @@ public class Event extends BaseEvent {
 
     public static class NotificationEvent {
 
-        public NotificationEvent() {
-            //empty constructor
+        private final int appointmentId;
+
+        public NotificationEvent(int appointmentId) {
+            this.appointmentId = appointmentId;
+        }
+
+        public int getAppointmentId() {
+            return appointmentId;
         }
     }
-
 }

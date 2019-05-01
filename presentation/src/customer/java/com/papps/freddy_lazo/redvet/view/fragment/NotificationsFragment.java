@@ -19,6 +19,7 @@ import com.papps.freddy_lazo.redvet.presenter.NotificationFragmentPresenter;
 import com.papps.freddy_lazo.redvet.view.activity.HomeActivity;
 import com.papps.freddy_lazo.redvet.view.adapter.NotificationAdapter;
 
+import java.util.Collections;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -99,6 +100,7 @@ public class NotificationsFragment extends BaseFragment implements NotificationF
 
     @Override
     public void successRequest(List<NotificationModel> data) {
+        Collections.reverse(data);
         adapter.bindList(data);
     }
 }

@@ -83,6 +83,7 @@
             android:layout_marginTop="40dp"
             android:background="@drawable/outline"
             android:checkedButton="@+id/dni"
+            android:focusable="false"
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="@id/end_guideline"
             app:layout_constraintStart_toStartOf="@id/start_guideline"
@@ -134,6 +135,7 @@
                 android:id="@+id/et_number"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:focusable="false"
                 android:inputType="number"
                 tools:text="70692399" />
 
@@ -174,6 +176,7 @@
                 android:id="@+id/et_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:focusable="false"
                 android:inputType="text"
                 tools:text="Freddy Raul" />
 
@@ -194,6 +197,7 @@
                 android:id="@+id/et_last_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:focusable="false"
                 android:inputType="text"
                 tools:text="Lazo Cardenas" />
 
@@ -366,11 +370,11 @@
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_schedules"
-            app:layout_constraintStart_toStartOf="@id/start_guideline"
-            app:layout_constraintEnd_toEndOf="@id/end_guideline"
-            app:layout_constraintTop_toBottomOf="@+id/txt_schedule"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="@id/end_guideline"
+            app:layout_constraintStart_toStartOf="@id/start_guideline"
+            app:layout_constraintTop_toBottomOf="@+id/txt_schedule">
 
         </android.support.v7.widget.RecyclerView>
 
@@ -391,17 +395,17 @@
                 app:layout_constraintGuide_percent="0.4" />
 
             <TextView
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@id/start_group"
-                app:layout_constraintEnd_toStartOf="@id/end_group"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="A"
                 android:textColor="@color/colorGreen"
                 android:textSize="10sp"
                 android:textStyle="bold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/end_group"
+                app:layout_constraintStart_toEndOf="@id/start_group"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <android.support.constraint.ConstraintLayout
                 android:id="@+id/start_group"

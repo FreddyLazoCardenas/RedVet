@@ -465,6 +465,11 @@ public class RegisterFragment extends BaseFragment implements RegisterFragmentVi
     }
 
     @Override
+    public void successRegisterRequest() {
+        activity.finish();
+    }
+
+    @Override
     public String getConsultationTime() {
         return getConsultationPriceVisibility() == View.VISIBLE ? "30" : null;
     }

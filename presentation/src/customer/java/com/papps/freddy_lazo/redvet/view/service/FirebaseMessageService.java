@@ -30,8 +30,18 @@ public class FirebaseMessageService extends FirebaseMessagingService {
         AndroidApplication mApp = (AndroidApplication) getApplication();
         Map<String, String> data = remoteMessage.getData();
         Log.d("remoteMessage", remoteMessage.toString());
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, new Intent(), 0);
-        NotificationUtil.showNotification(this, data.get("type"), data.get("message"), pendingIntent);
+
+        if (mApp.isAlive()) {
+            Intent notificationIntent = new Intent(getApplicationContext(), HomeActivity.class);
+            notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
+                    | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, mApp.isBackground() ? notificationIntent : new Intent(), 0);
+            NotificationUtil.showNotification(this, data.get("type"), data.get("message"), pendingIntent);
+        } else {
+            PendingIntent pendingIntent = PendingIntent.getActivity(this, 0,
+                    new Intent(getApplicationContext(), SplashActivity.class), 0);
+            NotificationUtil.showNotification(this, data.get("type"), data.get("message"), pendingIntent);
+        }
         String timeStamp = String.valueOf(TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis()));
         SaveNotification saveNotification = mApp.getApplicationComponent().saveNotification();
         RxBus rxBus= mApp.getApplicationComponent().rxBus();

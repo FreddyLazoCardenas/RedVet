@@ -104,4 +104,6 @@ public interface RegisterFragmentView extends BaseView {
     void hideShowerPriceError();
 
     void successRequest(List<PetRedVetModel> transform);
+
+    void successRegisterRequest();
 }

@@ -61,6 +61,8 @@ public class FinishedAppointmentDialog extends BaseDialogFragment implements App
     TextView tvDoctorJob;
     @BindView(R.id.tv_doctor_name)
     TextView tvDoctorName;
+    @BindView(R.id.group_buttons)
+    android.support.constraint.Group gButtons;
 
     @Inject
     PreferencesManager preferencesManager;
@@ -112,6 +114,7 @@ public class FinishedAppointmentDialog extends BaseDialogFragment implements App
 
 
     private void fillUi() {
+        gButtons.setVisibility(View.GONE);
         displayPhoto(pet.getPhoto_url(), imgPet);
         displayPhoto(model.getDoctor().getPhoto_url(), imgOwner);
         tvPet.setText(pet.getName());
@@ -205,6 +208,7 @@ public class FinishedAppointmentDialog extends BaseDialogFragment implements App
     private void setUpRv() {
         rvAttach.setLayoutManager(new LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false));
         rvAttach.setAdapter(adapter);
+        adapter.setCanClick(false);
         adapter.setListener(this);
     }
 
@@ -252,5 +256,10 @@ public class FinishedAppointmentDialog extends BaseDialogFragment implements App
     @OnClick(R.id.phone)
     public void phoneClicked() {
         navigator.navigatePhoneCall(activity, model.getDoctor().getPhone());
+    }
+
+    @OnClick(R.id.txt_address)
+    public void goToAppointment() {
+        navigator.navigateToNavigation(activity, model.getDoctor().getLatitude(), model.getDoctor().getLongitude());
     }
 }

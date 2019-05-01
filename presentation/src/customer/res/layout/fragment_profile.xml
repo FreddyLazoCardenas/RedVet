@@ -90,6 +90,7 @@
                 android:id="@+id/et_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:focusable="false"
                 android:inputType="text"
                 tools:text="Freddy Raul" />
 
@@ -109,6 +110,7 @@
                 android:id="@+id/et_last_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:focusable="false"
                 android:inputType="text"
                 tools:text="Lazo Cardenas" />
 
@@ -122,6 +124,7 @@
             android:layout_marginTop="20dp"
             android:drawableStart="@drawable/ic_dni"
             android:drawablePadding="10dp"
+            android:focusable="false"
             android:hint="DNI"
             android:inputType="number"
             app:layout_constraintEnd_toEndOf="@id/end_guideline"

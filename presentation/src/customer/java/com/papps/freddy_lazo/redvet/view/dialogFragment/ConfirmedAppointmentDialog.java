@@ -189,6 +189,11 @@ public class ConfirmedAppointmentDialog extends BaseDialogFragment {
         navigator.navigatePhoneCall(activity, model.getDoctor().getPhone());
     }
 
+    @OnClick(R.id.txt_address)
+    public void goToAppointment() {
+        navigator.navigateToNavigation(activity, model.getDoctor().getLatitude(), model.getDoctor().getLongitude());
+    }
+
     public interface RequestInterface {
         void successCancelRequest(int id);
     }
