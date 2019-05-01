@@ -48,55 +48,70 @@
         android:id="@+id/rv_header"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="@+id/header_shadow"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="@+id/header_shadow"
-        app:layout_constraintTop_toTopOf="@+id/header_shadow" />
-
-   <!-- <TextView
-        android:id="@+id/txt_pending"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:background="@drawable/quote_bg_selected"
-        android:padding="10dp"
-        android:text="Pendientes"
-        android:textColor="@color/colorWhite"
-        app:layout_constraintBottom_toBottomOf="@+id/header_shadow"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/header_shadow" />
 
-    <TextView
-        android:id="@+id/txt_confirmed"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/quote_bg"
-        android:padding="10dp"
-        android:text="Confirmadas"
-        android:textColor="@color/colorWhite"
-        app:layout_constraintBottom_toBottomOf="@+id/header_shadow"
-        app:layout_constraintEnd_toStartOf="@id/txt_finalized"
-        app:layout_constraintStart_toEndOf="@id/txt_pending"
-        app:layout_constraintTop_toTopOf="@+id/header_shadow" />
+    <!-- <TextView
+         android:id="@+id/txt_pending"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_marginStart="20dp"
+         android:background="@drawable/quote_bg_selected"
+         android:padding="10dp"
+         android:text="Pendientes"
+         android:textColor="@color/colorWhite"
+         app:layout_constraintBottom_toBottomOf="@+id/header_shadow"
+         app:layout_constraintStart_toStartOf="parent"
+         app:layout_constraintTop_toTopOf="@+id/header_shadow" />
 
-    <TextView
-        android:id="@+id/txt_finalized"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="20dp"
-        android:background="@drawable/quote_bg"
-        android:padding="10dp"
-        android:text="Finalizadas"
-        android:textColor="@color/colorWhite"
-        app:layout_constraintBottom_toBottomOf="@+id/header_shadow"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/header_shadow" />
--->
+     <TextView
+         android:id="@+id/txt_confirmed"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:background="@drawable/quote_bg"
+         android:padding="10dp"
+         android:text="Confirmadas"
+         android:textColor="@color/colorWhite"
+         app:layout_constraintBottom_toBottomOf="@+id/header_shadow"
+         app:layout_constraintEnd_toStartOf="@id/txt_finalized"
+         app:layout_constraintStart_toEndOf="@id/txt_pending"
+         app:layout_constraintTop_toTopOf="@+id/header_shadow" />
+
+     <TextView
+         android:id="@+id/txt_finalized"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_marginEnd="20dp"
+         android:background="@drawable/quote_bg"
+         android:padding="10dp"
+         android:text="Finalizadas"
+         android:textColor="@color/colorWhite"
+         app:layout_constraintBottom_toBottomOf="@+id/header_shadow"
+         app:layout_constraintEnd_toEndOf="parent"
+         app:layout_constraintTop_toTopOf="@+id/header_shadow" />
+ -->
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_appointments"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/header_shadow" />
+
+    <TextView
+        android:id="@+id/tv_empty_list"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:text="No hay citas para mostrar"
+        android:textColor="@color/colorPink"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

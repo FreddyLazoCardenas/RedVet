@@ -3,7 +3,6 @@ package com.papps.freddy_lazo.redvet.view.adapter;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +21,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -31,7 +29,6 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import retrofit2.http.PUT;
 
 public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.AppointmentViewHolder> {
 
@@ -68,7 +65,16 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
     public void bindList(List<PetLoverAppointmentModel> data) {
         if (data != null)
             this.data = data;
+        changeVisibility(data);
         notifyDataSetChanged();
+    }
+
+    private void changeVisibility(List<PetLoverAppointmentModel> data) {
+        if(data!= null && data.isEmpty()){
+            listener.emptyList();
+        }else{
+            listener.notEmptyList();
+        }
     }
 
     public void setView(BaseFragment fragment) {
@@ -90,6 +96,7 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
                 filterData.add(model);
             }
         }
+        changeVisibility(filterData);
         notifyDataSetChanged();
     }
 
@@ -99,8 +106,10 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
         if (isFiltering) {
             int filteringIndex = getFilterItemIndex(id);
             filterData.remove(filteringIndex);
+            changeVisibility(filterData);
             notifyItemRemoved(filteringIndex);
         } else {
+            changeVisibility(data);
             notifyItemRemoved(index);
         }
     }
@@ -146,6 +155,21 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
             tvTime.setText(bindData.getTime());
             tvPetName.setText(getPetName(bindData.getPet_by_pet_lover_id()));
             tvType.setText(setJobText(bindData.getDoctor().getType()));
+            tvType.setCompoundDrawablesWithIntrinsicBounds(getIcon(bindData.getDoctor().getType()), 0, 0, 0);
+
+        }
+
+        private int getIcon(String type) {
+            switch (type) {
+                case "clinic":
+                    return R.drawable.ic_hospital;
+                case "vet":
+                    return R.drawable.ic_hospital;
+                case "other":
+                    return R.drawable.ic_house;
+                default:
+                    return R.string.doctor_clinic_type;
+            }
         }
 
         private int setJobText(String type) {
@@ -199,5 +223,9 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
 
     public interface onClickAdapter {
         void itemClicked(PetLoverAppointmentModel data);
+
+        void emptyList();
+
+        void notEmptyList();
     }
 }
