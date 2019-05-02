@@ -12,12 +12,34 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
+
+
+    signingConfigs {
+        debug {
+            storeFile file('../freddyPro/redvet.keystore')
+            storePassword '12345678'
+            keyAlias 'redVetkey'
+            keyPassword '12345678'
+        }
+        release {
+            storeFile file('../freddyPro/redvet.keystore')
+            storePassword '12345678'
+            keyAlias 'redVetkey'
+            keyPassword '12345678'
+        }
+    }
+
     buildTypes {
         debug{
+            debuggable true
+            minifyEnabled false
             resValue 'string', 'GOOGLE_MAPS_API_KEY', '"AIzaSyCVdzgo5h0sMSyNnFWNUYnQATQynsm5jVE"'
         }
         release {
-            minifyEnabled false
+            signingConfig signingConfigs.release
+            debuggable false
+            minifyEnabled true
+            resValue 'string', 'GOOGLE_MAPS_API_KEY', '"AIzaSyCVdzgo5h0sMSyNnFWNUYnQATQynsm5jVE"'
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
