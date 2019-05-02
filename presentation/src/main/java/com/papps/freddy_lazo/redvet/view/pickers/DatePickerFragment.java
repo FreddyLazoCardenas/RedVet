@@ -23,6 +23,7 @@ public class DatePickerFragment extends BaseDialogFragment {
 
     private BaseActivity activity;
     private BaseFragment fragment;
+    private BaseDialogFragment dialogFragment;
     private Context context;
     private boolean setRangeDate;
 
@@ -41,6 +42,13 @@ public class DatePickerFragment extends BaseDialogFragment {
         return f;
     }
 
+    public static DatePickerFragment newInstance(BaseDialogFragment dialogFragment) {
+        DatePickerFragment f = new DatePickerFragment();
+        f.dialogFragment = dialogFragment;
+        f.context = dialogFragment.getContext();
+        return f;
+    }
+
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -49,16 +57,23 @@ public class DatePickerFragment extends BaseDialogFragment {
         int mMonth = c.get(Calendar.MONTH);
         int mDay = c.get(Calendar.DAY_OF_MONTH);
         // Use the current date as the default date in the picker
-        DatePickerDialog pickerDialog = new DatePickerDialog(context, activity != null ? (DatePickerDialog.OnDateSetListener) activity : (DatePickerDialog.OnDateSetListener) fragment, mYear, mMonth, mDay);
+        DatePickerDialog pickerDialog;
+        if (activity != null) {
+            pickerDialog = new DatePickerDialog(context, (DatePickerDialog.OnDateSetListener) activity, mYear, mMonth, mDay);
+        } else if (fragment != null) {
+            pickerDialog = new DatePickerDialog(context, (DatePickerDialog.OnDateSetListener) fragment, mYear, mMonth, mDay);
+        } else {
+            pickerDialog = new DatePickerDialog(context, (DatePickerDialog.OnDateSetListener) dialogFragment, mYear, mMonth, mDay);
+        }
 
-        if(setRangeDate){
+        if (setRangeDate) {
             setRangeDateMethod(pickerDialog, c);
         }
 
         return pickerDialog;
     }
 
-    private void setRangeDateMethod(DatePickerDialog pickerDialog , Calendar c) {
+    private void setRangeDateMethod(DatePickerDialog pickerDialog, Calendar c) {
         @SuppressLint("SimpleDateFormat") SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         try {
             pickerDialog.getDatePicker().setMinDate(DateHelper.createTimeStamp(dateFormat.format(c.getTime())));

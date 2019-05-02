@@ -2,6 +2,7 @@ package com.papps.freddy_lazo.redvet.view.dialogFragment;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -19,6 +20,7 @@ import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -43,7 +45,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class PetEditDialog extends BaseDialogFragment implements CameraDialog.OnClickListener, PetEditDialogView {
+public class PetEditDialog extends BaseDialogFragment implements CameraDialog.OnClickListener, PetEditDialogView, DatePickerDialog.OnDateSetListener {
 
     @BindView(R.id.pet_name)
     TextView petName;
@@ -146,9 +148,9 @@ public class PetEditDialog extends BaseDialogFragment implements CameraDialog.On
     private void validateData() {
         if (!validatePetName(getPetName()))
             return;
-        if (!validatePetBirthday(getPetName()))
+        if (!validatePetBirthday(getPetBirthday()))
             return;
-        if (!validatePetBreed(getPetName()))
+        if (!validatePetBreed(getPetBreed()))
             return;
         updateMode();
     }
@@ -309,5 +311,15 @@ public class PetEditDialog extends BaseDialogFragment implements CameraDialog.On
     @Override
     public void requestGalleryPermission() {
         requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, PetEditDialogPresenter.PERMISSION_REQUEST_GALLERY_CODE);
+    }
+
+    @Override
+    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+        petBirthday.setText(String.format("%d-%d-%d", year, month + 1, dayOfMonth));
+    }
+
+    @OnClick(R.id.pet_birthday)
+    public void petBirthday() {
+        navigator.navigateToDatePicker(this);
     }
 }

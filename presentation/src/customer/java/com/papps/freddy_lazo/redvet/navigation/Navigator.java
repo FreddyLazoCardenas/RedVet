@@ -214,6 +214,10 @@ public class Navigator extends BaseNavigator {
         DatePickerFragment.newInstance(fragment).show(Objects.requireNonNull(fragment.getFragmentManager()), "datePicker");
     }
 
+    public void navigateToDatePicker(BaseDialogFragment dialogFragment) {
+        DatePickerFragment.newInstance(dialogFragment).show(Objects.requireNonNull(dialogFragment.getFragmentManager()), "datePicker");
+    }
+
     public void navigateToTimePicker(BaseActivity activity) {
         TimePickerFragment.newInstance(activity).show(activity.getSupportFragmentManager(), "timePicker");
     }
