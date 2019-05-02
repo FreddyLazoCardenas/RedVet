@@ -53,7 +53,7 @@ public class DoctorPendingAppointmentPresenter implements Presenter<PendingAppoi
         @Override
         public void onNext(RedVetAppointment redVetAppointment) {
             super.onNext(redVetAppointment);
-            view.showErrorMessage("exitooo");
+            view.showErrorMessage("Éxito");
         }
 
         @Override

@@ -9,9 +9,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        app:cardBackgroundColor="@color/colorPink"
-        app:cardCornerRadius="8dp"
         android:maxWidth="200dp"
+        app:cardBackgroundColor="@color/colorGreen"
+        app:cardCornerRadius="8dp"
         app:cardElevation="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -21,9 +21,9 @@
             android:id="@+id/tv_message"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:maxWidth="200dp"
+            android:layout_gravity="start"
             android:gravity="end"
+            android:maxWidth="200dp"
             android:padding="10dp"
             tools:text="test dun" />
 

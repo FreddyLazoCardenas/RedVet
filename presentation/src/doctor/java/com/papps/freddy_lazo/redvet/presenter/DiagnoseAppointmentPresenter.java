@@ -143,7 +143,7 @@ public class DiagnoseAppointmentPresenter implements Presenter<DiagnoseAppointme
         @Override
         public void onComplete() {
             super.onComplete();
-            view.showErrorMessage("exitooo");
+            view.showErrorMessage("Éxito");
             view.successRequest();
         }
     }

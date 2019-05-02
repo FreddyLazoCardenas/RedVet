@@ -8,6 +8,7 @@
     <string name="doctor_other_type">Otro</string>
     <string name="text_required_field">Campo requerido</string>
     <string name="text_bad_format_field">Mal formato en campo</string>
+    <string name="text_password_bad_format_field">Mínimo 6 caracteres para contraseña</string>
     <string name="text_not_match">Contraseñas no coinciden</string>
     <string name="add_pet_data">Agregar datos de tu mascota</string>
     <string name="add_pets_data">Agregar datos de mascotas</string>

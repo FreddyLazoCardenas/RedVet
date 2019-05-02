@@ -187,7 +187,7 @@ public class ProfileFragmentPresenter implements Presenter<ProfileFragmentView> 
             return false;
         }
         if (repeatPassword.length() < 6) {
-            view.showRepeatPasswordError(view.context().getString(R.string.text_bad_format_field));
+            view.showRepeatPasswordError(view.context().getString(R.string.text_password_bad_format_field));
             return false;
         }
 
@@ -205,7 +205,7 @@ public class ProfileFragmentPresenter implements Presenter<ProfileFragmentView> 
             return false;
         }
         if (password.length() < 6) {
-            view.showPasswordError(view.context().getString(R.string.text_bad_format_field));
+            view.showPasswordError(view.context().getString(R.string.text_password_bad_format_field));
             return false;
         }
         view.hidePasswordError();
@@ -284,7 +284,7 @@ public class ProfileFragmentPresenter implements Presenter<ProfileFragmentView> 
             super.onNext(petLover);
             PetLoverModel petLoverModel = PetLoverModelMapper.transform(petLover);
             preferencesManager.savePetLoverCurrentUser(petLoverModel.toString());
-            view.showErrorMessage("exitooo");
+            view.showErrorMessage("Éxito");
             view.updateView();
         }
 

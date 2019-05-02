@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    >
+    xmlns:tools="http://schemas.android.com/tools">
 
     <application
         android:label="@string/app_doctor_name"
@@ -18,7 +17,9 @@
         <activity android:name="com.papps.freddy_lazo.redvet.view.activity.RegisterActivity" />
         <activity android:name="com.papps.freddy_lazo.redvet.view.activity.MapActivity" />
         <activity android:name="com.papps.freddy_lazo.redvet.view.activity.CancelAppointmentActivity" />
-        <activity android:name="com.papps.freddy_lazo.redvet.view.activity.DiagnoseAppointmentActivity" />
+        <activity
+            android:name="com.papps.freddy_lazo.redvet.view.activity.DiagnoseAppointmentActivity"
+            android:windowSoftInputMode="adjustPan" />
 
     </application>
 </manifest>

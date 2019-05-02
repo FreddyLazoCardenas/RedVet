@@ -70,7 +70,7 @@ public class PetLoverConfirmedAppointmentPresenter implements Presenter<PetLover
         @Override
         public void onNext(RedVetAppointment redVetAppointment) {
             super.onNext(redVetAppointment);
-            view.showErrorMessage("exitooo");
+            view.showErrorMessage("Éxito");
         }
 
         @Override

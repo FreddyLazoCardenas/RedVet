@@ -217,7 +217,7 @@ public class RegisterFragmentPresenter implements Presenter<RegisterFragmentView
             return false;
         }
         if (password.length() < 6) {
-            view.showPasswordError(view.context().getString(R.string.text_bad_format_field));
+            view.showPasswordError(view.context().getString(R.string.text_password_bad_format_field));
             return false;
         }
         view.hidePasswordError();

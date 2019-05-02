@@ -210,7 +210,7 @@ public class ProfileFragmentPresenter implements Presenter<ProfileFragmentView> 
             return false;
         }
         if (password.length() < 6) {
-            view.showPasswordError(view.context().getString(R.string.text_bad_format_field));
+            view.showPasswordError(view.context().getString(R.string.text_password_bad_format_field));
             return false;
         }
         view.hidePasswordError();
@@ -280,7 +280,7 @@ public class ProfileFragmentPresenter implements Presenter<ProfileFragmentView> 
             super.onNext(doctor);
             DoctorModel doctorModel = DoctorModelMapper.transform(doctor);
             preferencesManager.saveDoctorCurrentUser(doctorModel.toString());
-            view.showErrorMessage("exitooo");
+            view.showErrorMessage("Éxito");
             view.updateView();
         }
 

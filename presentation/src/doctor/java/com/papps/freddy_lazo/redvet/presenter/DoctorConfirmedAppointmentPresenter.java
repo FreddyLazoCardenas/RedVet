@@ -73,7 +73,7 @@ public class DoctorConfirmedAppointmentPresenter implements Presenter<ConfirmedA
         @Override
         public void onNext(RedVetAppointment redVetAppointment) {
             super.onNext(redVetAppointment);
-            view.showErrorMessage("exitooo");
+            view.showErrorMessage("Éxito");
         }
 
         @Override

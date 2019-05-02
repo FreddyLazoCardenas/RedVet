@@ -82,7 +82,7 @@ public class PetLoverChatPresenter implements Presenter<ChatActivityView> {
         @Override
         public void onNext(List<RedVetMessage> redVetMessages) {
             super.onNext(redVetMessages);
-            view.showErrorMessage("Exito");
+            view.showErrorMessage("Éxito");
             view.successRequest(RedVetMessageModelMapper.transform(redVetMessages));
         }
 
@@ -114,7 +114,7 @@ public class PetLoverChatPresenter implements Presenter<ChatActivityView> {
         @Override
         public void onNext(RedVetMessage redVetMessage) {
             super.onNext(redVetMessage);
-            view.showErrorMessage("Exito");
+            view.showErrorMessage("Éxito");
             view.successSendMessage(RedVetMessageModelMapper.transform(redVetMessage));
         }
 
