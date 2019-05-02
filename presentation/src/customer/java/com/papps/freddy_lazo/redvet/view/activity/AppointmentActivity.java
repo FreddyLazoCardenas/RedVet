@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -186,6 +187,7 @@ public class AppointmentActivity extends BaseActivity implements DatePickerDialo
 
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+        ivCheck.setVisibility(View.VISIBLE);
         datePicker.setText(String.format("%d-%d-%d", year, month + 1, dayOfMonth));
     }
 
