@@ -55,7 +55,9 @@
                     android:src="@drawable/ic_placeholder"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/img_dismiss" />
+                    app:layout_constraintTop_toBottomOf="@+id/img_dismiss"
+                    app:siBorderColor="@color/colorPink"
+                    app:siBorderWidth="4dp" />
 
                 <TextView
                     android:id="@+id/txt_name"
@@ -135,6 +137,7 @@
                     android:text="Llamar"
                     android:textAllCaps="false"
                     android:textColor="@color/colorGray"
+                    android:visibility="gone"
                     app:layout_constraintEnd_toStartOf="@+id/btn_whatsapp"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintHorizontal_chainStyle="packed"
@@ -151,6 +154,7 @@
                     android:text="Whatsapp"
                     android:textAllCaps="false"
                     android:textColor="@color/colorGray"
+                    android:visibility="gone"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toEndOf="@+id/btn_call"
