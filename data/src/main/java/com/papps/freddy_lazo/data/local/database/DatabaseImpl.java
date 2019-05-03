@@ -27,6 +27,16 @@ public class DatabaseImpl implements Database {
     }
 
     @Override
+    public Observable<Void> deleteSpecificNotification(String id) {
+        return Observable.create(emitter -> {
+            localDatabase.getNotificationDao().deleteSpecificNotification(id);
+            if (!emitter.isDisposed()) {
+                emitter.onComplete();
+            }
+        });
+    }
+
+    @Override
     public Observable<List<NotificationEntity>> getNotifications() {
         return Observable.create(emitter -> {
             List<NotificationTable> stores = localDatabase.getNotificationDao().getAll();

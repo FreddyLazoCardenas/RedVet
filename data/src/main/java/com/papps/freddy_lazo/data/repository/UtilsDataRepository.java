@@ -127,5 +127,8 @@ public class UtilsDataRepository implements UtilsRepository {
         return database.saveNotification(NotificationEntityDataMapper.transform(notification));
     }
 
-
+    @Override
+    public Observable<Void> deleteSpecificNotification(String id) {
+        return database.deleteSpecificNotification(id);
+    }
 }

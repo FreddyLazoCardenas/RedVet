@@ -111,12 +111,12 @@ public class LoginFragmentPresenter implements Presenter<LoginFragmentView> {
         @Override
         public void onError(Throwable e) {
             super.onError(e);
+            view.hideLoading();
             if (e instanceof NullPointerException) {
                 view.showErrorMessage("Error esta cuenta es de petLover");
                 return;
             }
             view.showErrorMessage(e.getMessage());
-            view.hideLoading();
         }
 
         @Override

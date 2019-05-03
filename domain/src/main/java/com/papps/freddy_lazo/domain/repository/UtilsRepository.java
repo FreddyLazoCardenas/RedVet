@@ -49,6 +49,8 @@ public interface UtilsRepository {
 
     Observable<Void> saveNotification(Notification notification);
 
+    Observable<Void> deleteSpecificNotification(String id);
+
 
 
 }

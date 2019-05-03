@@ -32,6 +32,7 @@ import com.papps.freddy_lazo.redvet.view.dialogFragment.DoctorDialog;
 import com.papps.freddy_lazo.redvet.view.dialogFragment.DoctorNotificationConfirmedDialog;
 import com.papps.freddy_lazo.redvet.view.dialogFragment.DoctorNotificationFinishedDialog;
 import com.papps.freddy_lazo.redvet.view.dialogFragment.FinishedAppointmentDialog;
+import com.papps.freddy_lazo.redvet.view.dialogFragment.NotificationsListDialog;
 import com.papps.freddy_lazo.redvet.view.dialogFragment.PendingAppointmentDialog;
 import com.papps.freddy_lazo.redvet.view.dialogFragment.PetEditDialog;
 import com.papps.freddy_lazo.redvet.view.dialogFragment.PetListDialog;
@@ -186,6 +187,10 @@ public class Navigator extends BaseNavigator {
 
     public void showPetListDialog(BaseActivity activity, PetListDialog.OnClickListener listener) {
         dialogTransaction(activity, PetListDialog.newInstance(listener));
+    }
+
+    public void showNotificationsListDialog(BaseActivity activity, NotificationsListDialog.OnClickListener listener) {
+        dialogTransaction(activity, NotificationsListDialog.newInstance(listener));
     }
 
     public void navigateDoctorDetailFragment(BaseActivity activity, String doctor) {

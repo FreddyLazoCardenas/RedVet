@@ -18,6 +18,7 @@ import com.papps.freddy_lazo.redvet.model.NotificationModel;
 import com.papps.freddy_lazo.redvet.presenter.NotificationFragmentPresenter;
 import com.papps.freddy_lazo.redvet.view.activity.HomeActivity;
 import com.papps.freddy_lazo.redvet.view.adapter.NotificationAdapter;
+import com.papps.freddy_lazo.redvet.view.dialogFragment.NotificationsListDialog;
 
 import java.util.List;
 
@@ -25,7 +26,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 
-public class NotificationsFragment extends BaseFragment implements NotificationFragmentView {
+public class NotificationsFragment extends BaseFragment implements NotificationFragmentView ,NotificationAdapter.OnClickAdapter, NotificationsListDialog.OnClickListener {
 
     @Inject
     NotificationFragmentPresenter presenter;
@@ -34,6 +35,7 @@ public class NotificationsFragment extends BaseFragment implements NotificationF
     @BindView(R.id.rv_notifications)
     RecyclerView rvNotifications;
     private HomeActivity activity;
+    private NotificationModel data;
 
     public static Fragment newInstance() {
         return new NotificationsFragment();
@@ -74,6 +76,7 @@ public class NotificationsFragment extends BaseFragment implements NotificationF
     private void setUpRv() {
         rvNotifications.setLayoutManager(new LinearLayoutManager(activity));
         rvNotifications.setAdapter(adapter);
+        adapter.setView(this);
     }
 
     @Override
@@ -100,6 +103,27 @@ public class NotificationsFragment extends BaseFragment implements NotificationF
     @Override
     public void successRequest(List<NotificationModel> data) {
         adapter.bindList(data);
+
+    }
+
+    @Override
+    public void onSuccessComplete() {
+
+    }
+
+    @Override
+    public void dataNotification(NotificationModel data) {
+        this.data = data;
+        navigator.showNotificationsListDialog(activity, this);
+    }
+
+    @Override
+    public void delete() {
+        adapter.deleteNotification(data);
+    }
+
+    @Override
+    public void cancel() {
 
     }
 }

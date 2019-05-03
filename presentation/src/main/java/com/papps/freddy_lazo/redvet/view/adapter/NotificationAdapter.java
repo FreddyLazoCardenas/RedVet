@@ -14,7 +14,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.papps.freddy_lazo.redvet.R;
+import com.papps.freddy_lazo.redvet.model.CreateAppointmentObjectModel;
 import com.papps.freddy_lazo.redvet.model.NotificationModel;
+import com.papps.freddy_lazo.redvet.view.fragment.BaseFragment;
 
 import java.security.Timestamp;
 import java.util.ArrayList;
@@ -26,11 +28,13 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapter.NotificationHolder> {
 
     private List<NotificationModel> data = new ArrayList<>();
     private Context context;
+    private OnClickAdapter listener;
 
     @Inject
     NotificationAdapter() {
@@ -61,6 +65,17 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         }
     }
 
+    public void setView(BaseFragment fragment) {
+        listener = (OnClickAdapter) fragment;
+    }
+
+    public void deleteNotification(NotificationModel data) {
+        int index = this.data.indexOf(data);
+        this.data.remove(index);
+        notifyItemRemoved(index);
+    }
+
+
     class NotificationHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.txt_title)
@@ -75,6 +90,11 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         NotificationHolder(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+        }
+
+        @OnClick
+        void itemClick() {
+            listener.dataNotification(data.get(getAdapterPosition()));
         }
 
         @SuppressLint("StringFormatMatches")
@@ -150,5 +170,9 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
                     return R.drawable.ic_check_not;
             }
         }
+    }
+
+    public interface OnClickAdapter {
+        void dataNotification(NotificationModel data);
     }
 }

@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface NotificationFragmentView extends BaseView {
     void successRequest(List<NotificationModel> transform);
+
+    void onSuccessComplete();
 }

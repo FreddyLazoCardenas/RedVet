@@ -2,6 +2,7 @@ package com.papps.freddy_lazo.redvet.view.adapter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -160,8 +161,10 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
 
     class AppointmentViewHolder extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.txt_date)
-        TextView tvDate;
+        @BindView(R.id.tv_day)
+        TextView tvDay;
+        @BindView(R.id.tv_month)
+        TextView tvMonth;
         @BindView(R.id.txt_time)
         TextView tvTime;
         @BindView(R.id.txt_pet_name)
@@ -175,9 +178,11 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
         }
 
         public void bind(int position) {
+            itemView.setBackgroundColor(ContextCompat.getColor(context, position % 2 == 0 ? R.color.colorWhite : R.color.colorNotificationGray));
             DoctorAppointmentModel bindData = isFiltering ? filterData.get(position) : data.get(position);
             Calendar calendar = convertToDate(bindData.getDate());
-            tvDate.setText(MessageFormat.format("{0}\n{1}", calendar.get(Calendar.DAY_OF_MONTH), getMonthForInt(calendar.get(Calendar.MONTH)).substring(0, 3)));
+            tvDay.setText(String.valueOf(calendar.get(Calendar.DAY_OF_MONTH)));
+            tvMonth.setText(getMonthForInt(calendar.get(Calendar.MONTH)).substring(0, 3));
             tvTime.setText(bindData.getTime());
             tvPetName.setText(bindData.getPet().getName());
             tvType.setText(setJobText(type));

@@ -6,18 +6,35 @@
     android:layout_height="100dp">
 
     <TextView
-        android:id="@+id/txt_date"
+        android:id="@+id/tv_day"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="15dp"
         android:ellipsize="end"
         android:gravity="center"
         android:textColor="@color/colorPink"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/tv_month"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="23\nNOV" />
+        app:layout_constraintVertical_chainStyle="packed"
+        tools:text="23" />
+
+    <TextView
+        android:id="@+id/tv_month"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textAllCaps="true"
+        android:textColor="@color/colorPink"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/tv_day"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@id/tv_day"
+        app:layout_constraintTop_toBottomOf="@+id/tv_day"
+        tools:text="nov" />
 
     <TextView
         android:id="@+id/txt_pet_name"
@@ -26,7 +43,7 @@
         android:layout_marginStart="15dp"
         android:text="Freddy Lazo"
         app:layout_constraintBottom_toTopOf="@+id/txt_place"
-        app:layout_constraintStart_toEndOf="@id/txt_date"
+        app:layout_constraintStart_toEndOf="@id/tv_day"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="packed" />
 

@@ -17,6 +17,9 @@ public interface NotificationDao {
     @Query("DELETE FROM notifications")
     void deleteAll();
 
+    @Query("DELETE FROM notifications WHERE appointment_id =:id")
+    void deleteSpecificNotification(String id);
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(NotificationTable notification);
 

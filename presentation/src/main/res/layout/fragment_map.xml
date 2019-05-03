@@ -23,12 +23,12 @@
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
+            style="@style/Widget.MyApp.Toolbar.Solid"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:minHeight="?attr/actionBarSize"
             android:theme="@style/ThemeOverlay.MyApp.ActionBar"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-            style="@style/Widget.MyApp.Toolbar.Solid" />
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
     </android.support.design.widget.AppBarLayout>
 
     <!--
@@ -89,6 +89,7 @@
         android:id="@+id/rv_types"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/header_view" />
@@ -98,6 +99,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="20dp"
         android:background="@drawable/quote_bg"
         android:drawableEnd="@drawable/ic_arrow"
