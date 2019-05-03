@@ -31,6 +31,7 @@ import com.papps.freddy_lazo.redvet.model.ServiceDoctorModel;
 import com.papps.freddy_lazo.redvet.presenter.AppointmentActivityPresenter;
 import com.papps.freddy_lazo.redvet.view.adapter.AppointmentTypeAdapter;
 import com.papps.freddy_lazo.redvet.view.adapter.PetAdapter;
+import com.papps.freddy_lazo.redvet.view.adapter.PetCustomerAdapter;
 import com.papps.freddy_lazo.redvet.view.adapter.PetLoverPetsAdapter;
 
 
@@ -44,7 +45,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 public class AppointmentActivity extends BaseActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener
-        , AppointmentActivityView, PetAdapter.onClickAdapter {
+        , AppointmentActivityView, PetCustomerAdapter.onClickAdapter {
 
     @BindView(R.id.etDatePicker)
     EditText datePicker;
@@ -71,7 +72,7 @@ public class AppointmentActivity extends BaseActivity implements DatePickerDialo
     @Inject
     PetLoverPetsAdapter petsAdapter;
     @Inject
-    PetAdapter doctorPetAdapter;
+    PetCustomerAdapter doctorPetAdapter;
     @Inject
     PreferencesManager preferencesManager;
     @Inject
