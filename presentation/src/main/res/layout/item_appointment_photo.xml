@@ -5,14 +5,18 @@
     android:layout_height="wrap_content"
     android:layout_margin="10dp">
 
-    <ImageView
+    <com.github.siyamed.shapeimageview.RoundedImageView
         android:id="@+id/iv_photo"
         android:layout_width="60dp"
         android:layout_height="60dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:siBorderColor="@color/colorPink"
+        app:siBorderWidth="5dp"
+        app:siRadius="5dp"
+        app:siSquare="true" />
 
 
 </android.support.constraint.ConstraintLayout>
