@@ -31,6 +31,8 @@ public class DoctorDialog extends BaseDialogFragment {
     TextView job;
     @BindView(R.id.img_register)
     ImageView ivDoctor;
+    @BindView(R.id.txt_content)
+    TextView tvContent;
     @BindView(R.id.rating)
     AppCompatRatingBar ratingBar;
 
@@ -90,6 +92,7 @@ public class DoctorDialog extends BaseDialogFragment {
     private void fillUi() {
         name.setText(MessageFormat.format("{0} {1}", doctorModel.getFirst_name(), doctorModel.getLast_name()));
         job.setText(setJobText());
+        tvContent.setText(doctorModel.getDescription());
         // ratingBar.setRating(doctorModel.get);
         displayPhoto(true);
     }

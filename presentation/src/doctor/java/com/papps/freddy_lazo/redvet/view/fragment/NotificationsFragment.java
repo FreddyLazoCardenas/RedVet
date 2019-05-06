@@ -108,7 +108,7 @@ public class NotificationsFragment extends BaseFragment implements NotificationF
 
     @Override
     public void onSuccessComplete() {
-
+        adapter.deleteNotification(data);
     }
 
     @Override
@@ -119,7 +119,7 @@ public class NotificationsFragment extends BaseFragment implements NotificationF
 
     @Override
     public void delete() {
-        adapter.deleteNotification(data);
+        presenter.deleteNotificationItem(data.getAppointment_id());
     }
 
     @Override

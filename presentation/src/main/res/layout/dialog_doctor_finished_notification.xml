@@ -114,6 +114,15 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tv_rating" />
 
+                <TextView
+                    android:id="@+id/tv_help"
+                    android:text="No te olvides de calificar al doctor"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/rating"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
                 <Button
                     android:id="@+id/btn_send"
                     style="@style/Widget.RetVet.ButtonSecondary"
@@ -125,7 +134,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/rating" />
+                    app:layout_constraintTop_toBottomOf="@+id/tv_help" />
 
 
             </android.support.constraint.ConstraintLayout>
