@@ -30,7 +30,6 @@ import com.papps.freddy_lazo.redvet.model.PetRedVetModel;
 import com.papps.freddy_lazo.redvet.model.ServiceDoctorModel;
 import com.papps.freddy_lazo.redvet.presenter.AppointmentActivityPresenter;
 import com.papps.freddy_lazo.redvet.view.adapter.AppointmentTypeAdapter;
-import com.papps.freddy_lazo.redvet.view.adapter.PetAdapter;
 import com.papps.freddy_lazo.redvet.view.adapter.PetCustomerAdapter;
 import com.papps.freddy_lazo.redvet.view.adapter.PetLoverPetsAdapter;
 
@@ -176,7 +175,7 @@ public class AppointmentActivity extends BaseActivity implements DatePickerDialo
         DaggerAppointmentComponent.builder().applicationComponent(getApplicationComponent()).build().inject(this);
     }
 
-    @OnClick({R.id.tilDatePicker, R.id.etDatePicker})
+    @OnClick({R.id.tilDatePicker, R.id.etDatePicker, R.id.btn_calendar})
     public void datePicker() {
         navigator.navigateToDatePicker(this);
     }
