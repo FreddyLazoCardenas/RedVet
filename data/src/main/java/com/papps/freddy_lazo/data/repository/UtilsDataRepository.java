@@ -128,7 +128,7 @@ public class UtilsDataRepository implements UtilsRepository {
     }
 
     @Override
-    public Observable<Void> deleteSpecificNotification(String id) {
+    public Observable<Void> deleteSpecificNotification(Integer id) {
         return database.deleteSpecificNotification(id);
     }
 }

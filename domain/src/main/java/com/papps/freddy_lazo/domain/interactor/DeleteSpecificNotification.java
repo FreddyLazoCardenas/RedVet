@@ -12,7 +12,7 @@ import io.reactivex.Observable;
 public class DeleteSpecificNotification extends UseCase {
 
     private final UtilsRepository repository;
-    private String id;
+    private Integer id;
 
     @Inject
     DeleteSpecificNotification(ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread, UtilsRepository repository) {
@@ -20,7 +20,7 @@ public class DeleteSpecificNotification extends UseCase {
         this.repository = repository;
     }
 
-    public void bindParams(String id){
+    public void bindParams(Integer id){
         this.id = id;
     }
 

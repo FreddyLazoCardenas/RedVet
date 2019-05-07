@@ -28,7 +28,7 @@ public class NotificationTableDataMapper {
 
     public static NotificationEntity transform(NotificationTable table) {
         if (table == null) return null;
-        return new NotificationEntity(table.getType(),
+        return new NotificationEntity(table.getId(),table.getType(),
                 table.getAppointment_id(),table.getMessage(),table.getTime(),table.isFrom_doctor());
     }
 
