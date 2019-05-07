@@ -208,14 +208,13 @@ public class FinishedAppointmentDialog extends BaseDialogFragment implements App
     private void setUpRv() {
         rvAttach.setLayoutManager(new LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false));
         rvAttach.setAdapter(adapter);
-        adapter.setCanClick(false);
         adapter.setListener(this);
     }
 
     @Override
     public void itemClicked(AppointmentPhotoModel data) {
         photoId = data.getId();
-        navigator.showPhotoListDialog(activity, this);
+        navigator.navigateToPhotoDetailActivity(activity, data.getPhoto_url());
     }
 
     @Override

@@ -57,7 +57,12 @@ public class DoctorEntity {
     private List<ScheduleEntity> schedules;
     @SerializedName("services")
     private List<ServicesDoctorEntity> services;
+    @SerializedName("rate")
+    private Float rate;
 
+    public Float getRate() {
+        return rate;
+    }
 
     public List<PetEntity> getPetEntity() {
         return petEntity;

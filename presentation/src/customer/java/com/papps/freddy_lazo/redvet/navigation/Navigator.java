@@ -22,6 +22,7 @@ import com.papps.freddy_lazo.redvet.view.activity.ChatActivity;
 import com.papps.freddy_lazo.redvet.view.activity.HomeActivity;
 import com.papps.freddy_lazo.redvet.view.activity.LoginActivity;
 import com.papps.freddy_lazo.redvet.view.activity.NewsDetailActivity;
+import com.papps.freddy_lazo.redvet.view.activity.PhotoDetailActivity;
 import com.papps.freddy_lazo.redvet.view.activity.RegisterActivity;
 import com.papps.freddy_lazo.redvet.view.activity.ServicesActivity;
 import com.papps.freddy_lazo.redvet.view.dialogFragment.BaseDialogFragment;
@@ -99,6 +100,10 @@ public class Navigator extends BaseNavigator {
 
     public void navigateToServicesActivity(BaseActivity activity, List<ServiceDoctorModel> data, int requestCode) {
         activity.startActivityForResult(ServicesActivity.getCallingIntent(activity, data), requestCode);
+    }
+
+    public void navigateToPhotoDetailActivity(BaseActivity activity, String url) {
+        activity.startActivity(PhotoDetailActivity.getCallingIntent(activity, url));
     }
 
     //fragments

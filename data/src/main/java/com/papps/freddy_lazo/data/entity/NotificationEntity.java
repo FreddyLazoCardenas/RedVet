@@ -4,6 +4,8 @@ import com.google.gson.annotations.SerializedName;
 
 public class NotificationEntity {
 
+    @SerializedName("id")
+    Integer id;
     @SerializedName("type")
     String type;
     @SerializedName("appointment_id")
@@ -15,7 +17,8 @@ public class NotificationEntity {
     @SerializedName("from_doctor")
     boolean from_doctor;
 
-    public NotificationEntity(String type, String appointment_id, String message, String time, boolean from_doctor) {
+    public NotificationEntity(Integer id, String type, String appointment_id, String message, String time, boolean from_doctor) {
+        this.id = id;
         this.type = type;
         this.appointment_id = appointment_id;
         this.message = message;
@@ -23,6 +26,10 @@ public class NotificationEntity {
         this.from_doctor = from_doctor;
     }
 
+
+    public Integer getId() {
+        return id;
+    }
 
     public boolean isFrom_doctor() {
         return from_doctor;

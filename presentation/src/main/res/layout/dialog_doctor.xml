@@ -91,6 +91,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
+                    android:isIndicator="true"
                     android:rating="5"
                     android:stepSize="1"
                     android:theme="@style/RatingBar"
@@ -119,11 +120,11 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="8dp"
                     android:gravity="center"
-                    tools:text="Contamos con diferentes servicios para asi poder satisfacer las necesidades de tu mascota, cumplir con todas las expectativas"
                     android:textSize="16sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/txt_attendance" />
+                    app:layout_constraintTop_toBottomOf="@+id/txt_attendance"
+                    tools:text="Contamos con diferentes servicios para asi poder satisfacer las necesidades de tu mascota, cumplir con todas las expectativas" />
 
                 <Button
                     android:id="@+id/btn_call"

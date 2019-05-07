@@ -46,11 +46,11 @@ public class FirebaseMessageService extends FirebaseMessagingService {
         }
         String timeStamp = String.valueOf(TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis()));
         SaveNotification saveNotification = mApp.getApplicationComponent().saveNotification();
-        RxBus rxBus= mApp.getApplicationComponent().rxBus();
+        RxBus rxBus = mApp.getApplicationComponent().rxBus();
         saveNotification.bindParams(new Notification(data.get("type"), data.get("appointment_id"), data.get("message"), timeStamp, false));
         saveNotification.execute(new SaveDataObservable());
-
-        rxBus.send(new Event.NotificationEvent(Integer.valueOf(Objects.requireNonNull(data.get("appointment_id")))));
+        if (data.get("appointment_id") != null)
+            rxBus.send(new Event.NotificationEvent(Integer.valueOf((data.get("appointment_id")))));
     }
 
     private class SaveDataObservable extends DefaultObserver<Void> {

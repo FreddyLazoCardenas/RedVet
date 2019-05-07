@@ -4,6 +4,7 @@ import java.util.List;
 
 public class Doctor {
 
+    private Float rate;
     private int user_id;
     private String type_document;
     private String number_document;
@@ -30,8 +31,9 @@ public class Doctor {
     private List<Schedule> scheduleList;
     private List<ServiceDoctor> serviceList;
 
-    public Doctor(int user_id, String type_document, String number_document, String business_name, String address, String latitude, String longitude, String consultation_price,String consultation_time,String shower_price ,String shower_time, String phone, String type, String tuition_number, String description, String attention
+    public Doctor(Float rate ,int user_id, String type_document, String number_document, String business_name, String address, String latitude, String longitude, String consultation_price,String consultation_time,String shower_price ,String shower_time, String phone, String type, String tuition_number, String description, String attention
             , String available, String first_name, String last_name, String email, String photo_url, String api_token, List<Pet> petList ,List<Schedule> scheduleList ,List<ServiceDoctor> serviceList) {
+        this.rate = rate;
         this.user_id = user_id;
         this.type_document = type_document;
         this.number_document = number_document;
@@ -57,6 +59,10 @@ public class Doctor {
         this.petList = petList;
         this.scheduleList = scheduleList;
         this.serviceList = serviceList;
+    }
+
+    public Float getRate() {
+        return rate;
     }
 
     public List<Pet> getPetList() {

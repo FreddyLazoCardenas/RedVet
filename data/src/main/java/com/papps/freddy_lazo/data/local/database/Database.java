@@ -10,7 +10,7 @@ public interface Database {
 
     Observable<Void> saveNotification(NotificationEntity entities);
 
-    Observable<Void> deleteSpecificNotification(String id);
+    Observable<Void> deleteSpecificNotification(Integer id);
 
     Observable<List<NotificationEntity>>  getNotifications();
 }

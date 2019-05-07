@@ -12,6 +12,7 @@ import java.util.List;
 
 public class DoctorModel implements Parcelable {
 
+    private Float rate;
     private int user_id;
     private String type_document;
     private String number_document;
@@ -39,8 +40,9 @@ public class DoctorModel implements Parcelable {
     private List<ServiceDoctorModel> serviceList;
 
 
-    public DoctorModel(int user_id, String type_document, String number_document, String business_name, String address, String latitude, String longitude, String consultation_price, String consultation_time,String shower_price ,String shower_time,String phone, String type, String tuition_number, String description, String attention
+    public DoctorModel(Float rate ,int user_id, String type_document, String number_document, String business_name, String address, String latitude, String longitude, String consultation_price, String consultation_time,String shower_price ,String shower_time,String phone, String type, String tuition_number, String description, String attention
             , String available, String first_name, String last_name, String email, String photo_url, String api_token, List<PetLoverRegisterModel> petList,List<ScheduleModel> scheduleList,List<ServiceDoctorModel> serviceList) {
+        this.rate = rate;
         this.user_id = user_id;
         this.type_document = type_document;
         this.number_document = number_document;
@@ -66,6 +68,11 @@ public class DoctorModel implements Parcelable {
         this.petList = petList;
         this.scheduleList = scheduleList;
         this.serviceList = serviceList;
+    }
+
+
+    public Float getRate() {
+        return rate;
     }
 
     public List<PetLoverRegisterModel> getPetList() {
@@ -273,12 +280,18 @@ public class DoctorModel implements Parcelable {
     }
 
     @Override
+    public String toString() {
+        return new Gson().toJson(this, DoctorModel.class);
+    }
+
+    @Override
     public int describeContents() {
         return 0;
     }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeValue(this.rate);
         dest.writeInt(this.user_id);
         dest.writeString(this.type_document);
         dest.writeString(this.number_document);
@@ -303,10 +316,11 @@ public class DoctorModel implements Parcelable {
         dest.writeString(this.api_token);
         dest.writeList(this.petList);
         dest.writeList(this.scheduleList);
-        dest.writeList(this.serviceList);
+        dest.writeTypedList(this.serviceList);
     }
 
     protected DoctorModel(Parcel in) {
+        this.rate = (Float) in.readValue(Float.class.getClassLoader());
         this.user_id = in.readInt();
         this.type_document = in.readString();
         this.number_document = in.readString();
@@ -329,20 +343,14 @@ public class DoctorModel implements Parcelable {
         this.email = in.readString();
         this.photo_url = in.readString();
         this.api_token = in.readString();
-        this.petList = new ArrayList<>();
-        in.readList(this.petList, PetModel.class.getClassLoader());
-        this.scheduleList = new ArrayList<>();
-        in.readList(this.scheduleList, PetModel.class.getClassLoader());
-        this.serviceList = new ArrayList<>();
-        in.readList(this.serviceList, PetModel.class.getClassLoader());
+        this.petList = new ArrayList<PetLoverRegisterModel>();
+        in.readList(this.petList, PetLoverRegisterModel.class.getClassLoader());
+        this.scheduleList = new ArrayList<ScheduleModel>();
+        in.readList(this.scheduleList, ScheduleModel.class.getClassLoader());
+        this.serviceList = in.createTypedArrayList(ServiceDoctorModel.CREATOR);
     }
 
-    @Override
-    public String toString() {
-        return new Gson().toJson(this, DoctorModel.class);
-    }
-
-    public static final Parcelable.Creator<DoctorModel> CREATOR = new Parcelable.Creator<DoctorModel>() {
+    public static final Creator<DoctorModel> CREATOR = new Creator<DoctorModel>() {
         @Override
         public DoctorModel createFromParcel(Parcel source) {
             return new DoctorModel(source);

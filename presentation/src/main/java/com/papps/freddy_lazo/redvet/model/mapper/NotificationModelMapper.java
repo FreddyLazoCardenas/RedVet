@@ -22,6 +22,6 @@ public class NotificationModelMapper {
     }
 
     private static NotificationModel transform(Notification notification) {
-        return new NotificationModel(notification.getType(),notification.getAppointment_id(),notification.getMessage(),notification.getTime(),notification.isFrom_doctor());
+        return new NotificationModel(notification.getId(), notification.getType(), notification.getAppointment_id(), notification.getMessage(), notification.getTime(), notification.isFrom_doctor());
     }
 }
