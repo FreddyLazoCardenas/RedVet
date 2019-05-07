@@ -38,7 +38,7 @@ public class NotificationFragmentPresenter implements Presenter<NotificationFrag
         getNotificationList.execute(new NotificationsObservable());
     }
 
-    public void deleteNotificationItem(String id) {
+    public void deleteNotificationItem(Integer id) {
         deleteSpecificNotification.bindParams(id);
         deleteSpecificNotification.execute(new DeleteNotificationObservable());
     }

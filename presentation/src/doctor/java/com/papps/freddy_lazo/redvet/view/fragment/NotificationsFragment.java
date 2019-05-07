@@ -119,7 +119,7 @@ public class NotificationsFragment extends BaseFragment implements NotificationF
 
     @Override
     public void delete() {
-        presenter.deleteNotificationItem(data.getAppointment_id());
+        presenter.deleteNotificationItem(data.getId());
     }
 
     @Override
