@@ -80,7 +80,8 @@ public class NetworkModule {
     @Singleton
     RestService provideRestService(OkHttpClient.Builder httpClientBuilder) {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://redvet.ctrl.pe/api/v1/")
+                //.baseUrl("https://redvet.ctrl.pe/api/v1/")
+                .baseUrl("https://admin.redvet.pe/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(httpClientBuilder.build())
                 .build();
