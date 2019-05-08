@@ -223,9 +223,8 @@
                 android:id="@+id/start_group"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawableStart="@drawable/ic_time"
+                android:drawableStart="@drawable/ic_pink_time"
                 android:drawablePadding="10dp"
-                android:drawableTint="@color/colorPink"
                 android:gravity="center"
                 android:text="Hora"
                 android:textColor="@color/colorPink"
@@ -235,7 +234,7 @@
                 app:layout_constraintEnd_toStartOf="@id/center_guideline"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:targetApi="m" />
+                />
 
             <android.support.constraint.ConstraintLayout
                 android:id="@+id/end_group"

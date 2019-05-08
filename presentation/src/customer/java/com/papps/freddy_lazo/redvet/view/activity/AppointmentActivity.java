@@ -82,6 +82,8 @@ public class AppointmentActivity extends BaseActivity implements DatePickerDialo
     ImageView ivCheck;
     @BindView(R.id.iv_check_footer)
     ImageView ivCheckFooter;
+    @BindView(R.id.txt_content)
+    TextView tvDescription;
 
     private DoctorModel doctorModel;
     private PetLoverModel petLoverModel;
@@ -125,6 +127,7 @@ public class AppointmentActivity extends BaseActivity implements DatePickerDialo
         presenter.setView(this);
         timeData = "15:00:00";
         tvName.setText(MessageFormat.format("{0} {1}", doctorModel.getFirst_name(), doctorModel.getLast_name()));
+        tvDescription.setText(doctorModel.getDescription());
         initRv();
         presenter.getPets();
     }

@@ -122,7 +122,7 @@ public class FinishedAppointmentDialog extends BaseDialogFragment implements App
         date.setText(getString(R.string.doctor_date, split[2], split[1], split[0].substring(2)));
         time.setText(model.getTime());
         Calendar calendar = DateHelper.convertToDate(pet.getBirthday());
-        tvPetBirthday.setText(MessageFormat.format("{0} {1} {2}", calendar.get(Calendar.DAY_OF_MONTH), DateHelper.getMonthForInt(calendar.get(Calendar.MONTH)).substring(0, 3), calendar.get(Calendar.YEAR)));
+        tvPetBirthday.setText(MessageFormat.format("{0} {1} {2}", calendar.get(Calendar.DAY_OF_MONTH), DateHelper.getMonthForInt(calendar.get(Calendar.MONTH)).substring(0, 3), calendar.get(Calendar.YEAR)).replaceAll(",",""));
         address.setText(model.getDoctor().getAddress());
         tvDoctorName.setText(MessageFormat.format("{0} {1}", model.getDoctor().getFirst_name(), model.getDoctor().getLast_name()));
         tvDni.setText(model.getDoctor().getNumber_document());
