@@ -55,6 +55,8 @@ import com.papps.freddy_lazo.redvet.view.dialogFragment.CameraDialog;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
+import org.w3c.dom.Text;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.util.ArrayList;
@@ -111,6 +113,8 @@ public class ProfileFragment extends BaseFragment implements CameraDialog.OnClic
     Spinner typeSpinner;
     @BindView(R.id.til_name)
     TextInputLayout tilName;
+    @BindView(R.id.attendance_counter)
+    TextView tvAttentions;
     @BindView(R.id.til_last_name)
     TextInputLayout tilLastName;
     @BindView(R.id.toggle)
@@ -293,6 +297,7 @@ public class ProfileFragment extends BaseFragment implements CameraDialog.OnClic
     private void fillUi() {
         latitude = Double.valueOf(doctorModel.getLatitude());
         longitude = Double.valueOf(doctorModel.getLongitude());
+        tvAttentions.setText(getString(R.string.petLover_attendances, doctorModel.getAttentions()));
         String typeDocument = doctorModel.getType_document();
         toggle.check(typeDocument.equals("dni") ? R.id.dni : R.id.ruc);
         etName.setText(doctorModel.getFirst_name());

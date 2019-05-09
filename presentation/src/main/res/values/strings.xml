@@ -42,4 +42,6 @@
     <string name="doctor_available">Doctor activado</string>
     <string name="red_vet_email_verified">Email verificado</string>
     <string name="pet_breed">Raza : %s</string>
+    <string name="doctor_attendances">%d atendidos</string>
+    <string name="petLover_attendances">%d atenciones</string>
 </resources>

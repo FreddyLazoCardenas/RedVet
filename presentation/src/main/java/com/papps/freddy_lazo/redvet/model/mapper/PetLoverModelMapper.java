@@ -9,6 +9,6 @@ public class PetLoverModelMapper {
     }
 
     public static PetLoverModel transform(PetLover petLover) {
-        return new PetLoverModel(petLover.getUser_id(),petLover.getDni(),petLover.getAddress(),petLover.getPhone(),petLover.getFirst_name(),petLover.getLast_name(),petLover.getPhoto_url(),petLover.getEmail(),petLover.getApi_token(),PetModelMapper.transform(petLover.getPetList()));
+        return new PetLoverModel(petLover.getAttentions(), petLover.getUser_id(), petLover.getDni(), petLover.getAddress(), petLover.getPhone(), petLover.getFirst_name(), petLover.getLast_name(), petLover.getPhoto_url(), petLover.getEmail(), petLover.getApi_token(), PetModelMapper.transform(petLover.getPetList()));
     }
 }

@@ -14,6 +14,7 @@ public class DoctorModel implements Parcelable {
 
     private Float rate;
     private int user_id;
+    private int attentions;
     private String type_document;
     private String number_document;
     private String business_name;
@@ -40,10 +41,11 @@ public class DoctorModel implements Parcelable {
     private List<ServiceDoctorModel> serviceList;
 
 
-    public DoctorModel(Float rate ,int user_id, String type_document, String number_document, String business_name, String address, String latitude, String longitude, String consultation_price, String consultation_time,String shower_price ,String shower_time,String phone, String type, String tuition_number, String description, String attention
+    public DoctorModel(int attentions ,Float rate ,int user_id, String type_document, String number_document, String business_name, String address, String latitude, String longitude, String consultation_price, String consultation_time,String shower_price ,String shower_time,String phone, String type, String tuition_number, String description, String attention
             , String available, String first_name, String last_name, String email, String photo_url, String api_token, List<PetLoverRegisterModel> petList,List<ScheduleModel> scheduleList,List<ServiceDoctorModel> serviceList) {
         this.rate = rate;
         this.user_id = user_id;
+        this.attentions = attentions;
         this.type_document = type_document;
         this.number_document = number_document;
         this.business_name = business_name;
@@ -70,6 +72,9 @@ public class DoctorModel implements Parcelable {
         this.serviceList = serviceList;
     }
 
+    public int getAttentions() {
+        return attentions;
+    }
 
     public Float getRate() {
         return rate;
@@ -293,6 +298,7 @@ public class DoctorModel implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeValue(this.rate);
         dest.writeInt(this.user_id);
+        dest.writeInt(this.attentions);
         dest.writeString(this.type_document);
         dest.writeString(this.number_document);
         dest.writeString(this.business_name);
@@ -322,6 +328,7 @@ public class DoctorModel implements Parcelable {
     protected DoctorModel(Parcel in) {
         this.rate = (Float) in.readValue(Float.class.getClassLoader());
         this.user_id = in.readInt();
+        this.attentions = in.readInt();
         this.type_document = in.readString();
         this.number_document = in.readString();
         this.business_name = in.readString();

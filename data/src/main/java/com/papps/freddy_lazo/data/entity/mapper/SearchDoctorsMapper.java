@@ -24,7 +24,7 @@ public class SearchDoctorsMapper {
     }
 
     public static Doctor transform(DoctorEntity entity) {
-        return new Doctor(entity.getRate(), entity.getUser_id(), entity.getType_document(), entity.getNumber_document(), entity.getBusiness_name(), entity.getAddress(), entity.getLatitude(), entity.getLongitude(), entity.getConsultation_price(), entity.getConsultation_time(), entity.getShower_price(), entity.getShower_time(), entity.getPhone(), entity.getType(), entity.getTuition_number()
+        return new Doctor(entity.getAttentions(), entity.getRate(), entity.getUser_id(), entity.getType_document(), entity.getNumber_document(), entity.getBusiness_name(), entity.getAddress(), entity.getLatitude(), entity.getLongitude(), entity.getConsultation_price(), entity.getConsultation_time(), entity.getShower_price(), entity.getShower_time(), entity.getPhone(), entity.getType(), entity.getTuition_number()
                 , entity.getDescription(), entity.getAttention(), entity.getAvailable(), entity.getFirst_name(), entity.getLast_name(), entity.getEmail(), entity.getPhoto_url(), entity.getApi_token(), PetMapper.transform(entity.getPetEntity()), ScheduleMapper.transform(entity.getSchedules()), ServiceDoctorMapper.transform(entity.getServices()));
     }
 }

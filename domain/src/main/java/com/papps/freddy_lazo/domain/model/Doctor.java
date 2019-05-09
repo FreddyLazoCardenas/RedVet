@@ -6,6 +6,7 @@ public class Doctor {
 
     private Float rate;
     private int user_id;
+    private int attentions;
     private String type_document;
     private String number_document;
     private String business_name;
@@ -31,10 +32,11 @@ public class Doctor {
     private List<Schedule> scheduleList;
     private List<ServiceDoctor> serviceList;
 
-    public Doctor(Float rate ,int user_id, String type_document, String number_document, String business_name, String address, String latitude, String longitude, String consultation_price,String consultation_time,String shower_price ,String shower_time, String phone, String type, String tuition_number, String description, String attention
+    public Doctor(Integer attentions , Float rate ,int user_id, String type_document, String number_document, String business_name, String address, String latitude, String longitude, String consultation_price,String consultation_time,String shower_price ,String shower_time, String phone, String type, String tuition_number, String description, String attention
             , String available, String first_name, String last_name, String email, String photo_url, String api_token, List<Pet> petList ,List<Schedule> scheduleList ,List<ServiceDoctor> serviceList) {
         this.rate = rate;
         this.user_id = user_id;
+        this.attentions = attentions;
         this.type_document = type_document;
         this.number_document = number_document;
         this.business_name = business_name;
@@ -59,6 +61,10 @@ public class Doctor {
         this.petList = petList;
         this.scheduleList = scheduleList;
         this.serviceList = serviceList;
+    }
+
+    public int getAttentions() {
+        return attentions;
     }
 
     public Float getRate() {

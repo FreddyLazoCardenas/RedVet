@@ -85,6 +85,8 @@ public class AppointmentActivity extends BaseActivity implements DatePickerDialo
     ImageView ivCheckFooter;
     @BindView(R.id.txt_content)
     TextView tvDescription;
+    @BindView(R.id.txt_attendance)
+    TextView tvAttentions;
     @BindView(R.id.rating)
     AppCompatRatingBar ratingBar;
 
@@ -131,6 +133,7 @@ public class AppointmentActivity extends BaseActivity implements DatePickerDialo
         timeData = "15:00:00";
         tvName.setText(MessageFormat.format("{0} {1}", doctorModel.getFirst_name(), doctorModel.getLast_name()));
         tvDescription.setText(doctorModel.getDescription());
+        tvAttentions.setText(getString(R.string.doctor_attendances, doctorModel.getAttentions()));
         ratingBar.setRating(doctorModel.getRate() != null ? doctorModel.getRate() : 5);
         initRv();
         presenter.getPets();

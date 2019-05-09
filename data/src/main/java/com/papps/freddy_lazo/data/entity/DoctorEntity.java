@@ -59,6 +59,13 @@ public class DoctorEntity {
     private List<ServicesDoctorEntity> services;
     @SerializedName("rate")
     private Float rate;
+    @SerializedName("attentions")
+    private Integer attentions;
+
+
+    public Integer getAttentions() {
+        return attentions;
+    }
 
     public Float getRate() {
         return rate;

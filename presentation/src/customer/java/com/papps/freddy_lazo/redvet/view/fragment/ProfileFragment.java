@@ -24,6 +24,7 @@ import android.view.ViewGroup;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.firebase.iid.FirebaseInstanceId;
@@ -57,7 +58,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class ProfileFragment extends BaseFragment implements CameraDialog.OnClickListener, ProfileFragmentView,  DatePickerDialog.OnDateSetListener,
+public class ProfileFragment extends BaseFragment implements CameraDialog.OnClickListener, ProfileFragmentView, DatePickerDialog.OnDateSetListener,
         PetProfileAdapter.onClickAdapter, PetListDialog.OnClickListener, PetEditDialog.PetEditInterface, AddPetAdapter.onClickAdapter {
 
 
@@ -103,6 +104,8 @@ public class ProfileFragment extends BaseFragment implements CameraDialog.OnClic
     ImageView imgProfile;
     @BindView(R.id.img_add)
     ImageView imgPet;
+    @BindView(R.id.attendance_counter)
+    TextView tvAttendance;
 
     @BindView(R.id.til_name)
     TextInputLayout tilName;
@@ -155,6 +158,7 @@ public class ProfileFragment extends BaseFragment implements CameraDialog.OnClic
 
     private void fillUi() {
         etName.setText(petLoverModel.getFirst_name());
+        tvAttendance.setText(getString(R.string.petLover_attendances, petLoverModel.getAttentions()));
         etLastName.setText(petLoverModel.getLast_name());
         etDni.setText(petLoverModel.getDni());
         etAddress.setText(petLoverModel.getAddress());

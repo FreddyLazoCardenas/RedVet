@@ -12,6 +12,7 @@ import java.util.List;
 public class PetLoverModel implements Parcelable {
 
     private int user_id;
+    private int attentions;
     private String dni;
     private String address;
     private String phone;
@@ -22,8 +23,9 @@ public class PetLoverModel implements Parcelable {
     private String api_token;
     private List<PetLoverRegisterModel> petList;
 
-    public PetLoverModel(int user_id, String dni, String address, String phone, String first_name, String last_name, String photo_url, String email, String api_token, List<PetLoverRegisterModel> petList) {
+    public PetLoverModel(int attentions, int user_id, String dni, String address, String phone, String first_name, String last_name, String photo_url, String email, String api_token, List<PetLoverRegisterModel> petList) {
         this.user_id = user_id;
+        this.attentions = attentions;
         this.dni = dni;
         this.address = address;
         this.phone = phone;
@@ -33,6 +35,14 @@ public class PetLoverModel implements Parcelable {
         this.email = email;
         this.api_token = api_token;
         this.petList = petList;
+    }
+
+    public int getAttentions() {
+        return attentions;
+    }
+
+    public void setAttentions(int attentions) {
+        this.attentions = attentions;
     }
 
     public int getUser_id() {
@@ -120,6 +130,11 @@ public class PetLoverModel implements Parcelable {
     }
 
     @Override
+    public String toString() {
+        return new Gson().toJson(this, PetLoverModel.class);
+    }
+
+    @Override
     public int describeContents() {
         return 0;
     }
@@ -127,6 +142,7 @@ public class PetLoverModel implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(this.user_id);
+        dest.writeInt(this.attentions);
         dest.writeString(this.dni);
         dest.writeString(this.address);
         dest.writeString(this.phone);
@@ -140,6 +156,7 @@ public class PetLoverModel implements Parcelable {
 
     protected PetLoverModel(Parcel in) {
         this.user_id = in.readInt();
+        this.attentions = in.readInt();
         this.dni = in.readString();
         this.address = in.readString();
         this.phone = in.readString();
@@ -149,15 +166,10 @@ public class PetLoverModel implements Parcelable {
         this.email = in.readString();
         this.api_token = in.readString();
         this.petList = new ArrayList<PetLoverRegisterModel>();
-        in.readList(this.petList, PetModel.class.getClassLoader());
+        in.readList(this.petList, PetLoverRegisterModel.class.getClassLoader());
     }
 
-    @Override
-    public String toString() {
-        return new Gson().toJson(this, PetLoverModel.class);
-    }
-
-    public static final Parcelable.Creator<PetLoverModel> CREATOR = new Parcelable.Creator<PetLoverModel>() {
+    public static final Creator<PetLoverModel> CREATOR = new Creator<PetLoverModel>() {
         @Override
         public PetLoverModel createFromParcel(Parcel source) {
             return new PetLoverModel(source);

@@ -24,8 +24,14 @@ public class PetLoverEntity {
     private String photo_url;
     @SerializedName("api_token")
     private String api_token;
+    @SerializedName("attentions")
+    private Integer attentions;
     @SerializedName("pets")
     private List<PetEntity> petEntity;
+
+    public Integer getAttentions() {
+        return attentions;
+    }
 
     public int getUser_id() {
         return user_id;

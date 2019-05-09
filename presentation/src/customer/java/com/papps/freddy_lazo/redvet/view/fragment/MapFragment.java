@@ -161,7 +161,7 @@ public class MapFragment extends BaseFragment implements OnMapReadyCallback, Map
                     if (location != null) {
                         position = new LatLng(location.getLatitude(), location.getLongitude());
                         googleMap.addMarker(new MarkerOptions().position(position)
-                                .icon(bitmapDescriptorFromVector(activity, R.drawable.ic_person_marker)));
+                                .icon(bitmapDescriptorFromVector(activity, R.drawable.ic_location_marker)));
                         btnLocation();
                         // Logic to handle location object
                     }
@@ -343,11 +343,11 @@ public class MapFragment extends BaseFragment implements OnMapReadyCallback, Map
     private int getIcon(String type) {
         switch (type) {
             case "clinic":
-                return R.drawable.ic_hospital;
+                return R.drawable.ic_marker_clinic;
             case "vet":
                 return R.drawable.ic_doctor_marker;
             case "other":
-                return R.drawable.ic_house;
+                return R.drawable.ic_marker_other;
             default:
                 return R.drawable.ic_doctor_marker;
         }

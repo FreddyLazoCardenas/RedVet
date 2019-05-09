@@ -5,6 +5,7 @@ import java.util.List;
 public class PetLover {
 
     private int user_id;
+    private int attentions;
     private String dni;
     private String address;
     private String phone;
@@ -15,9 +16,10 @@ public class PetLover {
     private String api_token;
     private List<Pet> petList;
 
-    public PetLover(int user_id, String dni, String address, String phone, String first_name, String last_name, String photo_url, String email, String api_token, List<Pet> petList) {
+    public PetLover(int attentions ,int user_id, String dni, String address, String phone, String first_name, String last_name, String photo_url, String email, String api_token, List<Pet> petList) {
         this.user_id = user_id;
         this.dni = dni;
+        this.attentions = attentions;
         this.address = address;
         this.phone = phone;
         this.first_name = first_name;
@@ -26,6 +28,10 @@ public class PetLover {
         this.email = email;
         this.api_token = api_token;
         this.petList = petList;
+    }
+
+    public int getAttentions() {
+        return attentions;
     }
 
     public int getUser_id() {

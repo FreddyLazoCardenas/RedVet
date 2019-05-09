@@ -12,7 +12,7 @@ public class PetLoverLoginMapper {
         if (entity == null) {
             return null;
         }
-        return new PetLover(entity.getUser_id(), entity.getDni(), entity.getAddress(),
+        return new PetLover(entity.getAttentions(), entity.getUser_id(), entity.getDni(), entity.getAddress(),
                 entity.getPhone(), entity.getFirst_name(), entity.getLast_name(), entity.getPhoto_url(), entity.getEmail(), entity.getApi_token(), PetMapper.transform(entity.getPetEntity()));
     }
 }
