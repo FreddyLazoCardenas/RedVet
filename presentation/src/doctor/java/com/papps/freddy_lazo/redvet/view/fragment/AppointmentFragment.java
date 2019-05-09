@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.papps.freddy_lazo.redvet.R;
 import com.papps.freddy_lazo.redvet.interfaces.AppointmentFragmentView;
@@ -43,6 +44,8 @@ public class AppointmentFragment extends BaseFragment implements AppointmentFrag
     RecyclerView rvAppointments;
     @BindView(R.id.rv_header)
     RecyclerView rvHeader;
+    @BindView(R.id.tv_empty_list)
+    TextView tvEmptyView;
     @Inject
     AppointmentFragmentPresenter presenter;
     @Inject
@@ -187,6 +190,18 @@ public class AppointmentFragment extends BaseFragment implements AppointmentFrag
                 break;
 
         }
+    }
+
+    @Override
+    public void emptyList() {
+        tvEmptyView.setVisibility(View.VISIBLE);
+        rvAppointments.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void notEmptyList() {
+        tvEmptyView.setVisibility(View.GONE);
+        rvAppointments.setVisibility(View.VISIBLE);
     }
 
     @Override

@@ -46,7 +46,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:padding="5dp"
-            android:text="Cerrar Sesion"
+            android:text="Cerrar Sesión"
             app:layout_constraintBottom_toBottomOf="@+id/img_profile"
             app:layout_constraintEnd_toEndOf="@id/txt_profile"
             app:layout_constraintHorizontal_bias="0.5"

@@ -68,7 +68,16 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
     public void bindList(List<DoctorAppointmentModel> data) {
         if (data != null)
             this.data = data;
+        changeVisibility(data);
         notifyDataSetChanged();
+    }
+
+    private void changeVisibility(List<DoctorAppointmentModel> data) {
+        if (data != null && data.isEmpty()) {
+            listener.emptyList();
+        } else {
+            listener.notEmptyList();
+        }
     }
 
     public void setFiltering(boolean isFiltering) {
@@ -86,6 +95,7 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
                 filterData.add(model);
             }
         }
+        changeVisibility(filterData);
         notifyDataSetChanged();
     }
 
@@ -99,8 +109,10 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
         if (isFiltering) {
             int filteringIndex = getFilterItemIndex(id);
             filterData.remove(filteringIndex);
+            changeVisibility(filterData);
             notifyItemRemoved(filteringIndex);
         } else {
+            changeVisibility(data);
             notifyItemRemoved(index);
         }
     }
@@ -231,5 +243,9 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
 
     public interface onClickAdapter {
         void itemClicked(DoctorAppointmentModel data);
+
+        void emptyList();
+
+        void notEmptyList();
     }
 }

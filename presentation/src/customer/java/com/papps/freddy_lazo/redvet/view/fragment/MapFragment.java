@@ -336,7 +336,20 @@ public class MapFragment extends BaseFragment implements OnMapReadyCallback, Map
 
     private void addDoctorMarker(LatLng latLng, DoctorModel doctorModel) {
         if (googleMap != null) {
-            googleMap.addMarker(new MarkerOptions().position(latLng).icon(bitmapDescriptorFromVector(activity, R.drawable.ic_doctor_marker))).setTag(doctorModel);
+            googleMap.addMarker(new MarkerOptions().position(latLng).icon(bitmapDescriptorFromVector(activity, getIcon(doctorModel.getType())))).setTag(doctorModel);
+        }
+    }
+
+    private int getIcon(String type) {
+        switch (type) {
+            case "clinic":
+                return R.drawable.ic_hospital;
+            case "vet":
+                return R.drawable.ic_doctor_marker;
+            case "other":
+                return R.drawable.ic_house;
+            default:
+                return R.drawable.ic_doctor_marker;
         }
     }
 

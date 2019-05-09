@@ -173,7 +173,7 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
                 case "other":
                     return R.drawable.ic_house;
                 default:
-                    return R.string.doctor_clinic_type;
+                    return R.drawable.ic_hospital;
             }
         }
 
