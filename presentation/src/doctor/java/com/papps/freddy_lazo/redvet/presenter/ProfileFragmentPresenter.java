@@ -133,8 +133,8 @@ public class ProfileFragmentPresenter implements Presenter<ProfileFragmentView> 
             return;
         if (!isValidPhone(view.getPhone()))
             return;
-        if (!isValidPassword(view.getPassword()))
-            return;
+        /*if (!isValidPassword(view.getPassword()))
+            return;*/
         if (!validatePetModelData())
             return;
         doctorUpdate.bindParams(view.getApiToken(), view.getEmail(), view.getPassword(), view.getName(), view.getLastName(), view.getTypeDocument(), view.getNumber(), view.getBusinessName(), view.getAddress(), view.getLatitude(),

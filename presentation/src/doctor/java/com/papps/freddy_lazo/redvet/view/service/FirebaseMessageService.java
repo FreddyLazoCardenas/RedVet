@@ -50,7 +50,8 @@ public class FirebaseMessageService extends FirebaseMessagingService {
         saveNotification.bindParams(new Notification(data.get("type"), data.get("appointment_id"), data.get("message"), timeStamp, true));
         saveNotification.execute(new SaveDataObservable());
 
-        rxBus.send(new Event.NotificationEvent(Integer.valueOf(Objects.requireNonNull(data.get("appointment_id")))));
+        if (data.get("appointment_id") != null)
+        rxBus.send(new Event.NotificationEvent(Integer.valueOf(data.get("appointment_id"))));
 
     }
 

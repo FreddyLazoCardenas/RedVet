@@ -900,7 +900,7 @@ public class ProfileFragment extends BaseFragment implements CameraDialog.OnClic
     @Override
     public void itemClicked(ScheduleRegisterModel data) {
         currentSchedule = data;
-        ivScheduleCheck.setImageResource(data.isCheck() ? R.drawable.ic_check_pink : R.drawable.ic_check_gray);
+        ivScheduleCheck.setImageResource(data.isCheck() ? R.drawable.ic_check_green : R.drawable.ic_check_gray);
         if (data.getStartHour() != null) {
             String[] text = data.getStartHour().split(":");
             startHour.setText(text[0]);

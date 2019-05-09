@@ -127,7 +127,7 @@ public class DiagnoseAppointmentActivity extends BaseActivity implements Diagnos
         displayPhoto(model.getPet().getPhoto_url(), false);
         petName.setText(model.getPet().getName());
         Calendar calendar = DateHelper.convertToDate(model.getPet().getBirthday());
-        petBirthday.setText(MessageFormat.format("{0} {1} {2}", calendar.get(Calendar.DAY_OF_MONTH), DateHelper.getMonthForInt(calendar.get(Calendar.MONTH)).substring(0, 3), calendar.get(Calendar.YEAR)));
+        petBirthday.setText(MessageFormat.format("{0} {1} {2}", calendar.get(Calendar.DAY_OF_MONTH), DateHelper.getMonthForInt(calendar.get(Calendar.MONTH)).substring(0, 3), calendar.get(Calendar.YEAR)).replaceAll(",",""));
         Calendar calendar1 = DateHelper.convertToDate(model.getDate());
         appointmentDate.setText(MessageFormat.format("{0} {1}", calendar1.get(Calendar.DAY_OF_MONTH), DateHelper.getMonthForInt(calendar1.get(Calendar.MONTH)).substring(0, 3)));
         appointmentTime.setText(model.getTime());
@@ -265,7 +265,7 @@ public class DiagnoseAppointmentActivity extends BaseActivity implements Diagnos
         if (adapter.getItemCount() < 5)
             navigator.showListDialog(this, this);
         else
-            showErrorMessage("Máximop número de fotos alcanzado");
+            showErrorMessage("Máximo número de fotos alcanzado");
     }
 
     @Override
