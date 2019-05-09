@@ -9,9 +9,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
+        android:maxWidth="200dp"
         app:cardBackgroundColor="@color/colorPink"
         app:cardCornerRadius="8dp"
-        android:maxWidth="200dp"
         app:cardElevation="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -22,9 +22,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
-            android:maxWidth="200dp"
             android:gravity="end"
+            android:maxWidth="200dp"
             android:padding="10dp"
+            android:textColor="@color/colorWhite"
             tools:text="test dun" />
 
 

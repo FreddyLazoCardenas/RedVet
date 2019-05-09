@@ -271,6 +271,7 @@
 
 
         <TextView
+            android:textColor="@color/colorPink"
             android:id="@+id/txt_add_pet_title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

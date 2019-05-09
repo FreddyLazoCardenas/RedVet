@@ -93,7 +93,7 @@ public class DoctorDialog extends BaseDialogFragment {
         name.setText(MessageFormat.format("{0} {1}", doctorModel.getFirst_name(), doctorModel.getLast_name()));
         job.setText(setJobText());
         tvContent.setText(doctorModel.getDescription());
-        ratingBar.setRating(doctorModel.getRate());
+        ratingBar.setRating(doctorModel.getRate() != null ? doctorModel.getRate() : 5);
         displayPhoto(true);
     }
 

@@ -122,7 +122,7 @@ public class PetProfileAdapter extends RecyclerView.Adapter<PetProfileAdapter.Pe
         void bind(int position) {
             tvPetName.setText(data.get(position).getName());
             Calendar calendar = DateHelper.convertToDate(data.get(position).getBirthday());
-            tvPetBirthday.setText(MessageFormat.format("{0} {1} {2}", calendar.get(Calendar.DAY_OF_MONTH), DateHelper.getMonthForInt(calendar.get(Calendar.MONTH)).substring(0, 3), calendar.get(Calendar.YEAR)));
+            tvPetBirthday.setText(MessageFormat.format("{0} {1} {2}", calendar.get(Calendar.DAY_OF_MONTH), DateHelper.getMonthForInt(calendar.get(Calendar.MONTH)).substring(0, 3), calendar.get(Calendar.YEAR)).replaceAll(",",""));
             tvBreed.setText(context.getString(R.string.pet_breed, data.get(position).getBreed()));
             loadImage(data.get(position).getPhoto_url());
         }

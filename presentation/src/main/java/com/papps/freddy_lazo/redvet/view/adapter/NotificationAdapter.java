@@ -105,7 +105,9 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
             Long tsLong = System.currentTimeMillis() / 1000;
             Long notTime = Long.valueOf(data.get(position).getTime());
             long test = (tsLong - notTime) / 3600;
-            if (test < 24) {
+            if (test < 1) {
+                tvTime.setText(context.getString(R.string.notification_time, test * 60, test * 60 == 1 ? "minuto" : "minutos"));
+            } else if (test < 24) {
                 tvTime.setText(context.getString(R.string.notification_time, test, test > 1 ? "horas" : "hora"));
             } else {
                 tvTime.setText(context.getString(R.string.notification_time, test / 24, (test / 24) > 1 ? "dias" : "dia"));
