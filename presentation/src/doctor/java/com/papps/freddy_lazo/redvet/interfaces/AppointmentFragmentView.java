@@ -10,4 +10,6 @@ public interface AppointmentFragmentView extends LoadingView {
     String getApiToken();
 
     void successRequest(List<DoctorAppointmentModel> data);
+
+    void successFinishRequest(int id);
 }

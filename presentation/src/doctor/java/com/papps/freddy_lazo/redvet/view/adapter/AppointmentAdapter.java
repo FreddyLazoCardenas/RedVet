@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,6 +33,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnLongClick;
 
 public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.AppointmentViewHolder> {
 
@@ -114,6 +116,15 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
         } else {
             changeVisibility(data);
             notifyItemRemoved(index);
+        }
+    }
+
+    public void removeFinishedAppointment(int id) {
+        if (isFiltering) {
+            int filteringIndex = getFilterItemIndex(id);
+            filterData.remove(filteringIndex);
+            changeVisibility(filterData);
+            notifyItemRemoved(filteringIndex);
         }
     }
 
@@ -234,6 +245,11 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
             return month;
         }
 
+        @OnLongClick
+        boolean itemLongClick(){
+            listener.itemLongClicked(isFiltering ? filterData.get(getAdapterPosition()) : data.get(getAdapterPosition()));
+            return true;
+        }
 
         @OnClick
         void itemClicked() {
@@ -247,5 +263,7 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
         void emptyList();
 
         void notEmptyList();
+
+        void itemLongClicked(DoctorAppointmentModel doctorAppointmentModel);
     }
 }

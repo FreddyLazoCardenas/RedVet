@@ -25,6 +25,7 @@ import com.papps.freddy_lazo.redvet.view.activity.HomeActivity;
 import com.papps.freddy_lazo.redvet.view.adapter.AppointmentAdapter;
 import com.papps.freddy_lazo.redvet.view.adapter.AppointmentHeaderAdapter;
 import com.papps.freddy_lazo.redvet.view.dialogFragment.ConfirmedAppointmentDialog;
+import com.papps.freddy_lazo.redvet.view.dialogFragment.FinishAppointmentDialog;
 import com.papps.freddy_lazo.redvet.view.dialogFragment.FinishedAppointmentDialog;
 import com.papps.freddy_lazo.redvet.view.dialogFragment.PendingAppointmentDialog;
 
@@ -37,7 +38,7 @@ import butterknife.BindView;
 import io.reactivex.functions.Consumer;
 
 public class AppointmentFragment extends BaseFragment implements AppointmentFragmentView, AppointmentHeaderAdapter.onClickAdapter, AppointmentAdapter.onClickAdapter,
-        PendingAppointmentDialog.RequestInterface, FinishedAppointmentDialog.RequestInterface, ConfirmedAppointmentDialog.RequestInterface {
+        PendingAppointmentDialog.RequestInterface, FinishedAppointmentDialog.RequestInterface, ConfirmedAppointmentDialog.RequestInterface, FinishAppointmentDialog.OnClickListener {
 
 
     @BindView(R.id.rv_appointments)
@@ -156,6 +157,11 @@ public class AppointmentFragment extends BaseFragment implements AppointmentFrag
         dataAdapter(this.data);
     }
 
+    @Override
+    public void successFinishRequest(int id) {
+        adapter.removeFinishedAppointment(id);
+    }
+
     private boolean isDataFiltering(List<CreateAppointmentObjectModel> data) {
         for (CreateAppointmentObjectModel model : data) {
             if (model.isSelected()) {
@@ -205,6 +211,13 @@ public class AppointmentFragment extends BaseFragment implements AppointmentFrag
     }
 
     @Override
+    public void itemLongClicked(DoctorAppointmentModel doctorAppointmentModel) {
+        if (doctorAppointmentModel.getStatus().equals("confirmed")) {
+            navigator.showFinishListDialog(activity, this,doctorAppointmentModel.getId());
+        }
+    }
+
+    @Override
     public void successPendingRequest(int id) {
         adapter.doctorPendingAppointment(id);
     }
@@ -241,5 +254,15 @@ public class AppointmentFragment extends BaseFragment implements AppointmentFrag
     @Override
     public void hideLoading() {
         activity.hideLoading();
+    }
+
+    @Override
+    public void delete(int id) {
+        presenter.sendFinishAppointmentRequest(id);
+    }
+
+    @Override
+    public void cancel() {
+        //no code need
     }
 }
