@@ -109,10 +109,10 @@ public class ProfileFragmentPresenter implements Presenter<ProfileFragmentView> 
             return;
         if (!isValidPhone(view.getPhone()))
             return;
-        if (!isValidPassword(view.getPassword()))
+        /*if (!isValidPassword(view.getPassword()))
             return;
         if (!isValidRepeatPassword(view.getRepeatPassword(), view.getPassword()))
-            return;
+            return;*/
         if (!validatePetModelData())
             return;
         petLoverUpdate.bindParams(view.getApiToken(), view.getEmail(), view.getPassword(), view.getName(), view.getLastName(), view.getDni(), view.getAddress(), view.getPhone(), view.getProfileBase64Image(), view.getToken(), view.getPetData());
