@@ -2,10 +2,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <application tools:ignore="GoogleAppIndexingWarning"
-        android:label="@string/app_pet_lover_name">
+    <application
+        android:label="@string/app_pet_lover_name"
+        tools:ignore="GoogleAppIndexingWarning">
 
-        <activity android:name="com.papps.freddy_lazo.redvet.view.activity.SplashActivity">
+        <activity android:name="com.papps.freddy_lazo.redvet.view.activity.SplashActivity"
+            android:screenOrientation="portrait">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -13,10 +15,20 @@
             </intent-filter>
         </activity>
 
-        <activity android:name="com.papps.freddy_lazo.redvet.view.activity.RegisterActivity"/>
-        <activity android:name="com.papps.freddy_lazo.redvet.view.activity.PhotoDetailActivity"/>
-        <activity android:name="com.papps.freddy_lazo.redvet.view.activity.HomeActivity"/>
-        <activity android:name="com.papps.freddy_lazo.redvet.view.activity.AppointmentActivity"/>
-        <activity android:name="com.papps.freddy_lazo.redvet.view.activity.CancelAppointmentActivity"/>
+        <activity
+            android:name="com.papps.freddy_lazo.redvet.view.activity.RegisterActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.papps.freddy_lazo.redvet.view.activity.PhotoDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.papps.freddy_lazo.redvet.view.activity.HomeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.papps.freddy_lazo.redvet.view.activity.AppointmentActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.papps.freddy_lazo.redvet.view.activity.CancelAppointmentActivity"
+            android:screenOrientation="portrait" />
     </application>
 </manifest>

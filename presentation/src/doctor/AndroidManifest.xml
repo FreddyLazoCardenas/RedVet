@@ -14,11 +14,18 @@
             </intent-filter>
         </activity>
 
-        <activity android:name="com.papps.freddy_lazo.redvet.view.activity.RegisterActivity" />
-        <activity android:name="com.papps.freddy_lazo.redvet.view.activity.MapActivity" />
-        <activity android:name="com.papps.freddy_lazo.redvet.view.activity.CancelAppointmentActivity" />
+        <activity
+            android:name="com.papps.freddy_lazo.redvet.view.activity.RegisterActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.papps.freddy_lazo.redvet.view.activity.MapActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.papps.freddy_lazo.redvet.view.activity.CancelAppointmentActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name="com.papps.freddy_lazo.redvet.view.activity.DiagnoseAppointmentActivity"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
 
     </application>
