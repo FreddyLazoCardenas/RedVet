@@ -55,8 +55,6 @@ import com.papps.freddy_lazo.redvet.view.dialogFragment.CameraDialog;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
-import org.w3c.dom.Text;
-
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.util.ArrayList;
@@ -129,10 +127,10 @@ public class ProfileFragment extends BaseFragment implements CameraDialog.OnClic
     EditText etTuition;
     @BindView(R.id.et_description)
     TextInputEditText etDescription;
-    @BindView(R.id.group_shower)
-    android.support.constraint.Group gShower;
-    @BindView(R.id.group_consultation)
-    android.support.constraint.Group gConsultation;
+    @BindView(R.id.txt_consultation_price)
+    TextView tvConsultationPrice;
+    @BindView(R.id.txt_shower_price)
+    TextView tvShowerPrice;
 
     @BindView(R.id.iv_schedule_check)
     ImageView ivScheduleCheck;
@@ -257,6 +255,16 @@ public class ProfileFragment extends BaseFragment implements CameraDialog.OnClic
         }
     }
 
+    private void setGShowerVisibility(int visibility) {
+        tvShowerPrice.setVisibility(visibility);
+        etShowerPrice.setVisibility(visibility);
+    }
+
+    private void setGConsultationVisibility(int visibility) {
+        tvConsultationPrice.setVisibility(visibility);
+        etConsultationPrice.setVisibility(visibility);
+    }
+
     private void setUpSpinner() {
         ArrayList<String> arrayData = new ArrayList<>();
         arrayData.add("Casa");
@@ -316,21 +324,20 @@ public class ProfileFragment extends BaseFragment implements CameraDialog.OnClic
 
     private void showerLogic() {
         if (doctorModel.getShower_price() != null && !doctorModel.getShower_price().equals("")) {
-            gShower.setVisibility(View.VISIBLE);
+            setGShowerVisibility(View.VISIBLE);
             etShowerPrice.setText(doctorModel.getShower_price());
         } else {
-            gShower.setVisibility(View.INVISIBLE);
+            setGConsultationVisibility(View.INVISIBLE);
         }
     }
 
     private void consultationLogic() {
         if (doctorModel.getConsultation_price() != null && !doctorModel.getConsultation_price().equals("")) {
-            gConsultation.setVisibility(View.VISIBLE);
+            setGConsultationVisibility(View.VISIBLE);
             etConsultationPrice.setText(doctorModel.getConsultation_price());
         } else {
-            gConsultation.setVisibility(View.INVISIBLE);
+            setGConsultationVisibility(View.INVISIBLE);
         }
-        gConsultation.requestLayout();
     }
 
     private void displayPhoto(boolean refresh, boolean fromModel) {
@@ -365,8 +372,8 @@ public class ProfileFragment extends BaseFragment implements CameraDialog.OnClic
                 data.add(new ServiceDoctorModel(tmpData.getId(), tmpData.getService_id()));
             }
         }
-        gShower.setVisibility(View.INVISIBLE);
-        gConsultation.setVisibility(View.INVISIBLE);
+        setGConsultationVisibility(View.INVISIBLE);
+        setGShowerVisibility(View.INVISIBLE);
         navigator.navigateToServicesActivity(this, data, SERVICES_REQUEST_CODE);
     }
 
@@ -414,10 +421,10 @@ public class ProfileFragment extends BaseFragment implements CameraDialog.OnClic
                     servicesDoctorRegisterList.add(data);
                 }
                 if (servicesModel.getState() && servicesModel.getName().toLowerCase().contains("consultas")) {
-                    gConsultation.setVisibility(View.VISIBLE);
+                    setGConsultationVisibility(View.VISIBLE);
                 }
                 if (servicesModel.getState() && servicesModel.getName().toLowerCase().contains("baños")) {
-                    gShower.setVisibility(View.VISIBLE);
+                    setGShowerVisibility(View.VISIBLE);
                 }
             }
         }

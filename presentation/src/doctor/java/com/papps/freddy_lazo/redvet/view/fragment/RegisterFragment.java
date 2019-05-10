@@ -123,10 +123,6 @@ public class RegisterFragment extends BaseFragment implements RegisterFragmentVi
     Spinner spinner;
     @BindView(R.id.type_spinner)
     Spinner typeSpinner;
-    @BindView(R.id.group_shower)
-    android.support.constraint.Group gShower;
-    @BindView(R.id.group_consultation)
-    android.support.constraint.Group gConsultation;
     @BindView(R.id.toggle)
     RadioGroup toggle;
     @BindView(R.id.et_consultation_price)
@@ -145,6 +141,10 @@ public class RegisterFragment extends BaseFragment implements RegisterFragmentVi
     TextView endHour;
     @BindView(R.id.end_minute)
     TextView endMinute;
+    @BindView(R.id.txt_consultation_price)
+    TextView tvConsultationPrice;
+    @BindView(R.id.txt_shower_price)
+    TextView tvShowerPrice;
 
     private Double latitude;
     private Double longitude;
@@ -275,9 +275,19 @@ public class RegisterFragment extends BaseFragment implements RegisterFragmentVi
     @OnClick(R.id.img_add_services)
     public void services() {
         List<ServiceDoctorModel> data = new ArrayList<>();
-        gShower.setVisibility(View.INVISIBLE);
-        gConsultation.setVisibility(View.INVISIBLE);
+        setGShowerVisibility(View.INVISIBLE);
+        setGConsultationVisibility(View.INVISIBLE);
         navigator.navigateToServicesActivity(this, data, SERVICES_REQUEST_CODE);
+    }
+
+    private void setGShowerVisibility(int visibility) {
+        tvShowerPrice.setVisibility(visibility);
+        etShowerPrice.setVisibility(visibility);
+    }
+
+    private void setGConsultationVisibility(int visibility) {
+        tvConsultationPrice.setVisibility(visibility);
+        etConsultationPrice.setVisibility(visibility);
     }
 
 
@@ -581,10 +591,10 @@ public class RegisterFragment extends BaseFragment implements RegisterFragmentVi
                     servicesDoctorRegisterList.add(data);
                 }
                 if (servicesModel.getState() && servicesModel.getName().toLowerCase().contains("consultas")) {
-                    gConsultation.setVisibility(View.VISIBLE);
+                    setGConsultationVisibility(View.VISIBLE);
                 }
                 if (servicesModel.getState() && servicesModel.getName().toLowerCase().contains("baños")) {
-                    gShower.setVisibility(View.VISIBLE);
+                    setGShowerVisibility(View.VISIBLE);
                 }
             }
         }
