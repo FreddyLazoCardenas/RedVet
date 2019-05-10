@@ -250,7 +250,7 @@ public class MapFragment extends BaseFragment implements OnMapReadyCallback, Map
 
     private void initHeaderAdapter() {
         List<CreateAppointmentObjectModel> data = new ArrayList<>();
-        data.add(new CreateAppointmentObjectModel("Clinicas", "clinic", true));
+        data.add(new CreateAppointmentObjectModel("Clínicas", "clinic", true));
         data.add(new CreateAppointmentObjectModel("Veterinarios", "vet"));
         data.add(new CreateAppointmentObjectModel("Otros", "other"));
         typeAdapter.bindList(data);

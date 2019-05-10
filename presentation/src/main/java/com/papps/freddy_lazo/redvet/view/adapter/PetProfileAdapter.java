@@ -17,6 +17,7 @@ import com.papps.freddy_lazo.redvet.R;
 import com.papps.freddy_lazo.redvet.model.AppointmentPhotoModel;
 import com.papps.freddy_lazo.redvet.model.PetLoverRegisterModel;
 import com.papps.freddy_lazo.redvet.model.PetModel;
+import com.papps.freddy_lazo.redvet.model.PetRedVetModel;
 import com.papps.freddy_lazo.redvet.util.DateHelper;
 import com.papps.freddy_lazo.redvet.view.fragment.BaseFragment;
 import com.papps.freddy_lazo.redvet.view.fragment.ProfileFragment;
@@ -37,6 +38,7 @@ public class PetProfileAdapter extends RecyclerView.Adapter<PetProfileAdapter.Pe
 
 
     private List<PetLoverRegisterModel> data = new ArrayList<>();
+    private List<PetRedVetModel> petData = new ArrayList<>();
     private Context context;
     private onClickAdapter listener;
 
@@ -102,10 +104,17 @@ public class PetProfileAdapter extends RecyclerView.Adapter<PetProfileAdapter.Pe
         return data;
     }
 
+    public void setPetRedVetModel(List<PetRedVetModel> petData) {
+        this.petData = petData;
+        notifyDataSetChanged();
+    }
+
     class PetViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.img_pet)
         ImageView imgPet;
+        @BindView(R.id.iv_pet)
+        ImageView ivPet;
         @BindView(R.id.tv_pet_name)
         TextView tvPetName;
         @BindView(R.id.tv_pet_birthday)
@@ -121,10 +130,20 @@ public class PetProfileAdapter extends RecyclerView.Adapter<PetProfileAdapter.Pe
 
         void bind(int position) {
             tvPetName.setText(data.get(position).getName());
+            loadPetImageLogic(data.get(position).getPet_id());
             Calendar calendar = DateHelper.convertToDate(data.get(position).getBirthday());
-            tvPetBirthday.setText(MessageFormat.format("{0} {1} {2}", calendar.get(Calendar.DAY_OF_MONTH), DateHelper.getMonthForInt(calendar.get(Calendar.MONTH)).substring(0, 3), calendar.get(Calendar.YEAR)).replaceAll(",",""));
-            tvBreed.setText(context.getString(R.string.pet_breed, data.get(position).getBreed()));
+            tvPetBirthday.setText(MessageFormat.format("{0} {1} {2}", calendar.get(Calendar.DAY_OF_MONTH), DateHelper.getMonthForInt(calendar.get(Calendar.MONTH)).substring(0, 3), calendar.get(Calendar.YEAR)).replaceAll(",", ""));
+            tvBreed.setText(context.getString(R.string.pet_breed, data.get(position).getBreed() != null ? data.get(position).getBreed() : ""));
             loadImage(data.get(position).getPhoto_url());
+        }
+
+        private void loadPetImageLogic(int pet_id) {
+            for (PetRedVetModel dataPet : petData) {
+                if (dataPet.getId() == pet_id) {
+                    loadPetImage(dataPet.getPhoto_url());
+                    break;
+                }
+            }
         }
 
         private void loadImage(String photo) {
@@ -134,6 +153,15 @@ public class PetProfileAdapter extends RecyclerView.Adapter<PetProfileAdapter.Pe
                     .placeholder(R.drawable.ic_placeholder)
                     .load(photo != null ? photo : "")
                     .into(imgPet);
+        }
+
+        private void loadPetImage(String photo) {
+            GlideApp.with(context)
+                    .asBitmap()
+                    .dontAnimate()
+                    .placeholder(R.drawable.ic_cat)
+                    .load(photo != null ? photo : "")
+                    .into(ivPet);
         }
 
 

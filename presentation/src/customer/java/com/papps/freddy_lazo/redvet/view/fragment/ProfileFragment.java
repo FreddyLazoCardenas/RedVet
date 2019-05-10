@@ -469,6 +469,7 @@ public class ProfileFragment extends BaseFragment implements CameraDialog.OnClic
     @Override
     public void successRequest(List<PetRedVetModel> data) {
         petAdapter.bindList(data);
+        adapter.setPetRedVetModel(data);
     }
 
     @Override

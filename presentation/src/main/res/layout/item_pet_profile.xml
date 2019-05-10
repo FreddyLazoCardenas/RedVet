@@ -22,17 +22,26 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
-        android:drawableStart="@drawable/ic_cat"
-        android:drawablePadding="5dp"
         android:gravity="center"
         android:textColor="@color/colorGray"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/tv_pet_birthday"
-        app:layout_constraintStart_toEndOf="@id/img_pet"
+        app:layout_constraintStart_toEndOf="@id/iv_pet"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="packed"
         tools:text="Fenicio Manolete" />
+
+    <ImageView
+        android:id="@+id/iv_pet"
+        android:layout_width="24dp"
+        android:src="@drawable/ic_cat"
+        android:tint="@color/colorPink"
+        android:layout_height="24dp"
+        android:layout_marginStart="10dp"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_pet_name"
+        app:layout_constraintStart_toEndOf="@id/img_pet"
+        app:layout_constraintTop_toTopOf="@+id/tv_pet_name" />
 
     <TextView
         android:id="@+id/tv_pet_birthday"
@@ -43,7 +52,7 @@
         android:gravity="center"
         android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@+id/tv_breed"
-        app:layout_constraintStart_toStartOf="@id/tv_pet_name"
+        app:layout_constraintStart_toStartOf="@id/iv_pet"
         app:layout_constraintTop_toBottomOf="@+id/tv_pet_name"
         tools:text="12 de mayo 2016" />
 
@@ -53,8 +62,8 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="@id/tv_pet_name"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@id/iv_pet"
         app:layout_constraintTop_toBottomOf="@+id/tv_pet_birthday"
         tools:text="Raza : XXXXX" />
 
