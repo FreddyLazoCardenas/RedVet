@@ -7,6 +7,7 @@ import android.text.TextUtils;
 
 import com.papps.freddy_lazo.data.sharedPreferences.PreferencesManager;
 import com.papps.freddy_lazo.domain.interactor.DefaultObserver;
+import com.papps.freddy_lazo.domain.interactor.DeletePetUseCase;
 import com.papps.freddy_lazo.domain.interactor.PetLoverUpdate;
 import com.papps.freddy_lazo.domain.interactor.PetRedVetUseCase;
 import com.papps.freddy_lazo.domain.model.PetLover;
@@ -30,12 +31,14 @@ public class ProfileFragmentPresenter implements Presenter<ProfileFragmentView> 
     private final PetLoverUpdate petLoverUpdate;
     private final PreferencesManager preferencesManager;
     private final PetRedVetUseCase petRedVetUseCase;
+    private final DeletePetUseCase deletePetUseCase;
     private ProfileFragmentView view;
 
     @Inject
-    public ProfileFragmentPresenter(PreferencesManager preferencesManager, PetLoverUpdate petLoverUpdate, PetRedVetUseCase petRedVetUseCase) {
+    public ProfileFragmentPresenter(PreferencesManager preferencesManager, PetLoverUpdate petLoverUpdate, PetRedVetUseCase petRedVetUseCase, DeletePetUseCase deletePetUseCase) {
         this.petRedVetUseCase = petRedVetUseCase;
         this.petLoverUpdate = petLoverUpdate;
+        this.deletePetUseCase = deletePetUseCase;
         this.preferencesManager = preferencesManager;
     }
 
@@ -57,6 +60,7 @@ public class ProfileFragmentPresenter implements Presenter<ProfileFragmentView> 
     public void destroy() {
         petLoverUpdate.unsubscribe();
         petRedVetUseCase.unsubscribe();
+        deletePetUseCase.unsubscribe();
     }
 
     @Override
@@ -227,7 +231,7 @@ public class ProfileFragmentPresenter implements Presenter<ProfileFragmentView> 
     }
 
     public void validatePetData() {
-        if(!isValidatePetId(view.getPetId()))
+        if (!isValidatePetId(view.getPetId()))
             return;
         if (!isValidPetName(view.getPetName()))
             return;
@@ -239,7 +243,7 @@ public class ProfileFragmentPresenter implements Presenter<ProfileFragmentView> 
     }
 
     private boolean isValidatePetId(int petId) {
-        if(petId == 0){
+        if (petId == 0) {
             view.showErrorMessage(view.context().getString(R.string.add_type_pet));
             return false;
         }
@@ -271,6 +275,11 @@ public class ProfileFragmentPresenter implements Presenter<ProfileFragmentView> 
         }
         view.hidePetBreedError();
         return true;
+    }
+
+    public void deletePet(Integer id) {
+        deletePetUseCase.bindParams(view.getApiToken(), id);
+        deletePetUseCase.execute(new DeletePetObservable());
     }
 
     private class PetLoverUpdateObservable extends DefaultObserver<PetLover> {
@@ -323,6 +332,25 @@ public class ProfileFragmentPresenter implements Presenter<ProfileFragmentView> 
         @Override
         public void onComplete() {
             super.onComplete();
+        }
+    }
+
+    private class DeletePetObservable extends DefaultObserver<List<Void>> {
+        @Override
+        protected void onStart() {
+            super.onStart();
+        }
+
+        @Override
+        public void onComplete() {
+            super.onComplete();
+            view.successDeletePet();
+        }
+
+        @Override
+        public void onError(Throwable e) {
+            super.onError(e);
+            view.showErrorMessage(e.getMessage());
         }
     }
 }

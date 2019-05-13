@@ -95,4 +95,6 @@ public interface ProfileFragmentView extends BaseView {
     String getPetBase64Image();
 
     int getPetId();
+
+    void successDeletePet();
 }

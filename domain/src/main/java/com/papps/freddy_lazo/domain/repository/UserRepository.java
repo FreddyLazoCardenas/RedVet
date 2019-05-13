@@ -38,4 +38,6 @@ public interface UserRepository {
     Observable<RedVetDetailAppointment> redVetAppointmentDetail(String auth, int appointmentId);
 
     Observable<PetLoverAppointment> petLoverQualifyAppointment(String auth, int appointmentId, int qualification);
+
+    Observable<List<Void>> deletePet(String auth, int petLoverId);
 }

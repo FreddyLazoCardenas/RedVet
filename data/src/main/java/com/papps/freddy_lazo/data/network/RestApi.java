@@ -78,5 +78,5 @@ public interface RestApi {
 
     Observable<PetLoverAppointmentEntity> petLoverQualifyAppointment(String auth, int appointmentId, int qualification);
 
-
+    Observable<List<Void>> deletePet(String auth, int petLoverId);
 }

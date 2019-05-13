@@ -91,4 +91,9 @@ public class UserDataRepository implements UserRepository {
     public Observable<PetLoverAppointment> petLoverQualifyAppointment(String auth, int appointmentId, int qualification) {
         return mRestApi.petLoverQualifyAppointment(auth, appointmentId, qualification).map(AppointmentPetLoverMapper::transform);
     }
+
+    @Override
+    public Observable<List<Void>> deletePet(String auth, int petLoverId) {
+        return mRestApi.deletePet(auth, petLoverId);
+    }
 }

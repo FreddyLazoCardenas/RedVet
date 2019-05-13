@@ -19,6 +19,7 @@ import com.papps.freddy_lazo.data.entity.ServicesEntity;
 import com.papps.freddy_lazo.data.network.body.BodyAppointment;
 import com.papps.freddy_lazo.data.network.body.BodyCancelAppointment;
 import com.papps.freddy_lazo.data.network.body.BodyConfirmAppointment;
+import com.papps.freddy_lazo.data.network.body.BodyDeletePet;
 import com.papps.freddy_lazo.data.network.body.BodyDeletePhoto;
 import com.papps.freddy_lazo.data.network.body.BodyDoctorRegister;
 import com.papps.freddy_lazo.data.network.body.BodyFinishAppointment;
@@ -444,6 +445,20 @@ public class RestApiImpl implements RestApi {
                 ResponseEntity<QualificationResponse> body = response.body();
                 if (body != null && body.getMessage() == null) {
                     emitter.onNext(body.getData().getAppointment());
+                    emitter.onComplete();
+                }
+            }
+        }));
+    }
+
+    @Override
+    public Observable<List<Void>> deletePet(String auth, int petLoverId) {
+        return Observable.create(emitter -> restService.deletePet("Bearer " + auth, new BodyDeletePet(petLoverId)).enqueue(new DefaultCallback<ResponseEntity<List<Void>>>(emitter) {
+            @Override
+            public void onResponse(@NonNull Call<ResponseEntity<List<Void>>> call, @NonNull Response<ResponseEntity<List<Void>>> response) {
+                super.onResponse(call, response);
+                ResponseEntity<List<Void>> body = response.body();
+                if (body != null && body.getMessage() == null) {
                     emitter.onComplete();
                 }
             }

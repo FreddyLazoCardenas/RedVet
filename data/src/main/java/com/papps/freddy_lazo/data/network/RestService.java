@@ -4,6 +4,7 @@ import com.papps.freddy_lazo.data.entity.ResponseEntity;
 import com.papps.freddy_lazo.data.network.body.BodyAppointment;
 import com.papps.freddy_lazo.data.network.body.BodyCancelAppointment;
 import com.papps.freddy_lazo.data.network.body.BodyConfirmAppointment;
+import com.papps.freddy_lazo.data.network.body.BodyDeletePet;
 import com.papps.freddy_lazo.data.network.body.BodyDeletePhoto;
 import com.papps.freddy_lazo.data.network.body.BodyDoctorRegister;
 import com.papps.freddy_lazo.data.network.body.BodyFinishAppointment;
@@ -112,5 +113,9 @@ public interface RestService {
 
     @POST("pet-lover/appointments/qualify")
     Call<ResponseEntity<QualificationResponse>> petLoverQualifyAppointment(@Header("Authorization") String auth, @Body BodyQualifyAppointment bodyQualifyAppointment);
+
+
+    @POST("pet-lover/pet/destroy")
+    Call<ResponseEntity<List<Void>>> deletePet(@Header("Authorization") String auth, @Body BodyDeletePet body);
 
 }

@@ -417,6 +417,12 @@ public class ProfileFragment extends BaseFragment implements CameraDialog.OnClic
     }
 
     @Override
+    public void successDeletePet() {
+        adapter.removePet(petLoverRegisterModel);
+        editModel(petLoverRegisterModel.getId());
+    }
+
+    @Override
     public String getPetBirthday() {
         return etPetBirthday.getText().toString();
     }
@@ -628,7 +634,18 @@ public class ProfileFragment extends BaseFragment implements CameraDialog.OnClic
 
     @Override
     public void delete() {
-        adapter.removePet(petLoverRegisterModel);
+        presenter.deletePet(petLoverRegisterModel.getId());
+    }
+
+    private void editModel(Integer id) {
+        PetLoverModel petData = PetLoverModel.toModel(preferencesManager.getPetLoverCurrentUser());
+        List<PetLoverRegisterModel> petList = petData.getPetList();
+        for (PetLoverRegisterModel data : petList) {
+            if (data.getId().equals(id)) {
+                petList.remove(data);
+            }
+        }
+        preferencesManager.savePetLoverCurrentUser(petData.toString());
     }
 
     @Override
