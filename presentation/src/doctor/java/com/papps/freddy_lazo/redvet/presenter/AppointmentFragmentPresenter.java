@@ -4,11 +4,9 @@ import com.papps.freddy_lazo.domain.interactor.DefaultObserver;
 import com.papps.freddy_lazo.domain.interactor.DoctorAppointmentFinish;
 import com.papps.freddy_lazo.domain.interactor.DoctorAppointmentUseCase;
 import com.papps.freddy_lazo.domain.model.DoctorAppointment;
-import com.papps.freddy_lazo.domain.model.PetLoverAppointment;
 import com.papps.freddy_lazo.domain.model.RedVetAppointment;
 import com.papps.freddy_lazo.redvet.interfaces.AppointmentFragmentView;
 import com.papps.freddy_lazo.redvet.model.mapper.DoctorAppointmentModelMapper;
-import com.papps.freddy_lazo.redvet.model.mapper.PetLoverAppointmentModelMapper;
 
 import java.util.List;
 
@@ -94,7 +92,7 @@ public class AppointmentFragmentPresenter implements Presenter<AppointmentFragme
         @Override
         public void onNext(List<DoctorAppointment> appointment) {
             super.onNext(appointment);
-            view.showErrorMessage("Éxito");
+            //view.showErrorMessage("Éxito");
             view.successRequest(DoctorAppointmentModelMapper.transform(appointment));
         }
 
