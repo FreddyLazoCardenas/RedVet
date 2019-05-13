@@ -67,6 +67,12 @@ public class ChatActivity extends BaseActivity implements ChatActivityView {
     }
 
     @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        presenter.getMessages();
+    }
+
+    @Override
     public int getAppointmentId() {
         return appointmentId;
     }

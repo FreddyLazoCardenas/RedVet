@@ -17,4 +17,18 @@ public class Event extends BaseEvent {
             return appointmentId;
         }
     }
+
+    public static class NotificationChatEvent {
+
+        private final int appointmentId;
+
+        public NotificationChatEvent(int appointmentId) {
+            this.appointmentId = appointmentId;
+        }
+
+        public int getAppointmentId() {
+            return appointmentId;
+        }
+    }
+
 }

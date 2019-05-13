@@ -27,6 +27,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.ChatActivity"
+            android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.NewsDetailActivity"

@@ -57,6 +57,12 @@ public class ChatActivity extends BaseActivity implements ChatActivityView {
         DaggerRedVetChatComponent.builder().applicationComponent(getApplicationComponent()).build().inject(this);
     }
 
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        presenter.getMessages();
+    }
+
     @OnClick(R.id.img_dismiss)
     public void imgDismiss() {
         finish();

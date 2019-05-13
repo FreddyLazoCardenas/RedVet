@@ -37,7 +37,7 @@ public class HomeActivity extends BaseActivity implements BottomNavigationView.O
         setContentView(R.layout.activity_home);
         injectView(this);
         buildInjection();
-        Log.d("date" , System.currentTimeMillis() + "");
+        Log.d("date", System.currentTimeMillis() + "");
         initUI();
     }
 
@@ -70,12 +70,15 @@ public class HomeActivity extends BaseActivity implements BottomNavigationView.O
         return event -> {
             if (event instanceof Event.NotificationEvent) {
                 Log.d("getBusAction", "llego a la actividad");
+            } else if (event instanceof Event.NotificationChatEvent) {
+                Event.NotificationChatEvent response = (Event.NotificationChatEvent) event;
+                navigator.navigateToChatActivity(this, response.getAppointmentId());
             }
         };
     }
 
 
-    public DoctorModel getModel(){
+    public DoctorModel getModel() {
         return DoctorModel.toModel(preferencesManager.getDoctorCurrentUser());
     }
 
