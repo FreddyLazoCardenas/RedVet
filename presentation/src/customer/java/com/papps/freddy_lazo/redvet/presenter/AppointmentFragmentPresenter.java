@@ -58,7 +58,7 @@ public class AppointmentFragmentPresenter implements Presenter<AppointmentFragme
         @Override
         public void onNext(List<PetLoverAppointment> appointment) {
             super.onNext(appointment);
-            view.showErrorMessage("Éxito");
+            //view.showErrorMessage("Éxito");
             view.successRequest(PetLoverAppointmentModelMapper.transform(appointment));
         }
 
