@@ -33,13 +33,13 @@ android {
         debug{
             debuggable true
             minifyEnabled false
-            resValue 'string', 'GOOGLE_MAPS_API_KEY', '"AIzaSyCVdzgo5h0sMSyNnFWNUYnQATQynsm5jVE"'
+            resValue 'string', 'GOOGLE_MAPS_API_KEY', '"AIzaSyBp8sjAj8QX5Cb5v5I5We4Lc7z6FYt_pkc"'
         }
         release {
             signingConfig signingConfigs.release
             debuggable false
             minifyEnabled true
-            resValue 'string', 'GOOGLE_MAPS_API_KEY', '"AIzaSyCVdzgo5h0sMSyNnFWNUYnQATQynsm5jVE"'
+            resValue 'string', 'GOOGLE_MAPS_API_KEY', '"AIzaSyBp8sjAj8QX5Cb5v5I5We4Lc7z6FYt_pkc"'
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
