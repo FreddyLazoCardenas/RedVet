@@ -6,6 +6,7 @@ import android.util.Log;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
+import com.papps.freddy_lazo.data.sharedPreferences.PreferencesManager;
 import com.papps.freddy_lazo.domain.interactor.DefaultObserver;
 import com.papps.freddy_lazo.domain.interactor.SaveNotification;
 import com.papps.freddy_lazo.domain.model.Notification;
@@ -34,6 +35,7 @@ public class FirebaseMessageService extends FirebaseMessagingService {
         AndroidApplication mApp = (AndroidApplication) getApplication();
         Map<String, String> data = remoteMessage.getData();
         Log.d("remoteMessage", remoteMessage.toString());
+        PreferencesManager preferencesManager = mApp.getApplicationComponent().preferenceManager();
         boolean isFromChat = data.get("message") != null && Objects.equals(data.get("message"), "Mensaje recibido") && data.get("appointment_id") != null;
         if (mApp.isAlive()) {
             if (isFromChat) {
