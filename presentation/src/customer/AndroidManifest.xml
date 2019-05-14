@@ -23,6 +23,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name="com.papps.freddy_lazo.redvet.view.activity.HomeActivity"
+            android:windowSoftInputMode="adjustPan"
             android:screenOrientation="portrait" />
         <activity
             android:name="com.papps.freddy_lazo.redvet.view.activity.AppointmentActivity"
