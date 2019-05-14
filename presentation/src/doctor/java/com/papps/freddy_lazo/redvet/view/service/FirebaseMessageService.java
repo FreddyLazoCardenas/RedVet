@@ -52,9 +52,20 @@ public class FirebaseMessageService extends FirebaseMessagingService {
                 NotificationUtil.showNotification(this, data.get("type"), data.get("message"), pendingIntent);
             }
         } else {
-            PendingIntent pendingIntent = PendingIntent.getActivity(this, 0,
-                    new Intent(getApplicationContext(), SplashActivity.class), 0);
-            NotificationUtil.showNotification(this, data.get("type"), data.get("message"), pendingIntent);
+            if (isFromChat && preferencesManager.getPetLoverCurrentUser() != null && !preferencesManager.getPetLoverCurrentUser().equals("")) {
+                Intent notificationIntent = new Intent(getApplicationContext(), ChatActivity.class);
+                int i = Integer.valueOf(data.get("appointment_id"));
+                notificationIntent.putExtra("data", i);
+                notificationIntent.putExtra("from_push", true);
+                notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
+                        | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+                NotificationUtil.showNotification(this, data.get("type"), data.get("message"), pendingIntent);
+            } else {
+                PendingIntent pendingIntent = PendingIntent.getActivity(this, 0,
+                        new Intent(getApplicationContext(), SplashActivity.class), 0);
+                NotificationUtil.showNotification(this, data.get("type"), data.get("message"), pendingIntent);
+            }
         }
         String timeStamp = String.valueOf(TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis()));
         SaveNotification saveNotification = mApp.getApplicationComponent().saveNotification();

@@ -6,6 +6,7 @@ import android.util.Log;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
+import com.papps.freddy_lazo.data.sharedPreferences.PreferencesManager;
 import com.papps.freddy_lazo.domain.interactor.DefaultObserver;
 import com.papps.freddy_lazo.domain.interactor.SaveNotification;
 import com.papps.freddy_lazo.domain.model.Notification;
@@ -32,6 +33,7 @@ public class FirebaseMessageService extends FirebaseMessagingService {
         super.onMessageReceived(remoteMessage);
         AndroidApplication mApp = (AndroidApplication) getApplication();
         Map<String, String> data = remoteMessage.getData();
+        PreferencesManager preferencesManager = mApp.getApplicationComponent().preferenceManager();
         Log.d("remoteMessage", remoteMessage.toString());
         boolean isFromChat = data.get("message") != null && Objects.equals(data.get("message"), "Mensaje recibido") && data.get("appointment_id") != null;
         if (mApp.isAlive()) {
@@ -41,7 +43,7 @@ public class FirebaseMessageService extends FirebaseMessagingService {
                 notificationIntent.putExtra("data", i);
                 notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
                         | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                PendingIntent pendingIntent = PendingIntent.getActivity(this, 0,  notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+                PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
                 NotificationUtil.showNotification(this, data.get("type"), data.get("message"), pendingIntent);
             } else {
                 Intent notificationIntent = new Intent(getApplicationContext(), HomeActivity.class);
@@ -51,9 +53,20 @@ public class FirebaseMessageService extends FirebaseMessagingService {
                 NotificationUtil.showNotification(this, data.get("type"), data.get("message"), pendingIntent);
             }
         } else {
-            PendingIntent pendingIntent = PendingIntent.getActivity(this, 0,
-                    new Intent(getApplicationContext(), SplashActivity.class), 0);
-            NotificationUtil.showNotification(this, data.get("type"), data.get("message"), pendingIntent);
+            if (isFromChat && preferencesManager.getPetLoverCurrentUser() != null && !preferencesManager.getPetLoverCurrentUser().equals("")) {
+                Intent notificationIntent = new Intent(getApplicationContext(), ChatActivity.class);
+                int i = Integer.valueOf(data.get("appointment_id"));
+                notificationIntent.putExtra("data", i);
+                notificationIntent.putExtra("from_push", true);
+                notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
+                        | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+                NotificationUtil.showNotification(this, data.get("type"), data.get("message"), pendingIntent);
+            } else {
+                PendingIntent pendingIntent = PendingIntent.getActivity(this, 0,
+                        new Intent(getApplicationContext(), SplashActivity.class), 0);
+                NotificationUtil.showNotification(this, data.get("type"), data.get("message"), pendingIntent);
+            }
         }
         String timeStamp = String.valueOf(TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis()));
         SaveNotification saveNotification = mApp.getApplicationComponent().saveNotification();
