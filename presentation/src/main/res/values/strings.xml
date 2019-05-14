@@ -1,8 +1,8 @@
 <resources>
     <string name="app_notifications_name">RedVet</string>
     <string name="app_notifications_content">Notificaciones de RedVet</string>
-    <string name="app_pet_lover_name">PetLover</string>
-    <string name="app_doctor_name">Medico</string>
+    <string name="app_pet_lover_name">Redvet</string>
+    <string name="app_doctor_name">RedVet-Pro</string>
     <string name="doctor_clinic_type">Clínica</string>
     <string name="doctor_vet_type">Médico Veterinario</string>
     <string name="doctor_other_type">Otro</string>

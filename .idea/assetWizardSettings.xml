@@ -62,7 +62,7 @@
                                             <option name="values">
                                               <map>
                                                 <entry key="color" value="000000" />
-                                                <entry key="scalingPercent" value="113" />
+                                                <entry key="scalingPercent" value="108" />
                                                 <entry key="trimmed" value="true" />
                                               </map>
                                             </option>
@@ -86,7 +86,10 @@
                                     <map>
                                       <entry key="backgroundAssetType" value="COLOR" />
                                       <entry key="backgroundColor" value="ffffff" />
+                                      <entry key="backgroundLayerName" value="ic_launcher_background" />
                                       <entry key="foregroundImage" value="$USER_HOME$/Downloads/REDVET-personal.png" />
+                                      <entry key="foregroundLayerName" value="ic_launcher_foreground" />
+                                      <entry key="outputName" value="ic_launcher_doctor" />
                                       <entry key="previewDensity" value="XXXHIGH" />
                                     </map>
                                   </option>
