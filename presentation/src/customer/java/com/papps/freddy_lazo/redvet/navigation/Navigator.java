@@ -51,6 +51,7 @@ import com.papps.freddy_lazo.redvet.view.fragment.LoginFragment;
 import com.papps.freddy_lazo.redvet.view.fragment.MainMenuFragment;
 import com.papps.freddy_lazo.redvet.view.fragment.ServicesFragment;
 import com.papps.freddy_lazo.redvet.view.pickers.DatePickerFragment;
+import com.papps.freddy_lazo.redvet.view.pickers.RangeTimePickerDialog;
 import com.papps.freddy_lazo.redvet.view.pickers.TimePickerFragment;
 
 import java.io.File;
@@ -230,6 +231,10 @@ public class Navigator extends BaseNavigator {
 
     public void navigateToTimePicker(BaseActivity activity) {
         TimePickerFragment.newInstance(activity).show(activity.getSupportFragmentManager(), "timePicker");
+    }
+
+    public RangeTimePickerDialog navigateToAppointmentTimePicker(BaseActivity activity) {
+        return RangeTimePickerDialog.newInstance(activity);
     }
 
     public void navigatePendingDialog(BaseActivity activity, String data) {
