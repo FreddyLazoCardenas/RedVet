@@ -112,7 +112,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:text="Consulta"
+            android:text="Precio de consulta"
             android:textColor="@color/colorGreen"
             android:textSize="16sp"
             android:textStyle="bold"
@@ -129,6 +129,27 @@
             tools:text="S/. 300" />
 
         <TextView
+            android:id="@+id/tv_shower"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Precio de baño"
+            android:textColor="@color/colorGreen"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@id/start_guideline"
+            app:layout_constraintTop_toBottomOf="@+id/tv_consultation_price" />
+
+        <TextView
+            android:id="@+id/tv_shower_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorGray"
+            app:layout_constraintStart_toStartOf="@id/start_guideline"
+            app:layout_constraintTop_toBottomOf="@+id/tv_shower"
+            tools:text="S/. 300" />
+
+        <TextView
             android:id="@+id/tv_services"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -139,7 +160,7 @@
             android:text="Más servicios"
             android:textColor="@color/colorPink"
             android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="@+id/tv_consultation_price"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_shower_price"
             app:layout_constraintEnd_toEndOf="@id/end_guideline"
             app:layout_constraintTop_toTopOf="@+id/tv_consultation" />
 
@@ -153,7 +174,7 @@
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@id/start_guideline"
-            app:layout_constraintTop_toBottomOf="@+id/tv_consultation_price" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_shower_price" />
 
         <View
             android:layout_width="0dp"
