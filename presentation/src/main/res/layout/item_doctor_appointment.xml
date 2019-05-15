@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="175dp"
     android:background="@color/colorLightGray"
     android:padding="10dp">
 
@@ -62,14 +62,14 @@
         app:layout_constraintStart_toStartOf="@id/tv_doctor_name"
         app:layout_constraintTop_toBottomOf="@+id/tv_doctor_job"
         tools:ignore="UnusedAttribute"
-        tools:text="70692399" />
+        tools:text="70692399009999" />
 
     <ImageView
         android:id="@+id/phone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
         android:src="@drawable/ic_doctor_phone"
+        android:layout_marginEnd="10dp"
         android:tint="@color/colorPink"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/chat" />
@@ -78,7 +78,6 @@
         android:id="@+id/chat"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
         android:src="@drawable/ic_chat"
         android:tint="@color/colorPink"
         app:layout_constraintBottom_toBottomOf="parent"

@@ -61,6 +61,8 @@ public class AppointmentActivity extends BaseActivity implements DatePickerDialo
     TextView tvJob;
     @BindView(R.id.tv_consultation_price)
     TextView tvConsultationPrice;
+    @BindView(R.id.tv_shower_price)
+    TextView tvShowerPrice;
     @BindView(R.id.rv_appointment)
     RecyclerView rvAppointment;
     @BindView(R.id.rv_pet_lover)
@@ -166,6 +168,7 @@ public class AppointmentActivity extends BaseActivity implements DatePickerDialo
         doctorModel = DoctorModel.toModel(getIntent().getStringExtra("doctor"));
         tvJob.setText(setJobText());
         tvConsultationPrice.setText(getString(R.string.consultation_price, doctorModel.getConsultation_price()));
+        tvShowerPrice.setText(getString(R.string.consultation_price, doctorModel.getShower_price()!= null  && !doctorModel.getShower_price().equals("")? doctorModel.getShower_price().equals("") : "Doctor no realiza este servicio"));
     }
 
     private int setJobText() {

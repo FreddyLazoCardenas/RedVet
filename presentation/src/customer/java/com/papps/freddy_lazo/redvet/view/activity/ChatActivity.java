@@ -37,6 +37,7 @@ public class ChatActivity extends BaseActivity implements ChatActivityView {
     MessagesAdapter adapter;
 
     private int appointmentId;
+    private boolean fromPush;
 
     public static Intent getCallingIntent(BaseActivity activity, int appointmentId) {
         return new Intent(activity, ChatActivity.class).putExtra("data", appointmentId);
@@ -50,6 +51,7 @@ public class ChatActivity extends BaseActivity implements ChatActivityView {
         injectView(this);
         buildInjection();
         appointmentId = getIntent().getIntExtra("data", -1);
+        fromPush = getIntent().getBooleanExtra("from_push", false);
         initUI();
     }
 
@@ -66,6 +68,15 @@ public class ChatActivity extends BaseActivity implements ChatActivityView {
     @OnClick(R.id.img_dismiss)
     public void imgDismiss() {
         finish();
+    }
+
+    @Override
+    public void finish() {
+        if (fromPush) {
+            navigator.navigateToHomeActivity(this);
+        } else {
+            super.finish();
+        }
     }
 
     @Override

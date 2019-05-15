@@ -59,6 +59,7 @@ public class RegisterFragment extends BaseFragment implements RegisterFragmentVi
 
     private static final String PICTURE_FILE_NAME = "profileComplete.jpg";
     private static final String PICTURE_CROPPED_FILE_NAME = "profile.jpg";
+    private static final String PICTURE_CROPPED_PET_FILE_NAME = "pet.jpg";
 
     private static final int SELECT_FILE = 1;
     private static final int REQUEST_CAMERA = 0;
@@ -444,7 +445,7 @@ public class RegisterFragment extends BaseFragment implements RegisterFragmentVi
                     .setOutputUri(Uri.fromFile(croppedPetFile))
                     .start(getContext(), this);
         } else {
-            croppedProfileFile = new File(getContext().getFilesDir(), PICTURE_CROPPED_FILE_NAME);
+            croppedProfileFile = new File(getContext().getFilesDir(), PICTURE_CROPPED_PET_FILE_NAME);
             CropImage.activity(source)
                     .setCropShape(Build.VERSION.SDK_INT >= Build.VERSION_CODES.P ? CropImageView.CropShape.RECTANGLE : CropImageView.CropShape.OVAL).setFixAspectRatio(true)
                     .setBorderCornerThickness(0)

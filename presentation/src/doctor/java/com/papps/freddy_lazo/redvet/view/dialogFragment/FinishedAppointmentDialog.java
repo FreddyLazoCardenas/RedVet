@@ -178,6 +178,7 @@ public class FinishedAppointmentDialog extends BaseDialogFragment implements App
     private void setUpRv() {
         rvAttach.setLayoutManager(new LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false));
         rvAttach.setAdapter(adapter);
+        adapter.setCanClick(false);
         adapter.setListener(this);
     }
 
