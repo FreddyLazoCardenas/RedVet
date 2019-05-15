@@ -167,7 +167,7 @@
                     android:layout_marginTop="20dp"
                     android:drawableStart="@drawable/ic_diagnosis"
                     android:drawablePadding="10dp"
-                    android:text="Diagnóstico"
+                    android:text="Observaciones"
                     android:textColor="@color/colorGreen"
                     android:textSize="18sp"
                     android:textStyle="bold"

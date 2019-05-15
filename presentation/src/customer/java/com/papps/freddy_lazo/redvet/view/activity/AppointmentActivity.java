@@ -173,7 +173,7 @@ public class AppointmentActivity extends BaseActivity implements DatePickerDialo
         getTimeLimits();
         tvJob.setText(setJobText());
         tvConsultationPrice.setText(getString(R.string.consultation_price, doctorModel.getConsultation_price()));
-        tvShowerPrice.setText(getString(R.string.consultation_price, doctorModel.getShower_price() != null && !doctorModel.getShower_price().equals("") ? doctorModel.getShower_price().equals("") : "Doctor no realiza este servicio"));
+        tvShowerPrice.setText(getString(R.string.consultation_price, (doctorModel.getShower_price() != null && !doctorModel.getShower_price().equals("")) ? doctorModel.getShower_price() : "Doctor no realiza este servicio"));
     }
 
     private void getTimeLimits() {
