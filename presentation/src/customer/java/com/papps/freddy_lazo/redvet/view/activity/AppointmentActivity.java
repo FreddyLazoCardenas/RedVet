@@ -39,6 +39,7 @@ import com.papps.freddy_lazo.redvet.view.pickers.RangeTimePickerDialog;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -99,6 +100,7 @@ public class AppointmentActivity extends BaseActivity implements DatePickerDialo
     private String timeData;
     private int maxTime;
     private int minTime;
+    private Integer calendarDay;
 
 
     public static Intent getCallingIntent(BaseActivity activity, String doctorModel) {
@@ -136,6 +138,7 @@ public class AppointmentActivity extends BaseActivity implements DatePickerDialo
     @Override
     public void initUI() {
         presenter.setView(this);
+        setTimeDefaultValues();
         timeData = "15:00:00";
         tvName.setText(MessageFormat.format("{0} {1}", doctorModel.getFirst_name(), doctorModel.getLast_name()));
         tvDescription.setText(doctorModel.getDescription());
@@ -170,25 +173,29 @@ public class AppointmentActivity extends BaseActivity implements DatePickerDialo
 
     private void getDoctorData() {
         doctorModel = DoctorModel.toModel(getIntent().getStringExtra("doctor"));
-        getTimeLimits();
         tvJob.setText(setJobText());
         tvConsultationPrice.setText(getString(R.string.consultation_price, doctorModel.getConsultation_price()));
         tvShowerPrice.setText(getString(R.string.consultation_price, (doctorModel.getShower_price() != null && !doctorModel.getShower_price().equals("")) ? doctorModel.getShower_price() : "Doctor no realiza este servicio"));
     }
 
-    private void getTimeLimits() {
-        maxTime = -1;
-        minTime = 25;
+    private void getTimeLimits() {//0 es domingo
+        setTimeDefaultValues();
+        if (calendarDay == null)
+            return;
         for (ScheduleModel model : doctorModel.getScheduleList()) {
             String[] splitMin = model.getStart_time().split(":");
             String[] splitMax = model.getEnd_time().split(":");
-            if (Integer.valueOf(splitMin[0]) < minTime) {
+            if (calendarDay == model.getDay()) {
                 minTime = Integer.valueOf(splitMin[0]);
-            }
-            if (Integer.valueOf(splitMax[0]) > maxTime) {
                 maxTime = Integer.valueOf(splitMax[0]);
+                break;
             }
         }
+    }
+
+    private void setTimeDefaultValues() {
+        maxTime = -1;
+        minTime = 25;
     }
 
     private int setJobText() {
@@ -215,6 +222,8 @@ public class AppointmentActivity extends BaseActivity implements DatePickerDialo
 
     @OnClick(R.id.end_group)
     public void timePicker() {
+        if (maxTime == -1 && minTime == 25)
+            return;
         RangeTimePickerDialog tp = navigator.navigateToAppointmentTimePicker(this);
         tp.setMax(maxTime, 0);
         tp.setMin(minTime, 0);
@@ -225,6 +234,10 @@ public class AppointmentActivity extends BaseActivity implements DatePickerDialo
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
         ivCheck.setVisibility(View.VISIBLE);
         datePicker.setText(String.format("%d-%d-%d", year, month + 1, dayOfMonth));
+        Calendar c = Calendar.getInstance();
+        c.set(year, month, dayOfMonth, 0, 0);
+        calendarDay = c.get(Calendar.DAY_OF_WEEK) - 1;
+        getTimeLimits();
     }
 
     @Override
@@ -319,6 +332,8 @@ public class AppointmentActivity extends BaseActivity implements DatePickerDialo
 
     @OnClick(R.id.iv_check)
     public void checkClicked() {
+        if (maxTime == -1 && minTime == 25)
+            return;
         if (ivCheck.getTag().equals("false")) {
             ivCheck.setTag("true");
             ivCheck.setImageResource(R.drawable.ic_check_pink);
