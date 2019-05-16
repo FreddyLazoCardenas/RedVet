@@ -82,6 +82,7 @@ public class HomeActivity extends BaseActivity implements BottomNavigationView.O
 
 
     public PetLoverModel getModel() {
+        Log.d("testraro",PetLoverModel.toModel(preferencesManager.getPetLoverCurrentUser()).toString());
         return PetLoverModel.toModel(preferencesManager.getPetLoverCurrentUser());
     }
 

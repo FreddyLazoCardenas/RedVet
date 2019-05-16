@@ -40,7 +40,7 @@ android {
         release {
             signingConfig signingConfigs.release
             debuggable false
-            minifyEnabled true
+            //minifyEnabled true
             resValue 'string', 'GOOGLE_MAPS_API_KEY', '"AIzaSyCrtRsfTuAg3wLNf3iJaC3AQ6tTROdRLUY"'
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }

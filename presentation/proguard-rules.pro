@@ -130,7 +130,7 @@ public static ** valueOf(java.lang.String);
 # This rule will properly ProGuard all the model classes in
 # the package com.yourcompany.models. Modify receiver fit the structure
 # of your app.
--keepclassmembers class pe.com.interbank.mpay.domain.model.** {
+-keepclassmembers class com.papps.freddy_lazo.redvet.domain.model.** {
   *;
 }
 
@@ -139,3 +139,7 @@ public static ** valueOf(java.lang.String);
 -dontwarn com.crashlytics.**
 -keepattributes SourceFile,LineNumberTable,*Annotation*
 -keep class com.crashlytics.android.**
+
+# NewPlaces
+-keep class com.google.android.libraries.places.** { *; }
+-dontwarn com.google.android.libraries.places.**
