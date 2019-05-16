@@ -95,6 +95,12 @@ public class AppointmentFragment extends BaseFragment implements AppointmentFrag
     }
 
     @Override
+    public void onDestroy() {
+        super.onDestroy();
+        presenter.destroy();
+    }
+
+    @Override
     protected Consumer<Object> getBusAction() {
         return event -> {
             if (event instanceof Event.NotificationEvent) {
