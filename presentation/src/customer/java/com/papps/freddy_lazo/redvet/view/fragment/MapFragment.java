@@ -9,6 +9,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -26,6 +27,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SearchView;
+import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -116,8 +118,15 @@ public class MapFragment extends BaseFragment implements OnMapReadyCallback, Map
         Objects.requireNonNull(activity).setSupportActionBar(toolbar);
         activity.setTitle("Filtrar");
         checkPermission();
+        checkGps();
         initUI();
+    }
 
+    private void checkGps() {
+        LocationManager manager = (LocationManager) activity.getSystemService(Context.LOCATION_SERVICE);
+        if (!manager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            Toast.makeText(activity, "Por favor habilita el GPS", Toast.LENGTH_LONG).show();
+        }
     }
 
     private void initMap() {
