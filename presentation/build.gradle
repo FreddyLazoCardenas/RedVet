@@ -1,7 +1,9 @@
 apply plugin: 'com.android.application'
 
 android {
-
+    defaultConfig {
+        multiDexEnabled true
+    }
 
     compileSdkVersion 28
     defaultConfig {
@@ -33,13 +35,13 @@ android {
         debug{
             debuggable true
             minifyEnabled false
-            resValue 'string', 'GOOGLE_MAPS_API_KEY', '"AIzaSyBp8sjAj8QX5Cb5v5I5We4Lc7z6FYt_pkc"'
+            resValue 'string', 'GOOGLE_MAPS_API_KEY', '"AIzaSyBb9qZsdAgAUpGm3VVAQF4JsiNgKgkowI0"'
         }
         release {
             signingConfig signingConfigs.release
             debuggable false
             minifyEnabled true
-            resValue 'string', 'GOOGLE_MAPS_API_KEY', '"AIzaSyBp8sjAj8QX5Cb5v5I5We4Lc7z6FYt_pkc"'
+            resValue 'string', 'GOOGLE_MAPS_API_KEY', '"AIzaSyBb9qZsdAgAUpGm3VVAQF4JsiNgKgkowI0"'
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -66,6 +68,7 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
         sourceCompatibility JavaVersion.VERSION_1_8
     }
+
 }
 
 dependencies {
@@ -95,7 +98,7 @@ dependencies {
     implementation presentationDependencies.imageCropper
     implementation presentationDependencies.firebaseMessaging
     implementation presentationDependencies.firebaseCore
-    implementation presentationDependencies.googlePlaces
+    implementation presentationDependencies.newGooglePlaces
 }
 apply plugin: 'com.google.gms.google-services'
 

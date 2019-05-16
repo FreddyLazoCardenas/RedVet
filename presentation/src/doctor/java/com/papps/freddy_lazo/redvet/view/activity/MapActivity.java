@@ -18,14 +18,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
-import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.location.places.AutocompleteFilter;
-import com.google.android.gms.location.places.Place;
-import com.google.android.gms.location.places.ui.PlaceAutocomplete;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -33,10 +28,17 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.model.Place;
+import com.google.android.libraries.places.widget.Autocomplete;
+import com.google.android.libraries.places.widget.AutocompleteActivity;
+import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
 import com.papps.freddy_lazo.redvet.R;
 import com.papps.freddy_lazo.redvet.internal.dagger.component.DaggerMapComponent;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
@@ -58,6 +60,7 @@ public class MapActivity extends BaseActivity implements OnMapReadyCallback, Goo
     Button readyButton;
     private LatLng latlng;
     private String address;
+    private List<Place.Field> placeFields;
 
     public static Intent getCallingIntent(Fragment fragment) {
         return new Intent(fragment.getContext(), MapActivity.class);
@@ -69,7 +72,26 @@ public class MapActivity extends BaseActivity implements OnMapReadyCallback, Goo
         setContentView(R.layout.activity_map);
         injectView(this);
         buildInjection();
+        iniNewApiPlaces();
         initUI();
+    }
+
+    private void iniNewApiPlaces() {
+        String apiKey = getString(R.string.places_api_key);
+        // Setup Places Client
+        if (!Places.isInitialized()) {
+            Places.initialize(getApplicationContext(), apiKey);
+        }
+        placeFields = getPlaceFields(Place.Field.ADDRESS_COMPONENTS, Place.Field.PHONE_NUMBER, Place.Field.WEBSITE_URI, Place.Field.OPENING_HOURS);
+    }
+
+
+    static List<Place.Field> getPlaceFields(Place.Field... placeFieldsToOmit) {
+        // Arrays.asList is immutable, create a mutable list to allow removing fields
+        List<Place.Field> placeFields = new ArrayList<>(Arrays.asList(Place.Field.values()));
+        placeFields.removeAll(Arrays.asList(placeFieldsToOmit));
+
+        return placeFields;
     }
 
     private void buildInjection() {
@@ -140,18 +162,20 @@ public class MapActivity extends BaseActivity implements OnMapReadyCallback, Goo
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == PLACE_AUTOCOMPLETE_REQUEST_CODE) {
-            if (resultCode == RESULT_OK) {
-                Place place = PlaceAutocomplete.getPlace(this, data);
+            if (resultCode == AutocompleteActivity.RESULT_OK) {
+                Place place = Autocomplete.getPlaceFromIntent(data);
                 tvAddress.setText(place.getAddress());
                 moveCamera(place.getLatLng());
-            } else if (resultCode == PlaceAutocomplete.RESULT_ERROR) {
-                Status status = PlaceAutocomplete.getStatus(this, data);
-                // TODO: Handle the error.
-
-            } else if (resultCode == RESULT_CANCELED) {
+            } else if (resultCode == AutocompleteActivity.RESULT_ERROR) {
+                Status status = Autocomplete.getStatusFromIntent(data);
+            } else if (resultCode == AutocompleteActivity.RESULT_CANCELED) {
                 // The user canceled the operation.
             }
         }
+        // Required because this class extends AppCompatActivity which extends FragmentActivity
+        // which implements this method to pass onActivityResult calls to child fragments
+        // (eg AutocompleteFragment).
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override
@@ -196,7 +220,7 @@ public class MapActivity extends BaseActivity implements OnMapReadyCallback, Goo
     }
 
     public void saveData() {
-        if (latlng != null && address != null) {
+       if (latlng != null && address != null) {
             Intent data = new Intent();
             data.putExtra("latitude", latlng.latitude);
             data.putExtra("longitude", latlng.longitude);
@@ -206,24 +230,13 @@ public class MapActivity extends BaseActivity implements OnMapReadyCallback, Goo
         }
     }
 
-    private void seeLocationsApi() {
-        try {
-            Log.d("cardClicked", "try");
-            AutocompleteFilter typeFilter = new AutocompleteFilter.Builder()
-                    .setCountry("PE")
-                    .build();
-            Intent intent =
-                    new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_OVERLAY)
-                            .setFilter(typeFilter)
-                            .build(this);
-            startActivityForResult(intent, PLACE_AUTOCOMPLETE_REQUEST_CODE);
-        } catch (GooglePlayServicesRepairableException e) {
-            // TODO: Handle the error.
-            Log.d("cardClicked", "GooglePlayServicesRepairableException");
 
-        } catch (GooglePlayServicesNotAvailableException e) {
-            // TODO: Handle the error.
-            Log.d("cardClicked", "GooglePlayServicesNotAvailableException");
-        }
+
+    private void seeLocationsApi() {
+        Intent autocompleteIntent =
+                new Autocomplete.IntentBuilder( AutocompleteActivityMode.OVERLAY, placeFields)
+                        .setCountry("PE")
+                        .build(this);
+        startActivityForResult(autocompleteIntent, PLACE_AUTOCOMPLETE_REQUEST_CODE);
     }
 }
