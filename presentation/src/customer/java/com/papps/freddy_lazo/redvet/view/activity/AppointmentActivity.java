@@ -224,10 +224,11 @@ public class AppointmentActivity extends BaseActivity implements DatePickerDialo
     public void timePicker() {
         if (maxTime == -1 && minTime == 25)
             return;
-        RangeTimePickerDialog tp = navigator.navigateToAppointmentTimePicker(this);
+        navigator.navigateToTimePicker(this);
+        /*RangeTimePickerDialog tp = navigator.navigateToAppointmentTimePicker(this);
         tp.setMax(maxTime, 0);
         tp.setMin(minTime, 0);
-        tp.show();
+        tp.show();*/
     }
 
     @Override
