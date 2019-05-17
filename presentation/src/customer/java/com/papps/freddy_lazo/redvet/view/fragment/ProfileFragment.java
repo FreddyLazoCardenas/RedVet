@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
@@ -252,6 +253,21 @@ public class ProfileFragment extends BaseFragment implements CameraDialog.OnClic
     public void logOut() {
         preferencesManager.savePetLoverCurrentUser("");
         navigator.navigateToLoginActivity(activity);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == RegisterFragmentPresenter.PERMISSION_REQUEST_CAMERA_CODE) {
+            if (grantResults.length <= 0 || grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                if (pictureFile == null) {
+                    pictureFile = new File(getContext().getFilesDir(), PICTURE_FILE_NAME);
+                }
+                navigator.navigateToTakePictureCamera(this, pictureFile, REQUEST_CAMERA);
+            }
+        } else if (requestCode == RegisterFragmentPresenter.PERMISSION_REQUEST_GALLERY_CODE && (grantResults.length <= 0 || grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+            navigator.navigateToGallery(this, SELECT_FILE);
+        }
     }
 
     @Override

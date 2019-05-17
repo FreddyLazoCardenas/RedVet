@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
@@ -48,6 +49,7 @@ import com.papps.freddy_lazo.redvet.model.ScheduleRegisterModel;
 import com.papps.freddy_lazo.redvet.model.ServiceDoctorModel;
 import com.papps.freddy_lazo.redvet.model.ServicesModel;
 import com.papps.freddy_lazo.redvet.presenter.ProfileFragmentPresenter;
+import com.papps.freddy_lazo.redvet.presenter.RegisterFragmentPresenter;
 import com.papps.freddy_lazo.redvet.view.activity.HomeActivity;
 import com.papps.freddy_lazo.redvet.view.adapter.PetAdapter;
 import com.papps.freddy_lazo.redvet.view.adapter.SchedulesAdapter;
@@ -192,6 +194,21 @@ public class ProfileFragment extends BaseFragment implements CameraDialog.OnClic
         for (ServiceDoctorModel model : doctorModel.getServiceList()) {
             ServicesDoctorRegister data = new ServicesDoctorRegister(model.getId(), model.getService_id());
             servicesDoctorRegisterList.add(data);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == PERMISSION_REQUEST_CAMERA_CODE) {
+            if (grantResults.length <= 0 || grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                if (pictureFile == null) {
+                    pictureFile = new File(getContext().getFilesDir(), PICTURE_FILE_NAME);
+                }
+                navigator.navigateToTakePictureCamera(this, pictureFile, REQUEST_CAMERA);
+            }
+        } else if (requestCode == PERMISSION_REQUEST_GALLERY_CODE && (grantResults.length <= 0 || grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+            navigator.navigateToGallery(this, SELECT_FILE);
         }
     }
 
