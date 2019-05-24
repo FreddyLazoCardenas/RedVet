@@ -58,8 +58,8 @@ public class AppointmentActivityPresenter implements Presenter<AppointmentActivi
             return;
         if (!validateType(view.getType()))
             return;
-        if (!validateReason(view.getReason()))
-            return;
+       /* if (!validateReason(view.getReason()))
+            return;*/
         sendRequest();
     }
 

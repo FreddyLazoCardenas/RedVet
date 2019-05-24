@@ -302,7 +302,7 @@ public class MapFragment extends BaseFragment implements OnMapReadyCallback, Map
     @Override
     public void getListData(List<DoctorModel> data) {
         setDoctorMarkers(data);
-        requestLastPosition();
+        //requestLastPosition();
     }
 
     @Override

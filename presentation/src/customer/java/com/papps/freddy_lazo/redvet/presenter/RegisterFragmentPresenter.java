@@ -96,8 +96,8 @@ public class RegisterFragmentPresenter implements Presenter<RegisterFragmentView
             return;
         if (!isValidDni(view.getDni()))
             return;
-        if (!isValidAddress(view.getAddress()))
-            return;
+        /*if (!isValidAddress(view.getAddress()))
+            return;*/
         if (!isValidEmail(view.getEmail()))
             return;
         if (!isValidPhone(view.getPhone()))
