@@ -4,9 +4,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.internal.BottomNavigationItemView;
+import android.support.design.internal.BottomNavigationMenuView;
 import android.support.design.widget.BottomNavigationView;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.papps.freddy_lazo.data.sharedPreferences.PreferencesManager;
 import com.papps.freddy_lazo.redvet.R;
@@ -39,6 +43,17 @@ public class HomeActivity extends BaseActivity implements BottomNavigationView.O
         buildInjection();
         Log.d("date", System.currentTimeMillis() + "");
         initUI();
+        test();
+    }
+
+    private void test() {
+        BottomNavigationMenuView bottomNavigationMenuView =
+                (BottomNavigationMenuView) bottomNav.getChildAt(0);
+        View v = bottomNavigationMenuView.getChildAt(3);
+        BottomNavigationItemView itemView = (BottomNavigationItemView) v;
+
+        View badge = LayoutInflater.from(this)
+                .inflate(R.layout.badge_bottom_nav_view, itemView, true);
     }
 
     private void buildInjection() {

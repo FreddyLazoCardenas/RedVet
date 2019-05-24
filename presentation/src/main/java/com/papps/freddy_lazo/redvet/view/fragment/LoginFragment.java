@@ -5,7 +5,10 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.method.PasswordTransformationMethod;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -25,6 +28,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import butterknife.OnTouch;
 
 public class LoginFragment extends BaseFragment implements LoginFragmentView {
 
@@ -59,6 +63,23 @@ public class LoginFragment extends BaseFragment implements LoginFragmentView {
         DaggerLoginFragmentComponent.builder()
                 .applicationComponent(getAndroidApplication().getApplicationComponent())
                 .build().inject(this);
+    }
+
+    @OnTouch(R.id.et_password)
+    public boolean touchEtPassword(View v, MotionEvent event) {
+        final int DRAWABLE_RIGHT = 2;
+        if (event.getAction() == MotionEvent.ACTION_UP) {
+            if (event.getRawX() >= (etPassword.getRight() - etPassword.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
+                // your action here
+                if (etPassword.getTransformationMethod() == null) {
+                    etPassword.setTransformationMethod(new PasswordTransformationMethod());
+                } else {
+                    etPassword.setTransformationMethod(null);
+                }
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override
