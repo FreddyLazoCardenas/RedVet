@@ -238,8 +238,8 @@ public class ProfileFragment extends BaseFragment implements CameraDialog.OnClic
 
     private void setUpTypeSpinner() {
         ArrayList<String> arrayData = new ArrayList<>();
-        arrayData.add("Clínica");
-        arrayData.add("Veterinaria");
+        arrayData.add("Clínica Veterinaria");
+        arrayData.add("Médico Veterinario");
         arrayData.add("Otro");
 
         String[] arrayListData = arrayData.toArray(new String[0]);
