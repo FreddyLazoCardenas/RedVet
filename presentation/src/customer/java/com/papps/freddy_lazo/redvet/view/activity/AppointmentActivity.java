@@ -156,6 +156,9 @@ public class AppointmentActivity extends BaseActivity implements DatePickerDialo
         data.add(new CreateAppointmentObjectModel("Baño"));
         data.add(new CreateAppointmentObjectModel("Otros"));
         adapter.bindList(data);
+        if (petLoverModel.getPetList().size() == 1) {
+            petLoverModel.getPetList().get(0).setSelected(true);
+        }
         petsAdapter.bindList(petLoverModel.getPetList());
         displayPhoto(true);
     }
