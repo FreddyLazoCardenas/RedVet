@@ -26,6 +26,7 @@ import com.papps.freddy_lazo.data.network.response.NewsResponse;
 import com.papps.freddy_lazo.data.network.response.PetsRedVetResponse;
 import com.papps.freddy_lazo.data.network.response.QualificationResponse;
 import com.papps.freddy_lazo.data.network.response.RedVetAppointmentResponse;
+import com.papps.freddy_lazo.data.network.response.RedVetNotificationsResponse;
 import com.papps.freddy_lazo.data.network.response.ServicesResponse;
 
 import java.util.List;
@@ -114,8 +115,9 @@ public interface RestService {
     @POST("pet-lover/appointments/qualify")
     Call<ResponseEntity<QualificationResponse>> petLoverQualifyAppointment(@Header("Authorization") String auth, @Body BodyQualifyAppointment bodyQualifyAppointment);
 
-
     @POST("pet-lover/pet/destroy")
     Call<ResponseEntity<List<Void>>> deletePet(@Header("Authorization") String auth, @Body BodyDeletePet body);
 
+  /*  @GET("notifications")
+    Call<ResponseEntity<RedVetNotificationsResponse>> redVetNotifications(@Header("Authorization") String auth);*/
 }
