@@ -29,9 +29,14 @@
     <string name="consultation_price">S/. %s</string>
     <string name="doctor_finished_date">Ha finalizado la consulta del %1$s/%2$s/%3$s </string>
     <string name="doctor_date">%1$s/%2$s/%3$s</string>
-    <string name="cancel_reason_1">No llegué a un acuerdo con el prestador de servicios</string>
-    <string name="cancel_reason_2">No logré contactar con el prestador de servicios</string>
-    <string name="cancel_reason_3">Tuve un inconveniente de fuerza mayor, ya contacté al prestador de servicios para informar</string>
+    <string name="cancel_reason_1_pl">Está tardando en confirmar la cita</string>
+    <string name="cancel_reason_2_pl">Ya tengo otra reserva</string>
+    <string name="cancel_reason_3_pl">El Doctor me lo ha pedido</string>
+    <string name="cancel_reason_4_pl">Solo estoy probando</string>
+    <string name="cancel_reason_1_doctor">No llegamos a un acuerdo</string>
+    <string name="cancel_reason_2_doctor">No podré atenderlo, reagendemos!</string>
+    <string name="cancel_reason_3_doctor">No contamos con ese servicio</string>
+    <string name="cancel_reason_4_doctor">El cliente me lo solicitó</string>
     <string name="pet_lover_appointment_confirmed">Tu cita ha sido confirmada</string>
     <string name="pet_lover_appointment_canceled">Tu cita ha sido cancelada</string>
     <string name="pet_lover_appointment_finished">Tu cita finalizó satisfactoriamente</string>

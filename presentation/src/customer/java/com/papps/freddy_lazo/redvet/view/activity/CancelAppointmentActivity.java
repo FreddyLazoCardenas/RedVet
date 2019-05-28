@@ -82,10 +82,11 @@ public class CancelAppointmentActivity extends BaseActivity implements CancelOth
 
     private void fillAdapter() {
         List<CancelAppointmentModel> data = new ArrayList<>();
-        data.add(new CancelAppointmentModel(getString(R.string.cancel_reason_1)));
-        data.add(new CancelAppointmentModel(getString(R.string.cancel_reason_2)));
-        data.add(new CancelAppointmentModel(getString(R.string.cancel_reason_3)));
-        data.add(new CancelAppointmentModel("Otros"));
+        data.add(new CancelAppointmentModel(getString(R.string.cancel_reason_1_pl)));
+        data.add(new CancelAppointmentModel(getString(R.string.cancel_reason_2_pl)));
+        data.add(new CancelAppointmentModel(getString(R.string.cancel_reason_3_pl)));
+        data.add(new CancelAppointmentModel(getString(R.string.cancel_reason_4_pl)));
+        data.add(new CancelAppointmentModel("Otro Motivo"));
         adapter.bindList(data);
     }
 
