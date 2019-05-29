@@ -118,6 +118,6 @@ public interface RestService {
     @POST("pet-lover/pet/destroy")
     Call<ResponseEntity<List<Void>>> deletePet(@Header("Authorization") String auth, @Body BodyDeletePet body);
 
-  /*  @GET("notifications")
-    Call<ResponseEntity<RedVetNotificationsResponse>> redVetNotifications(@Header("Authorization") String auth);*/
+    @GET("notifications")
+    Call<ResponseEntity<RedVetNotificationsResponse>> redVetNotifications(@Header("Authorization") String auth);
 }
