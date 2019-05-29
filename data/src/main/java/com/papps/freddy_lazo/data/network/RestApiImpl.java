@@ -14,6 +14,7 @@ import com.papps.freddy_lazo.data.entity.PetRedVetEntity;
 import com.papps.freddy_lazo.data.entity.RedVetAppointmentEntity;
 import com.papps.freddy_lazo.data.entity.RedVetDetailAppointmentEntity;
 import com.papps.freddy_lazo.data.entity.RedVetMessageEntity;
+import com.papps.freddy_lazo.data.entity.RedVetNotificationEntity;
 import com.papps.freddy_lazo.data.entity.ResponseEntity;
 import com.papps.freddy_lazo.data.entity.ServicesEntity;
 import com.papps.freddy_lazo.data.network.body.BodyAppointment;
@@ -41,6 +42,7 @@ import com.papps.freddy_lazo.data.network.response.NewsResponse;
 import com.papps.freddy_lazo.data.network.response.PetsRedVetResponse;
 import com.papps.freddy_lazo.data.network.response.QualificationResponse;
 import com.papps.freddy_lazo.data.network.response.RedVetAppointmentResponse;
+import com.papps.freddy_lazo.data.network.response.RedVetNotificationsResponse;
 import com.papps.freddy_lazo.data.network.response.ServicesResponse;
 import com.papps.freddy_lazo.domain.model.PetRegister;
 import com.papps.freddy_lazo.domain.model.ScheduleDoctorRegister;
@@ -459,6 +461,21 @@ public class RestApiImpl implements RestApi {
                 super.onResponse(call, response);
                 ResponseEntity<List<Void>> body = response.body();
                 if (body != null && body.getMessage() == null) {
+                    emitter.onComplete();
+                }
+            }
+        }));
+    }
+
+    @Override
+    public Observable<List<RedVetNotificationEntity>> redVetNotifications(String auth) {
+        return Observable.create(emitter -> restService.redVetNotifications("Bearer " + auth).enqueue(new DefaultCallback<ResponseEntity<RedVetNotificationsResponse>>(emitter) {
+            @Override
+            public void onResponse(@NonNull Call<ResponseEntity<RedVetNotificationsResponse>> call, @NonNull Response<ResponseEntity<RedVetNotificationsResponse>> response) {
+                super.onResponse(call, response);
+                ResponseEntity<RedVetNotificationsResponse> body = response.body();
+                if (body != null && body.getMessage() == null) {
+                    emitter.onNext(body.getData().getNotifications());
                     emitter.onComplete();
                 }
             }

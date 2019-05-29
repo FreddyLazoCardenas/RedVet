@@ -11,9 +11,35 @@ public class RedVetNotificationEntity {
     @SerializedName("user_id")
     private int user_id;
     @SerializedName("title")
-    private int title;
+    private String title;
     @SerializedName("description")
-    private int description;
-    @SerializedName("type")
-    private String type;
+    private String description;
+    @SerializedName("data")
+    private NotificationDataEntity data;
+    @SerializedName("is_read")
+    private boolean is_read;
+
+    public int getId() {
+        return id;
+    }
+
+    public int getUser_id() {
+        return user_id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public NotificationDataEntity getData() {
+        return data;
+    }
+
+    public boolean isRead() {
+        return is_read;
+    }
 }

@@ -285,6 +285,7 @@ public class MapFragment extends BaseFragment implements OnMapReadyCallback, Map
         this.googleMap = googleMap;
         googleMap.setOnMarkerClickListener(this);
         Log.d("onMapReady", "cargo el mapa");
+        requestLastPosition();
         presenter.getDoctors();
     }
 

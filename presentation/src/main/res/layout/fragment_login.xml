@@ -28,7 +28,7 @@
         android:drawableStart="@drawable/ic_username"
         android:drawablePadding="10dp"
         android:ems="10"
-        android:hint="Usuario"
+        android:hint="Correo electrónico"
         android:inputType="textEmailAddress"
         android:theme="@style/MyEditTextTheme"
         app:layout_constraintEnd_toEndOf="parent"

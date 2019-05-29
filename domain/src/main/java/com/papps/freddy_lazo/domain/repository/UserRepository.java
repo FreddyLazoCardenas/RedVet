@@ -7,6 +7,7 @@ import com.papps.freddy_lazo.domain.model.PetLoverAppointment;
 import com.papps.freddy_lazo.domain.model.PetRedVet;
 import com.papps.freddy_lazo.domain.model.PetRegister;
 import com.papps.freddy_lazo.domain.model.RedVetDetailAppointment;
+import com.papps.freddy_lazo.domain.model.RedVetNotification;
 import com.papps.freddy_lazo.domain.model.ScheduleDoctorRegister;
 import com.papps.freddy_lazo.domain.model.ServicesDoctorRegister;
 
@@ -40,4 +41,6 @@ public interface UserRepository {
     Observable<PetLoverAppointment> petLoverQualifyAppointment(String auth, int appointmentId, int qualification);
 
     Observable<List<Void>> deletePet(String auth, int petLoverId);
+
+    Observable<List<RedVetNotification>> redVetNotifications(String auth);
 }

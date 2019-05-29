@@ -11,6 +11,7 @@ import com.papps.freddy_lazo.data.entity.PetRedVetEntity;
 import com.papps.freddy_lazo.data.entity.RedVetAppointmentEntity;
 import com.papps.freddy_lazo.data.entity.RedVetDetailAppointmentEntity;
 import com.papps.freddy_lazo.data.entity.RedVetMessageEntity;
+import com.papps.freddy_lazo.data.entity.RedVetNotificationEntity;
 import com.papps.freddy_lazo.data.entity.ResponseEntity;
 import com.papps.freddy_lazo.data.entity.ServicesEntity;
 import com.papps.freddy_lazo.data.network.response.PetsRedVetResponse;
@@ -79,4 +80,7 @@ public interface RestApi {
     Observable<PetLoverAppointmentEntity> petLoverQualifyAppointment(String auth, int appointmentId, int qualification);
 
     Observable<List<Void>> deletePet(String auth, int petLoverId);
+
+    Observable<List<RedVetNotificationEntity>> redVetNotifications(String auth);
+
 }

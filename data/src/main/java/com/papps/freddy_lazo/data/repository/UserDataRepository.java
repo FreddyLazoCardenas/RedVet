@@ -6,6 +6,7 @@ import com.papps.freddy_lazo.data.entity.mapper.DoctorLoginMapper;
 import com.papps.freddy_lazo.data.entity.mapper.PetLoverLoginMapper;
 import com.papps.freddy_lazo.data.entity.mapper.PetRedVetMapper;
 import com.papps.freddy_lazo.data.entity.mapper.RedVetAppointmentDetailMapper;
+import com.papps.freddy_lazo.data.entity.mapper.RedVetNotificationMapper;
 import com.papps.freddy_lazo.data.entity.mapper.SearchDoctorsMapper;
 import com.papps.freddy_lazo.data.network.RestApi;
 import com.papps.freddy_lazo.domain.model.CreateAppointment;
@@ -15,6 +16,7 @@ import com.papps.freddy_lazo.domain.model.PetLoverAppointment;
 import com.papps.freddy_lazo.domain.model.PetRedVet;
 import com.papps.freddy_lazo.domain.model.PetRegister;
 import com.papps.freddy_lazo.domain.model.RedVetDetailAppointment;
+import com.papps.freddy_lazo.domain.model.RedVetNotification;
 import com.papps.freddy_lazo.domain.model.ScheduleDoctorRegister;
 import com.papps.freddy_lazo.domain.model.ServicesDoctorRegister;
 import com.papps.freddy_lazo.domain.repository.UserRepository;
@@ -95,5 +97,10 @@ public class UserDataRepository implements UserRepository {
     @Override
     public Observable<List<Void>> deletePet(String auth, int petLoverId) {
         return mRestApi.deletePet(auth, petLoverId);
+    }
+
+    @Override
+    public Observable<List<RedVetNotification>> redVetNotifications(String auth) {
+        return mRestApi.redVetNotifications(auth).map(RedVetNotificationMapper::transform);
     }
 }
