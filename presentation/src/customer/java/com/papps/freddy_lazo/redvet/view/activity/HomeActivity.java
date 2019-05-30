@@ -38,6 +38,7 @@ public class HomeActivity extends BaseActivity implements BottomNavigationView.O
     PreferencesManager preferencesManager;
     @Inject
     HomeActivityPresenter presenter;
+
     private View badge;
 
     public static Intent getCallingIntent(BaseActivity activity) {
@@ -158,5 +159,9 @@ public class HomeActivity extends BaseActivity implements BottomNavigationView.O
                 break;
             }
         }
+    }
+
+    public View getBadge() {
+        return badge;
     }
 }

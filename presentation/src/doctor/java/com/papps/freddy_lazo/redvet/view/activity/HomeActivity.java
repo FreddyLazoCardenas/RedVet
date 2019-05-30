@@ -142,4 +142,8 @@ public class HomeActivity extends BaseActivity implements BottomNavigationView.O
             }
         }
     }
+
+    public View getBadge() {
+        return badge;
+    }
 }

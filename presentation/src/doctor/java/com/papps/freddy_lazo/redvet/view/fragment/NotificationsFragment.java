@@ -69,6 +69,7 @@ public class NotificationsFragment extends BaseFragment implements NotificationF
 
     @Override
     public void initUI() {
+        activity.getBadge().setVisibility(View.GONE);
         setUpRv();
         presenter.setView(this);
         presenter.getNotificationList();
