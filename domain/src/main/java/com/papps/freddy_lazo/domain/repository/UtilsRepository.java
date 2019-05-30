@@ -33,7 +33,7 @@ public interface UtilsRepository {
 
     Observable<RedVetAppointment> petLoverCancelAppointment(String apiToken, int appointmentId, String reason);
 
-    Observable<AppointmentPhoto> doctorUploadAppointmentPhoto(String apiToken, int appointmentId, String photo);
+    Observable<AppointmentPhoto> doctorUploadAppointmentPhoto(String apiToken, int appointmentId,  byte[] photo);
 
     Observable<List<Void>> doctorDeleteAppointmentPhoto(String apiToken, int appointmentId, int appointment_photo_id);
 

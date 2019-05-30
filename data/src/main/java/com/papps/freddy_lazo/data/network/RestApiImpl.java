@@ -55,6 +55,9 @@ import java.util.List;
 
 import io.reactivex.Observable;
 import io.reactivex.annotations.NonNull;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Response;
 
@@ -322,18 +325,25 @@ public class RestApiImpl implements RestApi {
     }
 
     @Override
-    public Observable<AppointmentPhotoEntity> doctorUploadAppointmentPhoto(String apiToken, int appointmentId, String photo) {
-        return Observable.create(emitter -> restService.doctorUploadAppointmentPhoto("Bearer " + apiToken, new BodyUploadPhoto(appointmentId, photo)).enqueue(new DefaultCallback<ResponseEntity<AppointmentPhotoResponse>>(emitter) {
-            @Override
-            public void onResponse(@NonNull Call<ResponseEntity<AppointmentPhotoResponse>> call, @NonNull Response<ResponseEntity<AppointmentPhotoResponse>> response) {
-                super.onResponse(call, response);
-                ResponseEntity<AppointmentPhotoResponse> body = response.body();
-                if (body != null && body.getMessage() == null) {
-                    emitter.onNext(body.getData().getAppointment_photo());
-                    emitter.onComplete();
-                }
+    public Observable<AppointmentPhotoEntity> doctorUploadAppointmentPhoto(String apiToken, int appointmentId, byte[] photo) {
+        return Observable.create(emitter -> {
+            MultipartBody.Part body = null;
+            if (photo != null) {
+                body = MultipartBody.Part.createFormData("photo", "photo", RequestBody.create(MediaType.parse("image/jpeg"), photo));
             }
-        }));
+            RequestBody id = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(appointmentId));
+            restService.doctorUploadAppointmentPhoto("Bearer " + apiToken, body, id).enqueue(new DefaultCallback<ResponseEntity<AppointmentPhotoResponse>>(emitter) {
+                @Override
+                public void onResponse(@NonNull Call<ResponseEntity<AppointmentPhotoResponse>> call, @NonNull Response<ResponseEntity<AppointmentPhotoResponse>> response) {
+                    super.onResponse(call, response);
+                    ResponseEntity<AppointmentPhotoResponse> body = response.body();
+                    if (body != null && body.getMessage() == null) {
+                        emitter.onNext(body.getData().getAppointment_photo());
+                        emitter.onComplete();
+                    }
+                }
+            });
+        });
     }
 
     @Override
@@ -486,7 +496,7 @@ public class RestApiImpl implements RestApi {
 
     @Override
     public Observable<RedVetNotificationEntity> redVetReadNotification(String auth, int notId) {
-        return Observable.create(emitter -> restService.redVetReadNotification("Bearer " + auth, new BodyRedVetReadNotification(notId,true)).enqueue(new DefaultCallback<ResponseEntity<RedVetReadNotificationsResponse>>(emitter) {
+        return Observable.create(emitter -> restService.redVetReadNotification("Bearer " + auth, new BodyRedVetReadNotification(notId, true)).enqueue(new DefaultCallback<ResponseEntity<RedVetReadNotificationsResponse>>(emitter) {
             @Override
             public void onResponse(@NonNull Call<ResponseEntity<RedVetReadNotificationsResponse>> call, @NonNull Response<ResponseEntity<RedVetReadNotificationsResponse>> response) {
                 super.onResponse(call, response);

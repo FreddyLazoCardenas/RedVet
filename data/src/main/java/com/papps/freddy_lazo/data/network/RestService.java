@@ -33,11 +33,15 @@ import com.papps.freddy_lazo.data.network.response.ServicesResponse;
 
 import java.util.List;
 
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 import retrofit2.http.Path;
 
 public interface RestService {
@@ -90,8 +94,9 @@ public interface RestService {
     @POST("pet-lover/appointments/cancel")
     Call<ResponseEntity<PetLoverAppointmentResponse>> petLoverCancelAppointment(@Header("Authorization") String auth, @Body BodyCancelAppointment bodyCancelAppointment);
 
+    @Multipart
     @POST("doctor/appointments/upload-photo")
-    Call<ResponseEntity<AppointmentPhotoResponse>> doctorUploadAppointmentPhoto(@Header("Authorization") String auth, @Body BodyUploadPhoto bodyUploadPhoto);
+    Call<ResponseEntity<AppointmentPhotoResponse>> doctorUploadAppointmentPhoto(@Header("Authorization") String auth, @Part MultipartBody.Part photo, @Part("appointment_id") RequestBody appointmentId);
 
     @POST("doctor/appointments/delete-photo")
     Call<ResponseEntity<List<Void>>> doctorDeleteAppointmentPhoto(@Header("Authorization") String auth, @Body BodyDeletePhoto bodyDeletePhoto);

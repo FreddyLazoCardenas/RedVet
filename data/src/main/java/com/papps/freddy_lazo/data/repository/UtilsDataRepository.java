@@ -88,7 +88,7 @@ public class UtilsDataRepository implements UtilsRepository {
     }
 
     @Override
-    public Observable<AppointmentPhoto> doctorUploadAppointmentPhoto(String apiToken, int appointmentId, String photo) {
+    public Observable<AppointmentPhoto> doctorUploadAppointmentPhoto(String apiToken, int appointmentId, byte[] photo) {
         return mRestApi.doctorUploadAppointmentPhoto(apiToken, appointmentId, photo).map(AppointmentPhotoMapper::transform);
     }
 

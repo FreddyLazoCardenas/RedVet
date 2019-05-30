@@ -13,7 +13,7 @@ public class DoctorUploadAppointmentPhoto extends UseCase {
     private final UtilsRepository repository;
     private String apiToken;
     private int appointmentId;
-    private String photo;
+    private byte[] photo;
 
     @Inject
     DoctorUploadAppointmentPhoto(UtilsRepository repository, ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
@@ -21,7 +21,7 @@ public class DoctorUploadAppointmentPhoto extends UseCase {
         this.repository = repository;
     }
 
-    public void bindParams(String apiToken, int appointmentId, String photo) {
+    public void bindParams(String apiToken, int appointmentId, byte[] photo) {
         this.apiToken = apiToken;
         this.appointmentId = appointmentId;
         this.photo = photo;

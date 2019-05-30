@@ -213,13 +213,14 @@ public class DiagnoseAppointmentActivity extends BaseActivity implements Diagnos
         }
     }
 
-    public String getPetDiagnoseBase64Image() {
+    public byte[] getPetDiagnoseBase64Image() {
         if (croppedFile != null) {
             Bitmap bm = BitmapFactory.decodeFile(croppedFile.getAbsolutePath());
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             bm.compress(Bitmap.CompressFormat.JPEG, 100, baos); //bm is the bitmap object
             byte[] b = baos.toByteArray();
-            return Base64.encodeToString(b, Base64.NO_WRAP);
+            //return Base64.encodeToString(b, Base64.NO_WRAP);
+            return b;
         } else
             return null;
     }
