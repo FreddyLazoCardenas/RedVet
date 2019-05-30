@@ -34,6 +34,7 @@ import com.papps.freddy_lazo.redvet.util.DateHelper;
 import com.papps.freddy_lazo.redvet.view.adapter.AppointmentPhotoAdapter;
 import com.papps.freddy_lazo.redvet.view.dialogFragment.BaseDialogFragment;
 import com.papps.freddy_lazo.redvet.view.dialogFragment.CameraDialog;
+import com.papps.freddy_lazo.redvet.view.dialogFragment.DiagnoseDialog;
 import com.papps.freddy_lazo.redvet.view.dialogFragment.PhotoListDialog;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
@@ -48,13 +49,14 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class DiagnoseAppointmentActivity extends BaseActivity implements DiagnoseAppointmentView, CameraDialog.OnClickListener, AppointmentPhotoAdapter.onClickAdapter, PhotoListDialog.OnClickListener {
+public class DiagnoseAppointmentActivity extends BaseActivity implements DiagnoseAppointmentView, DiagnoseDialog.OnClickListener, AppointmentPhotoAdapter.onClickAdapter, PhotoListDialog.OnClickListener {
 
     private static final String PICTURE_FILE_NAME = "profileComplete.jpg";
     private static final String PICTURE_CROPPED_FILE_NAME = "profile.jpg";
-
-    private static final int SELECT_FILE = 1;
     private static final int REQUEST_CAMERA = 0;
+    private static final int SELECT_FILE = 1;
+    private static final int SELECT_FILE_PDF = 2;
+    private static final int SELECT_FILE_DOC = 3;
     private File pictureFile;
     private File croppedFile;
 
@@ -197,18 +199,19 @@ public class DiagnoseAppointmentActivity extends BaseActivity implements Diagnos
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == SELECT_FILE && resultCode == Activity.RESULT_OK) {
-            // selectGalleryButton();
             startCrop(data.getData());
         } else if (requestCode == REQUEST_CAMERA && resultCode == Activity.RESULT_OK) {
-            //selectSelfieButton();
             startCrop(Uri.fromFile(pictureFile));
+        } else if (requestCode == SELECT_FILE_PDF && resultCode == Activity.RESULT_OK) {
+           // uploadFile();
+        } else if (requestCode == SELECT_FILE_DOC && resultCode == Activity.RESULT_OK) {
+           // uploadFile();
         } else if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
             if (resultCode == Activity.RESULT_OK) {
                 displayPhoto(croppedFile.getAbsolutePath(), true);
                 presenter.uploadPhoto(getPetDiagnoseBase64Image());
             } else {
                 croppedFile = null;
-                // unSelectButtons();
             }
         }
     }
@@ -264,9 +267,9 @@ public class DiagnoseAppointmentActivity extends BaseActivity implements Diagnos
     @OnClick(R.id.iv_attach)
     public void ivAttach() {
         if (adapter.getItemCount() < 5)
-            navigator.showListDialog(this, this);
+            navigator.showDiagnoseListDialog(this, this);
         else
-            showErrorMessage("Máximo número de fotos alcanzado");
+            showErrorMessage("Máximo número de documentos alcanzado");
     }
 
     @Override
@@ -284,6 +287,16 @@ public class DiagnoseAppointmentActivity extends BaseActivity implements Diagnos
         if (presenter.checkGalleryPermissions()) {
             navigator.navigateToGallery(this, SELECT_FILE);
         }
+    }
+
+    @Override
+    public void pdf() {
+        navigator.navigateToPdf(this, SELECT_FILE_PDF);
+    }
+
+    @Override
+    public void documents() {
+        navigator.navigateToDocs(this, SELECT_FILE_DOC);
     }
 
     @OnClick(R.id.img_header)

@@ -7,6 +7,13 @@
         <item>Galería</item>
     </string-array>
     <string-array
+        name="string_array_diagnose">
+        <item>Cámara</item>
+        <item>Galería</item>
+        <item>Pdf</item>
+        <item>Documentos</item>
+    </string-array>
+    <string-array
         name="string_array_photo">
         <item>Eliminar</item>
         <item>Cancelar</item>

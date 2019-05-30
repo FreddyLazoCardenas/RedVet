@@ -27,6 +27,7 @@ import com.papps.freddy_lazo.redvet.view.dialogFragment.BaseDialogFragment;
 import com.papps.freddy_lazo.redvet.view.dialogFragment.CameraDialog;
 import com.papps.freddy_lazo.redvet.view.dialogFragment.CancelOtherReasonAppointmentDialog;
 import com.papps.freddy_lazo.redvet.view.dialogFragment.ConfirmedAppointmentDialog;
+import com.papps.freddy_lazo.redvet.view.dialogFragment.DiagnoseDialog;
 import com.papps.freddy_lazo.redvet.view.dialogFragment.FinishAppointmentDialog;
 import com.papps.freddy_lazo.redvet.view.dialogFragment.FinishedAppointmentDialog;
 import com.papps.freddy_lazo.redvet.view.dialogFragment.NotificationsListDialog;
@@ -200,13 +201,34 @@ public class Navigator extends BaseNavigator {
         intent.setAction(Intent.ACTION_GET_CONTENT);
         activity.startActivityForResult(Intent.createChooser(intent, "Select File"), requestCode);
     }
+
+    public void navigateToPdf(BaseActivity activity, int requestCode) {
+        Intent intent = new Intent();
+        intent.setType("application/pdf");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        activity.startActivityForResult(Intent.createChooser(intent, "Select File"), requestCode);
+    }
+
+    public void navigateToDocs(BaseActivity activity, int requestCode) {
+        String[] mimeTypes = {"application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document"};
+        Intent intent = new Intent();
+        intent.setType("*/*");
+        intent.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes);
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        activity.startActivityForResult(Intent.createChooser(intent, "Select File"), requestCode);
+    }
     //Dialogs
 
     public void showFinishListDialog(BaseActivity activity, FinishAppointmentDialog.OnClickListener listener, int id) {
-        dialogTransaction(activity, FinishAppointmentDialog.newInstance(listener,id));
+        dialogTransaction(activity, FinishAppointmentDialog.newInstance(listener, id));
     }
+
     public void showListDialog(BaseActivity activity, CameraDialog.OnClickListener listener) {
         dialogTransaction(activity, CameraDialog.newInstance(listener));
+    }
+
+    public void showDiagnoseListDialog(BaseActivity activity, DiagnoseDialog.OnClickListener listener) {
+        dialogTransaction(activity, DiagnoseDialog.newInstance(listener));
     }
 
     public void showPhotoListDialog(BaseActivity activity, PhotoListDialog.OnClickListener listener) {
@@ -216,6 +238,7 @@ public class Navigator extends BaseNavigator {
     public void showNotificationsListDialog(BaseActivity activity, NotificationsListDialog.OnClickListener listener) {
         dialogTransaction(activity, NotificationsListDialog.newInstance(listener));
     }
+
     public void navigatePendingDialog(BaseActivity activity, String data, PendingAppointmentDialog.RequestInterface listener) {
         dialogTransaction(activity, PendingAppointmentDialog.newInstance(data, listener));
     }

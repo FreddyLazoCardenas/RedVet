@@ -37,7 +37,7 @@ public class NotificationsFragment extends BaseFragment implements NotificationF
     @BindView(R.id.rv_notifications)
     RecyclerView rvNotifications;
     private HomeActivity activity;
-    private NotificationModel data;
+    private RedVetNotificationModel data;
 
     public static Fragment newInstance() {
         return new NotificationsFragment();
@@ -108,6 +108,11 @@ public class NotificationsFragment extends BaseFragment implements NotificationF
     }
 
     @Override
+    public void successReadRequest(RedVetNotificationModel data) {
+        adapter.updateNotification(data);
+    }
+
+    @Override
     public void showLoading() {
         activity.showLoading();
     }
@@ -124,8 +129,13 @@ public class NotificationsFragment extends BaseFragment implements NotificationF
 
     @Override
     public void dataNotification(RedVetNotificationModel data) {
-      /*  this.data = data;
-        navigator.showNotificationsListDialog(activity, this);*/
+        this.data = data;
+        navigator.showNotificationsListDialog(activity, this);
+    }
+
+    @Override
+    public void markAsRead() {
+        presenter.markReadNotificationItem(data.getId());
     }
 
     @Override

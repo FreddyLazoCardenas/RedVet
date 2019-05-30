@@ -5,6 +5,7 @@ import com.papps.freddy_lazo.domain.interactor.DefaultObserver;
 import com.papps.freddy_lazo.domain.interactor.DeleteSpecificNotification;
 import com.papps.freddy_lazo.domain.interactor.GetNotificationList;
 import com.papps.freddy_lazo.domain.interactor.RedVetNotifications;
+import com.papps.freddy_lazo.domain.interactor.RedVetReadNotification;
 import com.papps.freddy_lazo.domain.model.Notification;
 import com.papps.freddy_lazo.domain.model.RedVetNotification;
 import com.papps.freddy_lazo.redvet.interfaces.NotificationFragmentView;
@@ -20,11 +21,13 @@ public class NotificationFragmentPresenter implements Presenter<NotificationFrag
 
     private final RedVetNotifications redVetNotification;
     private final PreferencesManager preferencesManager;
+    private final RedVetReadNotification redVetReadNotification;
     private NotificationFragmentView view;
 
     @Inject
-    NotificationFragmentPresenter(PreferencesManager preferencesManager, RedVetNotifications redVetNotification) {
+    NotificationFragmentPresenter(PreferencesManager preferencesManager, RedVetNotifications redVetNotification, RedVetReadNotification redVetReadNotification) {
         this.redVetNotification = redVetNotification;
+        this.redVetReadNotification = redVetReadNotification;
         this.preferencesManager = preferencesManager;
     }
 
@@ -51,11 +54,17 @@ public class NotificationFragmentPresenter implements Presenter<NotificationFrag
     @Override
     public void destroy() {
         redVetNotification.unsubscribe();
+        redVetReadNotification.unsubscribe();
     }
 
     @Override
     public void setView(NotificationFragmentView view) {
         this.view = view;
+    }
+
+    public void markReadNotificationItem(Integer id) {
+        redVetReadNotification.bindParams(getApiToken(), id);
+        redVetReadNotification.execute(new ReadNotificationObservable());
     }
 
     private class NotificationsObservable extends DefaultObserver<List<RedVetNotification>> {
@@ -85,5 +94,33 @@ public class NotificationFragmentPresenter implements Presenter<NotificationFrag
             view.hideLoading();
         }
     }
+
+    private class ReadNotificationObservable extends DefaultObserver<RedVetNotification> {
+        @Override
+        protected void onStart() {
+            super.onStart();
+            view.showLoading();
+        }
+
+        @Override
+        public void onError(Throwable e) {
+            super.onError(e);
+            view.showErrorMessage(e.getMessage());
+            view.hideLoading();
+        }
+
+        @Override
+        public void onNext(RedVetNotification notifications) {
+            super.onNext(notifications);
+            view.successReadRequest(NotificationModelMapper.transform(notifications));
+        }
+
+        @Override
+        public void onComplete() {
+            super.onComplete();
+            view.hideLoading();
+        }
+    }
+
 
 }
