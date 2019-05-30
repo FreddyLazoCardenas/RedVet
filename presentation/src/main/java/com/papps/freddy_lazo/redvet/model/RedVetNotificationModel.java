@@ -1,21 +1,22 @@
-package com.papps.freddy_lazo.domain.model;
+package com.papps.freddy_lazo.redvet.model;
 
-public class RedVetNotification {
+
+public class RedVetNotificationModel {
 
     private int id;
     private int userId;
     private String title;
+    private NotificationDataModel data;
     private String description;
     private String time;
-    private NotificationData data;
     private boolean isRead;
 
-    public RedVetNotification(int id, int userId, String title, String description, NotificationData data, boolean isRead, String time) {
+    public RedVetNotificationModel(int id, int userId, String title, NotificationDataModel data, String description, boolean isRead, String time) {
         this.id = id;
         this.userId = userId;
         this.title = title;
-        this.description = description;
         this.data = data;
+        this.description = description;
         this.time = time;
         this.isRead = isRead;
     }
@@ -36,7 +37,7 @@ public class RedVetNotification {
         return description;
     }
 
-    public NotificationData getData() {
+    public NotificationDataModel getData() {
         return data;
     }
 

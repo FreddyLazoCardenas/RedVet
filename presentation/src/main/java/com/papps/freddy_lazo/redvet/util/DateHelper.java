@@ -22,6 +22,12 @@ public class DateHelper {
         return d.getTime();
     }
 
+    public static Long createNotificationTimeStamp(String date) throws ParseException {
+        SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US);
+        Date d = f.parse(date);
+        return d.getTime();
+    }
+
     public static String convertToDateSpanish(String date) throws ParseException {
         SimpleDateFormat month_date = new SimpleDateFormat("dd MMMM yyyy", new Locale("es", "ES"));
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");

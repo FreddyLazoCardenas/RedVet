@@ -83,4 +83,6 @@ public interface RestApi {
 
     Observable<List<RedVetNotificationEntity>> redVetNotifications(String auth);
 
+    Observable<RedVetNotificationEntity> redVetReadNotification(String auth , int notId);
+
 }

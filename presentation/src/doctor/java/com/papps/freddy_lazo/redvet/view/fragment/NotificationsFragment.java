@@ -15,6 +15,7 @@ import com.papps.freddy_lazo.redvet.R;
 import com.papps.freddy_lazo.redvet.interfaces.NotificationFragmentView;
 import com.papps.freddy_lazo.redvet.internal.dagger.component.DaggerNotificationsFragmentComponent;
 import com.papps.freddy_lazo.redvet.model.NotificationModel;
+import com.papps.freddy_lazo.redvet.model.RedVetNotificationModel;
 import com.papps.freddy_lazo.redvet.presenter.NotificationFragmentPresenter;
 import com.papps.freddy_lazo.redvet.view.activity.HomeActivity;
 import com.papps.freddy_lazo.redvet.view.adapter.NotificationAdapter;
@@ -26,7 +27,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 
-public class NotificationsFragment extends BaseFragment implements NotificationFragmentView ,NotificationAdapter.OnClickAdapter, NotificationsListDialog.OnClickListener {
+public class NotificationsFragment extends BaseFragment implements NotificationFragmentView, NotificationAdapter.OnClickAdapter, NotificationsListDialog.OnClickListener {
 
     @Inject
     NotificationFragmentPresenter presenter;
@@ -35,7 +36,7 @@ public class NotificationsFragment extends BaseFragment implements NotificationF
     @BindView(R.id.rv_notifications)
     RecyclerView rvNotifications;
     private HomeActivity activity;
-    private NotificationModel data;
+    private RedVetNotificationModel data;
 
     public static Fragment newInstance() {
         return new NotificationsFragment();
@@ -100,21 +101,14 @@ public class NotificationsFragment extends BaseFragment implements NotificationF
         presenter.destroy();
     }
 
-    @Override
-    public void successRequest(List<NotificationModel> data) {
-        adapter.bindList(data);
-
-    }
-
-    @Override
+  /*  @Override
     public void onSuccessComplete() {
         adapter.deleteNotification(data);
-    }
+    }*/
 
     @Override
-    public void dataNotification(NotificationModel data) {
-        this.data = data;
-        navigator.showNotificationsListDialog(activity, this);
+    public void markAsRead() {
+        presenter.markReadNotificationItem(data.getId());
     }
 
     @Override
@@ -125,5 +119,31 @@ public class NotificationsFragment extends BaseFragment implements NotificationF
     @Override
     public void cancel() {
 
+    }
+
+    @Override
+    public void successRequest(List<RedVetNotificationModel> data) {
+        adapter.bindList(data);
+    }
+
+    @Override
+    public void successReadRequest(RedVetNotificationModel data) {
+        adapter.updateNotification(data);
+    }
+
+    @Override
+    public void showLoading() {
+        activity.showLoading();
+    }
+
+    @Override
+    public void hideLoading() {
+        activity.hideLoading();
+    }
+
+    @Override
+    public void dataNotification(RedVetNotificationModel data) {
+        this.data = data;
+        navigator.showNotificationsListDialog(activity, this);
     }
 }

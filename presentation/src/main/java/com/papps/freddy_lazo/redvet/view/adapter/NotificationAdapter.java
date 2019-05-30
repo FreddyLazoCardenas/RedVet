@@ -16,9 +16,12 @@ import android.widget.TextView;
 import com.papps.freddy_lazo.redvet.R;
 import com.papps.freddy_lazo.redvet.model.CreateAppointmentObjectModel;
 import com.papps.freddy_lazo.redvet.model.NotificationModel;
+import com.papps.freddy_lazo.redvet.model.RedVetNotificationModel;
+import com.papps.freddy_lazo.redvet.util.DateHelper;
 import com.papps.freddy_lazo.redvet.view.fragment.BaseFragment;
 
 import java.security.Timestamp;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -32,7 +35,7 @@ import butterknife.OnClick;
 
 public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapter.NotificationHolder> {
 
-    private List<NotificationModel> data = new ArrayList<>();
+    private List<RedVetNotificationModel> data = new ArrayList<>();
     private Context context;
     private OnClickAdapter listener;
 
@@ -58,7 +61,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         return data.size();
     }
 
-    public void bindList(List<NotificationModel> data) {
+    public void bindList(List<RedVetNotificationModel> data) {
         if (data != null) {
             this.data = data;
             notifyDataSetChanged();
@@ -73,6 +76,21 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         int index = this.data.indexOf(data);
         this.data.remove(index);
         notifyItemRemoved(index);
+    }
+
+    public void updateNotification(RedVetNotificationModel data) {
+        int index = getItemIndex(data.getId());
+        this.data.set(index, data);
+        notifyItemChanged(index);
+    }
+
+    private int getItemIndex(int id) {
+        for (RedVetNotificationModel model : data) {
+            if (model.getId() == id) {
+                return data.indexOf(model);
+            }
+        }
+        return -1;
     }
 
 
@@ -99,20 +117,26 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
         @SuppressLint("StringFormatMatches")
         public void bind(int position) {
-            itemView.setBackgroundColor(ContextCompat.getColor(context, position % 2 == 0 ? R.color.colorWhite : R.color.colorNotificationGray));
-            tvTitle.setText(getTitleFromType(data.get(position).getType()));
-            tvContent.setText(data.get(position).getMessage());
+            itemView.setBackgroundColor(ContextCompat.getColor(context, data.get(position).isRead() ? R.color.colorWhite : R.color.colorNotificationGray));
+            tvTitle.setText(getTitleFromType(data.get(position).getTitle()));
+            tvContent.setText(data.get(position).getDescription());
             Long tsLong = System.currentTimeMillis() / 1000;
-            Long notTime = Long.valueOf(data.get(position).getTime());
-            long test = (tsLong - notTime) / 3600;
-            if (test < 1) {
-                tvTime.setText(context.getString(R.string.notification_time, test * 60, test * 60 == 1 ? "minuto" : "minutos"));
-            } else if (test < 24) {
-                tvTime.setText(context.getString(R.string.notification_time, test, test > 1 ? "horas" : "hora"));
-            } else {
-                tvTime.setText(context.getString(R.string.notification_time, test / 24, (test / 24) > 1 ? "dias" : "dia"));
+            long notTime;
+            try {
+                notTime = DateHelper.createNotificationTimeStamp(data.get(position).getTime()) / 1000;
+                Float test = (tsLong - notTime) / 3600f;
+                if (test < 1) {
+                    tvTime.setText(context.getString(R.string.notification_time, (int)(test * 60), test * 60 == 1 ? "minuto" : "minutos"));
+                } else if (test < 24) {
+                    tvTime.setText(context.getString(R.string.notification_time, test.intValue(), test.intValue() > 1 ? "horas" : "hora"));
+                } else {
+                    tvTime.setText(context.getString(R.string.notification_time, test.intValue() / 24, (test.intValue() / 24) > 1 ? "dias" : "dia"));
+                }
+            } catch (ParseException e) {
+                e.printStackTrace();
             }
-            ivIcon.setImageResource(getImageFromTitle(data.get(position).getType()));
+
+            ivIcon.setImageResource(getImageFromTitle(data.get(position).getData().getType()));
         }
 
         private String getTitleFromType(String type) {
@@ -175,6 +199,6 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
     }
 
     public interface OnClickAdapter {
-        void dataNotification(NotificationModel data);
+        void dataNotification(RedVetNotificationModel data);
     }
 }

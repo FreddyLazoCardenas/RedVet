@@ -43,4 +43,6 @@ public interface UserRepository {
     Observable<List<Void>> deletePet(String auth, int petLoverId);
 
     Observable<List<RedVetNotification>> redVetNotifications(String auth);
+
+    Observable<RedVetNotification> redVetReadNotification(String auth , int notId);
 }

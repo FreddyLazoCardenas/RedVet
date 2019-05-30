@@ -15,6 +15,7 @@ import com.papps.freddy_lazo.redvet.R;
 import com.papps.freddy_lazo.redvet.interfaces.NotificationFragmentView;
 import com.papps.freddy_lazo.redvet.internal.dagger.component.DaggerNotificationsFragmentComponent;
 import com.papps.freddy_lazo.redvet.model.NotificationModel;
+import com.papps.freddy_lazo.redvet.model.RedVetNotificationModel;
 import com.papps.freddy_lazo.redvet.presenter.NotificationFragmentPresenter;
 import com.papps.freddy_lazo.redvet.view.activity.HomeActivity;
 import com.papps.freddy_lazo.redvet.view.adapter.NotificationAdapter;
@@ -102,25 +103,34 @@ public class NotificationsFragment extends BaseFragment implements NotificationF
     }
 
     @Override
-    public void successRequest(List<NotificationModel> data) {
-        Collections.reverse(data);
+    public void successRequest(List<RedVetNotificationModel> data) {
         adapter.bindList(data);
     }
 
     @Override
-    public void onSuccessComplete() {
-        adapter.deleteNotification(data);
+    public void showLoading() {
+        activity.showLoading();
     }
 
     @Override
-    public void dataNotification(NotificationModel data) {
-        this.data = data;
-        navigator.showNotificationsListDialog(activity, this);
+    public void hideLoading() {
+        activity.hideLoading();
+    }
+
+   /* @Override
+    public void onSuccessComplete() {
+        adapter.deleteNotification(data);
+    }*/
+
+    @Override
+    public void dataNotification(RedVetNotificationModel data) {
+      /*  this.data = data;
+        navigator.showNotificationsListDialog(activity, this);*/
     }
 
     @Override
     public void delete() {
-        presenter.deleteNotificationItem(data.getId());
+        //presenter.deleteNotificationItem(data.getId());
     }
 
     @Override

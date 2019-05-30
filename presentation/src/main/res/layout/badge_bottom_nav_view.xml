@@ -1,12 +1,13 @@
 <merge xmlns:android="http://schemas.android.com/apk/res/android">
 
     <ImageView
-        android:id="@+id/notifications.badge"
+        android:id="@+id/badge"
         android:layout_width="10dp"
         android:layout_height="10dp"
         android:layout_gravity="top|center_horizontal"
         android:layout_marginStart="10dp"
         android:layout_marginTop="5dp"
         android:gravity="center"
-        android:src="@drawable/button_secondary_background" />
+        android:src="@drawable/button_secondary_background"
+        android:visibility="gone" />
 </merge>

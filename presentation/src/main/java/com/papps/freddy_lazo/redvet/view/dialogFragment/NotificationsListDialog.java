@@ -25,12 +25,15 @@ public class NotificationsListDialog extends BaseDialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle("Que desea hacer con la notificación")
-                .setItems(R.array.string_array_not, (dialog, which) -> {
+                .setItems(R.array.array_not, (dialog, which) -> {
                     switch (which) {
                         case 0:
-                            listener.delete();
+                            listener.markAsRead();
                             break;
                         case 1:
+                            listener.delete();
+                            break;
+                        case 2:
                             listener.cancel();
                             break;
                     }
@@ -40,6 +43,8 @@ public class NotificationsListDialog extends BaseDialogFragment {
 
 
     public interface OnClickListener {
+        void markAsRead();
+
         void delete();
 
         void cancel();

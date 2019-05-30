@@ -14,21 +14,29 @@ import android.view.View;
 
 import com.papps.freddy_lazo.data.sharedPreferences.PreferencesManager;
 import com.papps.freddy_lazo.redvet.R;
+import com.papps.freddy_lazo.redvet.interfaces.HomeActivityView;
 import com.papps.freddy_lazo.redvet.internal.bus.event.Event;
 import com.papps.freddy_lazo.redvet.internal.dagger.component.DaggerHomeComponent;
 import com.papps.freddy_lazo.redvet.model.DoctorModel;
+import com.papps.freddy_lazo.redvet.model.RedVetNotificationModel;
+import com.papps.freddy_lazo.redvet.presenter.HomeActivityPresenter;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import io.reactivex.functions.Consumer;
 
-public class HomeActivity extends BaseActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
+public class HomeActivity extends BaseActivity implements BottomNavigationView.OnNavigationItemSelectedListener, HomeActivityView {
 
     @BindView(R.id.bottom_navigation)
     BottomNavigationView bottomNav;
     @Inject
     PreferencesManager preferencesManager;
+    @Inject
+    HomeActivityPresenter presenter;
+    private View badge;
 
     public static Intent getCallingIntent(BaseActivity activity) {
         return new Intent(activity, HomeActivity.class)
@@ -41,19 +49,16 @@ public class HomeActivity extends BaseActivity implements BottomNavigationView.O
         setContentView(R.layout.activity_home);
         injectView(this);
         buildInjection();
-        Log.d("date", System.currentTimeMillis() + "");
         initUI();
-        test();
+        notificationBadge();
     }
 
-    private void test() {
+    private void notificationBadge() {
         BottomNavigationMenuView bottomNavigationMenuView =
                 (BottomNavigationMenuView) bottomNav.getChildAt(0);
         View v = bottomNavigationMenuView.getChildAt(3);
         BottomNavigationItemView itemView = (BottomNavigationItemView) v;
-
-        View badge = LayoutInflater.from(this)
-                .inflate(R.layout.badge_bottom_nav_view, itemView, true);
+        badge = LayoutInflater.from(this).inflate(R.layout.badge_bottom_nav_view, itemView, true).findViewById(R.id.badge);
     }
 
     private void buildInjection() {
@@ -62,7 +67,9 @@ public class HomeActivity extends BaseActivity implements BottomNavigationView.O
 
     @Override
     public void initUI() {
+        presenter.setView(this);
         bottomNav.getMenu().removeItem(R.id.action_map);
+        presenter.getNotificationList();
         bottomNav.setOnNavigationItemSelectedListener(this);
         bottomNav.setSelectedItemId(R.id.action_quotes);
 
@@ -114,6 +121,25 @@ public class HomeActivity extends BaseActivity implements BottomNavigationView.O
                 return true;
             default:
                 return false;
+        }
+    }
+
+    @Override
+    public String getApiToken() {
+        return getModel().getApi_token();
+    }
+
+    @Override
+    public void successNotificationRequest(List<RedVetNotificationModel> data) {
+        if (data.isEmpty()) {
+            badge.setVisibility(View.GONE);
+            return;
+        }
+        for (RedVetNotificationModel model : data) {
+            if (!model.isRead()) {
+                badge.setVisibility(View.VISIBLE);
+                break;
+            }
         }
     }
 }

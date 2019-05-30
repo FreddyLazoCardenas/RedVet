@@ -13,6 +13,7 @@ import com.papps.freddy_lazo.data.network.body.BodyPetLoverRegister;
 import com.papps.freddy_lazo.data.network.body.BodyQualifyAppointment;
 import com.papps.freddy_lazo.data.network.body.BodyRecoverPassword;
 import com.papps.freddy_lazo.data.network.body.BodyRedVetChat;
+import com.papps.freddy_lazo.data.network.body.BodyRedVetReadNotification;
 import com.papps.freddy_lazo.data.network.body.BodySearchDoctors;
 import com.papps.freddy_lazo.data.network.body.BodyUploadPhoto;
 import com.papps.freddy_lazo.data.network.response.AppointmentPhotoResponse;
@@ -27,6 +28,7 @@ import com.papps.freddy_lazo.data.network.response.PetsRedVetResponse;
 import com.papps.freddy_lazo.data.network.response.QualificationResponse;
 import com.papps.freddy_lazo.data.network.response.RedVetAppointmentResponse;
 import com.papps.freddy_lazo.data.network.response.RedVetNotificationsResponse;
+import com.papps.freddy_lazo.data.network.response.RedVetReadNotificationsResponse;
 import com.papps.freddy_lazo.data.network.response.ServicesResponse;
 
 import java.util.List;
@@ -120,4 +122,7 @@ public interface RestService {
 
     @GET("notifications")
     Call<ResponseEntity<RedVetNotificationsResponse>> redVetNotifications(@Header("Authorization") String auth);
+
+    @POST("notifications/read")
+    Call<ResponseEntity<RedVetReadNotificationsResponse>> redVetReadNotification(@Header("Authorization") String auth, @Body BodyRedVetReadNotification body);
 }

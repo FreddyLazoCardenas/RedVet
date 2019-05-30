@@ -18,6 +18,8 @@ public class RedVetNotificationEntity {
     private NotificationDataEntity data;
     @SerializedName("is_read")
     private boolean is_read;
+    @SerializedName("created_at")
+    private String time;
 
     public int getId() {
         return id;
@@ -41,5 +43,9 @@ public class RedVetNotificationEntity {
 
     public boolean isRead() {
         return is_read;
+    }
+
+    public String getTime() {
+        return time;
     }
 }

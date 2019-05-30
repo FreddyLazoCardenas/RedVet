@@ -24,6 +24,6 @@ public class RedVetNotificationMapper {
     }
 
     public static RedVetNotification transform(RedVetNotificationEntity data) {
-        return new RedVetNotification(data.getId(), data.getUser_id(), data.getTitle(), data.getDescription(), NotificationDataMapper.transform(data.getData()), data.isRead());
+        return new RedVetNotification(data.getId(), data.getUser_id(), data.getTitle(), data.getDescription(), NotificationDataMapper.transform(data.getData()), data.isRead(),data.getTime());
     }
 }

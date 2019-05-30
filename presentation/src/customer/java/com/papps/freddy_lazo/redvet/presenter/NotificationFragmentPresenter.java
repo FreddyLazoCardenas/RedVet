@@ -1,10 +1,14 @@
 package com.papps.freddy_lazo.redvet.presenter;
 
+import com.papps.freddy_lazo.data.sharedPreferences.PreferencesManager;
 import com.papps.freddy_lazo.domain.interactor.DefaultObserver;
 import com.papps.freddy_lazo.domain.interactor.DeleteSpecificNotification;
 import com.papps.freddy_lazo.domain.interactor.GetNotificationList;
+import com.papps.freddy_lazo.domain.interactor.RedVetNotifications;
 import com.papps.freddy_lazo.domain.model.Notification;
+import com.papps.freddy_lazo.domain.model.RedVetNotification;
 import com.papps.freddy_lazo.redvet.interfaces.NotificationFragmentView;
+import com.papps.freddy_lazo.redvet.model.PetLoverModel;
 import com.papps.freddy_lazo.redvet.model.mapper.NotificationModelMapper;
 
 import java.util.List;
@@ -14,14 +18,14 @@ import javax.inject.Inject;
 
 public class NotificationFragmentPresenter implements Presenter<NotificationFragmentView> {
 
-    private final GetNotificationList getNotificationList;
-    private final DeleteSpecificNotification deleteSpecificNotification;
+    private final RedVetNotifications redVetNotification;
+    private final PreferencesManager preferencesManager;
     private NotificationFragmentView view;
 
     @Inject
-    NotificationFragmentPresenter(GetNotificationList getNotificationList , DeleteSpecificNotification deleteSpecificNotification) {
-        this.getNotificationList = getNotificationList;
-        this.deleteSpecificNotification = deleteSpecificNotification;
+    NotificationFragmentPresenter(PreferencesManager preferencesManager, RedVetNotifications redVetNotification) {
+        this.redVetNotification = redVetNotification;
+        this.preferencesManager = preferencesManager;
     }
 
     @Override
@@ -34,18 +38,19 @@ public class NotificationFragmentPresenter implements Presenter<NotificationFrag
 
     }
 
+
     public void getNotificationList() {
-        getNotificationList.execute(new NotificationsObservable());
+        redVetNotification.bindParams(getApiToken());
+        redVetNotification.execute(new NotificationsObservable());
     }
 
-    public void deleteNotificationItem(Integer id) {
-        deleteSpecificNotification.bindParams(id);
-        deleteSpecificNotification.execute(new DeleteNotificationObservable());
+    private String getApiToken() {
+        return PetLoverModel.toModel(preferencesManager.getPetLoverCurrentUser()).getApi_token();
     }
 
     @Override
     public void destroy() {
-        getNotificationList.unsubscribe();
+        redVetNotification.unsubscribe();
     }
 
     @Override
@@ -53,20 +58,23 @@ public class NotificationFragmentPresenter implements Presenter<NotificationFrag
         this.view = view;
     }
 
-    private class NotificationsObservable extends DefaultObserver<List<Notification>> {
+    private class NotificationsObservable extends DefaultObserver<List<RedVetNotification>> {
 
         @Override
         protected void onStart() {
             super.onStart();
+            view.showLoading();
         }
 
         @Override
         public void onError(Throwable e) {
             super.onError(e);
+            view.showErrorMessage(e.getMessage());
+            view.hideLoading();
         }
 
         @Override
-        public void onNext(List<Notification> notifications) {
+        public void onNext(List<RedVetNotification> notifications) {
             super.onNext(notifications);
             view.successRequest(NotificationModelMapper.transform(notifications));
         }
@@ -74,25 +82,8 @@ public class NotificationFragmentPresenter implements Presenter<NotificationFrag
         @Override
         public void onComplete() {
             super.onComplete();
+            view.hideLoading();
         }
     }
 
-    private class DeleteNotificationObservable extends DefaultObserver<Void> {
-
-        @Override
-        protected void onStart() {
-            super.onStart();
-        }
-
-        @Override
-        public void onError(Throwable e) {
-            super.onError(e);
-        }
-
-        @Override
-        public void onComplete() {
-            super.onComplete();
-            view.onSuccessComplete();
-        }
-    }
 }

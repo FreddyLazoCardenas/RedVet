@@ -29,6 +29,7 @@ import com.papps.freddy_lazo.data.network.body.BodyPetLoverRegister;
 import com.papps.freddy_lazo.data.network.body.BodyQualifyAppointment;
 import com.papps.freddy_lazo.data.network.body.BodyRecoverPassword;
 import com.papps.freddy_lazo.data.network.body.BodyRedVetChat;
+import com.papps.freddy_lazo.data.network.body.BodyRedVetReadNotification;
 import com.papps.freddy_lazo.data.network.body.BodySearchDoctors;
 import com.papps.freddy_lazo.data.network.body.BodyUploadPhoto;
 import com.papps.freddy_lazo.data.network.response.AppointmentPhotoResponse;
@@ -43,6 +44,7 @@ import com.papps.freddy_lazo.data.network.response.PetsRedVetResponse;
 import com.papps.freddy_lazo.data.network.response.QualificationResponse;
 import com.papps.freddy_lazo.data.network.response.RedVetAppointmentResponse;
 import com.papps.freddy_lazo.data.network.response.RedVetNotificationsResponse;
+import com.papps.freddy_lazo.data.network.response.RedVetReadNotificationsResponse;
 import com.papps.freddy_lazo.data.network.response.ServicesResponse;
 import com.papps.freddy_lazo.domain.model.PetRegister;
 import com.papps.freddy_lazo.domain.model.ScheduleDoctorRegister;
@@ -476,6 +478,21 @@ public class RestApiImpl implements RestApi {
                 ResponseEntity<RedVetNotificationsResponse> body = response.body();
                 if (body != null && body.getMessage() == null) {
                     emitter.onNext(body.getData().getNotifications());
+                    emitter.onComplete();
+                }
+            }
+        }));
+    }
+
+    @Override
+    public Observable<RedVetNotificationEntity> redVetReadNotification(String auth, int notId) {
+        return Observable.create(emitter -> restService.redVetReadNotification("Bearer " + auth, new BodyRedVetReadNotification(notId,true)).enqueue(new DefaultCallback<ResponseEntity<RedVetReadNotificationsResponse>>(emitter) {
+            @Override
+            public void onResponse(@NonNull Call<ResponseEntity<RedVetReadNotificationsResponse>> call, @NonNull Response<ResponseEntity<RedVetReadNotificationsResponse>> response) {
+                super.onResponse(call, response);
+                ResponseEntity<RedVetReadNotificationsResponse> body = response.body();
+                if (body != null && body.getMessage() == null) {
+                    emitter.onNext(body.getData().getNotification());
                     emitter.onComplete();
                 }
             }

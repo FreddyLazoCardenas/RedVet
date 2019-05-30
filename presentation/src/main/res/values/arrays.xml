@@ -21,4 +21,10 @@
         <item>Eliminar</item>
         <item>Cancelar</item>
     </string-array>
+    <string-array
+        name="array_not">
+        <item>Marcar como leído</item>
+        <item>Eliminar</item>
+        <item>Cancelar</item>
+    </string-array>
 </resources>

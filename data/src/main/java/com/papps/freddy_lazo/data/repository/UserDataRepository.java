@@ -103,4 +103,9 @@ public class UserDataRepository implements UserRepository {
     public Observable<List<RedVetNotification>> redVetNotifications(String auth) {
         return mRestApi.redVetNotifications(auth).map(RedVetNotificationMapper::transform);
     }
+
+    @Override
+    public Observable<RedVetNotification> redVetReadNotification(String auth, int notId) {
+        return mRestApi.redVetReadNotification(auth, notId).map(RedVetNotificationMapper::transform);
+    }
 }

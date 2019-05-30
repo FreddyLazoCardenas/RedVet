@@ -7,6 +7,7 @@ import com.papps.freddy_lazo.domain.interactor.RedVetNotifications;
 import com.papps.freddy_lazo.domain.model.RedVetDetailAppointment;
 import com.papps.freddy_lazo.domain.model.RedVetNotification;
 import com.papps.freddy_lazo.redvet.interfaces.HomeActivityView;
+import com.papps.freddy_lazo.redvet.model.DoctorModel;
 import com.papps.freddy_lazo.redvet.model.PetLoverModel;
 import com.papps.freddy_lazo.redvet.model.mapper.NotificationModelMapper;
 import com.papps.freddy_lazo.redvet.model.mapper.RedVetDetailAppointmentModelMapper;
@@ -17,21 +18,14 @@ import javax.inject.Inject;
 
 public class HomeActivityPresenter implements Presenter<HomeActivityView> {
 
-    private final RedVetAppointmentUseCase redVetAppointmentUseCase;
     private final RedVetNotifications redVetNotification;
     private final PreferencesManager preferencesManager;
     private HomeActivityView view;
 
     @Inject
     HomeActivityPresenter(PreferencesManager preferencesManager, RedVetAppointmentUseCase redVetAppointmentUseCase, RedVetNotifications redVetNotification) {
-        this.redVetAppointmentUseCase = redVetAppointmentUseCase;
         this.redVetNotification = redVetNotification;
         this.preferencesManager = preferencesManager;
-    }
-
-    public void sendRequest(String auth, int appointment) {
-        redVetAppointmentUseCase.bindParams(auth, appointment);
-        redVetAppointmentUseCase.execute(new NotificationDetailObservable());
     }
 
     public void getNotificationList() {
@@ -40,7 +34,7 @@ public class HomeActivityPresenter implements Presenter<HomeActivityView> {
     }
 
     private String getApiToken() {
-        return PetLoverModel.toModel(preferencesManager.getPetLoverCurrentUser()).getApi_token();
+        return DoctorModel.toModel(preferencesManager.getDoctorCurrentUser()).getApi_token();
     }
 
     @Override
@@ -55,7 +49,6 @@ public class HomeActivityPresenter implements Presenter<HomeActivityView> {
 
     @Override
     public void destroy() {
-        redVetAppointmentUseCase.unsubscribe();
         redVetNotification.unsubscribe();
     }
 
@@ -72,31 +65,5 @@ public class HomeActivityPresenter implements Presenter<HomeActivityView> {
             view.successNotificationRequest(NotificationModelMapper.transform(notifications));
         }
 
-    }
-
-
-    private class NotificationDetailObservable extends DefaultObserver<RedVetDetailAppointment> {
-
-        @Override
-        protected void onStart() {
-            super.onStart();
-        }
-
-        @Override
-        public void onNext(RedVetDetailAppointment redVetDetailAppointment) {
-            super.onNext(redVetDetailAppointment);
-            view.successRequest(RedVetDetailAppointmentModelMapper.transform(redVetDetailAppointment));
-        }
-
-        @Override
-        public void onComplete() {
-            super.onComplete();
-        }
-
-        @Override
-        public void onError(Throwable e) {
-            super.onError(e);
-            view.showErrorMessage(e.getMessage());
-        }
     }
 }
