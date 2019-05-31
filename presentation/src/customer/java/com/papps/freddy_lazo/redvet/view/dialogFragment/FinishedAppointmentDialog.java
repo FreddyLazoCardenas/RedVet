@@ -35,7 +35,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class FinishedAppointmentDialog extends BaseDialogFragment implements AppointmentPhotoAdapter.onClickAdapter, PhotoListDialog.OnClickListener, PetLoverAppointmentView {
+public class FinishedAppointmentDialog extends BaseDialogFragment implements AppointmentPhotoAdapter.onClickAdapter, PetLoverAppointmentView, DocListDialog.OnClickListener {
 
     @BindView(R.id.img_pet)
     ImageView imgPet;
@@ -75,7 +75,7 @@ public class FinishedAppointmentDialog extends BaseDialogFragment implements App
     private PetLoverRegisterModel pet;
     private PetLoverModel petLoverModel;
     private HomeActivity activity;
-    private int photoId;
+    private AppointmentPhotoModel docModel;
 
 
     public static FinishedAppointmentDialog newInstance(String data) {
@@ -122,7 +122,7 @@ public class FinishedAppointmentDialog extends BaseDialogFragment implements App
         date.setText(getString(R.string.doctor_date, split[2], split[1], split[0].substring(2)));
         time.setText(model.getTime());
         Calendar calendar = DateHelper.convertToDate(pet.getBirthday());
-        tvPetBirthday.setText(MessageFormat.format("{0} {1} {2}", calendar.get(Calendar.DAY_OF_MONTH), DateHelper.getMonthForInt(calendar.get(Calendar.MONTH)).substring(0, 3), calendar.get(Calendar.YEAR)).replaceAll(",",""));
+        tvPetBirthday.setText(MessageFormat.format("{0} {1} {2}", calendar.get(Calendar.DAY_OF_MONTH), DateHelper.getMonthForInt(calendar.get(Calendar.MONTH)).substring(0, 3), calendar.get(Calendar.YEAR)).replaceAll(",", ""));
         address.setText(model.getDoctor().getAddress());
         tvDoctorName.setText(MessageFormat.format("{0} {1}", model.getDoctor().getFirst_name(), model.getDoctor().getLast_name()));
         tvDni.setText(model.getDoctor().getNumber_document());
@@ -198,7 +198,7 @@ public class FinishedAppointmentDialog extends BaseDialogFragment implements App
 
     private void getPetData(String petId) {
         for (PetLoverRegisterModel petLoverRegisterModel : petLoverModel.getPetList()) {
-            if (petLoverRegisterModel.getId() == Integer.valueOf(petId)) {
+            if (petLoverRegisterModel.getId().equals(Integer.valueOf(petId))) {
                 pet = petLoverRegisterModel;
                 break;
             }
@@ -213,8 +213,8 @@ public class FinishedAppointmentDialog extends BaseDialogFragment implements App
 
     @Override
     public void itemClicked(AppointmentPhotoModel data) {
-        photoId = data.getId();
-        navigator.navigateToPhotoDetailActivity(activity, data.getPhoto_url());
+        docModel = data;
+        navigator.showDocListDialog(activity, this);
     }
 
     @Override
@@ -225,6 +225,25 @@ public class FinishedAppointmentDialog extends BaseDialogFragment implements App
     @Override
     public void cancel() {
 
+    }
+
+    @Override
+    public void seeDetail() {
+        seeDetailLogic(docModel.getPhoto_url());
+    }
+
+
+    private void seeDetailLogic(String url) {
+        if (url.endsWith("jpeg")) {
+            navigator.navigateToPhotoDetailActivity(activity, docModel.getPhoto_url());
+            // navigator.navigateToDocumentDetail(activity, docModel.getPhoto_url());
+            return;
+        }
+        if (url.endsWith("pdf") || url.endsWith("msword")) {
+            navigator.navigateToShowFiles(activity, url);
+        } else {
+            navigator.navigateToPhotoDetailActivity(activity, docModel.getPhoto_url());
+        }
     }
 
     @Override
@@ -239,12 +258,12 @@ public class FinishedAppointmentDialog extends BaseDialogFragment implements App
 
     @Override
     public int getPhotoAppointmentId() {
-        return photoId;
+        return docModel.getId();
     }
 
     @Override
     public void successDelete() {
-        adapter.itemDeleted(photoId);
+        adapter.itemDeleted(getPhotoAppointmentId());
     }
 
     @OnClick(R.id.chat)

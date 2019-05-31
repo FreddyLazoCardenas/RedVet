@@ -29,6 +29,7 @@ import com.papps.freddy_lazo.redvet.view.dialogFragment.BaseDialogFragment;
 import com.papps.freddy_lazo.redvet.view.dialogFragment.CameraDialog;
 import com.papps.freddy_lazo.redvet.view.dialogFragment.CancelOtherReasonAppointmentDialog;
 import com.papps.freddy_lazo.redvet.view.dialogFragment.ConfirmedAppointmentDialog;
+import com.papps.freddy_lazo.redvet.view.dialogFragment.DocListDialog;
 import com.papps.freddy_lazo.redvet.view.dialogFragment.DoctorDialog;
 import com.papps.freddy_lazo.redvet.view.dialogFragment.DoctorNotificationConfirmedDialog;
 import com.papps.freddy_lazo.redvet.view.dialogFragment.DoctorNotificationFinishedDialog;
@@ -107,6 +108,11 @@ public class Navigator extends BaseNavigator {
         activity.startActivity(PhotoDetailActivity.getCallingIntent(activity, url));
     }
 
+
+    public void navigateToShowFiles(BaseActivity activity ,String url) {
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+        activity.startActivity(browserIntent);
+    }
     //fragments
 
     public void navigateToLoginFragment(BaseActivity activity) {
@@ -295,5 +301,9 @@ public class Navigator extends BaseNavigator {
         arr[0] = intentWaze;
         chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, arr);
         activity.startActivity(chooserIntent);
+    }
+
+    public void showDocListDialog(BaseActivity activity, DocListDialog.OnClickListener listener) {
+        dialogTransaction(activity, DocListDialog.newInstance(listener));
     }
 }

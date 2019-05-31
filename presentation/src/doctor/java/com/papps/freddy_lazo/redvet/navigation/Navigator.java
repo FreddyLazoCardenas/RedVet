@@ -22,6 +22,7 @@ import com.papps.freddy_lazo.redvet.view.activity.HomeActivity;
 import com.papps.freddy_lazo.redvet.view.activity.LoginActivity;
 import com.papps.freddy_lazo.redvet.view.activity.MapActivity;
 import com.papps.freddy_lazo.redvet.view.activity.NewsDetailActivity;
+import com.papps.freddy_lazo.redvet.view.activity.PhotoDetailActivity;
 import com.papps.freddy_lazo.redvet.view.activity.RegisterActivity;
 import com.papps.freddy_lazo.redvet.view.activity.ServicesActivity;
 import com.papps.freddy_lazo.redvet.view.dialogFragment.BaseDialogFragment;
@@ -285,5 +286,9 @@ public class Navigator extends BaseNavigator {
     public void navigateToShowFiles(BaseActivity activity ,String url) {
         Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
         activity.startActivity(browserIntent);
+    }
+
+    public void navigateToPhotoDetailActivity(BaseActivity activity, String photo_url) {
+        activity.startActivity(PhotoDetailActivity.getCallingIntent(activity, photo_url));
     }
 }

@@ -34,7 +34,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class FinishedAppointmentDialog extends BaseDialogFragment implements AppointmentPhotoAdapter.onClickAdapter, PhotoListDialog.OnClickListener, DoctorFinishedFragmentView {
+public class FinishedAppointmentDialog extends BaseDialogFragment implements AppointmentPhotoAdapter.onClickAdapter, DoctorFinishedFragmentView, DocListDialog.OnClickListener {
 
     @BindView(R.id.img_pet)
     ImageView imgPet;
@@ -70,7 +70,7 @@ public class FinishedAppointmentDialog extends BaseDialogFragment implements App
     private DoctorAppointmentModel model;
     private HomeActivity activity;
     private RequestInterface listener;
-    private int photoId;
+    private AppointmentPhotoModel docModel;
 
 
     public static FinishedAppointmentDialog newInstance(String data, RequestInterface listener) {
@@ -184,8 +184,8 @@ public class FinishedAppointmentDialog extends BaseDialogFragment implements App
 
     @Override
     public void itemClicked(AppointmentPhotoModel data) {
-        photoId = data.getId();
-        navigator.showPhotoListDialog(activity, this);
+        docModel = data;
+        navigator.showDocListDialog(activity, this);
     }
 
     @Override
@@ -196,6 +196,24 @@ public class FinishedAppointmentDialog extends BaseDialogFragment implements App
     @Override
     public void cancel() {
 
+    }
+
+    @Override
+    public void seeDetail() {
+        seeDetailLogic(docModel.getPhoto_url());
+    }
+
+    private void seeDetailLogic(String url) {
+        if (url.endsWith("jpeg")) {
+            navigator.navigateToPhotoDetailActivity(activity, docModel.getPhoto_url());
+            // navigator.navigateToDocumentDetail(activity, docModel.getPhoto_url());
+            return;
+        }
+        if (url.endsWith("pdf") || url.endsWith("msword")) {
+            navigator.navigateToShowFiles(activity, url);
+        } else {
+            navigator.navigateToPhotoDetailActivity(activity, docModel.getPhoto_url());
+        }
     }
 
     @OnClick(R.id.chat)
@@ -220,7 +238,7 @@ public class FinishedAppointmentDialog extends BaseDialogFragment implements App
 
     @Override
     public int getPhotoId() {
-        return photoId;
+        return docModel.getId();
     }
 
     @Override
