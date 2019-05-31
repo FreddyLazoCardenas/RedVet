@@ -29,6 +29,8 @@ public class NotificationUtil {
                 .setContentTitle(title)
                 .setColor(ContextCompat.getColor(context, R.color.colorWhite))
                 .setContentText(body)
+                .setStyle(new NotificationCompat.BigTextStyle()
+                        .bigText(body))
                 .setDefaults(Notification.DEFAULT_ALL)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setAutoCancel(true);
