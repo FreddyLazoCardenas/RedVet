@@ -227,6 +227,54 @@
                     android:visibility="gone"
                     app:layout_constraintTop_toTopOf="@+id/tv_attach" />
 
+                <TextView
+                    android:id="@+id/tv_appointment_title"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="20dp"
+                    android:gravity="start"
+                    android:text="Motivo de consulta"
+                    android:textColor="@color/colorGreen"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/iv_appointment_diagnosis" />
+
+                <ImageView
+                    android:id="@+id/iv_appointment_color"
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="10dp"
+                    android:src="@drawable/button_secondary_background"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_appointment_title" />
+
+                <TextView
+                    android:id="@+id/tv_appointment_type"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/iv_appointment_color"
+                    app:layout_constraintStart_toEndOf="@id/iv_appointment_color"
+                    app:layout_constraintTop_toTopOf="@+id/iv_appointment_color"
+                    tools:text="Emergencia" />
+
+
+                <TextView
+                    android:id="@+id/tv_appointment_reason"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="10dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/iv_appointment_color"
+                    tools:text="lolololo" />
+
+
                 <View
                     android:id="@+id/view"
                     android:layout_width="0dp"
@@ -236,7 +284,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_attach" />
+                    app:layout_constraintTop_toBottomOf="@+id/tv_appointment_reason" />
 
                 <Button
                     android:id="@+id/btn_cancel"

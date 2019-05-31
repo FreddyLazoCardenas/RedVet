@@ -50,4 +50,5 @@
     <string name="doctor_attendances">%d atendidos</string>
     <string name="petLover_attendances">%d atenciones</string>
     <string name="places_api_key">AIzaSyCrtRsfTuAg3wLNf3iJaC3AQ6tTROdRLUY</string>
+    <string name="success_register">Se le ha enviado un correo electrónico, para verificar su cuenta, revisar como no deseado</string>
 </resources>

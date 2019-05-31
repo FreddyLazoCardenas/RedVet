@@ -14,7 +14,6 @@ import android.view.ViewGroup;
 import com.papps.freddy_lazo.redvet.R;
 import com.papps.freddy_lazo.redvet.interfaces.NotificationFragmentView;
 import com.papps.freddy_lazo.redvet.internal.dagger.component.DaggerNotificationsFragmentComponent;
-import com.papps.freddy_lazo.redvet.model.NotificationModel;
 import com.papps.freddy_lazo.redvet.model.RedVetNotificationModel;
 import com.papps.freddy_lazo.redvet.presenter.NotificationFragmentPresenter;
 import com.papps.freddy_lazo.redvet.view.activity.HomeActivity;
@@ -88,7 +87,7 @@ public class NotificationsFragment extends BaseFragment implements NotificationF
 
     @Override
     public void showErrorMessage(String message) {
-
+        showMessage(activity, message);
     }
 
     @Override
@@ -101,11 +100,6 @@ public class NotificationsFragment extends BaseFragment implements NotificationF
         super.onDestroy();
         presenter.destroy();
     }
-
-  /*  @Override
-    public void onSuccessComplete() {
-        adapter.deleteNotification(data);
-    }*/
 
     @Override
     public void markAsRead() {
@@ -135,6 +129,11 @@ public class NotificationsFragment extends BaseFragment implements NotificationF
     @Override
     public void showLoading() {
         activity.showLoading();
+    }
+
+    @Override
+    public void onSuccessDelete() {
+        adapter.deleteNotification(data);
     }
 
     @Override

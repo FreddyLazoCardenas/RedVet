@@ -85,4 +85,5 @@ public interface RestApi {
 
     Observable<RedVetNotificationEntity> redVetReadNotification(String auth, int notId);
 
+    Observable<List<Void>> deleteRedVetNotification(String auth, int petLoverId);
 }

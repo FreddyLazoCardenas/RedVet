@@ -11,5 +11,7 @@ public interface NotificationFragmentView extends BaseView {
 
     void showLoading();
 
+    void onSuccessDelete();
+
     void hideLoading();
 }

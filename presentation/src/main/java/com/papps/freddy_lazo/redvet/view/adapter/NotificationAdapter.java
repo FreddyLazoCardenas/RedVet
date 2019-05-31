@@ -72,7 +72,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         listener = (OnClickAdapter) fragment;
     }
 
-    public void deleteNotification(NotificationModel data) {
+    public void deleteNotification(RedVetNotificationModel data) {
         int index = this.data.indexOf(data);
         this.data.remove(index);
         notifyItemRemoved(index);

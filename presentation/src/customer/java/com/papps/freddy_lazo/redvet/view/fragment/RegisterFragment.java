@@ -390,6 +390,7 @@ public class RegisterFragment extends BaseFragment implements RegisterFragmentVi
 
     @Override
     public void successRegisterRequest() {
+        showMessage(activity, getString(R.string.success_register));
         activity.finish();
     }
 

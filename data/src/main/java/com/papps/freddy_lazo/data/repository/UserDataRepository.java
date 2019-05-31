@@ -108,4 +108,9 @@ public class UserDataRepository implements UserRepository {
     public Observable<RedVetNotification> redVetReadNotification(String auth, int notId) {
         return mRestApi.redVetReadNotification(auth, notId).map(RedVetNotificationMapper::transform);
     }
+
+    @Override
+    public Observable<List<Void>> deleteRedVetNotification(String auth, int notId) {
+        return mRestApi.deleteRedVetNotification(auth, notId);
+    }
 }

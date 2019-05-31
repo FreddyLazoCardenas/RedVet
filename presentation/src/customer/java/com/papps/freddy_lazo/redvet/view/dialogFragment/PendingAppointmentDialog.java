@@ -56,7 +56,12 @@ public class PendingAppointmentDialog extends BaseDialogFragment implements Pend
     TextView tvDni;
     @BindView(R.id.group_buttons)
     android.support.constraint.Group gButtons;
-
+    @BindView(R.id.tv_appointment_type)
+    TextView tvAppointmentType;
+    @BindView(R.id.tv_appointment_reason)
+    TextView tvAppointmentReason;
+    @BindView(R.id.iv_appointment_color)
+    ImageView ivAppointmentType;
     @Inject
     PetLoverPendingAppointmentPresenter presenter;
     @Inject
@@ -116,6 +121,27 @@ public class PendingAppointmentDialog extends BaseDialogFragment implements Pend
         tvDoctorName.setText(MessageFormat.format("{0} {1}", model.getDoctor().getFirst_name(), model.getDoctor().getLast_name()));
         tvDni.setText(model.getDoctor().getNumber_document());
         tvDoctorJob.setText(setJobText(model.getDoctor().getType()));
+        tvAppointmentType.setText(model.getType());
+        tvAppointmentReason.setText(model.getReason());
+        ivAppointmentType.setImageResource(setImageAppointmentType());
+    }
+
+    private int setImageAppointmentType() {
+        switch (model.getType()) {
+            case "Emergencia":
+                return R.drawable.emergency;
+            case "Urgencia":
+                return R.drawable.urgency;
+            case "Consulta":
+                return R.drawable.simple_appointment;
+            case "Baño":
+                return R.drawable.barber_shower_appointment;
+            case "Otros":
+                return R.drawable.other_appointment;
+            default:
+                return R.drawable.emergency;
+
+        }
     }
 
     private int setJobText(String type) {

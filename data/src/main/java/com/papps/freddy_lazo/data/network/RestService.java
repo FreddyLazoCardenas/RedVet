@@ -13,6 +13,7 @@ import com.papps.freddy_lazo.data.network.body.BodyPetLoverRegister;
 import com.papps.freddy_lazo.data.network.body.BodyQualifyAppointment;
 import com.papps.freddy_lazo.data.network.body.BodyRecoverPassword;
 import com.papps.freddy_lazo.data.network.body.BodyRedVetChat;
+import com.papps.freddy_lazo.data.network.body.BodyRedVetDeleteNotification;
 import com.papps.freddy_lazo.data.network.body.BodyRedVetReadNotification;
 import com.papps.freddy_lazo.data.network.body.BodySearchDoctors;
 import com.papps.freddy_lazo.data.network.body.BodyUploadPhoto;
@@ -130,4 +131,7 @@ public interface RestService {
 
     @POST("notifications/read")
     Call<ResponseEntity<RedVetReadNotificationsResponse>> redVetReadNotification(@Header("Authorization") String auth, @Body BodyRedVetReadNotification body);
+
+    @POST("notifications/delete")
+    Call<ResponseEntity<List<Void>>> deleteRedVetNotification(@Header("Authorization") String auth, @Body BodyRedVetDeleteNotification body);
 }

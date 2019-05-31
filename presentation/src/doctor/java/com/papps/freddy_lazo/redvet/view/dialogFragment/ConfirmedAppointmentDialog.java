@@ -49,6 +49,12 @@ public class ConfirmedAppointmentDialog extends BaseDialogFragment {
     TextView tvPetLoverName;
     @BindView(R.id.txt_dni)
     TextView tvDni;
+    @BindView(R.id.tv_appointment_type)
+    TextView tvAppointmentType;
+    @BindView(R.id.tv_appointment_reason)
+    TextView tvAppointmentReason;
+    @BindView(R.id.iv_appointment_color)
+    ImageView ivAppointmentType;
     @Inject
     PreferencesManager preferencesManager;
 
@@ -107,7 +113,29 @@ public class ConfirmedAppointmentDialog extends BaseDialogFragment {
         address.setText(model.getPetLover().getAddress());
         tvPetLoverName.setText(MessageFormat.format("{0} {1}", model.getPetLover().getFirst_name(), model.getPetLover().getLast_name()));
         tvDni.setText(model.getPetLover().getDni());
+        tvAppointmentType.setText(model.getType());
+        tvAppointmentReason.setText(model.getReason());
+        ivAppointmentType.setImageResource(setImageAppointmentType());
     }
+
+
+    private int setImageAppointmentType() {
+        switch (model.getType()) {
+            case "Emergencia":
+                return R.drawable.emergency;
+            case "Urgencia":
+                return R.drawable.urgency;
+            case "Consulta":
+                return R.drawable.simple_appointment;
+            case "Baño":
+                return R.drawable.barber_shower_appointment;
+            case "Otros":
+                return R.drawable.other_appointment;
+            default:
+                return R.drawable.emergency;
+        }
+    }
+
 
     public void displayPhoto(String photoUrl, ImageView img) {
         GlideApp.with(activity)

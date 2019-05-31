@@ -5,6 +5,7 @@ import com.papps.freddy_lazo.data.sharedPreferences.PreferencesManager;
 import com.papps.freddy_lazo.domain.interactor.DefaultObserver;
 import com.papps.freddy_lazo.domain.interactor.DeleteSpecificNotification;
 import com.papps.freddy_lazo.domain.interactor.GetNotificationList;
+import com.papps.freddy_lazo.domain.interactor.RedVetDeleteNotification;
 import com.papps.freddy_lazo.domain.interactor.RedVetNotifications;
 import com.papps.freddy_lazo.domain.interactor.RedVetReadNotification;
 import com.papps.freddy_lazo.domain.model.Notification;
@@ -27,14 +28,15 @@ public class NotificationFragmentPresenter implements Presenter<NotificationFrag
     private final RedVetNotifications redVetNotification;
     private final PreferencesManager preferencesManager;
     private final RedVetReadNotification redVetReadNotification;
+    private final RedVetDeleteNotification redVetDeleteNotification;
     private NotificationFragmentView view;
 
     @Inject
-    NotificationFragmentPresenter(/*GetNotificationList getNotificationList, DeleteSpecificNotification deleteSpecificNotification*/
-            PreferencesManager preferencesManager, RedVetNotifications redVetNotification, RedVetReadNotification redVetReadNotification) {
+    NotificationFragmentPresenter(PreferencesManager preferencesManager, RedVetNotifications redVetNotification, RedVetReadNotification redVetReadNotification, RedVetDeleteNotification redVetDeleteNotification) {
         this.redVetNotification = redVetNotification;
         this.preferencesManager = preferencesManager;
         this.redVetReadNotification = redVetReadNotification;
+        this.redVetDeleteNotification = redVetDeleteNotification;
     }
 
     @Override
@@ -57,13 +59,14 @@ public class NotificationFragmentPresenter implements Presenter<NotificationFrag
     }
 
     public void deleteNotificationItem(Integer id) {
-       /* deleteSpecificNotification.bindParams(id);
-        deleteSpecificNotification.execute(new DeleteNotificationObservable());*/
+        redVetDeleteNotification.bindParams(getApiToken(), id);
+        redVetDeleteNotification.execute(new DeleteNotificationObservable());
     }
 
     public void markReadNotificationItem(Integer id) {
         redVetReadNotification.bindParams(getApiToken(), id);
         redVetReadNotification.execute(new ReadNotificationObservable());
+        redVetDeleteNotification.execute(new ReadNotificationObservable());
     }
 
     @Override
@@ -110,17 +113,21 @@ public class NotificationFragmentPresenter implements Presenter<NotificationFrag
         @Override
         protected void onStart() {
             super.onStart();
+            view.showLoading();
         }
 
         @Override
         public void onError(Throwable e) {
             super.onError(e);
+            view.showErrorMessage(e.getMessage());
+            view.hideLoading();
         }
 
         @Override
         public void onComplete() {
             super.onComplete();
-            // view.onSuccessComplete();
+            view.hideLoading();
+            view.onSuccessDelete();
         }
     }
 

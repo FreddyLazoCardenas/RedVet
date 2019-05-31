@@ -123,10 +123,10 @@ public class NotificationsFragment extends BaseFragment implements NotificationF
         activity.hideLoading();
     }
 
-   /* @Override
-    public void onSuccessComplete() {
+    @Override
+    public void onSuccessDelete() {
         adapter.deleteNotification(data);
-    }*/
+    }
 
     @Override
     public void dataNotification(RedVetNotificationModel data) {
@@ -141,7 +141,7 @@ public class NotificationsFragment extends BaseFragment implements NotificationF
 
     @Override
     public void delete() {
-        //presenter.deleteNotificationItem(data.getId());
+        presenter.deleteNotificationItem(data.getId());
     }
 
     @Override
