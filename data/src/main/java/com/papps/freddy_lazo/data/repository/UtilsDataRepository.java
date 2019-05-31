@@ -37,7 +37,7 @@ public class UtilsDataRepository implements UtilsRepository {
 
 
     @Inject
-    UtilsDataRepository(RestApi mRestApi , Database database) {
+    UtilsDataRepository(RestApi mRestApi, Database database) {
         this.mRestApi = mRestApi;
         this.database = database;
     }
@@ -88,8 +88,8 @@ public class UtilsDataRepository implements UtilsRepository {
     }
 
     @Override
-    public Observable<AppointmentPhoto> doctorUploadAppointmentPhoto(String apiToken, int appointmentId, byte[] photo) {
-        return mRestApi.doctorUploadAppointmentPhoto(apiToken, appointmentId, photo).map(AppointmentPhotoMapper::transform);
+    public Observable<AppointmentPhoto> doctorUploadAppointmentPhoto(String apiToken, int appointmentId, byte[] photo, String parseType) {
+        return mRestApi.doctorUploadAppointmentPhoto(apiToken, appointmentId, photo, parseType).map(AppointmentPhotoMapper::transform);
     }
 
     @Override

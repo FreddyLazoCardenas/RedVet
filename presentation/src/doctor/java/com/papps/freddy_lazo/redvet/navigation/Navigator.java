@@ -17,6 +17,7 @@ import com.papps.freddy_lazo.redvet.view.activity.BaseActivity;
 import com.papps.freddy_lazo.redvet.view.activity.CancelAppointmentActivity;
 import com.papps.freddy_lazo.redvet.view.activity.ChatActivity;
 import com.papps.freddy_lazo.redvet.view.activity.DiagnoseAppointmentActivity;
+import com.papps.freddy_lazo.redvet.view.activity.DocumentDetailActivity;
 import com.papps.freddy_lazo.redvet.view.activity.HomeActivity;
 import com.papps.freddy_lazo.redvet.view.activity.LoginActivity;
 import com.papps.freddy_lazo.redvet.view.activity.MapActivity;
@@ -28,6 +29,7 @@ import com.papps.freddy_lazo.redvet.view.dialogFragment.CameraDialog;
 import com.papps.freddy_lazo.redvet.view.dialogFragment.CancelOtherReasonAppointmentDialog;
 import com.papps.freddy_lazo.redvet.view.dialogFragment.ConfirmedAppointmentDialog;
 import com.papps.freddy_lazo.redvet.view.dialogFragment.DiagnoseDialog;
+import com.papps.freddy_lazo.redvet.view.dialogFragment.DocListDialog;
 import com.papps.freddy_lazo.redvet.view.dialogFragment.FinishAppointmentDialog;
 import com.papps.freddy_lazo.redvet.view.dialogFragment.FinishedAppointmentDialog;
 import com.papps.freddy_lazo.redvet.view.dialogFragment.NotificationsListDialog;
@@ -210,7 +212,8 @@ public class Navigator extends BaseNavigator {
     }
 
     public void navigateToDocs(BaseActivity activity, int requestCode) {
-        String[] mimeTypes = {"application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document"};
+        String[] mimeTypes = {"application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document","application/vnd.ms-word.template.macroEnabled.12"
+        ,"application/vnd.ms-word.document.macroEnabled.12","application/vnd.openxmlformats-officedocument.wordprocessingml.template"};
         Intent intent = new Intent();
         intent.setType("*/*");
         intent.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes);
@@ -233,6 +236,10 @@ public class Navigator extends BaseNavigator {
 
     public void showPhotoListDialog(BaseActivity activity, PhotoListDialog.OnClickListener listener) {
         dialogTransaction(activity, PhotoListDialog.newInstance(listener));
+    }
+
+    public void showDocListDialog(BaseActivity activity, DocListDialog.OnClickListener listener) {
+        dialogTransaction(activity, DocListDialog.newInstance(listener));
     }
 
     public void showNotificationsListDialog(BaseActivity activity, NotificationsListDialog.OnClickListener listener) {
@@ -269,5 +276,14 @@ public class Navigator extends BaseNavigator {
 
     public void navigateToTimePicker(BaseFragment fragment) {
         TimePickerFragment.newInstance(fragment).show(Objects.requireNonNull(fragment.getFragmentManager()), "datePicker");
+    }
+
+    public void navigateToDocumentDetail(BaseActivity activity, String photo_url) {
+        activity.startActivity(DocumentDetailActivity.getCallingIntent(activity, photo_url));
+    }
+
+    public void navigateToShowFiles(BaseActivity activity ,String url) {
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+        activity.startActivity(browserIntent);
     }
 }

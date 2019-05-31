@@ -64,13 +64,13 @@ public class DiagnoseAppointmentPresenter implements Presenter<DiagnoseAppointme
         return true;
     }
 
-    public void uploadPhoto(byte[] photo) {
-        doctorUploadAppointmentPhoto.bindParams(view.getApiToken(), view.getAppointmentId(), photo);
+    public void uploadPhoto(byte[] photo, String parseType) {
+        doctorUploadAppointmentPhoto.bindParams(view.getApiToken(), view.getAppointmentId(), photo, parseType);
         doctorUploadAppointmentPhoto.execute(new UploadPhotoObservable());
     }
 
-    public void deletePhoto(){
-        deleteAppointmentPhoto.bindParams(view.getApiToken(),view.getAppointmentId(),view.getAppointmentPhotoId());
+    public void deletePhoto() {
+        deleteAppointmentPhoto.bindParams(view.getApiToken(), view.getAppointmentId(), view.getAppointmentPhotoId());
         deleteAppointmentPhoto.execute(new DeletePhotoObservable());
     }
 

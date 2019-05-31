@@ -105,7 +105,20 @@ public class AppointmentPhotoAdapter extends RecyclerView.Adapter<AppointmentPho
         }
 
         public void bind(int position) {
-            loadImage(data.get(position).getPhoto_url());
+            String url = data.get(position).getPhoto_url();
+            if (url.endsWith("jpeg")) {
+                loadImage(url);
+                return;
+            }
+            if (url.endsWith("pdf")) {
+                ivPhoto.setImageResource(R.drawable.ic_check_green);
+                return;
+            }
+            if (url.endsWith("msword")) {
+                ivPhoto.setImageResource(R.drawable.ic_check_pink);
+            } else {
+                loadImage(url);
+            }
         }
 
         private void loadImage(String photo) {

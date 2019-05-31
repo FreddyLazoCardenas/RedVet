@@ -14,10 +14,10 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Base64;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.papps.freddy_lazo.data.sharedPreferences.PreferencesManager;
@@ -31,25 +31,29 @@ import com.papps.freddy_lazo.redvet.model.DoctorModel;
 import com.papps.freddy_lazo.redvet.presenter.DiagnoseAppointmentPresenter;
 import com.papps.freddy_lazo.redvet.presenter.RegisterFragmentPresenter;
 import com.papps.freddy_lazo.redvet.util.DateHelper;
+import com.papps.freddy_lazo.redvet.util.FileChooser;
 import com.papps.freddy_lazo.redvet.view.adapter.AppointmentPhotoAdapter;
 import com.papps.freddy_lazo.redvet.view.dialogFragment.BaseDialogFragment;
-import com.papps.freddy_lazo.redvet.view.dialogFragment.CameraDialog;
 import com.papps.freddy_lazo.redvet.view.dialogFragment.DiagnoseDialog;
-import com.papps.freddy_lazo.redvet.view.dialogFragment.PhotoListDialog;
+import com.papps.freddy_lazo.redvet.view.dialogFragment.DocListDialog;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.text.MessageFormat;
 import java.util.Calendar;
+import java.util.Objects;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class DiagnoseAppointmentActivity extends BaseActivity implements DiagnoseAppointmentView, DiagnoseDialog.OnClickListener, AppointmentPhotoAdapter.onClickAdapter, PhotoListDialog.OnClickListener {
+public class DiagnoseAppointmentActivity extends BaseActivity implements DiagnoseAppointmentView, DiagnoseDialog.OnClickListener, AppointmentPhotoAdapter.onClickAdapter, DocListDialog.OnClickListener {
 
     private static final String PICTURE_FILE_NAME = "profileComplete.jpg";
     private static final String PICTURE_CROPPED_FILE_NAME = "profile.jpg";
@@ -85,7 +89,7 @@ public class DiagnoseAppointmentActivity extends BaseActivity implements Diagnos
 
 
     private DoctorAppointmentModel model;
-    private int photoId;
+    private AppointmentPhotoModel docModel;
 
     public static Intent getCallingIntent(BaseDialogFragment fragment, String data) {
         return new Intent(fragment.getContext(), DiagnoseAppointmentActivity.class).putExtra("data", data);
@@ -129,7 +133,7 @@ public class DiagnoseAppointmentActivity extends BaseActivity implements Diagnos
         displayPhoto(model.getPet().getPhoto_url(), false);
         petName.setText(model.getPet().getName());
         Calendar calendar = DateHelper.convertToDate(model.getPet().getBirthday());
-        petBirthday.setText(MessageFormat.format("{0} {1} {2}", calendar.get(Calendar.DAY_OF_MONTH), DateHelper.getMonthForInt(calendar.get(Calendar.MONTH)).substring(0, 3), calendar.get(Calendar.YEAR)).replaceAll(",",""));
+        petBirthday.setText(MessageFormat.format("{0} {1} {2}", calendar.get(Calendar.DAY_OF_MONTH), DateHelper.getMonthForInt(calendar.get(Calendar.MONTH)).substring(0, 3), calendar.get(Calendar.YEAR)).replaceAll(",", ""));
         Calendar calendar1 = DateHelper.convertToDate(model.getDate());
         appointmentDate.setText(MessageFormat.format("{0} {1}", calendar1.get(Calendar.DAY_OF_MONTH), DateHelper.getMonthForInt(calendar1.get(Calendar.MONTH)).substring(0, 3)));
         appointmentTime.setText(model.getTime());
@@ -182,7 +186,7 @@ public class DiagnoseAppointmentActivity extends BaseActivity implements Diagnos
 
     @Override
     public int getAppointmentPhotoId() {
-        return photoId;
+        return docModel.getId();
     }
 
     @Override
@@ -203,17 +207,83 @@ public class DiagnoseAppointmentActivity extends BaseActivity implements Diagnos
         } else if (requestCode == REQUEST_CAMERA && resultCode == Activity.RESULT_OK) {
             startCrop(Uri.fromFile(pictureFile));
         } else if (requestCode == SELECT_FILE_PDF && resultCode == Activity.RESULT_OK) {
-           // uploadFile();
+            uploadFile(Objects.requireNonNull(data.getData()), "application/pdf");
         } else if (requestCode == SELECT_FILE_DOC && resultCode == Activity.RESULT_OK) {
-           // uploadFile();
+            uploadFile(Objects.requireNonNull(data.getData()), "application/msword");
         } else if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
             if (resultCode == Activity.RESULT_OK) {
                 displayPhoto(croppedFile.getAbsolutePath(), true);
-                presenter.uploadPhoto(getPetDiagnoseBase64Image());
+                presenter.uploadPhoto(getPetDiagnoseBase64Image(), "image/jpeg");
             } else {
                 croppedFile = null;
             }
         }
+    }
+
+    private static byte[] readBytesFromFile(String filePath) {
+
+        FileInputStream fileInputStream = null;
+        byte[] bytesArray = null;
+
+        try {
+
+            File file = new File(filePath);
+            bytesArray = new byte[(int) file.length()];
+
+            //read file into bytes[]
+            fileInputStream = new FileInputStream(file);
+            fileInputStream.read(bytesArray);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (fileInputStream != null) {
+                try {
+                    fileInputStream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+        }
+
+        return bytesArray;
+
+    }
+
+
+    private void uploadFile(Uri uri, String parseType) {
+        String path = FileChooser.getRealPath(this, uri);
+        try {
+            if (path != null)
+                presenter.uploadPhoto(loadFile(path), parseType);
+            else Toast.makeText(this, "Problemas con obtener archivo", Toast.LENGTH_LONG).show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private byte[] loadFile(String path) throws IOException {
+        InputStream inputStream = null;
+        try {
+            inputStream = new FileInputStream(path);
+            return readFully(inputStream);
+        } finally {
+            if (inputStream != null) {
+                inputStream.close();
+            }
+        }
+    }
+
+    private static byte[] readFully(InputStream stream) throws IOException {
+        byte[] buffer = new byte[8192];
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+
+        int bytesRead;
+        while ((bytesRead = stream.read(buffer)) != -1) {
+            baos.write(buffer, 0, bytesRead);
+        }
+        return baos.toByteArray();
     }
 
     public byte[] getPetDiagnoseBase64Image() {
@@ -306,8 +376,8 @@ public class DiagnoseAppointmentActivity extends BaseActivity implements Diagnos
 
     @Override
     public void itemClicked(AppointmentPhotoModel data) {
-        photoId = data.getId();
-        navigator.showPhotoListDialog(this, this);
+        docModel = data;
+        navigator.showDocListDialog(this, this);
     }
 
     @Override
@@ -317,6 +387,26 @@ public class DiagnoseAppointmentActivity extends BaseActivity implements Diagnos
 
     @Override
     public void cancel() {
+
+    }
+
+    @Override
+    public void seeDetail() {
+        seeDetailLogic(docModel.getPhoto_url());
+    }
+
+    private void seeDetailLogic(String url) {
+        if (url.endsWith("jpeg")) {
+            navigator.navigateToDocumentDetail(this, docModel.getPhoto_url());
+            return;
+        }
+        if (url.endsWith("pdf") || url.endsWith("msword")) {
+            navigator.navigateToShowFiles(this, url);
+        }
+    }
+
+    @Override
+    public void onPointerCaptureChanged(boolean hasCapture) {
 
     }
 }

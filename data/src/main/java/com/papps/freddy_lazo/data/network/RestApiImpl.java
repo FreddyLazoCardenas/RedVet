@@ -325,11 +325,12 @@ public class RestApiImpl implements RestApi {
     }
 
     @Override
-    public Observable<AppointmentPhotoEntity> doctorUploadAppointmentPhoto(String apiToken, int appointmentId, byte[] photo) {
+    public Observable<AppointmentPhotoEntity> doctorUploadAppointmentPhoto(String apiToken, int appointmentId, byte[] photo, String parseType) {
         return Observable.create(emitter -> {
             MultipartBody.Part body = null;
             if (photo != null) {
-                body = MultipartBody.Part.createFormData("photo", "photo", RequestBody.create(MediaType.parse("image/jpeg"), photo));
+                // parseType
+                body = MultipartBody.Part.createFormData("photo", parseType, RequestBody.create(MediaType.parse(parseType), photo));
             }
             RequestBody id = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(appointmentId));
             restService.doctorUploadAppointmentPhoto("Bearer " + apiToken, body, id).enqueue(new DefaultCallback<ResponseEntity<AppointmentPhotoResponse>>(emitter) {

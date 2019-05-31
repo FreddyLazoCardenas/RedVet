@@ -61,7 +61,7 @@ public interface RestApi {
 
     Observable<RedVetAppointmentEntity> petLoverCancelAppointment(String apiToken, int appointmentId, String reason);
 
-    Observable<AppointmentPhotoEntity> doctorUploadAppointmentPhoto(String apiToken, int appointmentId, byte[] photo);
+    Observable<AppointmentPhotoEntity> doctorUploadAppointmentPhoto(String apiToken, int appointmentId, byte[] photo, String parseType);
 
     Observable<List<Void>> doctorDeleteAppointmentPhoto(String apiToken, int appointmentId, int appointment_photo_id);
 
@@ -83,6 +83,6 @@ public interface RestApi {
 
     Observable<List<RedVetNotificationEntity>> redVetNotifications(String auth);
 
-    Observable<RedVetNotificationEntity> redVetReadNotification(String auth , int notId);
+    Observable<RedVetNotificationEntity> redVetReadNotification(String auth, int notId);
 
 }

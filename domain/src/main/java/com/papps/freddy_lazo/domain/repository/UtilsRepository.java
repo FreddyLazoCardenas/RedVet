@@ -33,7 +33,7 @@ public interface UtilsRepository {
 
     Observable<RedVetAppointment> petLoverCancelAppointment(String apiToken, int appointmentId, String reason);
 
-    Observable<AppointmentPhoto> doctorUploadAppointmentPhoto(String apiToken, int appointmentId,  byte[] photo);
+    Observable<AppointmentPhoto> doctorUploadAppointmentPhoto(String apiToken, int appointmentId, byte[] photo, String parseType);
 
     Observable<List<Void>> doctorDeleteAppointmentPhoto(String apiToken, int appointmentId, int appointment_photo_id);
 
@@ -50,7 +50,6 @@ public interface UtilsRepository {
     Observable<Void> saveNotification(Notification notification);
 
     Observable<Void> deleteSpecificNotification(Integer id);
-
 
 
 }

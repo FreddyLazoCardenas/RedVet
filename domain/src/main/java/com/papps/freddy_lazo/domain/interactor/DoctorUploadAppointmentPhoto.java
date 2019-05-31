@@ -12,6 +12,7 @@ public class DoctorUploadAppointmentPhoto extends UseCase {
 
     private final UtilsRepository repository;
     private String apiToken;
+    private String parseType;
     private int appointmentId;
     private byte[] photo;
 
@@ -21,14 +22,15 @@ public class DoctorUploadAppointmentPhoto extends UseCase {
         this.repository = repository;
     }
 
-    public void bindParams(String apiToken, int appointmentId, byte[] photo) {
+    public void bindParams(String apiToken, int appointmentId, byte[] photo, String parseType) {
         this.apiToken = apiToken;
+        this.parseType = parseType;
         this.appointmentId = appointmentId;
         this.photo = photo;
     }
 
     @Override
     protected Observable buildUseCaseObservable() {
-        return repository.doctorUploadAppointmentPhoto(apiToken, appointmentId, photo);
+        return repository.doctorUploadAppointmentPhoto(apiToken, appointmentId, photo, parseType);
     }
 }

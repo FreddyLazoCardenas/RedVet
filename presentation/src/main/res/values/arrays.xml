@@ -19,6 +19,12 @@
         <item>Cancelar</item>
     </string-array>
     <string-array
+        name="string_array_detail_photo">
+        <item>Ver Detalle</item>
+        <item>Eliminar</item>
+        <item>Cancelar</item>
+    </string-array>
+    <string-array
         name="string_array_pet">
         <item>Editar</item>
         <item>Eliminar</item>
