@@ -135,9 +135,9 @@ public class CancelAppointmentActivity extends BaseActivity implements Confirmed
 
     @OnClick(R.id.btn_send)
     public void btnClick() {
-        if (!getReason().isEmpty() && !getReason().equals("Otros"))
+        if (!getReason().isEmpty() && !getReason().equals("Otro Motivo"))
             presenter.sendRequest();
-        else if (getReason().equals("Otros"))
+        else if (getReason().equals("Otro Motivo"))
             navigator.navigateOtherReasonCancelAppointment(this, appointmentId, this);
         else
             showErrorMessage(getString(R.string.text_required_field));

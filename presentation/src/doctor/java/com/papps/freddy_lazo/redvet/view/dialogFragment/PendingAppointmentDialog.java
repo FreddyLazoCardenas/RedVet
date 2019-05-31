@@ -1,6 +1,8 @@
 package com.papps.freddy_lazo.redvet.view.dialogFragment;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -70,6 +72,7 @@ public class PendingAppointmentDialog extends BaseDialogFragment implements Pend
     private DoctorAppointmentModel model;
     private HomeActivity activity;
     private RequestInterface listener;
+    private static final int CANCEL_REQUEST_CODE = 1;
 
     public static PendingAppointmentDialog newInstance(String data, RequestInterface listener) {
         Bundle args = new Bundle();
@@ -104,6 +107,16 @@ public class PendingAppointmentDialog extends BaseDialogFragment implements Pend
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         initUI();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == CANCEL_REQUEST_CODE) {
+            if (resultCode == Activity.RESULT_OK) {
+                listener.successCancelRequest(model.getId());
+                dismiss();
+            }
+        }
     }
 
     private void fillUi() {
@@ -158,9 +171,14 @@ public class PendingAppointmentDialog extends BaseDialogFragment implements Pend
         dismiss();
     }
 
-    @OnClick({R.id.tv_confirm, R.id.iv_confirm})
+    @OnClick(R.id.btn_confirm)
     public void confirm() {
         presenter.sendRequest();
+    }
+
+    @OnClick(R.id.btn_deny)
+    public void deny() {
+        navigator.navigateCancelAppointmentActivity(this, model.getId(), CANCEL_REQUEST_CODE);
     }
 
     @Override
@@ -218,5 +236,7 @@ public class PendingAppointmentDialog extends BaseDialogFragment implements Pend
     public interface RequestInterface {
 
         void successPendingRequest(int id);
+
+        void successCancelRequest(int id);
     }
 }
