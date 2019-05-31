@@ -135,7 +135,7 @@ public class PendingAppointmentDialog extends BaseDialogFragment implements Pend
             case "Otros":
                 return R.drawable.other_appointment;
             default:
-                return R.drawable.emergency;
+                return R.drawable.barber_shower_appointment;
 
         }
     }
