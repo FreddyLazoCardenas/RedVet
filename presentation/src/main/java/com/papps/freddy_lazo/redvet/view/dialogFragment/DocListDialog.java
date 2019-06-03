@@ -24,14 +24,11 @@ public class DocListDialog extends BaseDialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle("Que desea hacer con la foto")
-                .setItems(R.array.string_array_detail_photo, (dialog, which) -> {
+        builder.setTitle("Que desea hacer con el documento")
+                .setItems(R.array.string_array_doc_photo, (dialog, which) -> {
                     switch (which) {
                         case 0:
                             listener.seeDetail();
-                            break;
-                        case 1:
-                            listener.delete();
                             break;
                         case 2:
                             listener.cancel();
@@ -43,8 +40,6 @@ public class DocListDialog extends BaseDialogFragment {
 
 
     public interface OnClickListener {
-        void delete();
-
         void cancel();
 
         void seeDetail();

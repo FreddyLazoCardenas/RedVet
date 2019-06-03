@@ -217,11 +217,11 @@ public class FinishedAppointmentDialog extends BaseDialogFragment implements App
         navigator.showDocListDialog(activity, this);
     }
 
-    @Override
+ /*   @Override
     public void delete() {
         presenter.sendRequest();
     }
-
+*/
     @Override
     public void cancel() {
 
