@@ -132,7 +132,7 @@ public class ConfirmedAppointmentDialog extends BaseDialogFragment {
             case "Otros":
                 return R.drawable.other_appointment;
             default:
-                return R.drawable.emergency;
+                return R.drawable.barber_shower_appointment;
         }
     }
 

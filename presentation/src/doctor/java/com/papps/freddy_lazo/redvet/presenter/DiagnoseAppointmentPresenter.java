@@ -65,8 +65,10 @@ public class DiagnoseAppointmentPresenter implements Presenter<DiagnoseAppointme
     }
 
     public void uploadPhoto(byte[] photo, String parseType) {
-        doctorUploadAppointmentPhoto.bindParams(view.getApiToken(), view.getAppointmentId(), photo, parseType);
-        doctorUploadAppointmentPhoto.execute(new UploadPhotoObservable());
+        if (photo != null) {
+            doctorUploadAppointmentPhoto.bindParams(view.getApiToken(), view.getAppointmentId(), photo, parseType);
+            doctorUploadAppointmentPhoto.execute(new UploadPhotoObservable());
+        }
     }
 
     public void deletePhoto() {

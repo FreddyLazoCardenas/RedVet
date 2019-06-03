@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.constraint.Group;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +17,6 @@ import com.papps.freddy_lazo.data.sharedPreferences.PreferencesManager;
 import com.papps.freddy_lazo.redvet.GlideApp;
 import com.papps.freddy_lazo.redvet.R;
 import com.papps.freddy_lazo.redvet.interfaces.PendingAppointmentDialogView;
-import com.papps.freddy_lazo.redvet.internal.dagger.component.DaggerLoginFragmentComponent;
 import com.papps.freddy_lazo.redvet.internal.dagger.component.DaggerPendingAppointmentDialogComponent;
 import com.papps.freddy_lazo.redvet.model.DoctorAppointmentModel;
 import com.papps.freddy_lazo.redvet.model.DoctorModel;
@@ -150,7 +148,7 @@ public class PendingAppointmentDialog extends BaseDialogFragment implements Pend
             case "Otros":
                 return R.drawable.other_appointment;
             default:
-                return R.drawable.emergency;
+                return R.drawable.barber_shower_appointment;
 
         }
     }

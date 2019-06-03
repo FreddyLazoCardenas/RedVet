@@ -254,31 +254,23 @@ public class DiagnoseAppointmentActivity extends BaseActivity implements Diagnos
 
     private void uploadFile(Uri uri, String parseType) {
         String path = FileChooser.getRealPath(this, uri);
-        try {
-            if (path != null)
-                presenter.uploadPhoto(loadFile(path), parseType);
-            else Toast.makeText(this, "Problemas con obtener archivo", Toast.LENGTH_LONG).show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        if (path != null)
+            presenter.uploadPhoto(loadFile(path), parseType);
+        else showErrorMessage("Problemas con obtener archivo");
     }
 
-    private byte[] loadFile(String path) throws IOException {
-        InputStream inputStream = null;
-        try {
-            inputStream = new FileInputStream(path);
+    private byte[] loadFile(String path) {
+        try (InputStream inputStream = new FileInputStream(path)) {
             return readFully(inputStream);
-        } finally {
-            if (inputStream != null) {
-                inputStream.close();
-            }
+        } catch (Exception exception) {
+            showErrorMessage(exception.getMessage());
+            return null;
         }
     }
 
     private static byte[] readFully(InputStream stream) throws IOException {
         byte[] buffer = new byte[8192];
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-
         int bytesRead;
         while ((bytesRead = stream.read(buffer)) != -1) {
             baos.write(buffer, 0, bytesRead);
@@ -291,9 +283,7 @@ public class DiagnoseAppointmentActivity extends BaseActivity implements Diagnos
             Bitmap bm = BitmapFactory.decodeFile(croppedFile.getAbsolutePath());
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             bm.compress(Bitmap.CompressFormat.JPEG, 100, baos); //bm is the bitmap object
-            byte[] b = baos.toByteArray();
-            //return Base64.encodeToString(b, Base64.NO_WRAP);
-            return b;
+            return baos.toByteArray();
         } else
             return null;
     }
