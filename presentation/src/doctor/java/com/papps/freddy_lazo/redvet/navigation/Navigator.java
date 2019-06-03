@@ -218,6 +218,7 @@ public class Navigator extends BaseNavigator {
         ,"application/vnd.ms-word.document.macroEnabled.12","application/vnd.openxmlformats-officedocument.wordprocessingml.template"};
         Intent intent = new Intent();
         intent.setType("*/*");
+        intent.putExtra(Intent.EXTRA_LOCAL_ONLY, true);
         intent.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes);
         intent.setAction(Intent.ACTION_GET_CONTENT);
         activity.startActivityForResult(Intent.createChooser(intent, "Select File"), requestCode);
