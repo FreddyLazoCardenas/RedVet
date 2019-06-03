@@ -35,7 +35,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class FinishedAppointmentDialog extends BaseDialogFragment implements AppointmentPhotoAdapter.onClickAdapter, PetLoverAppointmentView, DocListDialog.OnClickListener {
+public class FinishedAppointmentDialog extends BaseDialogFragment implements AppointmentPhotoAdapter.onClickAdapter, PetLoverAppointmentView, PetLoverListDialog.OnClickListener {
 
     @BindView(R.id.img_pet)
     ImageView imgPet;

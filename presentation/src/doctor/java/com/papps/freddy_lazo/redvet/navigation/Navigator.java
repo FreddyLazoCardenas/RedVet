@@ -208,6 +208,7 @@ public class Navigator extends BaseNavigator {
     public void navigateToPdf(BaseActivity activity, int requestCode) {
         Intent intent = new Intent();
         intent.setType("application/pdf");
+        intent.putExtra(Intent.EXTRA_LOCAL_ONLY, true);
         intent.setAction(Intent.ACTION_GET_CONTENT);
         activity.startActivityForResult(Intent.createChooser(intent, "Select File"), requestCode);
     }
