@@ -395,7 +395,7 @@ public class DiagnoseAppointmentActivity extends BaseActivity implements Diagnos
     }
 
     private void seeDetailLogic(String url) {
-        if (url.endsWith("jpeg")) {
+        if (url.endsWith("png") || url.endsWith("jpeg")) {
             //navigator.navigateToDocumentDetail(this, docModel.getPhoto_url());
             navigator.navigateToPhotoDetailActivity(this, docModel.getPhoto_url());
             return;

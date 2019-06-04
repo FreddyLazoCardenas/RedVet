@@ -204,7 +204,7 @@ public class FinishedAppointmentDialog extends BaseDialogFragment implements App
     }
 
     private void seeDetailLogic(String url) {
-        if (url.endsWith("jpeg")) {
+        if (url.endsWith("png") || url.endsWith("jpeg")) {
             navigator.navigateToPhotoDetailActivity(activity, docModel.getPhoto_url());
             // navigator.navigateToDocumentDetail(activity, docModel.getPhoto_url());
             return;

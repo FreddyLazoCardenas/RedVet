@@ -106,7 +106,7 @@ public class AppointmentPhotoAdapter extends RecyclerView.Adapter<AppointmentPho
 
         public void bind(int position) {
             String url = data.get(position).getPhoto_url();
-            if (url.endsWith("jpeg")) {
+            if (url.endsWith("png") || url.endsWith("jpeg")) {
                 loadImage(url);
                 return;
             }
