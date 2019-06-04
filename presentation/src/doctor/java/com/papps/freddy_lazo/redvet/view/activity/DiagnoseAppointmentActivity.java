@@ -17,7 +17,6 @@ import android.support.v7.widget.RecyclerView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.papps.freddy_lazo.data.sharedPreferences.PreferencesManager;
@@ -61,6 +60,8 @@ public class DiagnoseAppointmentActivity extends BaseActivity implements Diagnos
     private static final int SELECT_FILE = 1;
     private static final int SELECT_FILE_PDF = 2;
     private static final int SELECT_FILE_DOC = 3;
+    public static final int PERMISSION_REQUEST_CAMERA_CODE = 4;
+    // public static final int PERMISSION_REQUEST_GALLERY_CODE = 5;
     private File pictureFile;
     private File croppedFile;
 
@@ -175,13 +176,13 @@ public class DiagnoseAppointmentActivity extends BaseActivity implements Diagnos
     @SuppressLint("NewApi")
     @Override
     public void requestCameraPermission() {
-        requestPermissions(new String[]{Manifest.permission.CAMERA}, RegisterFragmentPresenter.PERMISSION_REQUEST_CAMERA_CODE);
+        requestPermissions(new String[]{Manifest.permission.CAMERA}, PERMISSION_REQUEST_CAMERA_CODE);
     }
 
     @SuppressLint("NewApi")
     @Override
-    public void requestGalleryPermission() {
-        requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, RegisterFragmentPresenter.PERMISSION_REQUEST_GALLERY_CODE);
+    public void requestGalleryPermission(int docType) {
+        requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, docType);
     }
 
     @Override
@@ -305,15 +306,19 @@ public class DiagnoseAppointmentActivity extends BaseActivity implements Diagnos
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == RegisterFragmentPresenter.PERMISSION_REQUEST_CAMERA_CODE) {
+        if (requestCode == PERMISSION_REQUEST_CAMERA_CODE) {
             if (grantResults.length <= 0 || grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 if (pictureFile == null) {
                     pictureFile = new File(getFilesDir(), PICTURE_FILE_NAME);
                 }
                 navigator.navigateToTakePictureCamera(this, pictureFile, REQUEST_CAMERA);
             }
-        } else if (requestCode == RegisterFragmentPresenter.PERMISSION_REQUEST_GALLERY_CODE && (grantResults.length <= 0 || grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+        } else if (requestCode == SELECT_FILE && (grantResults.length <= 0 || grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
             navigator.navigateToGallery(this, SELECT_FILE);
+        } else if (requestCode == SELECT_FILE_DOC && (grantResults.length <= 0 || grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+            navigator.navigateToDocs(this, SELECT_FILE_DOC);
+        } else if (requestCode == SELECT_FILE_PDF && (grantResults.length <= 0 || grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+            navigator.navigateToPdf(this, SELECT_FILE_PDF);
         }
     }
 
@@ -344,19 +349,23 @@ public class DiagnoseAppointmentActivity extends BaseActivity implements Diagnos
 
     @Override
     public void gallery() {
-        if (presenter.checkGalleryPermissions()) {
+        if (presenter.checkExternalStoragePermissions(SELECT_FILE)) {
             navigator.navigateToGallery(this, SELECT_FILE);
         }
     }
 
     @Override
     public void pdf() {
-        navigator.navigateToPdf(this, SELECT_FILE_PDF);
+        if (presenter.checkExternalStoragePermissions(SELECT_FILE_PDF)) {
+            navigator.navigateToPdf(this, SELECT_FILE_PDF);
+        }
     }
 
     @Override
     public void documents() {
-        navigator.navigateToDocs(this, SELECT_FILE_DOC);
+        if (presenter.checkExternalStoragePermissions(SELECT_FILE_DOC)) {
+            navigator.navigateToDocs(this, SELECT_FILE_DOC);
+        }
     }
 
     @OnClick(R.id.img_header)

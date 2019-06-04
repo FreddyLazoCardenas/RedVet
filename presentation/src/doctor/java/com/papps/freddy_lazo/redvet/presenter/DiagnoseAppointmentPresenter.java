@@ -89,25 +89,25 @@ public class DiagnoseAppointmentPresenter implements Presenter<DiagnoseAppointme
         if (ContextCompat.checkSelfPermission(view.context(),
                 Manifest.permission.CAMERA)
                 != PackageManager.PERMISSION_GRANTED) {
-            requestPermissions(PERMISSION_REQUEST_CAMERA_CODE);
+            requestPermissions(PERMISSION_REQUEST_CAMERA_CODE,0);
             return false;
         }
         return true;
     }
 
-    private void requestPermissions(int permissionCode) {
+    private void requestPermissions(int permissionCode , int docType) {
         if (permissionCode == PERMISSION_REQUEST_CAMERA_CODE) {
             view.requestCameraPermission();
         } else if (permissionCode == PERMISSION_REQUEST_GALLERY_CODE) {
-            view.requestGalleryPermission();
+            view.requestGalleryPermission(docType);
         }
     }
 
-    public boolean checkGalleryPermissions() {
+    public boolean  checkExternalStoragePermissions(int docType) {
         if (ContextCompat.checkSelfPermission(view.context(),
                 Manifest.permission.READ_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {
-            requestPermissions(PERMISSION_REQUEST_GALLERY_CODE);
+            requestPermissions(PERMISSION_REQUEST_GALLERY_CODE,docType);
             return false;
         }
         return true;

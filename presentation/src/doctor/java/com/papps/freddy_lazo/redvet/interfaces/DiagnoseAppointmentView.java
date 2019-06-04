@@ -13,7 +13,7 @@ public interface DiagnoseAppointmentView extends BaseView {
 
     void requestCameraPermission();
 
-    void requestGalleryPermission();
+    void requestGalleryPermission(int docType);
 
     int getAppointmentPhotoId();
 
