@@ -111,11 +111,11 @@ public class AppointmentPhotoAdapter extends RecyclerView.Adapter<AppointmentPho
                 return;
             }
             if (url.endsWith("pdf")) {
-                ivPhoto.setImageResource(R.drawable.ic_check_green);
+                ivPhoto.setImageResource(R.drawable.ic_pdf);
                 return;
             }
             if (url.endsWith("msword")) {
-                ivPhoto.setImageResource(R.drawable.ic_check_pink);
+                ivPhoto.setImageResource(R.drawable.ic_word);
             } else {
                 loadImage(url);
             }

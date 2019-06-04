@@ -173,8 +173,9 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="outputName" value="ic_show_password" />
-                            <entry key="sourceFile" value="$USER_HOME$/Downloads/svg/Recurso 8.svg" />
+                            <entry key="assetSourceType" value="FILE" />
+                            <entry key="outputName" value="ic_word" />
+                            <entry key="sourceFile" value="$USER_HOME$/Downloads/Archivo/word.svg" />
                           </map>
                         </option>
                       </PersistentState>
